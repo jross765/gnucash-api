@@ -1,6 +1,5 @@
 package org.gnucash.api.read.impl;
 
-import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -139,7 +138,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     // ---------------------------------------------------------------
 
     /**
-     * @return the JWSDP-object we are facading.
+     * {@inheritDoc}
      */
     @SuppressWarnings("exports")
     public GncTransaction getJwsdpPeer() {
@@ -149,14 +148,14 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     // ---------------------------------------------------------------
 
     /**
-     *  
-     * @see GnuCashTransaction#isBalanced()
+     * {@inheritDoc}
      */
     public boolean isBalanced() {
     	return getBalance().equals(new FixedPointNumber());
     }
 
     /**
+     * {@inheritDoc}
      */
     public GCshCmdtyCurrID getCmdtyCurrID() {
     	GCshCmdtyCurrID result = new GCshCmdtyCurrID(jwsdpPeer.getTrnCurrency().getCmdtySpace(), 
@@ -165,11 +164,28 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     }
 
     /**
-     * The result is in the currency of the transaction.
-     *
-     * @return the balance of the sum of all splits
-     *  
-     * @see GnuCashTransaction#getBalance()
+	 * The Currency-Format to use if no locale is given.
+	 *
+	 * @return default currency-format with the transaction's currency set
+	 */
+	protected NumberFormat getCurrencyFormat() {
+		if ( currencyFormat == null ) {
+			currencyFormat = NumberFormat.getCurrencyInstance();
+		}
+	
+		// the currency may have changed
+		if ( getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
+			Currency currency = new GCshCurrID(getCmdtyCurrID()).getCurrency();
+			currencyFormat.setCurrency(currency);
+		} else {
+			currencyFormat = NumberFormat.getNumberInstance();
+		}
+	
+		return currencyFormat;
+	}
+
+	/**
+     * {@inheritDoc}
      */
     public FixedPointNumber getBalance() {
 		FixedPointNumber fp = new FixedPointNumber();
@@ -182,18 +198,14 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     }
 
     /**
-     * The result is in the currency of the transaction.
-     *
-     * @see GnuCashTransaction#getBalanceFormatted()
+     * {@inheritDoc}
      */
     public String getBalanceFormatted() {
     	return getCurrencyFormat().format(getBalance());
     }
 
     /**
-     * The result is in the currency of the transaction.
-     *
-     * @see GnuCashTransaction#getBalanceFormatted(java.util.Locale)
+     * {@inheritDoc}
      */
     public String getBalanceFormatted(final Locale lcl) {
 		NumberFormat cf = NumberFormat.getInstance(lcl);
@@ -207,28 +219,21 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     }
 
     /**
-     * The result is in the currency of the transaction.
-     *  
-     *
-     * @see GnuCashTransaction#getNegatedBalance()
+     * {@inheritDoc}
      */
     public FixedPointNumber getNegatedBalance() {
     	return getBalance().multiply(new FixedPointNumber("-100/100"));
     }
 
     /**
-     * The result is in the currency of the transaction.
-     *
-     * @see GnuCashTransaction#getNegatedBalanceFormatted()
+     * {@inheritDoc}
      */
     public String getNegatedBalanceFormatted() {
     	return getCurrencyFormat().format(getNegatedBalance());
     }
 
     /**
-     * The result is in the currency of the transaction.
-     *
-     * @see GnuCashTransaction#getNegatedBalanceFormatted(java.util.Locale)
+     * {@inheritDoc}
      */
     public String getNegatedBalanceFormatted(final Locale lcl) {
 		NumberFormat nf = NumberFormat.getInstance(lcl);
@@ -242,7 +247,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     }
 
     /**
-     * @see GnuCashTransaction#getID()
+     * {@inheritDoc}
      */
     public GCshTrxID getID() {
     	return new GCshTrxID( jwsdpPeer.getTrnId().getValue() );
@@ -313,7 +318,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     }
 
     /**
-     * @see GnuCashTransaction#getDescription()
+     * {@inheritDoc}
      */
     public String getDescription() {
     	return jwsdpPeer.getTrnDescription();
@@ -336,13 +341,15 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     }
 
     /**
-     *  
-     * @see GnuCashTransaction#getSplitsCount()
+     * {@inheritDoc}
      */
     public int getSplitsCount() {
     	return getSplits().size();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public GnuCashTransactionSplit getSplitByID(final GCshSpltID spltID) {
 		for ( GnuCashTransactionSplit split : getSplits() ) {
 			if ( split.getID().equals(spltID) ) {
@@ -355,8 +362,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     }
 
     /**
-     *  
-     * @see GnuCashTransaction#getFirstSplit()
+     * {@inheritDoc}
      */
     public GnuCashTransactionSplit getFirstSplit() throws TransactionSplitNotFoundException {
     	if ( getSplits().size() == 0 )
@@ -366,8 +372,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     }
 
     /**
-     *  
-     * @see GnuCashTransaction#getSecondSplit()
+     * {@inheritDoc}
      */
     public GnuCashTransactionSplit getSecondSplit() throws TransactionSplitNotFoundException {
 		if ( getSplits().size() <= 1 )
@@ -377,8 +382,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     }
 
     /**
-     *  
-     * @see GnuCashTransaction#getSplits()
+     * {@inheritDoc}
      */
     @Override
     public List<GnuCashTransactionSplit> getSplits() {
@@ -389,6 +393,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 		if ( mySplits == null ) {
 			initSplits(addToAcct, addToInvc);
 		}
+		
 		return mySplits;
     }
 
@@ -419,7 +424,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     }
 
     /**
-     * @see GnuCashTransaction#getDateEntered()
+     * {@inheritDoc}
      */
     public ZonedDateTime getDateEntered() {
 		if ( dateEntered == null ) {
@@ -438,35 +443,31 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     }
 
     /**
-     * The Currency-Format to use if no locale is given.
-     *
-     * @return default currency-format with the transaction's currency set
+     * {@inheritDoc}
      */
-    protected NumberFormat getCurrencyFormat() {
-		if ( currencyFormat == null ) {
-			currencyFormat = NumberFormat.getCurrencyInstance();
+    public String getDateEnteredFormatted() {
+		try {
+	    	DateTimeFormatter fmt = DateTimeFormatter.ofPattern(Const.REDUCED_DATE_FORMAT_BOOK);
+			return getDateEntered().format(fmt);
+		} catch (Exception e) {
+			return getDateEntered().toString();
 		}
-
-		// the currency may have changed
-		if ( getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
-			Currency currency = new GCshCurrID(getCmdtyCurrID()).getCurrency();
-			currencyFormat.setCurrency(currency);
-		} else {
-			currencyFormat = NumberFormat.getNumberInstance();
-		}
-
-		return currencyFormat;
     }
 
     /**
-     * @see GnuCashTransaction#getDatePostedFormatted()
+     * {@inheritDoc}
      */
     public String getDatePostedFormatted() {
-    	return DateFormat.getDateInstance().format(getDatePosted());
+		try {
+	    	DateTimeFormatter fmt = DateTimeFormatter.ofPattern(Const.REDUCED_DATE_FORMAT_BOOK);
+			return getDatePosted().format(fmt);
+		} catch (Exception e) {
+			return getDatePosted().toString();
+		}
     }
 
     /**
-     * @see GnuCashTransaction#getDatePosted()
+     * {@inheritDoc}
      */
     public ZonedDateTime getDatePosted() {
 		if ( datePosted == null ) {
@@ -487,6 +488,9 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 
 	// -----------------------------------------------------------
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getURL() {
     	return getUserDefinedAttribute(Const.SLOT_KEY_ASSOC_URI);
@@ -494,12 +498,18 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 
 	// -----------------------------------------------------------
     
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public String getUserDefinedAttribute(String name) {
 		return HasUserDefinedAttributesImpl
 				.getUserDefinedAttributeCore(jwsdpPeer.getTrnSlots(), name);
 	}
 
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public List<String> getUserDefinedAttributeKeys() {
 		return HasUserDefinedAttributesImpl

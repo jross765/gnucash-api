@@ -151,14 +151,26 @@ public interface GnuCashTransaction extends Comparable<GnuCashTransaction>,
     /**
      *
      * @return the date the transaction was entered into the system
+     * 
+     * @see #getDateEnteredFormatted()
+     * @see #getDatePosted()
      */
     ZonedDateTime getDateEntered();
+
+    /**
+     *
+     * @return the date the transaction was entered into the system
+     * 
+     * @see #getDateEntered()
+    */
+   String getDateEnteredFormatted();
 
     /**
      *
      * @return the date the transaction happened
      * 
      * @see #getDatePostedFormatted()
+     * @see #getDateEntered()
      */
     ZonedDateTime getDatePosted();
 

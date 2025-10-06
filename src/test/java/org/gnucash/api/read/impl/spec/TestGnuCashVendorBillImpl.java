@@ -83,6 +83,7 @@ public class TestGnuCashVendorBillImpl {
 		assertEquals("2023-08-31T10:59Z", bllSpec.getDateOpened().toString());
 		// ::TODO
 		assertEquals("2023-08-31T10:59Z", bllSpec.getDatePosted().toString());
+		assertEquals("2023-08-31", bllSpec.getDatePostedFormatted());
 	}
 
 	@Test
@@ -101,6 +102,7 @@ public class TestGnuCashVendorBillImpl {
 		assertEquals("2023-08-30T10:59Z", bllSpec.getDateOpened().toString());
 		// ::TODO
 		assertEquals("2023-08-30T10:59Z", bllSpec.getDatePosted().toString());
+		assertEquals("2023-08-30", bllSpec.getDatePostedFormatted());
 	}
 
 	@Test

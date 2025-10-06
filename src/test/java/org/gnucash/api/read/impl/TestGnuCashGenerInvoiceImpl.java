@@ -99,7 +99,9 @@ public class TestGnuCashGenerInvoiceImpl {
 		assertEquals("Alles ohne Steuern / voll bezahlt", invc.getDescription());
 
 		assertEquals("2023-07-29T10:59Z", invc.getDateOpened().toString());
+		assertEquals("2023-07-29", invc.getDateOpenedFormatted());
 		assertEquals("2023-07-29T10:59Z", invc.getDatePosted().toString());
+		assertEquals("2023-07-29", invc.getDatePostedFormatted());
 	}
 
 	@Test
@@ -156,8 +158,9 @@ public class TestGnuCashGenerInvoiceImpl {
 		assertEquals("Sie wissen schon: Gefälligkeiten, ne?", invc.getDescription());
 
 		assertEquals("2023-08-31T10:59Z", invc.getDateOpened().toString());
-		// ::TODO
+		assertEquals("2023-08-31", invc.getDateOpenedFormatted());
 		assertEquals("2023-08-31T10:59Z", invc.getDatePosted().toString());
+		assertEquals("2023-08-31", invc.getDatePostedFormatted());
 	}
 
 	@Test
@@ -171,8 +174,9 @@ public class TestGnuCashGenerInvoiceImpl {
 		assertEquals("Dat isjamaol eine schöne jepflejgte Reschnung!", invc.getDescription());
 
 		assertEquals("2023-08-30T10:59Z", invc.getDateOpened().toString());
-		// ::TODO
+		assertEquals("2023-08-30", invc.getDateOpenedFormatted());
 		assertEquals("2023-08-30T10:59Z", invc.getDatePosted().toString());
+		assertEquals("2023-08-30", invc.getDatePostedFormatted());
 	}
 
 	@Test

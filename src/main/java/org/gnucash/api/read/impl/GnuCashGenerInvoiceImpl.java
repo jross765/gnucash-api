@@ -1214,14 +1214,24 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * {@inheritDoc}
 	 */
 	public String getDateOpenedFormatted() {
-		return getDateFormat().format(getDateOpened());
+		try {
+	    	DateTimeFormatter fmt = DateTimeFormatter.ofPattern(Const.REDUCED_DATE_FORMAT_BOOK);
+			return getDateOpened().format(fmt);
+		} catch (Exception e) {
+			return getDateOpened().toString();
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public String getDatePostedFormatted() {
-		return getDateFormat().format(getDatePosted());
+		try {
+	    	DateTimeFormatter fmt = DateTimeFormatter.ofPattern(Const.REDUCED_DATE_FORMAT_BOOK);
+			return getDatePosted().format(fmt);
+		} catch (Exception e) {
+			return getDatePosted().toString();
+		}
 	}
 
 	/**

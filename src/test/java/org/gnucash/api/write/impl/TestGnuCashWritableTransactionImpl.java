@@ -104,7 +104,9 @@ public class TestGnuCashWritableTransactionImpl {
 		assertEquals(0.0, trx.getBalance().getBigDecimal().doubleValue(), ConstTest.DIFF_TOLERANCE);
 		assertEquals("Dividenderl", trx.getDescription());
 		assertEquals("2023-08-06T10:59Z", trx.getDatePosted().toString());
+		assertEquals("2023-08-06", trx.getDatePostedFormatted());
 		assertEquals("2023-08-06T08:21:44Z", trx.getDateEntered().toString());
+		assertEquals("2023-08-06", trx.getDateEnteredFormatted());
 
 		assertEquals(3, trx.getSplitsCount());
 		assertEquals("7abf90fe15124254ac3eb7ec33f798e7", trx.getSplits().get(0).getID().toString());
@@ -121,7 +123,9 @@ public class TestGnuCashWritableTransactionImpl {
 		assertEquals(0.0, trx.getBalance().getBigDecimal().doubleValue(), ConstTest.DIFF_TOLERANCE);
 		assertEquals("Unfug und Quatsch GmbH", trx.getDescription());
 		assertEquals("2023-07-29T10:59Z", trx.getDatePosted().toString());
+		assertEquals("2023-07-29", trx.getDatePostedFormatted());
 		assertEquals("2023-09-13T08:36:54Z", trx.getDateEntered().toString());
+		assertEquals("2023-09-13", trx.getDateEnteredFormatted());
 
 		assertEquals(2, trx.getSplitsCount());
 		assertEquals("f2a67737458d4af4ade616a23db32c2e", trx.getSplits().get(0).getID().toString());
@@ -193,7 +197,9 @@ public class TestGnuCashWritableTransactionImpl {
 		assertEquals(0.0, trx.getBalance().getBigDecimal().doubleValue(), ConstTest.DIFF_TOLERANCE); // unchanged
 		assertEquals("Super dividend", trx.getDescription()); // changed
 		assertEquals("1970-01-01T00:00+01:00[Europe/Berlin]", trx.getDatePosted().toString()); // changed
+		assertEquals("1970-01-01", trx.getDatePostedFormatted());
 		assertEquals("2023-08-06T08:21:44Z", trx.getDateEntered().toString()); // unchanged
+		assertEquals("2023-08-06", trx.getDateEnteredFormatted());
 
 		assertEquals(3, trx.getSplitsCount()); // unchanged
 		assertEquals("7abf90fe15124254ac3eb7ec33f798e7", trx.getSplits().get(0).getID().toString()); // unchanged
@@ -216,7 +222,9 @@ public class TestGnuCashWritableTransactionImpl {
 		assertEquals(0.0, trx.getBalance().getBigDecimal().doubleValue(), ConstTest.DIFF_TOLERANCE); // unchanged
 		assertEquals("Super dividend", trx.getDescription()); // changed
 		assertEquals("1970-01-01T00:00+01:00", trx.getDatePosted().toString()); // changed
+		assertEquals("1970-01-01", trx.getDatePostedFormatted());
 		assertEquals("2023-08-06T08:21:44Z", trx.getDateEntered().toString()); // unchanged
+		assertEquals("2023-08-06", trx.getDateEnteredFormatted());
 
 		assertEquals(3, trx.getSplitsCount()); // unchanged
 		assertEquals("7abf90fe15124254ac3eb7ec33f798e7", trx.getSplits().get(0).getID().toString()); // unchanged
@@ -305,8 +313,10 @@ public class TestGnuCashWritableTransactionImpl {
 		// assertEquals(GnuCashTransaction.Type.PAYMENT, trx.getType());
 		assertEquals("Chattanooga Choo-Choo", trx.getDescription());
 		assertEquals(new GCshCurrID("EUR").toString(), trx.getCmdtyCurrID().toString());
-		assertEquals("2023-12-11T10:00+01:00[Europe/Berlin]", trx.getDateEntered().toString());
 		assertEquals("2023-05-20T00:00+02:00[Europe/Berlin]", trx.getDatePosted().toString());
+		assertEquals("2023-05-20", trx.getDatePostedFormatted());
+		assertEquals("2023-12-11T10:00+01:00[Europe/Berlin]", trx.getDateEntered().toString());
+		assertEquals("2023-12-11", trx.getDateEnteredFormatted());
 
 		// ---
 
@@ -351,8 +361,10 @@ public class TestGnuCashWritableTransactionImpl {
 		// assertEquals(GnuCashTransaction.Type.PAYMENT, trx.getType());
 		assertEquals("Chattanooga Choo-Choo", trx.getDescription());
 		assertEquals(new GCshCurrID("EUR").toString(), trx.getCmdtyCurrID().toString());
-		assertEquals("2023-12-11T10:00+01:00", trx.getDateEntered().toString());
 		assertEquals("2023-05-20T00:00+02:00", trx.getDatePosted().toString());
+		assertEquals("2023-05-20", trx.getDatePostedFormatted());
+		assertEquals("2023-12-11T10:00+01:00", trx.getDateEntered().toString());
+		assertEquals("2023-12-11", trx.getDateEnteredFormatted());
 
 		// ---
 
@@ -456,6 +468,7 @@ public class TestGnuCashWritableTransactionImpl {
 		assertEquals(0.0, trx1.getBalance().getBigDecimal().doubleValue(), ConstTest.DIFF_TOLERANCE); // unchanged
 		assertEquals("Dividenderl", trx1.getDescription()); // unchanged
 		assertEquals("2023-08-06T10:59Z", trx1.getDatePosted().toString()); // unchanged
+		assertEquals("2023-08-06", trx1.getDatePostedFormatted());
 		assertEquals(0, trx1.getSplitsCount()); // changed
 		
 		// However, the transaction cannot newly be instantiated any more,
@@ -481,6 +494,7 @@ public class TestGnuCashWritableTransactionImpl {
 		assertEquals(0.0, trx2.getBalance().getBigDecimal().doubleValue(), ConstTest.DIFF_TOLERANCE); // unchanged
 		assertEquals("Unfug und Quatsch GmbH", trx2.getDescription()); // unchanged
 		assertEquals("2023-07-29T10:59Z", trx2.getDatePosted().toString()); // unchanged
+		assertEquals("2023-07-29", trx2.getDatePostedFormatted());
 		assertEquals(0, trx2.getSplitsCount()); // changed
 		
 		// Cf. above.

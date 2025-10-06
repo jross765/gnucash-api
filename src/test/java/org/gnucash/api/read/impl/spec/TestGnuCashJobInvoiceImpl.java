@@ -79,6 +79,7 @@ public class TestGnuCashJobInvoiceImpl {
 
 		assertEquals("2023-09-20T10:59Z", invcSpec.getDateOpened().toString());
 		assertEquals("2023-09-20T10:59Z", invcSpec.getDatePosted().toString());
+		assertEquals("2023-09-20", invcSpec.getDatePostedFormatted());
 	}
 
 	@Test

@@ -80,6 +80,7 @@ public class TestGnuCashEmployeeVoucherImpl {
 
 		assertEquals("2023-11-13T10:59Z", vchSpec.getDateOpened().toString());
 		assertEquals("2023-11-13T10:59Z", vchSpec.getDatePosted().toString());
+		assertEquals("2023-11-13", vchSpec.getDatePostedFormatted());
 	}
 
 	@Test
