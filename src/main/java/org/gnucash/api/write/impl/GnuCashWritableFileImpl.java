@@ -1761,8 +1761,8 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			final String name) {
 		GnuCashWritableCommodityImpl cmdty = new GnuCashWritableCommodityImpl(this, cmdtyID);
 		cmdty.setQualifID(cmdtyID);
-		cmdty.setName(name);
 		cmdty.setXCode(code);
+		cmdty.setName(name);
 		((org.gnucash.api.write.impl.hlp.FileCommodityManager) super.cmdtyMgr)
 			.addCommodity(cmdty);
 		
