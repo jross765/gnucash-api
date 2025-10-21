@@ -17,6 +17,15 @@ file.
 * This repository contains no history before V. 1.7 (cf. notes in parent repo).
 
 ## Major Changes 
+### V. 1.7.0 &rarr; 1.7.1
+* Small corrections / bug fixes:
+  * `GnuCashGenerInvoiceImpl`: Fixed bug in `getXYZDateFormatted()`.
+  * `GnuCashTransactionImpl`: 
+    * Dto. (as for invoices)
+    * Added `getDateEnteredFormatted()` (consistency, had been forgotten).
+
+* Little bit of cleanup-work.
+
 ### V. 1.6 &rarr; 1.7
 * Introduced new (dummy) ID types (cf. module "Base") for type safety and better symmetry with sister project (inherited from module "Base" and also used in all downstream modules accordingly in order to fully leverage the measure).
 
