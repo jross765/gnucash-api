@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.gnucash</groupId>
 		<artifactId>gnucash</artifactId>
-		<version>1.8</version>
+		<version>1.9</version>
 	</parent>
 
 	<artifactId>gnucash-api</artifactId>
 	<name>${project.title} : API</name>
-	<version>1.7.1</version>
+	<version>1.8</version>
 
 	<properties>
 
@@ -37,7 +37,7 @@
 			<dependency>
 				<groupId>org.gnucash</groupId>
 				<artifactId>gnucash-base</artifactId>
-				<version>1.7.0</version>
+				<version>1.7.1</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -143,7 +143,7 @@
 		<dependency>
 			<groupId>org.gnucash</groupId>
 			<artifactId>gnucash-base</artifactId>
-			<version>1.7.0</version>
+			<version>1.7.1</version>
 			<scope>compile</scope>
 		</dependency>
 

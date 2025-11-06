@@ -147,7 +147,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 			jwsdpSplt.setSplitId(id);
 		}
 
-		jwsdpSplt.setSplitReconciledState(GnuCashTransactionSplit.ReconStatus.NREC.getCode());
+		jwsdpSplt.setSplitReconciledState(GnuCashTransactionSplit.ReconStatus.NOT_RECONCILED.getCode());
 
 		jwsdpSplt.setSplitQuantity("0/100");
 		jwsdpSplt.setSplitValue("0/100");

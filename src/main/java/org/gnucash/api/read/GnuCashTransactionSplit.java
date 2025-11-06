@@ -33,11 +33,11 @@ public interface GnuCashTransactionSplit extends Comparable<GnuCashTransactionSp
   public enum ReconStatus {
       
       // ::MAGIC
-      CREC ("c"), // cleared
-      YREC ("y"), // reconciled  
-      FREC ("f"), // frozen into accounting period
-      NREC ("n"), // not reconciled or cleared
-      VREC ("v"); // void
+      CLEARED        ("c"), // cleared
+      RECONCILED     ("y"), // reconciled  
+      FROZEN         ("f"), // frozen into accounting period
+      NOT_RECONCILED ("n"), // not reconciled or cleared
+      VOID           ("v"); // void
       
       // ---
       
@@ -351,5 +351,29 @@ public interface GnuCashTransactionSplit extends Comparable<GnuCashTransactionSp
      * @see #getAction()
      */
     String getActionStr();
+
+    /**
+     * Reconciliation state.
+     * 
+     * @return One of the enum values, or null, if it cannot be mapped.
+     */
+    ReconStatus getReconState();
+
+    // CAUTION: This method has *intionally* been taken out of the interface
+    // (as opposed to getActionStr().
+    // Reason: The values retured by this method is a pre-defined, locale-independent
+    // set, as defined in the enum ReconStatus. The action field, by contrast, is free.
+//    /**
+//     * The returned text is a one-character code.
+//     * <br>
+//     * <b>Using this method is discouraged.</b>
+//     * Use {@link #getReconState()} whenever possible/applicable instead.
+//     * <br>
+//     * 
+//     * @return 'c','y', 'f', 'n', 'v'.
+//     * 
+//     * @see #getReconState()
+//     */
+//    String getReconStateStr();
 
 }

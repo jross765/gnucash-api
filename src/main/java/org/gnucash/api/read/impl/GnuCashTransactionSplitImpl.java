@@ -122,8 +122,7 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
     }
 
     /**
-     *  
-     * @see GnuCashTransactionSplit#getActionStr()
+     * {@inheritDoc}
      */
     @Override
     public Action getAction() {
@@ -137,10 +136,36 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
     }
 
     /**
-     * @see GnuCashTransactionSplit#getAction()
+     * {@inheritDoc}
      */
     public String getActionStr() {
     	return getJwsdpPeer().getSplitAction();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ReconStatus getReconState() {
+    	if ( getReconStateStr() == null )
+    		return null;
+    	
+    	if ( getReconStateStr().trim().length() == 0 )
+    		return null;
+
+    	return ReconStatus.valueOff( getReconStateStr() );
+    }
+
+    /**
+     * The returned text is a one-character code.
+     * <br>
+     * <b>Using this method is discouraged.</b>
+     * Use {@link #getReconState()} whenever possible/applicable instead.
+     * 
+     * @return 'c','y', 'f', 'n', 'v'.
+     */
+    public String getReconStateStr() {
+    	return getJwsdpPeer().getSplitReconciledState();
     }
 
     /**
@@ -314,6 +339,13 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 		buffer.append(", action=");
 		try {
 			buffer.append(getAction());
+		} catch (Exception e) {
+			buffer.append("ERROR");
+		}
+
+		buffer.append(", recon-state=");
+		try {
+			buffer.append(getReconState());
 		} catch (Exception e) {
 			buffer.append("ERROR");
 		}
