@@ -146,14 +146,14 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
      * {@inheritDoc}
      */
     @Override
-    public ReconStatus getReconState() {
+    public ReconState getReconState() {
     	if ( getReconStateStr() == null )
     		return null;
     	
     	if ( getReconStateStr().trim().length() == 0 )
     		return null;
 
-    	return ReconStatus.valueOff( getReconStateStr() );
+    	return ReconState.valueOff( getReconStateStr() );
     }
 
     /**

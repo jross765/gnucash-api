@@ -26,173 +26,173 @@ public interface GnuCashTransactionSplit extends Comparable<GnuCashTransactionSp
 												 HasUserDefinedAttributes 
 {
 
-  // For the following enumerations cf.:
-  //  - https://github.com/GnuCash/gnucash/blob/stable/libgnucash/engine/Split.h
-  //  - https://github.com/GnuCash/gnucash/blob/stable/gnucash/register/ledger-core/split-register.c
+	  public enum Action {
+	      
+	      // ::MAGIC (actually kind of "half-magic")
+	      INCREASE    ("TRX_SPLT_ACTION_INCREASE"),
+	      DECREASE    ("TRX_SPLT_ACTION_DECREASE"),
+	      
+	      INTEREST    ("TRX_SPLT_ACTION_INTEREST"),
+	      PAYMENT     ("TRX_SPLT_ACTION_PAYMENT"),
+	      REBATE      ("TRX_SPLT_ACTION_REBATE"),
+	      PAYCHECK    ("TRX_SPLT_ACTION_PAYCHECK"),
+	      CREDIT      ("TRX_SPLT_ACTION_CREDIT"),
+	      
+	      ATM_DEPOSIT ("TRX_SPLT_ACTION_ATM_DEPOSIT"),
+	      ATM_DRAW    ("TRX_SPLT_ACTION_ATM_DRAW"),
+	      ONLINE      ("TRX_SPLT_ACTION_ONLINE"),
+	      
+	      INVOICE     ("TRX_SPLT_ACTION_INVOICE"),
+	      BILL        ("TRX_SPLT_ACTION_BILL"),
+	      VOUCHER     ("TRX_SPLT_ACTION_VOUCHER"),
+	      
+	      BUY         ("TRX_SPLT_ACTION_BUY"),
+	      SELL        ("TRX_SPLT_ACTION_SELL"),
+	      EQUITY      ("TRX_SPLT_ACTION_EQUITY"),
+	      
+	      PRICE       ("TRX_SPLT_ACTION_PRICE"),
+	      FEE         ("TRX_SPLT_ACTION_FEE"),
+	      DIVIDEND    ("TRX_SPLT_ACTION_DIVIDEND"),
+	      LTCG        ("TRX_SPLT_ACTION_LTCG"),
+	      STCG        ("TRX_SPLT_ACTION_STCG"),
+	      INCOME      ("TRX_SPLT_ACTION_INCOME"),
+	      DIST        ("TRX_SPLT_ACTION_DIST"),
+	      SPLIT       ("TRX_SPLT_ACTION_SPLIT");
+	      
+	      // ---
 
-  public enum ReconStatus {
-      
-      // ::MAGIC
-      CLEARED        ("c"), // cleared
-      RECONCILED     ("y"), // reconciled  
-      FROZEN         ("f"), // frozen into accounting period
-      NOT_RECONCILED ("n"), // not reconciled or cleared
-      VOID           ("v"); // void
-      
-      // ---
-      
-      // Note: The following should be chars, but the method where they are 
-      // used is generated and accepts a String.
-      
-      private String code = "X";
+	      private String code = "UNSET";
+		
+	      // ---
+		
+	      Action(String code) {
+	  		if ( code == null )
+				throw new IllegalArgumentException("argument <code> is null");
+			
+			if ( code.trim().length() == 0 )
+				throw new IllegalArgumentException("argument <code> is empty");
+			
+	    	  this.code = code;
+	      }
 
-      // ---
+	      // ---
+		
+	      public String getCode() {
+	    	  return code;
+	      }
+		
+	      public String getLocaleString() {
+	    	  return getLocaleString(Locale.getDefault());
+	      }
+
+	      public String getLocaleString(Locale lcl) {
+	  		if ( lcl == null )
+				throw new IllegalArgumentException("argument <lcl> is null");
+			
+			if ( code.equals("UNSET") )
+				throw new IllegalStateException("<code> is not properly set");
+			
+	    	  try {
+	  			Locale oldLcl = Locale.getDefault();
+	  			Locale.setDefault(lcl);
+	  			String result = Const_LocSpec.getValue(code);
+	  			Locale.setDefault(oldLcl);
+	  			return result;
+	    	  } catch ( Exception exc ) {
+	    		  throw new MappingException("Could not map string '" + code + "' to locale-specific string");
+	    	  }
+	      }
+			
+	      // No typo!
+	      public static Action valueOff(String code) {
+	      	  if ( code == null ) {
+	      		  throw new IllegalStateException("argument <code> is null");
+	      	  }
+	    		
+	      	  if ( code.trim().length() == 0 ) {
+	      		  throw new IllegalStateException("argument <code> is empty");
+	      	  }
+	    		
+	    	  for ( Action val : values() ) {
+	    		  if ( val.getCode().equals(code.trim()) ) {
+	    			  return val;
+	    		  }
+	    	  }
+		    
+	    	  return null;
+	      }
+
+	      // No typo!
+	      public static Action valueOfff(String lclStr) {
+	    	  return valueOfff(lclStr, Locale.getDefault());
+	      }
+	      
+	      public static Action valueOfff(String lclStr, Locale lcl) {
+	      	  if ( lclStr == null ) {
+	      		  throw new IllegalArgumentException("argument <lclStr> is null");
+	      	  }
+	  		
+	      	  if ( lclStr.trim().length() == 0 ) {
+	      		  throw new IllegalArgumentException("argument <lclStr> is empty");
+	      	  }
+	  		
+	    	  if ( lcl == null )
+	    		  throw new IllegalArgumentException("argument <lcl> is null");
+	    	  
+	    	  for ( Action val : values() ) {
+	    		  if ( val.getLocaleString(lcl).equals(lclStr.trim()) ) {
+	    			  return val;
+	    		  }
+	    	  }
+		    
+	    	  return null;
+	      }
+	  }
+	  
+	  // For the following enumerations cf.:
+	  //  - https://github.com/GnuCash/gnucash/blob/stable/libgnucash/engine/Split.h
+	  //  - https://github.com/GnuCash/gnucash/blob/stable/gnucash/register/ledger-core/split-register.c
+
+	  public enum ReconState {
       
-      ReconStatus(String code) {
-    	  this.code = code;
-      }
+		  // ::MAGIC
+		  CLEARED        ("c"), // cleared
+		  RECONCILED     ("y"), // reconciled  
+		  FROZEN         ("f"), // frozen into accounting period
+		  NOT_RECONCILED ("n"), // not reconciled or cleared
+		  VOID           ("v"); // void
       
-      // ---
+		  // ---
+      
+		  // Note: The following should be chars, but the method where they are 
+		  // used is generated and accepts a String.
+      
+		  private String code = "X";
+
+		  // ---
+      
+		  ReconState(String code) {
+			  this.code = code;
+		  }
+      
+		  // ---
 	
-      public String getCode() {
-    	  return code;
-      }
+		  public String getCode() {
+			  return code;
+		  }
 	
-      // no typo!
-      public static ReconStatus valueOff(String code) {
-    	  for ( ReconStatus reconStat : values() ) {
-    		  if ( reconStat.getCode().equals(code) ) {
-    			  return reconStat;
-    		  }
-    	  }
+		  // no typo!
+		  public static ReconState valueOff(String code) {
+			  for ( ReconState reconStat : values() ) {
+				  if ( reconStat.getCode().equals(code) ) {
+					  return reconStat;
+				  }
+			  }
 	    
-    	  return null;
-      }
-  }
+			  return null;
+		  }
+	  }
     
-  public enum Action {
-      
-      // ::MAGIC (actually kind of "half-magic")
-      INCREASE    ("TRX_SPLT_ACTION_INCREASE"),
-      DECREASE    ("TRX_SPLT_ACTION_DECREASE"),
-      
-      INTEREST    ("TRX_SPLT_ACTION_INTEREST"),
-      PAYMENT     ("TRX_SPLT_ACTION_PAYMENT"),
-      REBATE      ("TRX_SPLT_ACTION_REBATE"),
-      PAYCHECK    ("TRX_SPLT_ACTION_PAYCHECK"),
-      CREDIT      ("TRX_SPLT_ACTION_CREDIT"),
-      
-      ATM_DEPOSIT ("TRX_SPLT_ACTION_ATM_DEPOSIT"),
-      ATM_DRAW    ("TRX_SPLT_ACTION_ATM_DRAW"),
-      ONLINE      ("TRX_SPLT_ACTION_ONLINE"),
-      
-      INVOICE     ("TRX_SPLT_ACTION_INVOICE"),
-      BILL        ("TRX_SPLT_ACTION_BILL"),
-      VOUCHER     ("TRX_SPLT_ACTION_VOUCHER"),
-      
-      BUY         ("TRX_SPLT_ACTION_BUY"),
-      SELL        ("TRX_SPLT_ACTION_SELL"),
-      EQUITY      ("TRX_SPLT_ACTION_EQUITY"),
-      
-      PRICE       ("TRX_SPLT_ACTION_PRICE"),
-      FEE         ("TRX_SPLT_ACTION_FEE"),
-      DIVIDEND    ("TRX_SPLT_ACTION_DIVIDEND"),
-      LTCG        ("TRX_SPLT_ACTION_LTCG"),
-      STCG        ("TRX_SPLT_ACTION_STCG"),
-      INCOME      ("TRX_SPLT_ACTION_INCOME"),
-      DIST        ("TRX_SPLT_ACTION_DIST"),
-      SPLIT       ("TRX_SPLT_ACTION_SPLIT");
-      
-      // ---
-
-      private String code = "UNSET";
-	
-      // ---
-	
-      Action(String code) {
-  		if ( code == null )
-			throw new IllegalArgumentException("argument <code> is null");
-		
-		if ( code.trim().length() == 0 )
-			throw new IllegalArgumentException("argument <code> is empty");
-		
-    	  this.code = code;
-      }
-
-      // ---
-	
-      public String getCode() {
-    	  return code;
-      }
-	
-      public String getLocaleString() {
-    	  return getLocaleString(Locale.getDefault());
-      }
-
-      public String getLocaleString(Locale lcl) {
-  		if ( lcl == null )
-			throw new IllegalArgumentException("argument <lcl> is null");
-		
-		if ( code.equals("UNSET") )
-			throw new IllegalStateException("<code> is not properly set");
-		
-    	  try {
-  			Locale oldLcl = Locale.getDefault();
-  			Locale.setDefault(lcl);
-  			String result = Const_LocSpec.getValue(code);
-  			Locale.setDefault(oldLcl);
-  			return result;
-    	  } catch ( Exception exc ) {
-    		  throw new MappingException("Could not map string '" + code + "' to locale-specific string");
-    	  }
-      }
-		
-      // No typo!
-      public static Action valueOff(String code) {
-      	  if ( code == null ) {
-      		  throw new IllegalStateException("argument <code> is null");
-      	  }
-    		
-      	  if ( code.trim().length() == 0 ) {
-      		  throw new IllegalStateException("argument <code> is empty");
-      	  }
-    		
-    	  for ( Action val : values() ) {
-    		  if ( val.getCode().equals(code.trim()) ) {
-    			  return val;
-    		  }
-    	  }
-	    
-    	  return null;
-      }
-
-      // No typo!
-      public static Action valueOfff(String lclStr) {
-    	  return valueOfff(lclStr, Locale.getDefault());
-      }
-      
-      public static Action valueOfff(String lclStr, Locale lcl) {
-      	  if ( lclStr == null ) {
-      		  throw new IllegalArgumentException("argument <lclStr> is null");
-      	  }
-  		
-      	  if ( lclStr.trim().length() == 0 ) {
-      		  throw new IllegalArgumentException("argument <lclStr> is empty");
-      	  }
-  		
-    	  if ( lcl == null )
-    		  throw new IllegalArgumentException("argument <lcl> is null");
-    	  
-    	  for ( Action val : values() ) {
-    		  if ( val.getLocaleString(lcl).equals(lclStr.trim()) ) {
-    			  return val;
-    		  }
-    	  }
-	    
-    	  return null;
-      }
-  }
-  
   // Not yet, for future releases:
 //  public static final String SPLIT_DATE_RECONCILED    = "date-reconciled";
 //  public static final String SPLIT_BALANCE            = "balance";
@@ -357,7 +357,7 @@ public interface GnuCashTransactionSplit extends Comparable<GnuCashTransactionSp
      * 
      * @return One of the enum values, or null, if it cannot be mapped.
      */
-    ReconStatus getReconState();
+    ReconState getReconState();
 
     // CAUTION: This method has *intionally* been taken out of the interface
     // (as opposed to getActionStr().
