@@ -513,21 +513,21 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 			buffer.append("ERROR");
 		}
 
+		buffer.append(", recon-state=");
+		try {
+			buffer.append(getReconState());
+		} catch (Exception e) {
+			buffer.append("ERROR");
+		}
+
 		buffer.append(", transaction-id=");
 		buffer.append(getTransaction().getID());
 
 		buffer.append(", accountID=");
 		buffer.append(getAccountID());
 
-//		buffer.append(", account=");
-//		GnuCashAccount account = getAccount();
-//		buffer.append(account == null ? "null" : "'" + account.getQualifiedName() + "'");
-
 		buffer.append(", description='");
 		buffer.append(getDescription() + "'");
-
-		buffer.append(", transaction-description='");
-		buffer.append(getTransaction().getDescription() + "'");
 
 		buffer.append(", value=");
 		buffer.append(getValue());
