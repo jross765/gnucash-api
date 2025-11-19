@@ -17,7 +17,7 @@
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<schnorxolib-base-systemPath>/home/xxx/Programme-ProdReady/schnorxoborx/schnorxolib-base-0.1.1.jar</schnorxolib-base-systemPath>
+		<schnorxolib-base-systemPath>/home/xxx/Programme-ProdReady/schnorxoborx/schnorxolib-base-0.2.jar</schnorxolib-base-systemPath>
 
 	</properties>
 
@@ -120,6 +120,20 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-numbers-core -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-numbers-core</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-numbers-fraction -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-numbers-fraction</artifactId>
+			<version>1.2</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.sun.istack</groupId>
 			<artifactId>istack-commons-runtime</artifactId>
@@ -132,7 +146,7 @@
 		<dependency>
 			<groupId>xyz.schnorxoborx.schnorxolib</groupId>
 			<artifactId>schnorxolib-base</artifactId>
-			<version>0.1.1</version>
+			<version>0.2</version>
 			<scope>system</scope>
 			<systemPath>${schnorxolib-base-systemPath}</systemPath>
 		</dependency>
