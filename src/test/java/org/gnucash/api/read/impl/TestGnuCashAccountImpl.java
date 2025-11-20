@@ -84,7 +84,12 @@ public class TestGnuCashAccountImpl {
     	assertEquals("fdffaa52f5b04754901dfb1cf9221494", acct.getParentAccountID().toString());
 
     	assertEquals(9175.31, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
+    	assertEquals(917531, acct.getBalanceRat().getNumerator().longValue());
+    	assertEquals(100, acct.getBalanceRat().getDenominator().longValue());
+    	
     	assertEquals(9175.31, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
+    	assertEquals(917531, acct.getBalanceRecursiveRat().getNumerator().longValue());
+    	assertEquals(100, acct.getBalanceRecursiveRat().getDenominator().longValue());
 
     	List<GnuCashTransaction> trxList = acct.getTransactions();
     	// Collections.sort(trxList, Comparator.reverseOrder()); // not necessary
@@ -119,7 +124,12 @@ public class TestGnuCashAccountImpl {
 
     	// ::TODO
     	assertEquals(0.0, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
+    	assertEquals(0, acct.getBalanceRat().getNumerator().longValue());
+    	assertEquals(1, acct.getBalanceRat().getDenominator().longValue());
+    	
     	assertEquals(2978.0, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
+    	assertEquals(2978, acct.getBalanceRecursiveRat().getNumerator().longValue());
+    	assertEquals(1, acct.getBalanceRecursiveRat().getDenominator().longValue());
 
     	// ::TODO
     	assertEquals(0, acct.getTransactions().size());
@@ -150,10 +160,15 @@ public class TestGnuCashAccountImpl {
     	assertEquals("1a5b06dada56466197edbd15e64fd425", acctList.get(2).getID().toString());
 
     	assertEquals(0.00, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
+    	assertEquals(0, acct.getBalanceRat().getNumerator().longValue());
+    	assertEquals(1, acct.getBalanceRat().getDenominator().longValue());
+    	
     	// ::CHECK: Should'nt the value in the following assert be positive
-    	// (that's how it is displayed in GnuCacsh, after all, at least with
+    	// (that's how it is displayed in GnuCash, after all, at least with
     	// standard settings).
     	assertEquals(-289.92, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
+    	assertEquals(-7248, acct.getBalanceRecursiveRat().getNumerator().longValue());
+    	assertEquals(25, acct.getBalanceRecursiveRat().getDenominator().longValue());
 
     	assertEquals(0, acct.getTransactions().size());
 
@@ -176,7 +191,12 @@ public class TestGnuCashAccountImpl {
 
     	// ::TODO
     	assertEquals(0.00, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
+    	assertEquals(0, acct.getBalanceRat().getNumerator().longValue());
+    	assertEquals(1, acct.getBalanceRat().getDenominator().longValue());
+    	
     	assertEquals(0.00, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
+    	assertEquals(0, acct.getBalanceRecursiveRat().getNumerator().longValue());
+    	assertEquals(1, acct.getBalanceRecursiveRat().getDenominator().longValue());
 
     	// ::TODO
     	assertEquals(2, acct.getTransactions().size());
@@ -205,7 +225,12 @@ public class TestGnuCashAccountImpl {
     	assertEquals("74401ce4880c4f4487c4301027a71bde", acct.getParentAccountID().toString());
 
     	assertEquals(709.95, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
+    	assertEquals(14199, acct.getBalanceRat().getNumerator().longValue());
+    	assertEquals(20, acct.getBalanceRat().getDenominator().longValue());
+    	
     	assertEquals(709.95, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
+    	assertEquals(14199, acct.getBalanceRecursiveRat().getNumerator().longValue());
+    	assertEquals(20, acct.getBalanceRecursiveRat().getDenominator().longValue());
 
     	assertEquals(4, acct.getTransactions().size());
     	assertEquals("c97032ba41684b2bb5d1391c9d7547e9", acct.getTransactions().get(0).getID().toString());
@@ -235,7 +260,12 @@ public class TestGnuCashAccountImpl {
     	assertEquals(ROOT_ACCT_ID, acct.getParentAccountID());
 
     	assertEquals(0.00, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
+    	assertEquals(0, acct.getBalanceRat().getNumerator().longValue());
+    	assertEquals(1, acct.getBalanceRat().getDenominator().longValue());
+    	
     	assertEquals(0.00, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
+    	assertEquals(0, acct.getBalanceRecursiveRat().getNumerator().longValue());
+    	assertEquals(1, acct.getBalanceRecursiveRat().getDenominator().longValue());
 
     	assertEquals(0, acct.getTransactions().size());
 
@@ -257,7 +287,12 @@ public class TestGnuCashAccountImpl {
     	assertEquals(ACCT_2_ID, acct.getParentAccountID());
 
     	assertEquals(200.00, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
+    	assertEquals(200, acct.getBalanceRat().getNumerator().longValue());
+    	assertEquals(1, acct.getBalanceRat().getDenominator().longValue());
+    	
     	assertEquals(200.00, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
+    	assertEquals(200, acct.getBalanceRecursiveRat().getNumerator().longValue());
+    	assertEquals(1, acct.getBalanceRecursiveRat().getDenominator().longValue());
 
     	assertEquals(2, acct.getTransactions().size());
     	assertEquals("cc9fe6a245df45ba9b494660732a7755", acct.getTransactions().get(0).getID().toString());

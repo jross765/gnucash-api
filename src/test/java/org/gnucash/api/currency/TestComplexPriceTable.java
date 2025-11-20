@@ -7,11 +7,11 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.gnucash.api.ConstTest;
+import org.gnucash.api.read.GnuCashFile;
+import org.gnucash.api.read.impl.GnuCashFileImpl;
 import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID_Exchange;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID_SecIdType;
-import org.gnucash.api.read.GnuCashFile;
-import org.gnucash.api.read.impl.GnuCashFileImpl;
 import org.junit.Before;
 import org.junit.Test;
 

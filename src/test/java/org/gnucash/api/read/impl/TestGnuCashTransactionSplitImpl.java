@@ -78,10 +78,17 @@ public class TestGnuCashTransactionSplitImpl {
 		assertEquals(ACCT_1_ID, splt.getAccountID());
 		assertEquals(null, splt.getActionStr());
 		assertEquals(null, splt.getAction());
+		
 		assertEquals(-2253.00, splt.getValue().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(-2253, splt.getValueRat().getNumerator().longValue());
+		assertEquals(1, splt.getValueRat().getDenominator().longValue());
 		assertEquals("-2.253,00 €", splt.getValueFormatted()); // ::TODO: locale-specific!
+		
 		assertEquals(-2253.00, splt.getQuantity().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(-2253, splt.getQuantityRat().getNumerator().longValue());
+		assertEquals(1, splt.getQuantityRat().getDenominator().longValue());
 		assertEquals("-2.253,00 €", splt.getQuantityFormatted());
+		
 		assertEquals("", splt.getDescription());
 		assertEquals(null, splt.getLotID());
 		assertEquals(null, splt.getUserDefinedAttributeKeys());
@@ -96,10 +103,17 @@ public class TestGnuCashTransactionSplitImpl {
 		assertEquals(ACCT_8_ID, splt.getAccountID());
 		assertEquals("Kauf", splt.getActionStr());
 		assertEquals(GnuCashTransactionSplit.Action.BUY, splt.getAction());
+		
 		assertEquals(1875.00, splt.getValue().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(1875, splt.getValueRat().getNumerator().longValue());
+		assertEquals(1, splt.getValueRat().getDenominator().longValue());
 		assertEquals("1.875,00 €", splt.getValueFormatted()); // ::TODO: locale-specific!
+		
 		assertEquals(15.00, splt.getQuantity().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(15, splt.getQuantityRat().getNumerator().longValue());
+		assertEquals(1, splt.getQuantityRat().getDenominator().longValue());
 		assertEquals("15 EURONEXT:SAP", splt.getQuantityFormatted());
+		
 		assertEquals("", splt.getDescription());
 		assertEquals(ACCTLOT_1_ID, splt.getLotID());
 		assertEquals(null, splt.getUserDefinedAttributeKeys());

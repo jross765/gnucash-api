@@ -34,7 +34,7 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
     // -----------------------------------------------------------
 
     public SimpleCommodityQuoteTable() {
-	mCmdtyID2Factor = new Hashtable<String, FixedPointNumber>();
+    	mCmdtyID2Factor = new Hashtable<String, FixedPointNumber>();
     }
 
     // -----------------------------------------------------------
@@ -46,7 +46,7 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
      */
     @Override
     public FixedPointNumber getConversionFactor(final String cmdtyID) {
-	return mCmdtyID2Factor.get(cmdtyID);
+    	return mCmdtyID2Factor.get(cmdtyID);
     }
 
     /**
@@ -57,7 +57,7 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
      */
     @Override
     public void setConversionFactor(final String cmdtyQualifID, final FixedPointNumber factor) {
-	mCmdtyID2Factor.put(cmdtyQualifID, factor);
+    	mCmdtyID2Factor.put(cmdtyQualifID, factor);
     }
 
     public void setConversionFactor(final GCshCmdtyID cmdtyID, final FixedPointNumber factor) {
@@ -107,9 +107,36 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
             return false;
         }
         
+        // CAUTION: mutable
         value.divide(factor);
         return true;
     }
+
+    // ::TODO
+    // CAUTION: Does not work like this, because BigFraction is immutable
+//    @Override
+//    public boolean convertFromBaseCurrencyRat(BigFraction value, final String cmdtyID) {
+//		if ( value == null ) {
+//			throw new IllegalArgumentException("argument <value> is null");
+//		}
+//
+//		if ( cmdtyID == null ) {
+//			throw new IllegalArgumentException("argument <cmdtyID> is null");
+//		}
+//
+//		if ( cmdtyID.trim().equals("") ) {
+//			throw new IllegalArgumentException("argument <cmdtyID> is empty");
+//		}
+//
+//		BigFraction factor = getConversionFactor(cmdtyID).toBigFraction();
+//        if (factor == null) {
+//            return false;
+//        }
+//        
+//        // CAUTION: immutable
+//        value = value.divide(factor);
+//        return true;
+//    }
 
     /**
      * @param value           the value to convert
@@ -135,9 +162,36 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
 			return false;
 		}
 		
+        // CAUTION: mutable
 		value.multiply(factor);
 		return true;
     }
+
+    // ::TODO
+    // CAUTION: Does not work like this, because BigFraction is immutable
+//    @Override
+//    public boolean convertToBaseCurrencyRat(BigFraction value, final String cmdtyID) {
+//		if ( value == null ) {
+//			throw new IllegalArgumentException("argument <value> is null");
+//		}
+//
+//		if ( cmdtyID == null ) {
+//			throw new IllegalArgumentException("argument <cmdtyID> is null");
+//		}
+//
+//		if ( cmdtyID.trim().equals("") ) {
+//			throw new IllegalArgumentException("argument <cmdtyID> is empty");
+//		}
+//
+//		BigFraction factor = getConversionFactor(cmdtyID).toBigFraction();
+//		if (factor == null) {
+//			return false;
+//		}
+//		
+//        // CAUTION: immutable
+//		value = value.multiply(factor);
+//		return true;
+//    }
 
     // ---------------------------------------------------------------
 
@@ -146,7 +200,7 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
      */
     @Override
     public List<String> getCurrencies() {
-	return new ArrayList<String>(mCmdtyID2Factor.keySet());
+    	return new ArrayList<String>(mCmdtyID2Factor.keySet());
     }
     
     /**
@@ -161,19 +215,19 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
 
     @Override
     public String toString() {
-	String result = "SimpleCommodityQuoteTable [\n";
+    	String result = "SimpleCommodityQuoteTable [\n";
 	
-	result += "No. of entries: " + mCmdtyID2Factor.size() + "\n";
+    	result += "No. of entries: " + mCmdtyID2Factor.size() + "\n";
 	
-	result += "Entries:\n";
-	for ( String cmdtyID : mCmdtyID2Factor.keySet() ) {
-	    // result += " - " + cmdtyID + "\n";
-	    result += " - " + cmdtyID + ";" + mCmdtyID2Factor.get(cmdtyID) + "\n";
-	}
+    	result += "Entries:\n";
+    	for ( String cmdtyID : mCmdtyID2Factor.keySet() ) {
+    		// result += " - " + cmdtyID + "\n";
+    		result += " - " + cmdtyID + ";" + mCmdtyID2Factor.get(cmdtyID) + "\n";
+    	}
 	
-	result += "]";
+    	result += "]";
 	
-	return result;
+    	return result;
     }
 
 }

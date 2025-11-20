@@ -7,6 +7,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,11 +35,11 @@ public class SimpleCurrencyExchRateTable implements SimplePriceTable,
     // -----------------------------------------------------------
 
     public SimpleCurrencyExchRateTable() {
-	// super();
-	mIso4217CurrCodes2Factor = new Hashtable<String, FixedPointNumber>();
+    	// super();
+    	mIso4217CurrCodes2Factor = new Hashtable<String, FixedPointNumber>();
 	
-	setConversionFactor("EUR", new FixedPointNumber(1));
-	// setConversionFactor("GBP", new FixedPointNumber("769/523"));
+    	setConversionFactor("EUR", new FixedPointNumber(1));
+    	// setConversionFactor("GBP", new FixedPointNumber("769/523"));
     }
 
     // -----------------------------------------------------------
@@ -49,7 +50,7 @@ public class SimpleCurrencyExchRateTable implements SimplePriceTable,
      *         amount of that currency to get the value in the base-currency.
      */
     public FixedPointNumber getConversionFactor(final String iso4217CurrCode) {
-	return mIso4217CurrCodes2Factor.get(iso4217CurrCode);
+    	return mIso4217CurrCodes2Factor.get(iso4217CurrCode);
     }
 
     /**
@@ -59,7 +60,7 @@ public class SimpleCurrencyExchRateTable implements SimplePriceTable,
      *                        value in the base-currency.
      */
     public void setConversionFactor(final String iso4217CurrCode, final FixedPointNumber factor) {
-	mIso4217CurrCodes2Factor.put(iso4217CurrCode, factor);
+    	mIso4217CurrCodes2Factor.put(iso4217CurrCode, factor);
     }
 
     // ---------------------------------------------------------------
@@ -78,18 +79,36 @@ public class SimpleCurrencyExchRateTable implements SimplePriceTable,
         return true;
     }
 
+    public boolean convertFromBaseCurrencyRat(BigFraction value, final String iso4217CurrencyCode) {
+    	BigFraction factor = getConversionFactor(iso4217CurrencyCode).toBigFraction();
+        if (factor == null) {
+            return false;
+        }
+        value.divide(factor);
+        return true;
+    }
+
     /**
      * @param value               the value to convert
      * @param iso4217CurrencyCode it's currency
      * @return false if the conversion is not possible
      */
     public boolean convertToBaseCurrency(FixedPointNumber value, final String iso4217CurrencyCode) {
-	FixedPointNumber factor = getConversionFactor(iso4217CurrencyCode);
-	if (factor == null) {
-	    return false;
-	}
-	value.multiply(factor);
-	return true;
+    	FixedPointNumber factor = getConversionFactor(iso4217CurrencyCode);
+    	if (factor == null) {
+    		return false;
+    	}
+    	value.multiply(factor);
+    	return true;
+    }
+
+    public boolean convertToBaseCurrencyRat(BigFraction value, final String iso4217CurrencyCode) {
+    	BigFraction factor = getConversionFactor(iso4217CurrencyCode).toBigFraction();
+    	if (factor == null) {
+    		return false;
+    	}
+    	value.multiply(factor);
+    	return true;
     }
 
     /**
@@ -98,7 +117,11 @@ public class SimpleCurrencyExchRateTable implements SimplePriceTable,
      * @return false if the conversion is not possible
      */
     public boolean convertToBaseCurrency(FixedPointNumber value, final Currency pCurrency) {
-	return convertToBaseCurrency(value, pCurrency.getCurrencyCode());
+    	return convertToBaseCurrency(value, pCurrency.getCurrencyCode());
+    }
+
+    public boolean convertToBaseCurrencyRat(BigFraction value, final Currency pCurrency) {
+    	return convertToBaseCurrencyRat(value, pCurrency.getCurrencyCode());
     }
 
     // ---------------------------------------------------------------
@@ -107,7 +130,7 @@ public class SimpleCurrencyExchRateTable implements SimplePriceTable,
      * @return all currency-names
      */
     public List<String> getCurrencies() {
-	return new ArrayList<String>(mIso4217CurrCodes2Factor.keySet());
+    	return new ArrayList<String>(mIso4217CurrCodes2Factor.keySet());
     }
 
     // ---------------------------------------------------------------
@@ -121,19 +144,19 @@ public class SimpleCurrencyExchRateTable implements SimplePriceTable,
 
     @Override
     public String toString() {
-	String result = "SimpleCurrencyExchRateTable [\n";
+    	String result = "SimpleCurrencyExchRateTable [\n";
 	
-	result += "No. of entries: " + mIso4217CurrCodes2Factor.size() + "\n";
+    	result += "No. of entries: " + mIso4217CurrCodes2Factor.size() + "\n";
 	
-	result += "Entries:\n";
-	for ( String currCode : mIso4217CurrCodes2Factor.keySet() ) {
-	    // result += " - " + currCode + "\n";
-	    result += " - " + currCode + ";" + mIso4217CurrCodes2Factor.get(currCode) + "\n";
-	}
+    	result += "Entries:\n";
+    	for ( String currCode : mIso4217CurrCodes2Factor.keySet() ) {
+    		// result += " - " + currCode + "\n";
+    		result += " - " + currCode + ";" + mIso4217CurrCodes2Factor.get(currCode) + "\n";
+    	}
 	
-	result += "]";
+    	result += "]";
 	
-	return result;
+    	return result;
     }
 
 }

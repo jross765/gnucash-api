@@ -8,6 +8,7 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.Const;
 import org.gnucash.api.generated.GncTransaction;
 import org.gnucash.api.generated.ObjectFactory;
@@ -150,8 +151,17 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isBalanced() {
     	return getBalance().equals(new FixedPointNumber());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isBalancedRat() {
+    	return getBalanceRat().equals(BigFraction.ZERO);
     }
 
     /**
@@ -191,7 +201,19 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 		FixedPointNumber fp = new FixedPointNumber();
 
 		for ( GnuCashTransactionSplit split : getSplits() ) {
+			// CAUTION: FixedPointNumber is mutable
 			fp.add(split.getValue());
+		}
+
+		return fp;
+    }
+
+    public BigFraction getBalanceRat() {
+		BigFraction fp = BigFraction.ZERO;
+
+		for ( GnuCashTransactionSplit split : getSplits() ) {
+			// CAUTION: BigFraction is immutable
+			fp = fp.add(split.getValueRat());
 		}
 
 		return fp;

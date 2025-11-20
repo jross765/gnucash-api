@@ -4,6 +4,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.generated.GncTransaction;
 import org.gnucash.api.read.hlp.GnuCashObject;
 import org.gnucash.api.read.hlp.HasAttachment;
@@ -190,6 +191,8 @@ public interface GnuCashTransaction extends Comparable<GnuCashTransaction>,
      */
     boolean isBalanced();
 
+    boolean isBalancedRat();
+
     GCshCmdtyCurrID getCmdtyCurrID();
 
     /**
@@ -202,6 +205,9 @@ public interface GnuCashTransaction extends Comparable<GnuCashTransaction>,
      * @see #isBalanced()
      */
     FixedPointNumber getBalance();
+    
+    BigFraction      getBalanceRat();
+    
     /**
      * The result is in the currency of the transaction.
      * @return 

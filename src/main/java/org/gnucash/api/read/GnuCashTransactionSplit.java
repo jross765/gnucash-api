@@ -2,6 +2,7 @@ package org.gnucash.api.read;
 
 import java.util.Locale;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.Const_LocSpec;
 import org.gnucash.api.generated.GncTransaction;
 import org.gnucash.api.read.hlp.HasUserDefinedAttributes;
@@ -258,6 +259,10 @@ public interface GnuCashTransactionSplit extends Comparable<GnuCashTransactionSp
      */
     FixedPointNumber getValue();
 
+    // BigRational getValueBR();
+
+    BigFraction getValueRat();
+
     /**
      * The value is in the currency of the transaction!
      * @return the value-transfer this represents
@@ -271,29 +276,14 @@ public interface GnuCashTransactionSplit extends Comparable<GnuCashTransactionSp
     String getValueFormatted(Locale lcl);
 
     /**
-     * @return the balance of the account (in the account's currency)
-     *         up to this split.
-     */
-    FixedPointNumber getAccountBalance();
-
-    /**
-     * @return the balance of the account (in the account's currency)
-     *         up to this split.
-     */
-    String getAccountBalanceFormatted();
-
-    /**
-     * @param lcl 
-     * @return 
-     * @see GnuCashAccount#getBalanceFormatted()
-     */
-    String getAccountBalanceFormatted(Locale lcl);
-
-    /**
      * The quantity is in the currency of the account!
      * @return the number of items added to the account
      */
     FixedPointNumber getQuantity();
+
+    // BigRational getQuantityBR();
+
+    BigFraction      getQuantityRat();
 
     /**
      * The quantity is in the currency of the account!

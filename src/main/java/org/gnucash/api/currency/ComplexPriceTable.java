@@ -264,27 +264,48 @@ public class ComplexPriceTable implements Serializable {
 	 *      java.lang.String)
 	 */
 	public boolean convertFromBaseCurrency(final FixedPointNumber pValue, 
-	    final GCshCmdtyCurrID cmdtyCurrID) {
+										   final GCshCmdtyCurrID cmdtyCurrID) {
+		SimplePriceTable table = getByNamespace(cmdtyCurrID.getNameSpace());
+		if (table == null) {
+			return false;
+		}
 
-	SimplePriceTable table = getByNamespace(cmdtyCurrID.getNameSpace());
-	if (table == null) {
-	    return false;
+		return table.convertFromBaseCurrency(pValue, cmdtyCurrID.getCode());
 	}
 
-	return table.convertFromBaseCurrency(pValue, cmdtyCurrID.getCode());
-	}
+	// ::TODO
+//	public boolean convertFromBaseCurrencyRat(final BigFraction pValue, 
+//			   								  final GCshCmdtyCurrID cmdtyCurrID) {
+//		SimplePriceTable table = getByNamespace(cmdtyCurrID.getNameSpace());
+//		if (table == null) {
+//			return false;
+//		}
+//
+//		return table.convertFromBaseCurrencyRat(pValue, cmdtyCurrID.getCode());
+//	}
 
 	public boolean convertToBaseCurrency(final FixedPointNumber pValue, 
-					final GCshCmdtyCurrID cmdtyCurrID) {
-
+										 final GCshCmdtyCurrID cmdtyCurrID) {
 		SimplePriceTable table = getByNamespace(cmdtyCurrID.getNameSpace());
 
 		if (table == null) {
-		return false;
+			return false;
 		}
 
 		return table.convertToBaseCurrency(pValue, cmdtyCurrID.getCode());
 	}
+
+	// ::TODO
+//	public boolean convertToBaseCurrencyRat(final BigFraction pValue, 
+//											final GCshCmdtyCurrID cmdtyCurrID) {
+//		SimplePriceTable table = getByNamespace(cmdtyCurrID.getNameSpace());
+//
+//		if (table == null) {
+//			return false;
+//		}
+//
+//		return table.convertToBaseCurrencyRat(pValue, cmdtyCurrID.getCode());
+//	}
 
 	// ---------------------------------------------------------------
 	

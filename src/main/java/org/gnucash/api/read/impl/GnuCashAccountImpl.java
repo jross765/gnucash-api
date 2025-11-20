@@ -493,4 +493,5 @@ public class GnuCashAccountImpl extends SimpleAccount
     	
     	return false;
 	}
+
 }

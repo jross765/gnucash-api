@@ -5,6 +5,7 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.generated.GncAccount;
 import org.gnucash.api.read.aux.GCshAcctLot;
 import org.gnucash.api.read.aux.GCshAcctReconInfo;
@@ -170,7 +171,7 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      * @param date if null, the last split of all time is returned
      * @return the last transaction-split before the given date
      */
-    GnuCashTransactionSplit getLastSplitBeforeRecursive(final LocalDate date);
+    GnuCashTransactionSplit getLastSplitBeforeRecursive(LocalDate date);
 
     // ----------------------------
 
@@ -186,7 +187,7 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      * @param lot 
      * @param split split to add to this transaction
      */
-    void addLot(final GCshAcctLot lot);
+    void addLot(GCshAcctLot lot);
 
     /**
      * @return true if ${@link #getTransactionSplits()}.size() &gt; 0
@@ -202,7 +203,7 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      * @param acctLotID the lot-id to look for
      * @return the identified lot or null
      */
-    GCshAcctLot getLotByID(final GCshLotID acctLotID);
+    GCshAcctLot getLotByID(GCshLotID acctLotID);
 
     // -----------------------------------------------------------------
 
@@ -215,6 +216,10 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      */
     FixedPointNumber getBalance();
 
+    // BigRational      getBalanceBR();
+    
+    BigFraction      getBalanceRat();
+    
     /**
      * Be aware that the result is in the currency of this account!
      *
@@ -222,7 +227,11 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      *             calculation
      * @return the balance formatted using the current locale
      */
-    FixedPointNumber getBalance(final LocalDate date);
+    FixedPointNumber getBalance(LocalDate date);
+
+    // BigRational      getBalanceBR(LocalDate date);
+
+    BigFraction      getBalanceRat(LocalDate date);
 
     /**
      * Be aware that the result is in the currency of this account!
@@ -232,16 +241,25 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      * @param after splits that are after date are added here.
      * @return the balance formatted using the current locale
      */
-    FixedPointNumber getBalance(final LocalDate date, List<GnuCashTransactionSplit> after);
+    FixedPointNumber getBalance(LocalDate date, List<GnuCashTransactionSplit> after);
 
-	FixedPointNumber getBalance(final LocalDate date, final GCshCmdtyCurrID cmdtyCurrID);
+    // BigRational getBalanceBR(LocalDate date, List<GnuCashTransactionSplit> after);
+
+    BigFraction      getBalanceRat(LocalDate date, List<GnuCashTransactionSplit> after);
+
+	FixedPointNumber getBalance(LocalDate date, GCshCmdtyCurrID cmdtyCurrID);
 	
-	FixedPointNumber getBalance(final LocalDate date, final Currency currency);
+	BigFraction      getBalanceRat(LocalDate date, GCshCmdtyCurrID cmdtyCurrID);
+	
+	FixedPointNumber getBalance(LocalDate date, Currency currency);
+	
+	BigFraction      getBalanceRat(LocalDate date, Currency currency);
+	
     /**
      * @param lastIncludesSplit last split to be included
      * @return the balance up to and including the given split
      */
-    FixedPointNumber getBalance(final GnuCashTransactionSplit lastIncludesSplit);
+    FixedPointNumber getBalance(GnuCashTransactionSplit lastIncludesSplit);
 
     // ----------------------------
 
@@ -260,7 +278,7 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      * @param lcl the locale to use (does not affect the currency)
      * @return the balance formatted using the given locale
      */
-    String getBalanceFormatted(final Locale lcl);
+    String getBalanceFormatted(Locale lcl);
 
     // ----------------------------
 
@@ -273,6 +291,8 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      */
     FixedPointNumber getBalanceRecursive();
 
+    BigFraction      getBalanceRecursiveRat();
+
     /**
      * Gets the balance including all sub-accounts.
      *
@@ -280,7 +300,9 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      *             calculation
      * @return the balance including all sub-accounts
      */
-    FixedPointNumber getBalanceRecursive(final LocalDate date);
+    FixedPointNumber getBalanceRecursive(LocalDate date);
+
+    BigFraction      getBalanceRecursiveRat(LocalDate date);
 
     /**
      * Ignores accounts for which this conversion is not possible.
@@ -290,7 +312,9 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      * @return Gets the balance including all sub-accounts.
      * @see GnuCashAccount#getBalanceRecursive(LocalDate)
      */
-    FixedPointNumber getBalanceRecursive(final LocalDate date, final Currency curr);
+    FixedPointNumber getBalanceRecursive(LocalDate date, Currency curr);
+
+    BigFraction      getBalanceRecursiveRat(LocalDate date, Currency curr);
 
     /**
      * Ignores accounts for which this conversion is not possible.
@@ -300,7 +324,9 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      * @return Gets the balance including all sub-accounts.
      * @see GnuCashAccount#getBalanceRecursive(LocalDate)
      */
-    FixedPointNumber getBalanceRecursive(final LocalDate date, final GCshCmdtyCurrID secCurrID);
+    FixedPointNumber getBalanceRecursive(LocalDate date, GCshCmdtyCurrID secCurrID);
+
+    BigFraction      getBalanceRecursiveRat(LocalDate date, GCshCmdtyCurrID secCurrID);
 
     // ----------------------------
 
@@ -312,14 +338,7 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      */
     String getBalanceRecursiveFormatted();
 
-    /**
-     * Gets the balance including all sub-accounts.
-     *
-     * @param date if non-null transactions after this date are ignored in the
-     *             calculation
-     * @return the balance including all sub-accounts
-     */
-    String getBalanceRecursiveFormatted(final LocalDate date);
+    String getBalanceRecursiveFormatted(Locale lcl);
 
     // ---------------------------------------------------------------
     

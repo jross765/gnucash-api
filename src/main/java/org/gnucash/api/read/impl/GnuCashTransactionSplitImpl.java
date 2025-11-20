@@ -4,6 +4,7 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.Const;
 import org.gnucash.api.generated.GncTransaction;
 import org.gnucash.api.read.GnuCashAccount;
@@ -206,6 +207,11 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
     	return new FixedPointNumber(jwsdpPeer.getSplitValue());
     }
 
+    @Override
+    public BigFraction getValueRat() {
+    	return BigFraction.parse(jwsdpPeer.getSplitValue());
+    }
+
     /**
      * @return The currencyFormat for the quantity to use when no locale is given.
      */
@@ -228,9 +234,9 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
     	if ( getTransaction().getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
     		// redundant, but symmetry:
     		nf.setCurrency(new GCshCurrID(getTransaction().getCmdtyCurrID()).getCurrency());
-    		return nf.format(getValue());
+    		return nf.format(getValue().getBigDecimal());
     	} else {
-    		return nf.format(getValue()) + " " + getTransaction().getCmdtyCurrID().toString(); 
+    		return nf.format(getValue().getBigDecimal()) + " " + getTransaction().getCmdtyCurrID().toString(); 
     	}
     }
 
@@ -242,31 +248,10 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 		if ( getTransaction().getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
 			// redundant, but symmetry:
 			nf.setCurrency(new GCshCurrID(getTransaction().getCmdtyCurrID()).getCurrency());
-			return nf.format(getValue());
+			return nf.format(getValue().getBigDecimal());
 		} else {
-			return nf.format(getValue()) + " " + getTransaction().getCmdtyCurrID().toString();
+			return nf.format(getValue().getBigDecimal()) + " " + getTransaction().getCmdtyCurrID().toString();
 		}
-    }
-
-    /**
-     * @see GnuCashTransactionSplit#getAccountBalance()
-     */
-    public FixedPointNumber getAccountBalance() {
-    	return getAccount().getBalance(this);
-    }
-
-    /**
-     * @see GnuCashTransactionSplit#getAccountBalanceFormatted()
-     */
-    public String getAccountBalanceFormatted() {
-    	return ((GnuCashAccountImpl) getAccount()).getCurrencyFormat().format(getAccountBalance());
-    }
-
-    /**
-     * @see GnuCashTransactionSplit#getAccountBalanceFormatted(java.util.Locale)
-     */
-    public String getAccountBalanceFormatted(final Locale lcl) {
-    	return getAccount().getBalanceFormatted(lcl);
     }
 
     /**
@@ -274,6 +259,11 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
      */
     public FixedPointNumber getQuantity() {
     	return new FixedPointNumber(jwsdpPeer.getSplitQuantity());
+    }
+
+    @Override
+    public BigFraction getQuantityRat() {
+    	return BigFraction.parse(jwsdpPeer.getSplitQuantity());
     }
 
     /**
@@ -293,9 +283,9 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 		NumberFormat nf = getQuantityCurrencyFormat();
 		if ( getAccount().getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
 			nf.setCurrency(new GCshCurrID(getAccount().getCmdtyCurrID()).getCurrency());
-			return nf.format(getQuantity());
+			return nf.format(getQuantity().getBigDecimal());
 		} else {
-			return nf.format(getQuantity()) + " " + getAccount().getCmdtyCurrID().toString();
+			return nf.format(getQuantity().getBigDecimal()) + " " + getAccount().getCmdtyCurrID().toString();
 		}
     }
 
