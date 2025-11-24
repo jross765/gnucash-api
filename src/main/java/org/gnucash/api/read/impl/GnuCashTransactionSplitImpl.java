@@ -216,37 +216,37 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
      * @return The currencyFormat for the quantity to use when no locale is given.
      */
     protected NumberFormat getQuantityCurrencyFormat() {
-    	return ((GnuCashAccountImpl) getAccount()).getCurrencyFormat();
+    	return getQuantityCurrencyFormat(Locale.getDefault());
+    }
+
+    protected NumberFormat getQuantityCurrencyFormat(Locale lcl) {
+    	return ((GnuCashAccountImpl) getAccount()).getCurrencyFormat(lcl);
     }
 
     /**
      * @return the currency-format of the transaction
      */
     public NumberFormat getValueCurrencyFormat() {
-    	return ((GnuCashTransactionImpl) getTransaction()).getCurrencyFormat();
+    	return getValueCurrencyFormat(Locale.getDefault());
+    }
+
+    public NumberFormat getValueCurrencyFormat(Locale lcl) {
+    	return ((GnuCashTransactionImpl) getTransaction()).getCurrencyFormat(lcl);
     }
 
     /**
      * @see GnuCashTransactionSplit#getValueFormatted()
      */
     public String getValueFormatted() {
-    	NumberFormat nf = getValueCurrencyFormat();
-    	if ( getTransaction().getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
-    		// redundant, but symmetry:
-    		nf.setCurrency(new GCshCurrID(getTransaction().getCmdtyCurrID()).getCurrency());
-    		return nf.format(getValue().getBigDecimal());
-    	} else {
-    		return nf.format(getValue().getBigDecimal()) + " " + getTransaction().getCmdtyCurrID().toString(); 
-    	}
+    	return getValueFormatted(Locale.getDefault());
     }
 
     /**
      * @see GnuCashTransactionSplit#getValueFormatted(java.util.Locale)
      */
     public String getValueFormatted(final Locale lcl) {
-		NumberFormat nf = NumberFormat.getInstance(lcl);
+		NumberFormat nf = getValueCurrencyFormat(lcl);
 		if ( getTransaction().getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
-			// redundant, but symmetry:
 			nf.setCurrency(new GCshCurrID(getTransaction().getCmdtyCurrID()).getCurrency());
 			return nf.format(getValue().getBigDecimal());
 		} else {
@@ -280,7 +280,7 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
      * @return the formatted number
      */
     public String getQuantityFormatted(final Locale lcl) {
-		NumberFormat nf = getQuantityCurrencyFormat();
+		NumberFormat nf = getQuantityCurrencyFormat(lcl);
 		if ( getAccount().getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
 			nf.setCurrency(new GCshCurrID(getAccount().getCmdtyCurrID()).getCurrency());
 			return nf.format(getQuantity().getBigDecimal());

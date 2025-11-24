@@ -230,6 +230,8 @@ public interface GnuCashTransactionSplit extends Comparable<GnuCashTransactionSp
      */
     GCshSpltID getID();
 
+    // ----------------------------
+
     /**
      *
      * @return the id of the account we transfer from/to.
@@ -243,45 +245,61 @@ public interface GnuCashTransactionSplit extends Comparable<GnuCashTransactionSp
      */
     GnuCashAccount getAccount();
 
+    // ----------------------------
+
     /**
      * @return the ID of the transaction this is a split of.
+     * 
+     * @see #getTransaction()
      */
     GCshTrxID getTransactionID();
 
     /**
      * @return the transaction this is a split of.
+     * 
+     * @see #getTransactionID()
      */
     GnuCashTransaction getTransaction();
+
+    // ----------------------------
 
     /**
      * The value is in the currency of the transaction!
      * @return the value-transfer this represents
+     * 
+     * @see #getValueFormatted()
+     * @see #getValueFormatted(Locale)
      */
     FixedPointNumber getValue();
-
-    // BigRational getValueBR();
 
     BigFraction getValueRat();
 
     /**
      * The value is in the currency of the transaction!
      * @return the value-transfer this represents
+     * 
+     * @see #getValue()
+     * @see #getValueFormatted(Locale)
      */
     String getValueFormatted();
+    
     /**
      * The value is in the currency of the transaction!
      * @param lcl the locale to use
      * @return the value-transfer this represents
+     * 
+     * @see #getValue()
+     * @see #getValueFormatted()
      */
     String getValueFormatted(Locale lcl);
+
+    // ----------------------------
 
     /**
      * The quantity is in the currency of the account!
      * @return the number of items added to the account
      */
     FixedPointNumber getQuantity();
-
-    // BigRational getQuantityBR();
 
     BigFraction      getQuantityRat();
 
@@ -297,6 +315,8 @@ public interface GnuCashTransactionSplit extends Comparable<GnuCashTransactionSp
      * @return the number of items added to the account
      */
     String getQuantityFormatted(Locale lcl);
+
+    // ----------------------------
 
     /**
      * @return the user-defined description for this object

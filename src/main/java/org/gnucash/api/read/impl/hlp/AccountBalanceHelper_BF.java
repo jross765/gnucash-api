@@ -64,6 +64,14 @@ public class AccountBalanceHelper_BF
 
 	public static BigFraction getBalance(final LocalDate date, final GCshCmdtyCurrID cmdtyCurrID,
 									     final SimpleAccount acct) {
+		if ( cmdtyCurrID == null ) {
+			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
+		}
+
+		if ( ! cmdtyCurrID.isSet() ) {
+			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
+		}
+
 		BigFraction retval = getBalance(date, acct);
 
 		if ( retval == null ) {
@@ -79,8 +87,7 @@ public class AccountBalanceHelper_BF
 		ComplexPriceTable priceTab = acct.getGnuCashFile().getCurrencyTable();
 	
 		if ( priceTab == null ) {
-			LOGGER.error("getBalance: Cannot transfer "
-					+ "to given currency because we have no currency-table");
+			LOGGER.error("getBalance: Cannot transfer to given currency because we have no currency-table");
 			return null;
 		}
 	
@@ -127,8 +134,7 @@ public class AccountBalanceHelper_BF
 		ComplexPriceTable priceTab = acct.getGnuCashFile().getCurrencyTable();
 
 		if ( priceTab == null ) {
-			LOGGER.warn("getBalance: Cannot transfer "
-					+ "to given currency because we have no currency-table");
+			LOGGER.warn("getBalance: Cannot transfer to given currency because we have no currency-table");
 			return null;
 		}
 
@@ -202,6 +208,14 @@ public class AccountBalanceHelper_BF
 
 	public static BigFraction getBalanceRecursive(final LocalDate date, final GCshCmdtyCurrID cmdtyCurrID,
 												  final SimpleAccount acct) {
+		if ( cmdtyCurrID == null ) {
+			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
+		}
+
+		if ( ! cmdtyCurrID.isSet() ) {
+			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
+		}
+
 			if ( cmdtyCurrID.getType() == GCshCmdtyCurrID.Type.CURRENCY )
 				return getBalanceRecursive(date, new GCshCurrID(cmdtyCurrID.getCode()).getCurrency(), acct);
 			else
@@ -221,7 +235,7 @@ public class AccountBalanceHelper_BF
 		for ( GnuCashAccount child : acct.getChildren() ) {
 			try {
 				// CAUTION: BigFraction is immutable
-				retval = retval.add(child.getBalanceRecursiveRat(date, curr));
+				retval = retval.add( child.getBalanceRecursiveRat(date, curr) );
 			} catch ( Exception exc ) {
 				// Yes, it does happen sometimes!
 				LOGGER.error("getBalanceRecursive: Error adding balance for child account " + child.getID());

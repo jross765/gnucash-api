@@ -87,7 +87,7 @@ public class TestGnuCashTransactionSplitImpl {
 		assertEquals(-2253.00, splt.getQuantity().doubleValue(), ConstTest.DIFF_TOLERANCE);
 		assertEquals(-2253, splt.getQuantityRat().getNumerator().longValue());
 		assertEquals(1, splt.getQuantityRat().getDenominator().longValue());
-		assertEquals("-2.253,00 €", splt.getQuantityFormatted());
+		assertEquals("-2.253,00 €", splt.getQuantityFormatted()); // ::TODO: locale-specific!
 		
 		assertEquals("", splt.getDescription());
 		assertEquals(null, splt.getLotID());

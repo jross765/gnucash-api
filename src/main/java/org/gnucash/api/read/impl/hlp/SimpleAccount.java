@@ -25,7 +25,7 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 /*
  * This is a base-class that helps implementing the GnuCashAccount
- * interface with its extensive number of convenience-methods.<br/>
+ * interface with its extensive number of convenience-methods.
  */
 public abstract class SimpleAccount extends GnuCashObjectImpl 
 									implements GnuCashAccount 
@@ -78,10 +78,9 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 		
 		return retval;
 	}
-	
+
 	@Override
 	public boolean isChildAccountRecursive(final GnuCashAccount account) {
-
 		if ( this == account ) {
 			return true;
 		}
@@ -94,6 +93,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 				return true;
 			}
 		}
+		
 		return false;
 	}
 
@@ -102,7 +102,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 		return getQualifiedName();
 	}
 
-	/*
+	/**
 	 * Get name including the name of the parent accounts.
 	 */
 	@Override
@@ -272,6 +272,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 
 	// ----------------------------
 
+	@Override
 	public String getBalanceRecursiveFormatted() {
 		return AccountBalanceHelper_FP.getBalanceRecursiveFormatted(this);
 	}
@@ -346,9 +347,12 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
     
 	// ----------------------------
 
+	/**
+	 * @return null if we are no currency but e.g. a fund
+	 */
 	public Currency getCurrency() {
 		if ( getCmdtyCurrID().getType() != GCshCmdtyCurrID.Type.CURRENCY ) {
-			return null;
+			throw new IllegalStateException("Account commodity/currency is not of type " + GCshCmdtyCurrID.Type.CURRENCY);
 		}
 
 		String gcshCurrID = getCmdtyCurrID().getCode();
@@ -356,16 +360,18 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	}
 
 	public NumberFormat getCurrencyFormat() {
-		// Do *not* check for null; the currency may have changed
-//		if ( currencyFormat == null ) {
-			if ( getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
-				currencyFormat = NumberFormat.getCurrencyInstance();
-				Currency currency = getCurrency();
-				currencyFormat.setCurrency(currency);
-			} else {
-				currencyFormat = NumberFormat.getNumberInstance();
-			}
-//		}
+		return getCurrencyFormat(Locale.getDefault());
+	}
+	
+	public NumberFormat getCurrencyFormat(Locale lcl) {
+		// The currency may have changed
+		if ( getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
+			currencyFormat = NumberFormat.getCurrencyInstance(lcl);
+			Currency curr = getCurrency();
+			currencyFormat.setCurrency(curr);
+		} else {
+			currencyFormat = NumberFormat.getNumberInstance(lcl);
+		}
 
 		return currencyFormat;
 	}
@@ -455,13 +461,23 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	 */
 	@SuppressWarnings("unused")
 	private Long startsWithNumber(final String s) {
+		if ( s == null ) {
+			throw new IllegalArgumentException("null string given");
+		}
+
+//		if ( s.trim().equals("") ) {
+//			throw new IllegalArgumentException("empty string given");
+//		}
+
 		int digitCount = 0;
 		for ( int i = 0; i < s.length() && Character.isDigit(s.charAt(i)); i++ ) {
 			digitCount++;
 		}
+		
 		if ( digitCount == 0 ) {
 			return null;
 		}
+		
 		return Long.valueOf(s.substring(0, digitCount));
 	}
 

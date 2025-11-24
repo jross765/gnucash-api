@@ -138,7 +138,10 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
     /**
      * The returned collection is never null and is sorted by Account-Name.
      *
-     * @return all child-accounts
+     * @return all child-accounts (only one level, no grand-children etc.)
+     * 
+     * @see #getChildrenRecursive()
+     * @see #isChildAccountRecursive(GnuCashAccount)
      */
     List<GnuCashAccount> getChildren();
 
@@ -153,14 +156,26 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
 
     /**
      * @param account the account to test
+     * 
      * @return true if this is a child of us or any child's or us.
+     * 
+     * @see #getChildren()
+     * #see #getChildrenRecursive()
      */
     boolean isChildAccountRecursive(GnuCashAccount account);
 
     // ----------------------------
 
+    /**
+     * 
+     * @return
+     */
     Type getType();
 
+    /**
+     * 
+     * @return commodity/currency ID
+     */
     GCshCmdtyCurrID getCmdtyCurrID();
 
     // -----------------------------------------------------------------
@@ -216,8 +231,6 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      */
     FixedPointNumber getBalance();
 
-    // BigRational      getBalanceBR();
-    
     BigFraction      getBalanceRat();
     
     /**
@@ -228,8 +241,6 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      * @return the balance formatted using the current locale
      */
     FixedPointNumber getBalance(LocalDate date);
-
-    // BigRational      getBalanceBR(LocalDate date);
 
     BigFraction      getBalanceRat(LocalDate date);
 
@@ -242,8 +253,6 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      * @return the balance formatted using the current locale
      */
     FixedPointNumber getBalance(LocalDate date, List<GnuCashTransactionSplit> after);
-
-    // BigRational getBalanceBR(LocalDate date, List<GnuCashTransactionSplit> after);
 
     BigFraction      getBalanceRat(LocalDate date, List<GnuCashTransactionSplit> after);
 

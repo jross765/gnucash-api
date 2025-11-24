@@ -173,22 +173,32 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     	return result;
     }
 
+	public Currency getCurrency() {
+		if ( getCmdtyCurrID().getType() != GCshCmdtyCurrID.Type.CURRENCY ) {
+			throw new IllegalStateException("Transaction commodity/currency is not of type " + GCshCmdtyCurrID.Type.CURRENCY);
+		}
+
+		String gcshCurrID = getCmdtyCurrID().getCode();
+		return Currency.getInstance(gcshCurrID);
+	}
+
     /**
 	 * The Currency-Format to use if no locale is given.
 	 *
 	 * @return default currency-format with the transaction's currency set
 	 */
 	protected NumberFormat getCurrencyFormat() {
-		if ( currencyFormat == null ) {
-			currencyFormat = NumberFormat.getCurrencyInstance();
-		}
+		return getCurrencyFormat(Locale.getDefault());
+	}
 	
-		// the currency may have changed
+	protected NumberFormat getCurrencyFormat(Locale lcl) {
+		// The currency may have changed
 		if ( getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
-			Currency currency = new GCshCurrID(getCmdtyCurrID()).getCurrency();
-			currencyFormat.setCurrency(currency);
+			currencyFormat = NumberFormat.getCurrencyInstance(lcl);
+			Currency curr = getCurrency();
+			currencyFormat.setCurrency(curr);
 		} else {
-			currencyFormat = NumberFormat.getNumberInstance();
+			currencyFormat = NumberFormat.getNumberInstance(lcl);
 		}
 	
 		return currencyFormat;
