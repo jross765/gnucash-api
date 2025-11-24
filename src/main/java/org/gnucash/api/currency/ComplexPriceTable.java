@@ -1,6 +1,7 @@
 package org.gnucash.api.currency;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -47,30 +48,37 @@ public class ComplexPriceTable implements Serializable {
 	// -----------------------------------------------------------
 
 	public void addComplexPriceTableChangeListener(final ComplexPriceTableChangeListener listener) {
-		if (listeners == null) {
+		if ( listeners == null ) {
 			listeners = new ArrayList<>();
 		}
+		
 		listeners.add(listener);
 	}
 
 	public void removeComplexPriceTableChangeListener(final ComplexPriceTableChangeListener listener) {
-		if (listeners == null) {
+		if ( listeners == null ) {
 		listeners = new ArrayList<>();
 		}
+		
 		listeners.remove(listener);
 	}
 
 	protected void firePriceTableChanged(final String curr, final FixedPointNumber factor) {
 		if ( curr == null ) {
-			throw new IllegalArgumentException("null currency given");
+			throw new IllegalArgumentException("argument <curr> is null");
 		}
 
 		if ( curr.trim().equals("") ) {
-			throw new IllegalArgumentException("empty currency given");
+			throw new IllegalArgumentException("argument <curr> is empty");
 		}
 		
 		if ( factor == null ) {
-			throw new IllegalArgumentException("null factor given");
+			throw new IllegalArgumentException("argument <factor> is null");
+		}
+		
+		if ( factor.isLessThan(BigDecimal.ZERO) ||
+			 factor.equals(BigDecimal.ZERO) ) {
+			throw new IllegalArgumentException("argument <factor> must be > 0");
 		}
 		
 		if ( listeners != null ) {
@@ -187,7 +195,6 @@ public class ComplexPriceTable implements Serializable {
 	 * @param nameSpace 
 	 * @param code 
 	 * @return the factor to convert the price specified by the name-space-code-pair
-	 *   to 
 	 * @see SimplePriceTable#setConversionFactor(java.lang.String, FixedPointNumber)
 	 */
 	public FixedPointNumber getConversionFactor(final String nameSpace, final String code) {
@@ -196,7 +203,7 @@ public class ComplexPriceTable implements Serializable {
 		}
 
 		if ( code.trim().equals("") ) {
-			throw new IllegalArgumentException("empty code given");
+			throw new IllegalArgumentException("argument <code> is empty");
 		}
 
 		SimplePriceTable table = getByNamespace(nameSpace);
@@ -218,12 +225,20 @@ public class ComplexPriceTable implements Serializable {
 	 */
 	public void setConversionFactor(final String nameSpace, final String code,
 			final FixedPointNumber pFactor) {
+		if ( nameSpace == null ) {
+			throw new IllegalArgumentException("argument <nameSpace> is null");
+		}
+
+		if ( nameSpace.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <nameSpace> is empty");
+		}
+
 		if ( code == null ) {
 			throw new IllegalArgumentException("argument <code> is null");
 		}
 
 		if ( code.trim().equals("") ) {
-			throw new IllegalArgumentException("empty code given");
+			throw new IllegalArgumentException("argument <code> is empty");
 		}
 
 		if ( pFactor == null ) {
@@ -247,7 +262,7 @@ public class ComplexPriceTable implements Serializable {
 		}
 	
 		if ( ! cmdtyCurrID.isSet() ) {
-		    throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
+		    throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
 		}
 	
 		setConversionFactor(cmdtyCurrID.getNameSpace(), cmdtyCurrID.getCode(),
@@ -265,6 +280,17 @@ public class ComplexPriceTable implements Serializable {
 	 */
 	public boolean convertFromBaseCurrency(final FixedPointNumber pValue, 
 										   final GCshCmdtyCurrID cmdtyCurrID) {
+		if ( pValue == null )
+			throw new IllegalArgumentException("argument <pValue> is null");
+
+		if ( cmdtyCurrID == null ) {
+			throw new IllegalArgumentException("argument <cmdtyCurrID> is null"); 
+		}
+		
+		if ( ! cmdtyCurrID.isSet() ) {
+			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set"); 
+		}
+		
 		SimplePriceTable table = getByNamespace(cmdtyCurrID.getNameSpace());
 		if (table == null) {
 			return false;
@@ -272,17 +298,6 @@ public class ComplexPriceTable implements Serializable {
 
 		return table.convertFromBaseCurrency(pValue, cmdtyCurrID.getCode());
 	}
-
-	// ::TODO
-//	public boolean convertFromBaseCurrencyRat(final BigFraction pValue, 
-//			   								  final GCshCmdtyCurrID cmdtyCurrID) {
-//		SimplePriceTable table = getByNamespace(cmdtyCurrID.getNameSpace());
-//		if (table == null) {
-//			return false;
-//		}
-//
-//		return table.convertFromBaseCurrencyRat(pValue, cmdtyCurrID.getCode());
-//	}
 
 	public boolean convertToBaseCurrency(final FixedPointNumber pValue, 
 										 final GCshCmdtyCurrID cmdtyCurrID) {
@@ -308,7 +323,7 @@ public class ComplexPriceTable implements Serializable {
 //	}
 
 	// ---------------------------------------------------------------
-	
+
 	public List<String> getNameSpaces() {
 		ArrayList<String> result = new ArrayList<String>(namespace2CurrTab.keySet());
 		Collections.sort(result);

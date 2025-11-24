@@ -2,6 +2,7 @@ package org.gnucash.api.currency;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 public class SimpleCommodityQuoteTable implements SimplePriceTable,
-                                                 Serializable 
+                                                  Serializable 
 {
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(SimpleCommodityQuoteTable.class);
@@ -46,6 +47,14 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
      */
     @Override
     public FixedPointNumber getConversionFactor(final String cmdtyID) {
+		if ( cmdtyID == null ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is null");
+		}
+
+		if ( cmdtyID.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is empty");
+		}
+
     	return mCmdtyID2Factor.get(cmdtyID);
     }
 
@@ -57,6 +66,18 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
      */
     @Override
     public void setConversionFactor(final String cmdtyQualifID, final FixedPointNumber factor) {
+		if ( cmdtyQualifID == null ) {
+			throw new IllegalArgumentException("argument <cmdtyQualifID> is null");
+		}
+
+		if ( cmdtyQualifID.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <cmdtyQualifID> is empty");
+		}
+
+		if ( factor == null ) {
+			throw new IllegalArgumentException("argument <factor> is null");
+		}
+
     	mCmdtyID2Factor.put(cmdtyQualifID, factor);
     }
 
@@ -78,6 +99,26 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
 
     public void setConversionFactor(final String nameSpace, final String code, 
 	                            final FixedPointNumber factor) {
+		if ( nameSpace == null ) {
+			throw new IllegalArgumentException("argument <nameSpace> is null");
+		}
+
+		if ( nameSpace.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <nameSpace> is empty");
+		}
+
+		if ( code == null ) {
+			throw new IllegalArgumentException("argument <code> is null");
+		}
+
+		if ( code.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <code> is empty");
+		}
+
+		if ( factor == null ) {
+			throw new IllegalArgumentException("argument <factor> is null");
+		}
+
 		mCmdtyID2Factor.put(new GCshCmdtyID(nameSpace, code).toString(), factor);
     }
 
@@ -112,32 +153,6 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
         return true;
     }
 
-    // ::TODO
-    // CAUTION: Does not work like this, because BigFraction is immutable
-//    @Override
-//    public boolean convertFromBaseCurrencyRat(BigFraction value, final String cmdtyID) {
-//		if ( value == null ) {
-//			throw new IllegalArgumentException("argument <value> is null");
-//		}
-//
-//		if ( cmdtyID == null ) {
-//			throw new IllegalArgumentException("argument <cmdtyID> is null");
-//		}
-//
-//		if ( cmdtyID.trim().equals("") ) {
-//			throw new IllegalArgumentException("argument <cmdtyID> is empty");
-//		}
-//
-//		BigFraction factor = getConversionFactor(cmdtyID).toBigFraction();
-//        if (factor == null) {
-//            return false;
-//        }
-//        
-//        // CAUTION: immutable
-//        value = value.divide(factor);
-//        return true;
-//    }
-
     /**
      * @param value           the value to convert
      * @param cmdtyID it's currency
@@ -166,32 +181,6 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
 		value.multiply(factor);
 		return true;
     }
-
-    // ::TODO
-    // CAUTION: Does not work like this, because BigFraction is immutable
-//    @Override
-//    public boolean convertToBaseCurrencyRat(BigFraction value, final String cmdtyID) {
-//		if ( value == null ) {
-//			throw new IllegalArgumentException("argument <value> is null");
-//		}
-//
-//		if ( cmdtyID == null ) {
-//			throw new IllegalArgumentException("argument <cmdtyID> is null");
-//		}
-//
-//		if ( cmdtyID.trim().equals("") ) {
-//			throw new IllegalArgumentException("argument <cmdtyID> is empty");
-//		}
-//
-//		BigFraction factor = getConversionFactor(cmdtyID).toBigFraction();
-//		if (factor == null) {
-//			return false;
-//		}
-//		
-//        // CAUTION: immutable
-//		value = value.multiply(factor);
-//		return true;
-//    }
 
     // ---------------------------------------------------------------
 

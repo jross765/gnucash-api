@@ -6,11 +6,20 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 public interface SimplePriceTable {
 
+    /**
+     * @param code
+     * @return conversion factor from currency specified by
+     *         code to base currency
+     */
     FixedPointNumber getConversionFactor(final String code);
 
     // ::TODO
     // BigFraction getConversionFactorRat(final String code);
 
+    /**
+     * @param code
+     * @param factor
+     */
     void setConversionFactor(final String code, final FixedPointNumber factor);
 
     // ::TODO
@@ -18,6 +27,11 @@ public interface SimplePriceTable {
 
     // ---------------------------------------------------------------
 
+    /**
+     * @param value
+     * @param code
+     * @return
+     */
     boolean convertFromBaseCurrency(FixedPointNumber value, final String code);
 
     // ::TODO
@@ -25,6 +39,11 @@ public interface SimplePriceTable {
     
     // ---
 
+    /**
+     * @param value
+     * @param code
+     * @return
+     */
     boolean convertToBaseCurrency(FixedPointNumber value, final String code);
 
     // ::TODO
