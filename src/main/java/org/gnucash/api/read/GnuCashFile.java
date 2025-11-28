@@ -254,6 +254,8 @@ public interface GnuCashFile extends GnuCashObject,
      */
     GnuCashTransactionSplit getTransactionSplitByID(GCshSpltID spltID);
 
+    GnuCashTransactionSplit getTransactionSplitByAcctIDAndTrxID(GCshAcctID acctID, GCshTrxID trxID);
+
     /**
      * @return list of all transaction splits (ro-objects)
      */

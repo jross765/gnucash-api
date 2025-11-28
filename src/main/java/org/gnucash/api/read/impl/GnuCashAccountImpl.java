@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import org.gnucash.api.Const;
 import org.gnucash.api.generated.GncAccount;
@@ -16,6 +17,7 @@ import org.gnucash.api.read.aux.GCshAcctLot;
 import org.gnucash.api.read.aux.GCshAcctReconInfo;
 import org.gnucash.api.read.impl.aux.GCshAcctLotImpl;
 import org.gnucash.api.read.impl.aux.GCshAcctReconInfoImpl;
+import org.gnucash.api.read.impl.hlp.AccountBalanceHelper_FP;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
 import org.gnucash.api.read.impl.hlp.SimpleAccount;
 import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
@@ -26,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import xyz.schnorxoborx.base.beanbase.UnknownAccountTypeException;
+import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 /**
  * Implementation of GnuCashAccount that used a
@@ -474,6 +477,22 @@ public class GnuCashAccountImpl extends SimpleAccount
         }
     }
     
+    // ---------------------------------------------------------------
+	// Helpers -- balance pre-computed
+    // We have to provide this indirection for methods calling this
+    // outside of this module, because the actual implementation is in
+    // a non-exported package.
+
+	public static String formatBalance(GnuCashAccountImpl acct, FixedPointNumber blnc) {
+		return AccountBalanceHelper_FP.formatBalance( acct, blnc );
+	}
+	
+	public static String formatBalance(GnuCashAccountImpl acct, FixedPointNumber blnc, Locale lcl) {
+		return AccountBalanceHelper_FP.formatBalance( acct, blnc, lcl );
+	}
+	
+    // ---------------------------------------------------------------
+
     public boolean hasChildrenMatching(GnuCashAccount acct, GnuCashAccount.Type acctType) {
     	for ( GnuCashAccount chld : acct.getChildren() ) {
     		if ( chld.getType() == acctType ) {

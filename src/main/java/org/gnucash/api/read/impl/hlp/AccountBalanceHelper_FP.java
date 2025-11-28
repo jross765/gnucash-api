@@ -239,4 +239,23 @@ public class AccountBalanceHelper_FP
 		cf.setCurrency(acct.getCurrency());
 		return cf.format(getBalanceRecursive(acct).getBigDecimal());
 	}
+	
+	// ---------------------------------------------------------------
+	// Helpers -- balance pre-computed
+	
+	public static String formatBalance(SimpleAccount acct, FixedPointNumber blnc) {
+		Locale lcl = Locale.getDefault();
+		return formatBalance(acct, blnc, lcl);
+	}
+	
+	public static String formatBalance(SimpleAccount acct, FixedPointNumber blnc, Locale lcl) {
+		NumberFormat nf = acct.getCurrencyFormat(lcl);
+    	if ( acct.getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
+    		nf.setCurrency(Currency.getInstance(acct.getCmdtyCurrID().getCode()));
+    		return nf.format(blnc.getBigDecimal());
+    	} else {
+    		return nf.format(blnc.getBigDecimal()) + " " + acct.getCmdtyCurrID().getCode().toString();
+    	}
+	}
+
 }

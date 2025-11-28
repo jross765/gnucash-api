@@ -1,14 +1,20 @@
 module gnucash.api {
-	requires static org.slf4j;
+
 	requires java.desktop;
 	requires jakarta.xml.bind;
 	requires java.xml;
+
+	requires static org.slf4j;
 	
 	// ----------------------------
 	
+	// The following already marked as "transitive" in "schnorxoborx.schnorxolib":
 	requires transitive org.apache.commons.numbers.core;
 	requires transitive org.apache.commons.numbers.fraction;
+	requires transitive commons.configuration;
+	requires transitive org.apache.commons.cli;
 	
+	// Already drawn from "gnucash.base":
 	requires transitive schnorxoborx.schnorxolib;
 	
 	requires transitive gnucash.base;
