@@ -76,6 +76,9 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <factor> is null");
 		}
 		
+		// ::TODO ::CHECK
+		// In the sister project, we had to remove this check (cf. comment there).
+		// What about GnuCash?
 		if ( factor.isLessThan(BigDecimal.ZERO) ||
 			 factor.equals(BigDecimal.ZERO) ) {
 			throw new IllegalArgumentException("argument <factor> must be > 0");
@@ -219,12 +222,12 @@ public class ComplexPriceTable implements Serializable {
 	 * 
 	 * @param nameSpace 
 	 * @param code 
-	 * @param pFactor 
+	 * @param factor 
 	 *
 	 * @see SimplePriceTable#setConversionFactor(java.lang.String, FixedPointNumber)
 	 */
 	public void setConversionFactor(final String nameSpace, final String code,
-			final FixedPointNumber pFactor) {
+			final FixedPointNumber factor) {
 		if ( nameSpace == null ) {
 			throw new IllegalArgumentException("argument <nameSpace> is null");
 		}
@@ -241,8 +244,16 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <code> is empty");
 		}
 
-		if ( pFactor == null ) {
-		    throw new IllegalArgumentException("argument <pFactor> is null");
+		if ( factor == null ) {
+		    throw new IllegalArgumentException("argument <factor> is null");
+		}
+		
+		// ::TODO ::CHECK
+		// In the sister project, we had to remove this check (cf. comment there).
+		// What about GnuCash?
+		if ( factor.isLessThan(BigDecimal.ZERO) ||
+			 factor.equals(BigDecimal.ZERO) ) {
+			throw new IllegalArgumentException("argument <factor> must be > 0");
 		}
 
 		SimplePriceTable table = getByNamespace(nameSpace);
@@ -251,12 +262,12 @@ public class ComplexPriceTable implements Serializable {
 			table = getByNamespace(nameSpace);
 		}
 
-		table.setConversionFactor(code, pFactor);
+		table.setConversionFactor(code, factor);
 
-		firePriceTableChanged(code, pFactor);
+		firePriceTableChanged(code, factor);
 	}
 
-	public void setConversionFactor(final GCshCmdtyCurrID cmdtyCurrID, final FixedPointNumber pFactor) {
+	public void setConversionFactor(final GCshCmdtyCurrID cmdtyCurrID, final FixedPointNumber factor) {
 		if ( cmdtyCurrID == null ) {
 		    throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
 		}
@@ -265,8 +276,12 @@ public class ComplexPriceTable implements Serializable {
 		    throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
 		}
 	
+		if ( factor == null ) {
+		    throw new IllegalArgumentException("argument <factor> is null");
+		}
+	
 		setConversionFactor(cmdtyCurrID.getNameSpace(), cmdtyCurrID.getCode(),
-			            pFactor);
+			            factor);
 	}
 	
 	// ---------------------------------------------------------------
