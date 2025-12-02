@@ -43,7 +43,7 @@ public class FilePriceManager {
     
     protected GnuCashFileImpl gcshFile;
 
-    protected GncPricedb                priceDB = null;
+    protected GncPricedb                   priceDB = null;
     protected Map<GCshPrcID, GnuCashPrice> prcMap  = null;
 
     // ---------------------------------------------------------------
@@ -265,6 +265,18 @@ public class FilePriceManager {
 		return getLatestPrice(new GCshCmdtyCurrID(pCmdtySpace, pCmdtyId), 0);
 	}
 
+	// ----------------------------
+
+	/**
+	 * @param pCmdtySpace the name space for pCmdtyId
+	 * @param pCmdtyId    the currency-name
+	 * @param depth       used for recursion. Always call with '0' for aborting
+	 *                    recursive quotes (quotes to other then the base- currency)
+	 *                    we abort if the depth reached RECURS_DEPTH_MAX + 1.
+	 * @return the latest price-quote in the KMyMoney file in the default-currency
+	 * @see {@link GnuCashFile#getLatestPrice(String, String)}
+	 * @see #getDefaultCurrencyID()
+	 */
 	private FixedPointNumber getLatestPrice(final GCshCmdtyCurrID cmdtyCurrID, final int depth) {
 		if ( cmdtyCurrID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
@@ -278,7 +290,7 @@ public class FilePriceManager {
 
 		Date latestDate = null;
 		FixedPointNumber latestQuote = null;
-		FixedPointNumber factor = new FixedPointNumber(1); // factor is used if the quote is not to our base-currency
+		FixedPointNumber factor = FixedPointNumber.ONE.copy(); // factor is used if the quote is not to our base-currency
 		final int maxRecursionDepth = RECURS_DEPTH_MAX;
 
 		for ( Price priceQuote : priceDB.getPrice() ) {
@@ -420,7 +432,7 @@ public class FilePriceManager {
 		}
 
 		if ( factor == null ) {
-			factor = new FixedPointNumber(1);
+			factor = FixedPointNumber.ONE.copy();
 		}
 
 		return factor.multiply(latestQuote);
