@@ -159,7 +159,7 @@ public class AccountBalanceHelper_BF
 		return retval;
 	}
 
-	public static BigFraction getBalance(final GnuCashTransactionSplit lastIncludesSplit,
+	public static BigFraction getBalance(final GnuCashTransactionSplit lastSpltIncl,
 										 final SimpleAccount acct) {
 		BigFraction balance = BigFraction.ZERO;
 	
@@ -168,7 +168,7 @@ public class AccountBalanceHelper_BF
 				// CAUTION: BigFraction is immutable
 				balance = balance.add(splt.getQuantityRat());
 	
-				if ( splt == lastIncludesSplit ) {
+				if ( splt == lastSpltIncl ) {
 					break;
 				}
 			} catch ( Exception exc ) {
@@ -236,6 +236,28 @@ public class AccountBalanceHelper_BF
 			try {
 				// CAUTION: BigFraction is immutable
 				retval = retval.add( child.getBalanceRecursiveRat(date, curr) );
+			} catch ( Exception exc ) {
+				// Yes, it does happen sometimes!
+				LOGGER.error("getBalanceRecursive: Error adding balance for child account " + child.getID());
+				throw exc;
+			}
+		}
+
+		return retval;
+	}
+
+	public static BigFraction getBalanceRecursive(final GnuCashTransactionSplit lastSpltIncl,
+												  final SimpleAccount acct) {
+		BigFraction retval = getBalance(lastSpltIncl, acct);
+
+		if ( retval == null ) {
+			retval = BigFraction.ZERO;
+		}
+
+		for ( GnuCashAccount child : acct.getChildren() ) {
+			try {
+				// CAUTION: BigFraction is immutable
+				retval = retval.add( child.getBalanceRecursiveRat(lastSpltIncl) );
 			} catch ( Exception exc ) {
 				// Yes, it does happen sometimes!
 				LOGGER.error("getBalanceRecursive: Error adding balance for child account " + child.getID());

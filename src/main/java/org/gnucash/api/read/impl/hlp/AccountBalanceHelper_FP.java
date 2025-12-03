@@ -39,7 +39,7 @@ public class AccountBalanceHelper_FP
 	// The currency will be the one of this account.
 	public static FixedPointNumber getBalance(final LocalDate date, List<GnuCashTransactionSplit> after,
 											  final SimpleAccount acct) {
-		FixedPointNumber balance = new FixedPointNumber();
+		FixedPointNumber balance = FixedPointNumber.ZERO.copy();
 	
 		for ( GnuCashTransactionSplit splt : acct.getTransactionSplits() ) {
 			if ( date != null && 
@@ -113,7 +113,7 @@ public class AccountBalanceHelper_FP
 		}
 
 		if ( curr == null ||
-			 retval.equals(new FixedPointNumber()) ) {
+			 retval.equals(FixedPointNumber.ZERO.copy()) ) {
 			return retval;
 		}
 
@@ -147,16 +147,16 @@ public class AccountBalanceHelper_FP
 		return retval;
 	}
 
-	public static FixedPointNumber getBalance(final GnuCashTransactionSplit lastIncludesSplit,
+	public static FixedPointNumber getBalance(final GnuCashTransactionSplit lastSpltIncl,
 											  final SimpleAccount acct) {
-		FixedPointNumber balance = new FixedPointNumber();
+		FixedPointNumber balance = FixedPointNumber.ZERO.copy();
 	
 		for ( GnuCashTransactionSplit splt : acct.getTransactionSplits() ) {
 			try {
 				// CAUTION: FixedPointNumber is mutable
 				balance.add(splt.getQuantity());
 	
-				if ( splt == lastIncludesSplit ) {
+				if ( splt == lastSpltIncl ) {
 					break;
 				}
 			} catch ( Exception exc ) {
@@ -209,13 +209,35 @@ public class AccountBalanceHelper_FP
 		FixedPointNumber retval = getBalance(date, curr, acct);
 
 		if ( retval == null ) {
-			retval = new FixedPointNumber();
+			retval = FixedPointNumber.ZERO.copy();
 		}
 
 		for ( GnuCashAccount child : acct.getChildren() ) {
 			try {
 				// CAUTION: FixedPointNumber is mutable
 				retval.add(child.getBalanceRecursive(date, curr));
+			} catch ( Exception exc ) {
+				// Yes, it does happen sometimes!
+				LOGGER.error("getBalanceRecursive: Error adding balance for child account " + child.getID());
+				throw exc;
+			}
+		}
+
+		return retval;
+	}
+
+	public static FixedPointNumber getBalanceRecursive(final GnuCashTransactionSplit lastSpltIncl,
+			  										   final SimpleAccount acct) {
+		FixedPointNumber retval = getBalance(lastSpltIncl, acct);
+
+		if ( retval == null ) {
+			retval = FixedPointNumber.ZERO.copy();
+		}
+
+		for ( GnuCashAccount child : acct.getChildren() ) {
+			try {
+				// CAUTION: FixedPointNumber is mutable
+				retval.add(child.getBalanceRecursive(lastSpltIncl));
 			} catch ( Exception exc ) {
 				// Yes, it does happen sometimes!
 				LOGGER.error("getBalanceRecursive: Error adding balance for child account " + child.getID());

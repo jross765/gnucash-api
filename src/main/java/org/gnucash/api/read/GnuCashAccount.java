@@ -265,10 +265,12 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
 	BigFraction      getBalanceRat(LocalDate date, Currency currency);
 	
     /**
-     * @param lastIncludesSplit last split to be included
+     * @param lastSpltIncl last split to be included
      * @return the balance up to and including the given split
      */
-    FixedPointNumber getBalance(GnuCashTransactionSplit lastIncludesSplit);
+    FixedPointNumber getBalance(GnuCashTransactionSplit lastSpltIncl);
+
+    BigFraction      getBalanceRat(GnuCashTransactionSplit lastSpltIncl);
 
     // ----------------------------
 
@@ -336,6 +338,14 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
     FixedPointNumber getBalanceRecursive(LocalDate date, GCshCmdtyCurrID secCurrID);
 
     BigFraction      getBalanceRecursiveRat(LocalDate date, GCshCmdtyCurrID secCurrID);
+
+    /**
+     * @param lastSpltIncl last split to be included
+     * @return the balance up to and including the given split
+     */
+    FixedPointNumber getBalanceRecursive(GnuCashTransactionSplit lastSpltIncl);
+
+    BigFraction      getBalanceRecursiveRat(GnuCashTransactionSplit lastSpltIncl);
 
     // ----------------------------
 
