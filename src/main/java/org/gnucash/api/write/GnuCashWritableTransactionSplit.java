@@ -1,5 +1,6 @@
 package org.gnucash.api.write;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashTransactionSplit;
 import org.gnucash.api.write.hlp.GnuCashWritableObject;
@@ -91,6 +92,8 @@ public interface GnuCashWritableTransactionSplit extends GnuCashTransactionSplit
 	 */
 	void setQuantity(FixedPointNumber n);
 
+	void setQuantity(BigFraction n);
+
 	/**
 	 * If the currencies of transaction and account match, this also does
 	 * ${@link #setQuantity(FixedPointNumber)}.
@@ -110,6 +113,8 @@ public interface GnuCashWritableTransactionSplit extends GnuCashTransactionSplit
 	 * @see #setValue(FixedPointNumber)
 	 */
 	void setValue(FixedPointNumber n);
+
+	void setValue(BigFraction n);
 
 	/**
 	 * If the currencies of transaction and account match, this also does

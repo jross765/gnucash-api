@@ -2,6 +2,7 @@ package org.gnucash.api.write.impl;
 
 import java.text.ParseException;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.Const;
 import org.gnucash.api.generated.GncTransaction;
 import org.gnucash.api.generated.ObjectFactory;
@@ -260,6 +261,15 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		}
     }
 
+	public void setQuantity(final BigFraction quant) {
+		if ( quant == null ) {
+			throw new IllegalArgumentException("argument <quant> is null");
+		}
+
+		FixedPointNumber temp = FixedPointNumber.of(quant);
+		setQuantity(temp);
+	}
+	
     /**
 	 * @see GnuCashWritableTransactionSplit#setQuantity(FixedPointNumber)
 	 */
@@ -305,7 +315,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 			getJwsdpPeer().setSplitQuantity(val.toGnuCashString());
 			if ( old == null || !old.equals(val.toGnuCashString()) ) {
 				if ( helper.getPropertyChangeSupport() != null ) {
-					helper.getPropertyChangeSupport().firePropertyChange("quantity", new FixedPointNumber(oldValue), val);
+					helper.getPropertyChangeSupport().firePropertyChange("value", new FixedPointNumber(oldValue), val);
 				}
 			}
 		}
@@ -317,6 +327,15 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		}
 	}
 
+	public void setValue(final BigFraction val) {
+		if ( val == null ) {
+			throw new IllegalArgumentException("argument <val> is null");
+		}
+
+		FixedPointNumber temp = FixedPointNumber.of(val);
+		setValue(temp);
+	}
+	
 	/**
      * @see GnuCashWritableTransactionSplit#setValue(FixedPointNumber)
      */
