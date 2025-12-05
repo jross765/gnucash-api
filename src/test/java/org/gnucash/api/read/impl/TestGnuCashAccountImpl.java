@@ -86,10 +86,12 @@ public class TestGnuCashAccountImpl {
     	assertEquals(9175.31, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
     	assertEquals(917531, acct.getBalanceRat().getNumerator().longValue());
     	assertEquals(100, acct.getBalanceRat().getDenominator().longValue());
+		assertEquals("9.175,31 €", acct.getBalanceFormatted()); // ::TODO: locale-specific!
     	
     	assertEquals(9175.31, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
     	assertEquals(917531, acct.getBalanceRecursiveRat().getNumerator().longValue());
     	assertEquals(100, acct.getBalanceRecursiveRat().getDenominator().longValue());
+		assertEquals("9.175,31 €", acct.getBalanceRecursiveFormatted()); // ::TODO: locale-specific!
 
     	List<GnuCashTransaction> trxList = acct.getTransactions();
     	// Collections.sort(trxList, Comparator.reverseOrder()); // not necessary
@@ -122,14 +124,15 @@ public class TestGnuCashAccountImpl {
 
     	assertEquals("7ee6fe4de6db46fd957f3513c9c6f983", acct.getParentAccountID().toString());
 
-    	// ::TODO
     	assertEquals(0.0, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
     	assertEquals(0, acct.getBalanceRat().getNumerator().longValue());
     	assertEquals(1, acct.getBalanceRat().getDenominator().longValue());
+		assertEquals("0,00 €", acct.getBalanceFormatted()); // ::TODO: locale-specific!
     	
     	assertEquals(2978.0, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
     	assertEquals(2978, acct.getBalanceRecursiveRat().getNumerator().longValue());
     	assertEquals(1, acct.getBalanceRecursiveRat().getDenominator().longValue());
+		assertEquals("2.978,00 €", acct.getBalanceRecursiveFormatted()); // ::TODO: locale-specific!
 
     	// ::TODO
     	assertEquals(0, acct.getTransactions().size());
@@ -162,6 +165,7 @@ public class TestGnuCashAccountImpl {
     	assertEquals(0.00, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
     	assertEquals(0, acct.getBalanceRat().getNumerator().longValue());
     	assertEquals(1, acct.getBalanceRat().getDenominator().longValue());
+		assertEquals("0,00 €", acct.getBalanceFormatted()); // ::TODO: locale-specific!
     	
     	// ::CHECK: Should'nt the value in the following assert be positive
     	// (that's how it is displayed in GnuCash, after all, at least with
@@ -169,6 +173,7 @@ public class TestGnuCashAccountImpl {
     	assertEquals(-289.92, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
     	assertEquals(-7248, acct.getBalanceRecursiveRat().getNumerator().longValue());
     	assertEquals(25, acct.getBalanceRecursiveRat().getDenominator().longValue());
+		assertEquals("-289,92 €", acct.getBalanceRecursiveFormatted()); // ::TODO: locale-specific!
 
     	assertEquals(0, acct.getTransactions().size());
 
@@ -193,10 +198,12 @@ public class TestGnuCashAccountImpl {
     	assertEquals(0.00, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
     	assertEquals(0, acct.getBalanceRat().getNumerator().longValue());
     	assertEquals(1, acct.getBalanceRat().getDenominator().longValue());
+		assertEquals("0,00 €", acct.getBalanceFormatted()); // ::TODO: locale-specific!
     	
     	assertEquals(0.00, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
     	assertEquals(0, acct.getBalanceRecursiveRat().getNumerator().longValue());
     	assertEquals(1, acct.getBalanceRecursiveRat().getDenominator().longValue());
+		assertEquals("0,00 €", acct.getBalanceRecursiveFormatted()); // ::TODO: locale-specific!
 
     	// ::TODO
     	assertEquals(2, acct.getTransactions().size());
@@ -227,10 +234,12 @@ public class TestGnuCashAccountImpl {
     	assertEquals(709.95, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
     	assertEquals(14199, acct.getBalanceRat().getNumerator().longValue());
     	assertEquals(20, acct.getBalanceRat().getDenominator().longValue());
+		assertEquals("709,95 €", acct.getBalanceFormatted()); // ::TODO: locale-specific!
     	
     	assertEquals(709.95, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
     	assertEquals(14199, acct.getBalanceRecursiveRat().getNumerator().longValue());
     	assertEquals(20, acct.getBalanceRecursiveRat().getDenominator().longValue());
+		assertEquals("709,95 €", acct.getBalanceFormatted()); // ::TODO: locale-specific!
 
     	assertEquals(4, acct.getTransactions().size());
     	assertEquals("c97032ba41684b2bb5d1391c9d7547e9", acct.getTransactions().get(0).getID().toString());
@@ -262,10 +271,12 @@ public class TestGnuCashAccountImpl {
     	assertEquals(0.00, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
     	assertEquals(0, acct.getBalanceRat().getNumerator().longValue());
     	assertEquals(1, acct.getBalanceRat().getDenominator().longValue());
+		assertEquals("0,00 €", acct.getBalanceFormatted()); // ::TODO: locale-specific!
     	
     	assertEquals(0.00, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
     	assertEquals(0, acct.getBalanceRecursiveRat().getNumerator().longValue());
     	assertEquals(1, acct.getBalanceRecursiveRat().getDenominator().longValue());
+		assertEquals("0,00 €", acct.getBalanceRecursiveFormatted()); // ::TODO: locale-specific!
 
     	assertEquals(0, acct.getTransactions().size());
 
@@ -289,10 +300,14 @@ public class TestGnuCashAccountImpl {
     	assertEquals(200.00, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
     	assertEquals(200, acct.getBalanceRat().getNumerator().longValue());
     	assertEquals(1, acct.getBalanceRat().getDenominator().longValue());
+    	// ::TODO
+		// assertEquals("200,00 €", acct.getBalanceFormatted()); // ::TODO: locale-specific!
     	
     	assertEquals(200.00, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
     	assertEquals(200, acct.getBalanceRecursiveRat().getNumerator().longValue());
     	assertEquals(1, acct.getBalanceRecursiveRat().getDenominator().longValue());
+    	// ::TODO
+		// assertEquals("200,00 €", acct.getBalanceFormatted()); // ::TODO: locale-specific!
 
     	assertEquals(2, acct.getTransactions().size());
     	assertEquals("cc9fe6a245df45ba9b494660732a7755", acct.getTransactions().get(0).getID().toString());

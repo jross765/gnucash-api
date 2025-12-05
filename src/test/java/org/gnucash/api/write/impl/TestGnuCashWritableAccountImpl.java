@@ -16,7 +16,6 @@ import org.gnucash.api.read.impl.aux.GCshFileStats;
 import org.gnucash.api.write.GnuCashWritableAccount;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
-import org.gnucash.base.basetypes.simple.GCshID;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -106,9 +105,15 @@ public class TestGnuCashWritableAccountImpl {
 
 		assertEquals("fdffaa52f5b04754901dfb1cf9221494", acct.getParentAccountID().toString());
 
-		// ::TODO (throws exception when you try to call that)
-		//    assertEquals(3060.46, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
-		//    assertEquals(3060.46, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
+    	assertEquals(9175.31, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
+    	assertEquals(917531, acct.getBalanceRat().getNumerator().longValue());
+    	assertEquals(100, acct.getBalanceRat().getDenominator().longValue());
+		assertEquals("9.175,31 €", acct.getBalanceFormatted()); // ::TODO: locale-specific!
+    	
+    	assertEquals(9175.31, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
+    	assertEquals(917531, acct.getBalanceRecursiveRat().getNumerator().longValue());
+    	assertEquals(100, acct.getBalanceRecursiveRat().getDenominator().longValue());
+		assertEquals("9.175,31 €", acct.getBalanceRecursiveFormatted()); // ::TODO: locale-specific!
 
 		assertEquals(10, acct.getTransactions().size());
 		assertEquals("568864bfb0954897ab8578db4d27372f", acct.getTransactions().get(0).getID().toString());
@@ -138,11 +143,16 @@ public class TestGnuCashWritableAccountImpl {
 		assertEquals("CURRENCY:EUR", acct.getCmdtyCurrID().toString());
 
 		assertEquals("7ee6fe4de6db46fd957f3513c9c6f983", acct.getParentAccountID().toString());
-
-		// ::TODO
-		// ::TODO (throws exception when you try to call that)
-		//    assertEquals(0.0, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
-		//    assertEquals(4428.0, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		
+    	assertEquals(0.0, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
+    	assertEquals(0, acct.getBalanceRat().getNumerator().longValue());
+    	assertEquals(1, acct.getBalanceRat().getDenominator().longValue());
+		assertEquals("0,00 €", acct.getBalanceFormatted()); // ::TODO: locale-specific!
+    	
+    	assertEquals(2978.0, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
+    	assertEquals(2978, acct.getBalanceRecursiveRat().getNumerator().longValue());
+    	assertEquals(1, acct.getBalanceRecursiveRat().getDenominator().longValue());
+		assertEquals("2.978,00 €", acct.getBalanceRecursiveFormatted()); // ::TODO: locale-specific!
 
 		// ::TODO
 		assertEquals(0, acct.getTransactions().size());

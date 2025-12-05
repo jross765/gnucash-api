@@ -101,7 +101,12 @@ public class TestGnuCashWritableTransactionImpl {
 		assertNotEquals(null, trx);
 
 		assertEquals(TRX_1_ID, trx.getID());
+		
 		assertEquals(0.0, trx.getBalance().getBigDecimal().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(0, trx.getBalanceRat().getNumerator().longValue());
+		assertEquals(1, trx.getBalanceRat().getDenominator().longValue());
+		assertEquals("0,00 €", trx.getBalanceFormatted()); // ::TODO: locale-specific!
+		
 		assertEquals("Dividenderl", trx.getDescription());
 		assertEquals("2023-08-06T10:59Z", trx.getDatePosted().toString());
 		assertEquals("2023-08-06", trx.getDatePostedFormatted());
@@ -120,7 +125,12 @@ public class TestGnuCashWritableTransactionImpl {
 		assertNotEquals(null, trx);
 
 		assertEquals(TRX_2_ID, trx.getID());
+		
 		assertEquals(0.0, trx.getBalance().getBigDecimal().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(0, trx.getBalanceRat().getNumerator().longValue());
+		assertEquals(1, trx.getBalanceRat().getDenominator().longValue());
+		assertEquals("0,00 €", trx.getBalanceFormatted()); // ::TODO: locale-specific!
+		
 		assertEquals("Unfug und Quatsch GmbH", trx.getDescription());
 		assertEquals("2023-07-29T10:59Z", trx.getDatePosted().toString());
 		assertEquals("2023-07-29", trx.getDatePostedFormatted());
