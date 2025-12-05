@@ -12,8 +12,6 @@ import org.gnucash.api.write.hlp.HasWritableUserDefinedAttributes;
 import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
 
-import xyz.schnorxoborx.base.beanbase.TransactionSplitNotFoundException;
-
 /**
  * Transaction that can be modified.<br/>
  * For PropertyChange-Listeners we support the properties:
@@ -78,22 +76,6 @@ public interface GnuCashWritableTransaction extends GnuCashTransaction,
     void setNumber(String string);
 
     /**
-     * @return 
-     * @throws TransactionSplitNotFoundException 
-     *  
-     * @see #getFirstSplit()
-     */
-    GnuCashWritableTransactionSplit getWritableFirstSplit() throws TransactionSplitNotFoundException;
-
-    /**
-     * @return 
-     * @throws TransactionSplitNotFoundException 
-     *  
-     * @see #getSecondSplit()
-     */
-    GnuCashWritableTransactionSplit getWritableSecondSplit() throws TransactionSplitNotFoundException;
-
-    /**
      *  
      * @param spltID 
      * @return
@@ -101,33 +83,6 @@ public interface GnuCashWritableTransaction extends GnuCashTransaction,
      * @see #getSplitByID(GCshSpltID)
      */
     GnuCashWritableTransactionSplit getWritableSplitByID(GCshSpltID spltID);
-
-    /**
-     *
-     * @return the first split of this transaction or null.
-     * <br>
-     * <em>Caution</em>: This only makes sense for simple transactions
-     * that consist of only two splits. 
-     * By no means is that guaranteed or even "normal"!
-     * 
-     * @see #getSecondSplit()
-     * @see #getSplits()
-     * @see #getSplitsCount()
-     */
-    GnuCashWritableTransactionSplit getFirstSplit() throws TransactionSplitNotFoundException;
-
-    /**
-     * @return the second split of this transaction or null.
-     * <br>
-     * <em>Caution</em>: This only makes sense for simple transactions
-     * that consist of only two splits. 
-     * By no means is that guaranteed or even "normal"!
-     * 
-     * @see #getFirstSplit()
-     * @see #getSplits()
-     * @see #getSplitsCount()
-     */
-    GnuCashWritableTransactionSplit getSecondSplit() throws TransactionSplitNotFoundException;
 
     /**
      *  

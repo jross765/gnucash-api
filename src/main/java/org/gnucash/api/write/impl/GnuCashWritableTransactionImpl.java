@@ -265,36 +265,6 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
     }
 
     /**
-     * @see GnuCashWritableTransaction#getWritableFirstSplit()
-     */
-    @Override
-    public GnuCashWritableTransactionSplit getFirstSplit() throws TransactionSplitNotFoundException {
-    	return (GnuCashWritableTransactionSplit) super.getFirstSplit();
-    }
-
-    /**
-     * @see GnuCashWritableTransaction#getWritableFirstSplit()
-     */
-    public GnuCashWritableTransactionSplit getWritableFirstSplit() throws TransactionSplitNotFoundException {
-    	return (GnuCashWritableTransactionSplit) super.getFirstSplit();
-    }
-
-    /**
-     * @see GnuCashWritableTransaction#getWritableSecondSplit()
-     */
-    @Override
-    public GnuCashWritableTransactionSplit getSecondSplit() throws TransactionSplitNotFoundException {
-    	return (GnuCashWritableTransactionSplit) super.getSecondSplit();
-    }
-
-    /**
-     * @see GnuCashWritableTransaction#getWritableSecondSplit()
-     */
-    public GnuCashWritableTransactionSplit getWritableSecondSplit()  throws TransactionSplitNotFoundException {
-    	return (GnuCashWritableTransactionSplit) super.getSecondSplit();
-    }
-
-    /**
      * @see #getSplitByID(GCshSpltID)
      */
     public GnuCashWritableTransactionSplit getWritableSplitByID(final GCshSpltID spltID) {

@@ -13,7 +13,6 @@ import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
 import org.gnucash.base.basetypes.simple.GCshTrxID;
 
-import xyz.schnorxoborx.base.beanbase.TransactionSplitNotFoundException;
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 /**
@@ -115,37 +114,6 @@ public interface GnuCashTransaction extends Comparable<GnuCashTransaction>,
      *  
      */
     GnuCashTransactionSplit getSplitByID(GCshSpltID spltID);
-
-    /**
-     *
-     * @return the first split of this transaction or null.
-     * <br>
-     * <em>Caution</em>: This only makes sense for simple transactions
-     * that consist of only two splits. 
-     * By no means is that guaranteed or even "normal"!
-     *  
-     * @throws TransactionSplitNotFoundException
-     * 
-     * @see #getSecondSplit()
-     * @see #getSplits()
-     * @see #getSplitsCount()
-     */
-    GnuCashTransactionSplit getFirstSplit() throws TransactionSplitNotFoundException;
-
-    /**
-     * @return the second split of this transaction or null.
-     * <br>
-     * <em>Caution</em>: This only makes sense for simple transactions
-     * that consist of only two splits. 
-     * By no means is that guaranteed or even "normal"!
-     * 
-     * @throws TransactionSplitNotFoundException 
-     *
-     * @see #getFirstSplit()
-     * @see #getSplits()
-     * @see #getSplitsCount()
-     */
-    GnuCashTransactionSplit getSecondSplit() throws TransactionSplitNotFoundException;
 
     /**
      *
