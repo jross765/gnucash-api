@@ -6,14 +6,14 @@ Please note that the file contains *german* data, and not only superficially (i.
 
 [ In future releases, we will therefore probably provide one test data file per supported locale. ]
 
-When you change the test.xml file, please save it in *uncompressed* XML format 
+When you change the `test.xml` file, please save it in *uncompressed* XML format 
 (by convention, compressed 
 GnuCash
 files have the extension 
 "gnucash").
 
 # Testing Aspects
-Please be careful when making changes on the file: All JUnit test cases heavily rely on it, and you might break things.
+Please be careful when making changes on the file: All JUnit test cases heavily depend on it, and you might break things.
 
 # Accounting Aspects
 If you are an accountant (or have a similar profession), you might look at this file with a mixture of astonishment and disgust, perhaps thinking: "My goodness! Don't these guys know how to do accounting? This is awful nonsense!".
