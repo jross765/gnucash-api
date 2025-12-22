@@ -165,6 +165,8 @@ public class AccountBalanceHelper_BF
 	
 		for ( GnuCashTransactionSplit splt : acct.getTransactionSplits() ) {
 			try {
+				// CAUTION: No special logic for action type GnuCashTransactionSplit.Action.SPLIT,
+				// as opposed to sister project.
 				// CAUTION: BigFraction is immutable
 				balance = balance.add(splt.getQuantityRat());
 	

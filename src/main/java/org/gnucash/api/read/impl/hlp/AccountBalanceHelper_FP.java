@@ -153,6 +153,8 @@ public class AccountBalanceHelper_FP
 	
 		for ( GnuCashTransactionSplit splt : acct.getTransactionSplits() ) {
 			try {
+				// CAUTION: No special logic for action type GnuCashTransactionSplit.Action.SPLIT,
+				// as opposed to sister project.
 				// CAUTION: FixedPointNumber is mutable
 				balance.add(splt.getQuantity());
 	
