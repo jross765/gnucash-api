@@ -189,12 +189,51 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		prcMgr = new org.gnucash.api.write.impl.hlp.FilePriceManager(this);
 	}
 
+	public GnuCashWritableFileImpl(final File file, boolean withProgBar) throws IOException {
+		super(file, withProgBar);
+		setModified(false);
+
+    	// CAUTION: The order matters
+		acctMgr = new org.gnucash.api.write.impl.hlp.FileAccountManager(this);
+		trxMgr = new org.gnucash.api.write.impl.hlp.FileTransactionManager(this, withProgBar);
+
+		invcMgr = new org.gnucash.api.write.impl.hlp.FileInvoiceManager(this);
+		invcEntrMgr = new org.gnucash.api.write.impl.hlp.FileInvoiceEntryManager(this);
+
+		custMgr = new org.gnucash.api.write.impl.hlp.FileCustomerManager(this);
+		vendMgr = new org.gnucash.api.write.impl.hlp.FileVendorManager(this);
+		emplMgr = new org.gnucash.api.write.impl.hlp.FileEmployeeManager(this);
+		jobMgr = new org.gnucash.api.write.impl.hlp.FileJobManager(this);
+
+		cmdtyMgr = new org.gnucash.api.write.impl.hlp.FileCommodityManager(this);
+		prcMgr = new org.gnucash.api.write.impl.hlp.FilePriceManager(this);
+	}
+
 	public GnuCashWritableFileImpl(final InputStream is) throws IOException {
 		super(is);
 
     	// CAUTION: The order matters
 		acctMgr = new org.gnucash.api.write.impl.hlp.FileAccountManager(this);
 		trxMgr = new org.gnucash.api.write.impl.hlp.FileTransactionManager(this);
+
+		invcMgr = new org.gnucash.api.write.impl.hlp.FileInvoiceManager(this);
+		invcEntrMgr = new org.gnucash.api.write.impl.hlp.FileInvoiceEntryManager(this);
+
+		custMgr = new org.gnucash.api.write.impl.hlp.FileCustomerManager(this);
+		vendMgr = new org.gnucash.api.write.impl.hlp.FileVendorManager(this);
+		emplMgr = new org.gnucash.api.write.impl.hlp.FileEmployeeManager(this);
+		jobMgr = new org.gnucash.api.write.impl.hlp.FileJobManager(this);
+
+		cmdtyMgr = new org.gnucash.api.write.impl.hlp.FileCommodityManager(this);
+		prcMgr = new org.gnucash.api.write.impl.hlp.FilePriceManager(this);
+	}
+
+	public GnuCashWritableFileImpl(final InputStream is, boolean withProgBar) throws IOException {
+		super(is, withProgBar);
+
+    	// CAUTION: The order matters
+		acctMgr = new org.gnucash.api.write.impl.hlp.FileAccountManager(this);
+		trxMgr = new org.gnucash.api.write.impl.hlp.FileTransactionManager(this, withProgBar);
 
 		invcMgr = new org.gnucash.api.write.impl.hlp.FileInvoiceManager(this);
 		invcEntrMgr = new org.gnucash.api.write.impl.hlp.FileInvoiceEntryManager(this);
@@ -290,8 +329,8 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void loadFile(final File pFile) throws IOException {
-		super.loadFile(pFile);
+	protected void loadFile(final File pFile, boolean withProgBar) throws IOException {
+		super.loadFile(pFile, withProgBar);
 		lastWriteTime = Math.max(pFile.lastModified(), System.currentTimeMillis());
 	}
 
@@ -560,8 +599,8 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	 * @see #getRootElement()
 	 */
 	@Override
-	protected void setRootElement(final GncV2 rootElement) {
-		super.setRootElement(rootElement);
+	protected void setRootElement(final GncV2 rootElement, boolean withProgBar) {
+		super.setRootElement(rootElement, withProgBar);
 	}
 
 	// ---------------------------------------------------------------

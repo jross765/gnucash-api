@@ -104,6 +104,7 @@ import org.xml.sax.InputSource;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
+import me.tongfei.progressbar.ProgressBar;
 import xyz.schnorxoborx.base.beanbase.NoEntryFoundException;
 import xyz.schnorxoborx.base.beanbase.TooManyEntriesFoundException;
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
@@ -174,7 +175,12 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	 */
 	public GnuCashFileImpl(final File pFile) throws IOException {
 		super();
-		loadFile(pFile);
+		loadFile(pFile, false);
+	}
+
+	public GnuCashFileImpl(final File pFile, boolean withProgBar) throws IOException {
+		super();
+		loadFile(pFile, withProgBar);
 	}
 
 	/**
@@ -185,7 +191,12 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	 */
 	public GnuCashFileImpl(final InputStream is) throws IOException {
 		super();
-		loadInputStream(is);
+		loadInputStream(is, false);
+	}
+
+	public GnuCashFileImpl(final InputStream is, boolean withProgBar) throws IOException {
+		super();
+		loadInputStream(is, withProgBar);
 	}
 
 	// ---------------------------------------------------------------
@@ -219,7 +230,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	 * @throws IOException on low level reading-errors (FileNotFoundException if not found)
 	 * @see #setRootElement(GncV2)
 	 */
-	protected void loadFile(final File pFile) throws IOException {
+	protected void loadFile(final File pFile, boolean withProgBar) throws IOException {
 		long start = System.currentTimeMillis();
 
 		if ( pFile == null ) {
@@ -251,13 +262,13 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 			}
 		}
 
-		loadInputStream(in);
+		loadInputStream(in, withProgBar);
 
 		long end = System.currentTimeMillis();
 		LOGGER.info("loadFile: Took " + (end - start) + " ms (total) ");
 	}
 
-	protected void loadInputStream(InputStream in) throws UnsupportedEncodingException, IOException,
+	protected void loadInputStream(InputStream in, boolean withProgBar) throws UnsupportedEncodingException, IOException,
 			InvalidCmdtyCurrIDException {
 		long start = System.currentTimeMillis();
 
@@ -272,7 +283,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 
 			GncV2 obj = (GncV2) unmarshaller.unmarshal(new InputSource(new BufferedReader(reader)));
 			long start2 = System.currentTimeMillis();
-			setRootElement(obj);
+			setRootElement(obj, withProgBar);
 			long end = System.currentTimeMillis();
 			LOGGER.info("loadInputStream: Took " + (end - start) + " ms (total), " + (start2 - start)
 					+ " ms (jaxb-loading), " + (end - start2) + " ms (building facades)");
@@ -1222,7 +1233,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	 *
 	 * @param pRootElement the new root-element
 	 */
-	protected void setRootElement(final GncV2 pRootElement) {
+	protected void setRootElement(final GncV2 pRootElement, boolean withProgBar) {
 		if ( pRootElement == null ) {
 			throw new IllegalArgumentException("argument <pRootElement> is null");
 		}
@@ -1238,7 +1249,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 
 		prcMgr = new FilePriceManager(this);
 
-		loadPriceDatabase(pRootElement);
+		loadPriceDatabase(pRootElement, withProgBar);
 //	if (pRootElement.getGncBook().getBookSlots() == null) {
 //	    pRootElement.getGncBook().setBookSlots((new ObjectFactory()).createSlotsType());
 //	}
@@ -1260,7 +1271,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 
 		// Caution: transactions refer to invoices,
 		// therefore they have to be loaded after them
-		trxMgr = new FileTransactionManager(this);
+		trxMgr = new FileTransactionManager(this, withProgBar);
 
 		custMgr = new FileCustomerManager(this);
 
@@ -1326,7 +1337,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	/**
 	 * @param pRootElement the root-element of the GnuCash file
 	 */
-	protected void loadPriceDatabase(final GncV2 pRootElement) {
+	protected void loadPriceDatabase(final GncV2 pRootElement, boolean withProgBar) {
 		boolean noPriceDB = true;
 
 		GncPricedb priceDB = prcMgr.getPriceDB();
@@ -1337,7 +1348,10 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 			LOGGER.warn("loadPriceDatabase: The library only supports the price-DB format V. 1, "
 					+ "but the file has version " + priceDB.getVersion() + ". " + "Prices will not be loaded.");
 		} else {
-			loadPriceDatabaseCore(priceDB);
+			if ( withProgBar )
+				loadPriceDatabaseCore_wProgBar(priceDB);
+			else
+				loadPriceDatabaseCore_woProgBar(priceDB);
 		}
 
 		if ( noPriceDB ) {
@@ -1347,6 +1361,10 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	}
 
 	private void loadPriceDatabaseCore(GncPricedb priceDB) {
+		loadPriceDatabaseCore_woProgBar(priceDB);
+	}
+	
+	private void loadPriceDatabaseCore_woProgBar(GncPricedb priceDB) {
 //		getCurrencyTable().clear();
 //		getCurrencyTable().setConversionFactor(GCshCmdtyCurrNameSpace.CURRENCY, 
 //		                               getDefaultCurrencyID(), 
@@ -1355,6 +1373,50 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 		String baseCurrency = getDefaultCurrencyID();
 
 		for ( Price price : priceDB.getPrice() ) {
+			Price.PriceCommodity fromCmdtyCurr = price.getPriceCommodity();
+//	    	Price.PriceCurrency  toCurr = price.getPriceCurrency();
+//	    	System.err.println("tt " + fromCmdtyCurr.getCmdtySpace() + ":" + fromCmdtyCurr.getCmdtyID() + 
+//	                       " --> " + toCurr.getCmdtySpace() + ":" + toCurr.getCmdtyID());
+
+			// Check if we already have a latest price for this commodity
+			// (= currency, fund, ...)
+			if ( getCurrencyTable().getConversionFactor(fromCmdtyCurr.getCmdtySpace(),
+					fromCmdtyCurr.getCmdtyId()) != null ) {
+				continue;
+			}
+
+			if ( fromCmdtyCurr.getCmdtySpace().equals(GCshCmdtyCurrNameSpace.CURRENCY)
+					&& fromCmdtyCurr.getCmdtyId().equals(baseCurrency) ) {
+				LOGGER.warn("loadPriceDatabaseCore: Ignoring price-quote for " + baseCurrency + " because "
+						+ baseCurrency + " is our base-currency.");
+				continue;
+			}
+
+			// get the latest price in the file and insert it into
+			// our currency table
+			FixedPointNumber factor = getLatestPrice(
+					new GCshCmdtyCurrID(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId()));
+
+			if ( factor != null ) {
+				getCurrencyTable().setConversionFactor(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId(),
+						factor);
+			} else {
+				LOGGER.warn("loadPriceDatabaseCore: The GnuCash file defines a factor for a commodity '"
+						+ fromCmdtyCurr.getCmdtySpace() + ":" + fromCmdtyCurr.getCmdtyId()
+						+ "' but has no commodity for it");
+			}
+		} // for price
+	}
+	
+	private void loadPriceDatabaseCore_wProgBar(GncPricedb priceDB) {
+//		getCurrencyTable().clear();
+//		getCurrencyTable().setConversionFactor(GCshCmdtyCurrNameSpace.CURRENCY, 
+//		                               getDefaultCurrencyID(), 
+//		                               new FixedPointNumber(1));
+
+		String baseCurrency = getDefaultCurrencyID();
+
+		for ( Price price : ProgressBar.wrap( priceDB.getPrice(), "Price DB") ) {
 			Price.PriceCommodity fromCmdtyCurr = price.getPriceCommodity();
 //	    	Price.PriceCurrency  toCurr = price.getPriceCurrency();
 //	    	System.err.println("tt " + fromCmdtyCurr.getCmdtySpace() + ":" + fromCmdtyCurr.getCmdtyID() + 

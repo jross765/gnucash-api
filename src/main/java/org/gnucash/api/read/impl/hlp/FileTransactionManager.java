@@ -24,6 +24,8 @@ import org.gnucash.base.basetypes.simple.aux.GCshLotID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import me.tongfei.progressbar.ProgressBar;
+
 public class FileTransactionManager {
 
 	protected static final Logger LOGGER = LoggerFactory.getLogger(FileTransactionManager.class);
@@ -39,14 +41,23 @@ public class FileTransactionManager {
 
 	public FileTransactionManager(GnuCashFileImpl gcshFile) {
 		this.gcshFile = gcshFile;
-		init(gcshFile.getRootElement());
+		init(gcshFile.getRootElement(), false);
+	}
+
+	public FileTransactionManager(GnuCashFileImpl gcshFile, boolean withProgBar) {
+		this.gcshFile = gcshFile;
+		init(gcshFile.getRootElement(), withProgBar);
 	}
 
 	// ---------------------------------------------------------------
 
-	private void init(final GncV2 pRootElement) {
+	private void init(final GncV2 pRootElement, boolean withProgBar) {
 		init1(pRootElement);
-		init2(pRootElement);
+		
+		if ( withProgBar )
+			init2_wProgBar(pRootElement);
+		else
+			init2_woProgBar(pRootElement);
 	}
 
 	private void init1(final GncV2 pRootElement) {
@@ -60,9 +71,40 @@ public class FileTransactionManager {
 	}
 
 	private void init2(final GncV2 pRootElement) {
+		init2_woProgBar(pRootElement);
+	}
+	
+	private void init2_woProgBar(final GncV2 pRootElement) {
 		trxSpltMap = new HashMap<GCshSpltID, GnuCashTransactionSplit>();
 
 		for ( GnuCashTransaction trx : trxMap.values() ) {
+			try {
+				List<GnuCashTransactionSplit> spltList = null;
+				if ( gcshFile instanceof GnuCashWritableFileImpl ) {
+					spltList = ((GnuCashTransactionImpl) trx).getSplits(false, true);
+				} else {
+					spltList = ((GnuCashTransactionImpl) trx).getSplits(true, true);
+				}
+				if ( spltList != null ) { // shouldn't happen, just in case...
+					for ( GnuCashTransactionSplit splt : spltList ) {
+						trxSpltMap.put(splt.getID(), splt);
+					}
+				}
+			} catch (RuntimeException e) {
+				LOGGER.error("init2: [RuntimeException] Problem in " + getClass().getName() + ".init2: "
+						+ "ignoring illegal Transaction entry with id=" + trx.getID(), e);
+//		System.err.println("init2: ignoring illegal Transaction entry with id: " + trx.getID());
+//		System.err.println("  " + e.getMessage());
+			}
+		} // for trx
+
+		LOGGER.debug("init2: No. of entries in transaction split map: " + trxSpltMap.size());
+	}
+
+	private void init2_wProgBar(final GncV2 pRootElement) {
+		trxSpltMap = new HashMap<GCshSpltID, GnuCashTransactionSplit>();
+
+		for ( GnuCashTransaction trx : ProgressBar.wrap(trxMap.values(), "Transactions") ) {
 			try {
 				List<GnuCashTransactionSplit> spltList = null;
 				if ( gcshFile instanceof GnuCashWritableFileImpl ) {

@@ -25,6 +25,10 @@ public class FileTransactionManager extends org.gnucash.api.read.impl.hlp.FileTr
 		super(gcshFile);
 	}
 
+	public FileTransactionManager(GnuCashWritableFileImpl gcshFile, boolean withProgBar) {
+		super(gcshFile, withProgBar);
+	}
+
 	// ---------------------------------------------------------------
 
 	/*
