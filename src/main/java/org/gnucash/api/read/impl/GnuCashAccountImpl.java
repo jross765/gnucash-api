@@ -368,6 +368,24 @@ public class GnuCashAccountImpl extends SimpleAccount
     // ---------------------------------------------------------------
     
     @Override
+	public boolean isHidden() {
+    	if ( jwsdpPeer.getActSlots() == null ) {
+			return false;
+		}
+    	
+    	for ( Slot slt : jwsdpPeer.getActSlots().getSlot() ) {
+    		if ( slt.getSlotKey().equals(Const.SLOT_KEY_ACCT_HIDDEN) ) {
+    			String sltVal = slt.getSlotValue().getContent().toString();
+    			if ( sltVal.equals("true")) { // ::MAGIC
+    				return true;
+    			}
+    		}
+    	}
+    	
+    	return false;
+    }
+
+    @Override
 	public GCshAcctReconInfo getReconcileInfo() {
     	if ( jwsdpPeer.getActSlots() == null ) {
 			return null;

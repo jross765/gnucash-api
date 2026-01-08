@@ -899,7 +899,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			.removeTransactionSplit(splt, false);
 		
 		// 2) remove transaction split
-		GCshID trxID = splt.getTransactionID();
+		GCshTrxID trxID = splt.getTransactionID();
 		String trxIDStr = null;
 		try {
 			trxIDStr = trxID.get();
@@ -1170,7 +1170,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalStateException("cannot remove this invoice! It has payments");
 		}
 
-		GCshID invcID = invc.getID();
+		GCshGenerInvcID invcID = invc.getID();
 
 		if ( withEntries ) {
 			if ( invc.getGenerEntries().size() > 0 ) {
@@ -1363,7 +1363,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			((GnuCashWritableTransaction) postTransaction).remove();
 		}
 		
-		GCshID entrID = entr.getID();
+		GCshGenerInvcEntrID entrID = entr.getID();
 
 		((org.gnucash.api.write.impl.hlp.FileInvoiceEntryManager) super.invcEntrMgr)
 			.removeGenerInvcEntry(entr);

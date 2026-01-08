@@ -313,7 +313,7 @@ public class GnuCashWritableJobInvoiceImpl extends GnuCashWritableGenerInvoiceIm
 //	 * Do not use
 //	 */
 //	@Override
-//	protected GCshID getCustInvcPostAccountID(final GnuCashGenerInvoiceEntryImpl entry) {
+//	protected GCshAcctID getCustInvcPostAccountID(final GnuCashGenerInvoiceEntryImpl entry) {
 //		throw new WrongInvoiceTypeException();
 //	}
 
@@ -322,7 +322,7 @@ public class GnuCashWritableJobInvoiceImpl extends GnuCashWritableGenerInvoiceIm
 //	 * Do not use
 //	 */
 //	@Override
-//	protected GCshID getVendBllPostAccountID(final GnuCashGenerInvoiceEntryImpl entry) {
+//	protected GCshAcctID getVendBllPostAccountID(final GnuCashGenerInvoiceEntryImpl entry) {
 //		throw new WrongInvoiceTypeException();
 //	}
 

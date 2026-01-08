@@ -361,6 +361,8 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
 
     // ---------------------------------------------------------------
     
+    boolean isHidden();
+    
     GCshAcctReconInfo getReconcileInfo();
 
     // ---------------------------------------------------------------

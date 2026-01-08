@@ -22,6 +22,7 @@ public class Const {
   
   public static final String SLOT_KEY_ACCT_PLACEHOLDER          = "placeholder";
   public static final String SLOT_KEY_ACCT_NOTES                = "notes";
+  public static final String SLOT_KEY_ACCT_HIDDEN               = "hidden";
   public static final String SLOT_KEY_ACCT_RECONCILE_INFO       = "reconcile-info";
   public static final String SLOT_KEY_ACCT_INCLUDE_CHILDREN     = "include-children";
   public static final String SLOT_KEY_ACCT_LAST_DATE            = "last-date";
