@@ -17,6 +17,35 @@ file.
 * This repository contains no history before V. 1.7 (cf. notes in parent repo).
 
 ## Major Changes 
+### V. 1.7.1 &rarr; 1.8
+* Introduced important add-on: exact numbers / computations, as opposed to current implementation 
+  based on class `FixedPointNumber` in `SchnorxoLib`, which allows for high/arbitrary-precision 
+  computations, but not for exact ones).
+    
+  (Based on `SchnorxoLib` V. 0.2 and
+  class `BigFraction` in Apache Commons Numbers. ==> new dependency)
+    
+   * Package "`read`":
+     * `GnuCashTrxSplit(Impl)`: New methods `getValueRat()` and `getQuantityRat()`
+
+       ("rat" for "rational number") that return the according values as
+       fractions / rational numbers.
+     * `GnuCashAccount(Impl)`, `GnuCashTransaction(Impl)`: new methods `getBalanceXYZRat()`
+
+       (symmetric to already existing ones) that return balance of account / transaction as *exactly computed* number (i.e., as fraction).
+    * Package "`write`": accordingly.
+    * Package "`currency`":
+       * ::TODO: Introduce BigFraction in package "currency"
+       * Small improvements
+
+* `GnuCashAccount(Impl)`: Method `isHidden()`.
+
+* `GnuCash(Writable)Transaction(Impl)`: Moved code to new module "API Specialized Entities".
+ 
+* Loading files now shows progress bars for the parts that typically take longer: Price-DB and transactions (optional, off by default).
+
+* Various small improvements here and there.
+
 ### V. 1.7.0 &rarr; 1.7.1
 * Small corrections / bug fixes:
   * `GnuCashGenerInvoiceImpl`: Fixed bug in `getXYZDateFormatted()`.
