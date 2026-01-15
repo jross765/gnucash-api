@@ -21,6 +21,7 @@ import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcEntrID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcID;
 import org.gnucash.base.basetypes.simple.GCshID;
+import org.gnucash.base.basetypes.simple.GCshSpltID;
 import org.gnucash.base.basetypes.simple.GCshTrxID;
 import org.gnucash.base.basetypes.simple.aux.GCshLotID;
 
@@ -200,20 +201,26 @@ public interface GnuCashGenerInvoice extends Comparable<GnuCashGenerInvoice>,
      *
      * @return the transactions the customer Paid this invoice vis.
      */
+    List<GCshSpltID> getPayingTransactionSplitIDs();
+
+    List<? extends GnuCashTransactionSplit> getPayingTransactionSplits();
+
     List<? extends GnuCashTransaction> getPayingTransactions();
 
     /**
      *
      * @param trans a transaction the customer Paid a part of this invoice vis.
      */
-    void addPayingTransaction(GnuCashTransactionSplit trans);
+    void addPayingTransactionSplitID(GCshSpltID spltID);
+
+    void addPayingTransactionSplit(GnuCashTransactionSplit splt);
 
     /**
      *
      * @param trans a transaction that is the transaction due to handing out this
      *              invoice
      */
-    void addTransaction(GnuCashTransaction trans);
+    void addTransaction(GnuCashTransaction trx);
 
     // ---------------------------------------------------------------
 

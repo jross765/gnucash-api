@@ -30,6 +30,7 @@ import org.gnucash.base.basetypes.simple.GCshGenerInvcEntrID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcID;
 import org.gnucash.base.basetypes.simple.GCshGenerJobID;
 import org.gnucash.base.basetypes.simple.GCshID;
+import org.gnucash.base.basetypes.simple.GCshSpltID;
 import org.gnucash.base.basetypes.simple.GCshTrxID;
 import org.gnucash.base.basetypes.simple.aux.GCshLotID;
 import org.slf4j.Logger;
@@ -83,7 +84,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	/**
 	 * The transactions that are paying for this invoice.
 	 */
-	private final List<GnuCashTransaction> payingTransactions = new ArrayList<GnuCashTransaction>();
+	private final List<GCshSpltID> payTrxSpltIDs = new ArrayList<GCshSpltID>();
 
 	// ------------------------------
 
@@ -289,28 +290,90 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	/**
 	 * {@inheritDoc}
 	 */
-	public void addPayingTransaction(final GnuCashTransactionSplit trans) {
-		payingTransactions.add(trans.getTransaction());
+	@Override
+	public void addPayingTransactionSplitID(final GCshSpltID spltID) {
+		if ( spltID == null ) {
+			throw new IllegalArgumentException("argument <spltID> is null");
+		}
+		
+		if ( payTrxSpltIDs.contains( spltID ) ) {
+			LOGGER.warn("addPayingTransactionSplitID: List of paying transactions already contains split with ID " + spltID);
+			// throw new IllegalStateException("List of paying transactions already contains split with ID " + spltID);
+			return; 
+		}
+		
+		payTrxSpltIDs.add(spltID);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void addTransaction(final GnuCashTransaction trans) {
-		//
-
+	@Override
+	public void addPayingTransactionSplit(final GnuCashTransactionSplit splt) {
+		if ( splt == null ) {
+			throw new IllegalArgumentException("argument <splt> is null");
+		}
+		
+		addPayingTransactionSplitID( splt.getID() );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public void addTransaction(final GnuCashTransaction trx) {
+		// ::TODO
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<GCshSpltID> getPayingTransactionSplitIDs() {
+		if ( payTrxSpltIDs == null ) {
+			throw new IllegalStateException("Split-IDs are not set");
+		}
+		
+		return payTrxSpltIDs;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<GnuCashTransactionSplit> getPayingTransactionSplits() {
+		ArrayList<GnuCashTransactionSplit> result = new ArrayList<GnuCashTransactionSplit>();
+		
+		for ( GCshSpltID spltID : getPayingTransactionSplitIDs() ) {
+			GnuCashTransactionSplit splt = getGnuCashFile().getTransactionSplitByID(spltID);
+			if ( splt == null ) {
+				LOGGER.error("getPayingTransactionSplits: Could not find split with ID " + spltID);
+				throw new IllegalStateException("Could not find split with ID " + spltID);
+			}
+			result.add( splt );
+		}
+		
+		return result;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<GnuCashTransaction> getPayingTransactions() {
-		return payingTransactions;
+		ArrayList<GnuCashTransaction> result = new ArrayList<GnuCashTransaction>();
+		
+		for ( GnuCashTransactionSplit splt : getPayingTransactionSplits() ) {
+			result.add( splt.getTransaction() );
+		}
+		
+		return result;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public GCshAcctID getPostAccountID() {
 		try {
 			return new GCshAcctID(jwsdpPeer.getInvoicePostacc().getValue());
@@ -322,6 +385,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public GCshTrxID getPostTransactionID() {
 		try {
 			return new GCshTrxID(jwsdpPeer.getInvoicePosttxn().getValue());
@@ -333,6 +397,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public GnuCashAccount getPostAccount() {
 		if ( getPostAccountID() == null ) {
 			return null;
@@ -344,6 +409,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * @return the transaction that transferes the money from the customer to the
 	 *         account for money you are to get and the one you owe the taxes.
 	 */
+	@Override
 	public GnuCashTransaction getPostTransaction() {
 		if ( getPostTransactionID() == null ) {
 			return null;
