@@ -301,7 +301,11 @@ public class TestGnuCashWritableAccountImpl {
 		// ----------------------------
 		// Bare naked object
 
-		GnuCashWritableAccount acct = gcshInFile.createWritableAccount();
+		GnuCashWritableAccount acct = 
+				gcshInFile
+					.createWritableAccount(GnuCashAccount.Type.BANK, new GCshCurrID("JPY"),
+										   new GCshAcctID("fdffaa52f5b04754901dfb1cf9221494"), // Root Account:Aktiva:Sichteinlagen:KK),
+										   "Giro Rhumba");
 		assertNotEquals(null, acct);
 		newAcctID = acct.getID();
 		assertEquals(true, newAcctID.isSet());
@@ -309,11 +313,7 @@ public class TestGnuCashWritableAccountImpl {
 		// ----------------------------
 		// Modify the object
 
-		acct.setType(GnuCashAccount.Type.BANK);
-		acct.setParentAccountID(new GCshAcctID("fdffaa52f5b04754901dfb1cf9221494")); // Root Account:Aktiva:Sichteinlagen:KK
-		acct.setName("Giro Rhumba");
 		acct.setDescription("Cha-cha-cha");
-		acct.setCmdtyCurrID(new GCshCurrID("JPY"));
 
 		// ----------------------------
 		// Check whether the object has actually been created

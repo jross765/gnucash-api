@@ -10,6 +10,7 @@ import java.util.Locale;
 import org.gnucash.api.Const;
 import org.gnucash.api.generated.GncAccount;
 import org.gnucash.api.generated.Slot;
+import org.gnucash.api.generated.SlotsType;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.GnuCashTransactionSplit;
@@ -40,29 +41,22 @@ public class GnuCashAccountImpl extends SimpleAccount
 
     // ---------------------------------------------------------------
 
-    /**
-     * the JWSDP-object we are facading.
-     */
+    // the JWSDP-object we are facading.
     protected final GncAccount jwsdpPeer;
     
     // ---------------------------------------------------------------
 
-    /**
-     * Helper to implement the {@link GnuCashObject}-interface.
-     */
-//    protected GnuCashObjectImpl helper;
+    // protected GnuCashObjectImpl helper;
 
     // ---------------------------------------------------------------
 
-    /**
+    /*
      * The splits of this transaction. May not be fully initialized during loading
      * of the GnuCash file.
-     *
-     * @see #mySplitsNeedSorting
      */
     private final List<GnuCashTransactionSplit> mySplits = new ArrayList<GnuCashTransactionSplit>();
 
-    /**
+    /*
      * If {@link #mySplits} needs to be sorted because it was modified. Sorting is
      * done in a lazy way.
      */
@@ -84,23 +78,23 @@ public class GnuCashAccountImpl extends SimpleAccount
     		final GnuCashFile gcshFile) {
     	super(gcshFile);
 
-//		if (peer.getActSlots() == null) {
-//	    	peer.setActSlots(new ObjectFactory().createSlotsType());
-//		}
-
-//		if (peer.getActLots() == null) {
-//    	peer.setActLots(new ObjectFactory().createGncAccountActLots());
-//  	}
-
-    	if (peer == null) {
+    	if ( peer == null ) {
     		throw new IllegalArgumentException("argument <peer> is null");
     	}
 
-    	if (gcshFile == null) {
+    	if ( gcshFile == null ) {
     		throw new IllegalArgumentException("argument <gcshFile> is null");
     	}
 
-    	jwsdpPeer = peer;
+    	this.jwsdpPeer = peer;
+    	
+//		if ( peer.getActSlots() == null ) {
+//			peer.setActSlots(new ObjectFactory().createSlotsType());
+//		}
+//
+//		if ( peer.getActLots() == null ) {
+//			peer.setActLots(new ObjectFactory().createGncAccountActLots());
+//		}
     }
 
     // ---------------------------------------------------------------
@@ -117,7 +111,7 @@ public class GnuCashAccountImpl extends SimpleAccount
     // ---------------------------------------------------------------
 
     /**
-     * @see GnuCashAccount#getID()
+     * {@inheritDoc}
      */
     @Override
 	public GCshAcctID getID() {
@@ -168,7 +162,7 @@ public class GnuCashAccountImpl extends SimpleAccount
     // ---------------------------------------------------------------
 
     /**
-     * @see GnuCashAccount#getName()
+     * {@inheritDoc}
      */
     @Override
 	public String getName() {
@@ -176,7 +170,7 @@ public class GnuCashAccountImpl extends SimpleAccount
     }
 
     /**
-     * @see GnuCashAccount#getDescription()
+     * {@inheritDoc}
      */
     @Override
 	public String getDescription() {
@@ -184,7 +178,7 @@ public class GnuCashAccountImpl extends SimpleAccount
     }
 
     /**
-     * @see GnuCashAccount#getCode()
+     * {@inheritDoc}
      */
     @Override
 	public String getCode() {
@@ -196,7 +190,7 @@ public class GnuCashAccountImpl extends SimpleAccount
     }
 
     /**
-     * @see GnuCashAccount#getType()
+     * {@inheritDoc}
      */
     @Override
 	public Type getType() {
@@ -241,25 +235,30 @@ public class GnuCashAccountImpl extends SimpleAccount
     }
 
     /**
-     * @see GnuCashAccount#addTransactionSplit(GnuCashTransactionSplit)
+     * {@inheritDoc}
      */
     @Override
 	public void addTransactionSplit(final GnuCashTransactionSplit splt) {
+		if ( splt == null ) {
+			throw new IllegalArgumentException("argument <splt> is null");
+		}
+
     	GnuCashTransactionSplit old = getTransactionSplitByID(splt.getID());
     	if ( old != null ) {
     		// There already is a split with that ID
     		if ( ! old.equals(splt) ) {
-    			System.err.println("addTransactionSplit: New Transaction Split object with same ID, needs to be replaced: " + 
-    					splt.getID() + " [" + splt.getClass().getName() + "] and " + 
-    					old.getID() + " [" + old.getClass().getName() + "]\n" + 
-    					"new = " + splt.toString() + "\n" + 
-    					"old = " + old.toString());
-    			LOGGER.error("addTransactionSplit: New Transaction Split object with same ID, needs to be replaced: " + 
-    					splt.getID() + " [" + splt.getClass().getName() + "] and " + 
-    					old.getID() + " [" + old.getClass().getName() + "]\n" + 
-    					"new=" + splt.toString() + "\n" + 
-    					"old=" + old.toString());
-    			// ::TODO
+    			System.err.println(
+    					"addTransactionSplit: New Transaction Split object with same ID, needs to be replaced: " +
+    							splt.getID() + " [" + splt.getClass().getName() + "] and " +
+    							old.getID() + " [" + old.getClass().getName() + "]\n" +
+    							"new = " + splt.toString() + "\n" +
+    							"old = " + old.toString());
+    			LOGGER.error(
+    					"addTransactionSplit: New Transaction Split object with same ID, needs to be replaced: " +
+    							splt.getID() + " [" + splt.getClass().getName() + "] and " +
+    							old.getID() + " [" + old.getClass().getName() + "]\n" +
+    							"new=" + splt.toString() + "\n" +
+    							"old=" + old.toString());
     			IllegalStateException exc = new IllegalStateException("DEBUG");
     			exc.printStackTrace();
     			replaceTransactionSplit(old, (GnuCashTransactionSplitImpl) splt);
@@ -275,6 +274,7 @@ public class GnuCashAccountImpl extends SimpleAccount
      * For internal use only.
      *
      * @param splt
+     * @param impl 
      */
     public void replaceTransactionSplit(
     		final GnuCashTransactionSplit splt,
@@ -286,8 +286,11 @@ public class GnuCashAccountImpl extends SimpleAccount
     	mySplits.add(impl);
     }
 
-    // ----------------------------
+    // ---------------------------------------------------------------
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<GCshAcctLot> getLots() {
     	if (myLots == null) {
@@ -322,7 +325,7 @@ public class GnuCashAccountImpl extends SimpleAccount
     }
 
     /**
-     * @see GnuCashAccount#addLot(GCshAcctLot)
+     * {@inheritDoc}
      */
     @Override
 	public void addLot(final GCshAcctLot lot) {
@@ -330,15 +333,15 @@ public class GnuCashAccountImpl extends SimpleAccount
     	if ( old != null ) {
     		// There already is a lot with that ID
     		if ( ! old.equals(lot) ) {
-    			System.err.println("addLot: New Account Lot object with same ID, needs to be replaced: " + 
-    					lot.getID() + " [" + lot.getClass().getName() + "] and " + 
-    					old.getID() + " [" + old.getClass().getName() + "]\n" + 
-    					"new = " + lot.toString() + "\n" + 
+    			System.err.println("addLot: New Account Lot object with same ID, needs to be replaced: " +
+    					lot.getID() + " [" + lot.getClass().getName() + "] and " +
+    					old.getID() + " [" + old.getClass().getName() + "]\n" +
+    					"new = " + lot.toString() + "\n" +
     					"old = " + old.toString());
-    			LOGGER.error("addLot: New Account Lot object with same ID, needs to be replaced: " + 
-    					lot.getID() + " [" + lot.getClass().getName() + "] and " + 
-    					old.getID() + " [" + old.getClass().getName() + "]\n" + 
-    					"new = " + lot.toString() + "\n" + 
+    			LOGGER.error("addLot: New Account Lot object with same ID, needs to be replaced: " +
+    					lot.getID() + " [" + lot.getClass().getName() + "] and " +
+    					old.getID() + " [" + old.getClass().getName() + "]\n" +
+    					"new = " + lot.toString() + "\n" +
     					"old = " + old.toString());
     			IllegalStateException exc = new IllegalStateException("DEBUG");
     			exc.printStackTrace();
@@ -354,6 +357,7 @@ public class GnuCashAccountImpl extends SimpleAccount
      * For internal use only.
      *
      * @param lot
+     * @param impl 
      */
     public void replaceLot(
     		final GCshAcctLot lot,
@@ -367,6 +371,9 @@ public class GnuCashAccountImpl extends SimpleAccount
 
     // ---------------------------------------------------------------
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
 	public boolean isHidden() {
     	if ( jwsdpPeer.getActSlots() == null ) {
@@ -385,6 +392,9 @@ public class GnuCashAccountImpl extends SimpleAccount
     	return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
 	public GCshAcctReconInfo getReconcileInfo() {
     	if ( jwsdpPeer.getActSlots() == null ) {
@@ -401,18 +411,40 @@ public class GnuCashAccountImpl extends SimpleAccount
     	return null;
     }
 
-    // -----------------------------------------------------------------
+    // ---------------------------------------------------------------
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getUserDefinedAttribute(final String name) {
-    	return HasUserDefinedAttributesImpl
-    			.getUserDefinedAttributeCore(jwsdpPeer.getActSlots(), name);
+		if ( name == null ) {
+			throw new IllegalArgumentException("argument <name> is null");
+		}
+
+		if ( name.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <name> is empty");
+		}
+
+		if ( jwsdpPeer.getActSlots() == null ) {
+			return null;
+		}
+		
+		SlotsType slots = jwsdpPeer.getActSlots();
+    	return HasUserDefinedAttributesImpl.getUserDefinedAttributeCore(slots, name);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> getUserDefinedAttributeKeys() {
-    	return HasUserDefinedAttributesImpl
-    			.getUserDefinedAttributeKeysCore(jwsdpPeer.getActSlots());
+		if ( jwsdpPeer.getActSlots() == null ) {
+			return null;
+		}
+		
+		SlotsType slots = jwsdpPeer.getActSlots();
+    	return HasUserDefinedAttributesImpl.getUserDefinedAttributeKeysCore(slots);
     }
 
     // -----------------------------------------------------------------
@@ -494,7 +526,7 @@ public class GnuCashAccountImpl extends SimpleAccount
            	}
         }
     }
-    
+
     // ---------------------------------------------------------------
 	// Helpers -- balance pre-computed
     // We have to provide this indirection for methods calling this

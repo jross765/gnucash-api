@@ -3,12 +3,14 @@ package org.gnucash.api.write;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.write.aux.GCshWritableAccountLot;
 import org.gnucash.api.write.hlp.GnuCashWritableObject;
 import org.gnucash.api.write.hlp.HasWritableUserDefinedAttributes;
 import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
+import org.gnucash.base.basetypes.simple.GCshID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
 import org.gnucash.base.basetypes.simple.aux.GCshLotID;
 
@@ -25,6 +27,8 @@ public interface GnuCashWritableAccount extends GnuCashAccount,
 {
 
     /**
+	 * The GnuCash file is the top-level class to contain everything.
+	 *
      * @return the file we belong to
      */
     GnuCashWritableFile getWritableGnuCashFile();
@@ -34,6 +38,8 @@ public interface GnuCashWritableAccount extends GnuCashAccount,
      * non-ascii and non-western characters.
      *
      * @param name the new name (not null)
+	 * 
+	 * @see #getName()
      */
     void setName(String name);
 
@@ -48,6 +54,8 @@ public interface GnuCashWritableAccount extends GnuCashAccount,
     /**
      * @param desc the user-defined description (may contain multiple lines and
      *             non-ascii-characters)
+     *             
+     * @see #getDescription()
      */
     void setDescription(String desc);
 
@@ -59,26 +67,36 @@ public interface GnuCashWritableAccount extends GnuCashAccount,
      * @param to   when to stop, exclusive.
      * @return the sum of all transaction-splits affecting this account in the given
      *         time-frame.
+     * 
+	 * @see #getBalanceChange(LocalDate, LocalDate)
      */
     FixedPointNumber getBalanceChange(LocalDate from, LocalDate to);
+
+    BigFraction      getBalanceChangeRat(LocalDate from, LocalDate to);
 
     /**
      * Set the type of the account (income, ...).
      *
      * @param type the new type.
-     * @see {@link GnuCashAccount#getType()}
+     * 
+     * @see #getType()
      */
     void setType(Type type);
+
+	// ----------------------------
 
     /**
      * @param cmdtyCurrID 
      * @param id the new currency
+     * 
      * @see #getCmdtyCurrID()
      */
     void setCmdtyCurrID(GCshCmdtyCurrID cmdtyCurrID);
 
     /**
      * @param newparent the new account or null to make it a top-level-account
+     * 
+     * @see #getParentAccount()
      */
     void setParentAccount(GnuCashAccount newparent);
 
@@ -87,7 +105,6 @@ public interface GnuCashWritableAccount extends GnuCashAccount,
      * @param newParentID 
      *
      * @see #getParentAccountID()
-     * @see {@link #setParentAccount(GnuCashAccount)}
      */
     void setParentAccountID(GCshAcctID newParentID);
     
@@ -115,7 +132,7 @@ public interface GnuCashWritableAccount extends GnuCashAccount,
      * @return a new split, already attached to this transaction
      *  
      */
-//    GCshWritableAccountLot createWritableTransactionSplit();
+//    GnuCashWritableTransactionSplit createWritableTransactionSplit();
 
     // ---------------------------------------------------------------
 
@@ -156,11 +173,13 @@ public interface GnuCashWritableAccount extends GnuCashAccount,
      * @param impl the lot to be removed from this account
      *  
      */
-    void remove(GCshWritableAccountLot lot);
+    void removeLot(GCshWritableAccountLot lot);
+
+    // ---------------------------------------------------------------
 
     /**
      * Remove this account from the system.<br/>
-     * Throws IllegalStateException if this account has splits or childres.
+     * Throws IllegalStateException if this account has splits or children.
      */
     void remove();
 
