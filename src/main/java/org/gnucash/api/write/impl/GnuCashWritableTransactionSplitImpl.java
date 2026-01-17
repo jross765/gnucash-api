@@ -89,16 +89,16 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		trx.addSplit(this);
     }
 
-    public GnuCashWritableTransactionSplitImpl(final GnuCashTransactionSplit split) {
-    	super(split.getJwsdpPeer(), split.getTransaction(), 
+    public GnuCashWritableTransactionSplitImpl(final GnuCashTransactionSplit splt) {
+    	super(splt.getJwsdpPeer(), splt.getTransaction(), 
     		  true, true);
     }
 
     public GnuCashWritableTransactionSplitImpl(
-    		final GnuCashTransactionSplit split,
+    		final GnuCashTransactionSplit splt,
     		final boolean addSpltToAcct,
     		final boolean addSpltToInvc) {
-    	super(split.getJwsdpPeer(), split.getTransaction(), 
+    	super(splt.getJwsdpPeer(), splt.getTransaction(), 
     		  addSpltToAcct, addSpltToInvc);
     }
 
@@ -160,8 +160,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 			jwsdpSplt.setSplitAccount(splitaccount);
 		}
 
-		LOGGER.debug("createTransactionSplit_int: Created new transaction split (core): "
-				+ jwsdpSplt.getSplitId().getValue());
+		LOGGER.debug("createTransactionSplit_int: Created new transaction split (core): " + jwsdpSplt.getSplitId().getValue());
 
 		return jwsdpSplt;
 	}

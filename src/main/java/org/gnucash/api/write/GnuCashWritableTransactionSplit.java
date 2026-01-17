@@ -11,9 +11,7 @@ import xyz.schnorxoborx.base.beanbase.IllegalTransactionSplitActionException;
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 /**
- * Transaction-split that can be modified.<br/>
- * For propertyChange we support the properties "value", "quantity"
- * "description",  "splitAction" and "accountID".
+ * Transaction-split that can be modified.
  * 
  * @see GnuCashTransactionSplit
  */
@@ -28,16 +26,16 @@ public interface GnuCashWritableTransactionSplit extends GnuCashTransactionSplit
 
 	/**
 	 * Remove this split from the system.
-	 *  
 	 */
 	void remove();
 
 	/**
-	 * Does not convert the quantity to another
-	 * currency if the new account has another
-	 * one then the old!
+	 * Does not convert the quantity to another currency if the new account has
+	 * another one than the old one!
+	 * 
 	 * @param acctID the new account to give this money to/take it from.
 	 * 
+	 * @see #getAccount()
 	 * @see #getAccountID()
 	 * @see #setAccount(GnuCashAccount)
 	 */
@@ -51,6 +49,7 @@ public interface GnuCashWritableTransactionSplit extends GnuCashTransactionSplit
 	 *        money to/take it from.
 	 *        
 	 * @see #getAccount()
+	 * @see #getAccountID()
 	 * @see #setAccountID(GCshAcctID)
 	 */
 	void setAccount(GnuCashAccount account);
@@ -88,10 +87,20 @@ public interface GnuCashWritableTransactionSplit extends GnuCashTransactionSplit
 	 * @param n the new quantity (in the currency of the account)
 	 * 
 	 * @see #getQuantity()
+	 * @see #setQuantity(BigFraction)
 	 * @see #setQuantity(String)
 	 */
 	void setQuantity(FixedPointNumber n);
 
+	/**
+	 * If the currencies of transaction and account match, this also does
+	 * ${@link #setQuantity(BigFraction)}.
+	 * @param n the new quantity (in the currency of the account)
+	 * 
+	 * @see #getQuantity()
+	 * @see #setQuantity(FixedPointNumber)
+	 * @see #setQuantity(String)
+	 */
 	void setQuantity(BigFraction n);
 
 	/**
@@ -100,6 +109,7 @@ public interface GnuCashWritableTransactionSplit extends GnuCashTransactionSplit
 	 * @param n the new quantity (in the currency of the account)
 	 * 
 	 * @see #getQuantity()
+	 * @see #setQuantity(BigFraction)
 	 * @see #setQuantity(FixedPointNumber)
 	 */
 	void setQuantity(String n);
@@ -107,6 +117,7 @@ public interface GnuCashWritableTransactionSplit extends GnuCashTransactionSplit
 	/**
 	 * If the currencies of transaction and account match, this also does
 	 * ${@link #setValue(FixedPointNumber)}.
+	 * 
 	 * @param n the new value (in the currency of the transaction)
 	 * 
 	 * @see #getValue()
@@ -119,6 +130,7 @@ public interface GnuCashWritableTransactionSplit extends GnuCashTransactionSplit
 	/**
 	 * If the currencies of transaction and account match, this also does
 	 * ${@link #setValue(FixedPointNumber)}.
+	 * 
 	 * @param n the new value (in the currency of the transaction)
 	 * 
 	 * @see #getValue()

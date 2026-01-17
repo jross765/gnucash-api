@@ -83,7 +83,7 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 						// Check if it's a payment transaction.
 						// If so, add it to the invoice's list of payment transactions.
 						if ( getAction() == Action.PAYMENT ) {
-							invc.addPayingTransaction(this);
+							invc.addPayingTransactionSplit(this);
 						}
 					}
 				} // for invc

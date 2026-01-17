@@ -234,14 +234,19 @@ public interface GnuCashTransactionSplit extends Comparable<GnuCashTransactionSp
 
     /**
      *
-     * @return the id of the account we transfer from/to.
+     * @return the ID of the account we transfer from/to.
+     * 
+     * @see #getAccount()
      */
     GCshAcctID getAccountID();
 
     /**
-     * This may be null if an account-id is specified in
+     * @return the account we transfer from/to.
+     * <br/>
+     * This may be null if an account-ID is specified in
      * the GnuCash file that does not belong to an account.
-     * @return the account of the account we transfer from/to.
+
+     * @see #getAccountID()
      */
     GnuCashAccount getAccount();
 
@@ -262,69 +267,6 @@ public interface GnuCashTransactionSplit extends Comparable<GnuCashTransactionSp
     GnuCashTransaction getTransaction();
 
     // ----------------------------
-
-    /**
-     * The value is in the currency of the transaction!
-     * @return the value-transfer this represents
-     * 
-     * @see #getValueFormatted()
-     * @see #getValueFormatted(Locale)
-     */
-    FixedPointNumber getValue();
-
-    BigFraction getValueRat();
-
-    /**
-     * The value is in the currency of the transaction!
-     * @return the value-transfer this represents
-     * 
-     * @see #getValue()
-     * @see #getValueFormatted(Locale)
-     */
-    String getValueFormatted();
-    
-    /**
-     * The value is in the currency of the transaction!
-     * @param lcl the locale to use
-     * @return the value-transfer this represents
-     * 
-     * @see #getValue()
-     * @see #getValueFormatted()
-     */
-    String getValueFormatted(Locale lcl);
-
-    // ----------------------------
-
-    /**
-     * The quantity is in the currency of the account!
-     * @return the number of items added to the account
-     */
-    FixedPointNumber getQuantity();
-
-    BigFraction      getQuantityRat();
-
-    /**
-     * The quantity is in the currency of the account!
-     * @return the number of items added to the account
-     */
-    String getQuantityFormatted();
-
-    /**
-     * The quantity is in the currency of the account!
-     * @param lcl the locale to use
-     * @return the number of items added to the account
-     */
-    String getQuantityFormatted(Locale lcl);
-
-    // ----------------------------
-
-    /**
-     * @return the user-defined description for this object
-     *         (may contain multiple lines and non-ascii-characters)
-     */
-    String getDescription();
-
-    public GCshLotID getLotID();
 
     /**
      * Tries to map the result of {@link #getActionStr()} to the {@link Action} enum.
@@ -362,6 +304,8 @@ public interface GnuCashTransactionSplit extends Comparable<GnuCashTransactionSp
      */
     String getActionStr();
 
+    // ----------------------------
+
     /**
      * Reconciliation state.
      * 
@@ -386,4 +330,95 @@ public interface GnuCashTransactionSplit extends Comparable<GnuCashTransactionSp
 //     */
 //    String getReconStateStr();
 
+    // ----------------------------
+
+    /**
+     * The value is in the currency of the transaction!
+     * @return the value-transfer this represents
+     * 
+     * @see #getValueRat()
+     * @see #getValueFormatted()
+     * @see #getValueFormatted(Locale)
+     */
+    FixedPointNumber getValue();
+
+    BigFraction getValueRat();
+
+    /**
+     * The value is in the currency of the transaction!
+     * @return the value-transfer this represents
+     * 
+     * @see #getValue()
+     * @see #getValueRat()
+     * @see #getValueFormatted(Locale)
+     */
+    String getValueFormatted();
+    
+    /**
+     * The value is in the currency of the transaction!
+     * @param lcl the locale to use
+     * @return the value-transfer this represents
+     * 
+     * @see #getValue()
+     * @see #getValueRat()
+     * @see #getValueFormatted()
+     */
+    String getValueFormatted(Locale lcl);
+
+    // ----------------------------
+
+    /**
+     * The quantity is in the currency of the account!
+     * @return the number of items added to the account
+     * 
+     * @see #getQuantityRat()
+     * @see #getQuantityFormatted()
+     * @see #getQuantityFormatted(Locale)
+     */
+    FixedPointNumber getQuantity();
+
+    /**
+     * The quantity is in the currency of the account!
+     * @return the number of items added to the account
+     * 
+     * @see #getShares()
+     * @see #getSharesFormatted()
+     * @see #getSharesFormatted(Locale)
+     */
+    BigFraction      getQuantityRat();
+
+    /**
+     * The quantity is in the currency of the account!
+     * @return the number of items added to the account
+     *  
+     * @see #getQuantity()
+     * @see #getQuantityRat()
+     * @see #getQuantityFormatted(Locale)
+     */
+    String getQuantityFormatted();
+
+    /**
+     * The quantity is in the currency of the account!
+     * @param lcl the locale to use
+     * @return the number of items added to the account
+     * 
+     * @see #getQuantity()
+     * @see #getQuantityRat()
+     * @see #getQuantityFormatted()
+     */
+    String getQuantityFormatted(Locale lcl);
+
+    // ----------------------------
+
+    public GCshLotID getLotID();
+
+    // ----------------------------
+
+    /**
+     * @return the user-defined description for this split
+     *         (may contain multiple lines and non-ascii-characters)
+     */
+    String getDescription();
+
 }
+
