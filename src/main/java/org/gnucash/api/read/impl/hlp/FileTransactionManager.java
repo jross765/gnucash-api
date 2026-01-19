@@ -91,9 +91,9 @@ public class FileTransactionManager {
 					}
 				}
 			} catch (RuntimeException e) {
-				LOGGER.error("init2: [RuntimeException] Problem in " + getClass().getName() + ".init2: "
-						+ "ignoring illegal Transaction entry with id=" + trx.getID(), e);
-//		System.err.println("init2: ignoring illegal Transaction entry with id: " + trx.getID());
+				LOGGER.error("init2_woProgBar: [RuntimeException] Problem in " + getClass().getName() + ".init2: "
+						+ "ignoring illegal Transaction entry with ID=" + trx.getID(), e);
+//		System.err.println("init2_woProgBar: ignoring illegal Transaction entry with ID: " + trx.getID());
 //		System.err.println("  " + e.getMessage());
 			}
 		} // for trx
@@ -118,14 +118,14 @@ public class FileTransactionManager {
 					}
 				}
 			} catch (RuntimeException e) {
-				LOGGER.error("init2: [RuntimeException] Problem in " + getClass().getName() + ".init2: "
-						+ "ignoring illegal Transaction entry with id=" + trx.getID(), e);
-//		System.err.println("init2: ignoring illegal Transaction entry with id: " + trx.getID());
+				LOGGER.error("init2_wProgBar: [RuntimeException] Problem in " + getClass().getName() + ".init2: "
+						+ "ignoring illegal Transaction entry with ID=" + trx.getID(), e);
+//		System.err.println("init2_wProgBar: ignoring illegal Transaction entry with ID: " + trx.getID());
 //		System.err.println("  " + e.getMessage());
 			}
 		} // for trx
 
-		LOGGER.debug("init2: No. of entries in transaction split map: " + trxSpltMap.size());
+		LOGGER.debug("init2_wProgBar: No. of entries in transaction split map: " + trxSpltMap.size());
 	}
 
 	// ----------------------------
@@ -142,7 +142,7 @@ public class FileTransactionManager {
 			final boolean addSpltToAcct, 
 			final boolean addSpltToInvc) {
 		GnuCashTransactionSplitImpl splt = new GnuCashTransactionSplitImpl(jwsdpTrxSplt, trx, 
-				                                                           addSpltToAcct, addSpltToInvc);
+																			addSpltToAcct, addSpltToInvc);
 		LOGGER.debug("createTransactionSplit: Generated new transaction split: " + splt.getID());
 		return splt;
 	}
@@ -153,18 +153,18 @@ public class FileTransactionManager {
 		if ( trxID == null ) {
 			throw new IllegalArgumentException("argument <trxID> is null");
 		}
-		
+
 		if ( ! trxID.isSet() ) {
 			throw new IllegalArgumentException("argument <trxID> is null");
 		}
-		
+
 		if ( trxMap == null ) {
 			throw new IllegalStateException("no root-element loaded");
 		}
 
 		GnuCashTransaction retval = trxMap.get(trxID);
 		if ( retval == null ) {
-			LOGGER.warn("getTransactionByID: No Transaction with id '" + trxID + "'. We know " + trxMap.size() + " transactions.");
+			LOGGER.warn("getTransactionByID: No Transaction with ID '" + trxID + "'. We know " + trxMap.size() + " transactions.");
 		}
 
 		return retval;
@@ -176,18 +176,18 @@ public class FileTransactionManager {
 		if ( spltID == null ) {
 			throw new IllegalArgumentException("argument <spltID> is null");
 		}
-		
+
 		if ( ! spltID.isSet() ) {
 			throw new IllegalArgumentException("argument <spltID> is not set");
 		}
-		
+
 		if ( trxSpltMap == null ) {
 			throw new IllegalStateException("no root-element loaded");
 		}
 
 		GnuCashTransactionSplit retval = trxSpltMap.get(spltID);
 		if ( retval == null ) {
-			LOGGER.warn("getTransactionSplitByID: No Transaction-Split with id '" + spltID + "'. We know " + trxSpltMap.size() + " transaction splits.");
+			LOGGER.warn("getTransactionSplitByID: No Transaction-Split with ID '" + spltID + "'. We know " + trxSpltMap.size() + " transaction splits.");
 		}
 
 		return retval;
@@ -268,9 +268,9 @@ public class FileTransactionManager {
 				result.add(trx);
 			} catch (RuntimeException e) {
 				LOGGER.error("getTransactions_readAfresh: [RuntimeException] Problem in " + getClass().getName()
-						+ ".getTransactions_readAfresh: " + "ignoring illegal Transaction entry with id="
+						+ ".getTransactions_readAfresh: " + "ignoring illegal Transaction entry with ID="
 						+ jwsdpTrx.getTrnId().getValue(), e);
-//		System.err.println("getTransactions_readAfresh: ignoring illegal Transaction entry with id: " + jwsdpTrx.getTrnID().getValue());
+//		System.err.println("getTransactions_readAfresh: ignoring illegal Transaction entry with ID: " + jwsdpTrx.getTrnID().getValue());
 //		System.err.println("  " + e.getMessage());
 			}
 		}
@@ -301,7 +301,7 @@ public class FileTransactionManager {
 		if ( trxSpltMap == null ) {
 			throw new IllegalStateException("no root-element loaded");
 		}
-		
+
 		ArrayList<GnuCashTransactionSplit> temp = new ArrayList<GnuCashTransactionSplit>(trxSpltMap.values());
 		Collections.sort(temp);
 		
@@ -319,9 +319,9 @@ public class FileTransactionManager {
 					result.add(splt);
 				} catch (RuntimeException e) {
 					LOGGER.error("getTransactionSplits_readAfresh(1): [RuntimeException] Problem in "
-							+ "ignoring illegal Transaction Split entry with id="
+							+ "ignoring illegal Transaction Split entry with ID="
 							+ jwsdpTrxSplt.getSplitId().getValue(), e);
-//			System.err.println("getTransactionSplits_readAfresh(1): ignoring illegal Transaction Split entry with id: " + jwsdpTrxSplt.getSplitID().getValue());
+//			System.err.println("getTransactionSplits_readAfresh(1): ignoring illegal Transaction Split entry with ID: " + jwsdpTrxSplt.getSplitId().getValue());
 //			System.err.println("  " + e.getMessage());
 				}
 			} // for jwsdpTrxSplt
@@ -342,9 +342,9 @@ public class FileTransactionManager {
 						result.add(splt);
 					} catch (RuntimeException e) {
 						LOGGER.error("getTransactionSplits_readAfresh(2): [RuntimeException] Problem in "
-								+ "ignoring illegal Transaction Split entry with id="
+								+ "ignoring illegal Transaction Split entry with ID="
 								+ jwsdpTrxSplt.getSplitId().getValue(), e);
-//			System.err.println("getTransactionSplits_readAfresh(2): ignoring illegal Transaction Split entry with id: " + jwsdpTrxSplt.getSplitID().getValue());
+//			System.err.println("getTransactionSplits_readAfresh(2): ignoring illegal Transaction Split entry with ID: " + jwsdpTrxSplt.getSplitId().getValue());
 //			System.err.println("  " + e.getMessage());
 					}
 				} // for jwsdpTrxSplt

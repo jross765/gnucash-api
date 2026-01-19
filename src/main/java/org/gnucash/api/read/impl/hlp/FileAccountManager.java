@@ -74,8 +74,8 @@ public class FileAccountManager {
 				}
 			} catch (RuntimeException e) {
 				LOGGER.error("init2: [RuntimeException] Problem in " + getClass().getName() + ".init2: "
-						+ "ignoring illegal Account entry with id=" + acct.getID(), e);
-//		System.err.println("init2: ignoring illegal Account entry with id: " + acct.getID());
+						+ "ignoring illegal Account entry with ID=" + acct.getID(), e);
+//		System.err.println("init2: ignoring illegal Account entry with ID: " + acct.getID());
 //		System.err.println("  " + e.getMessage());
 			}
 		} // for acct
@@ -85,6 +85,10 @@ public class FileAccountManager {
 
 	// ----------------------------
 
+	/**
+	 * @param jwsdpAcct the JWSDP-peer (parsed xml-element) to fill our object with
+	 * @return the new GnuCashAccount to wrap the given JAXB-object.
+	 */
 	protected GnuCashAccountImpl createAccount(final GncAccount jwsdpAcct) {
 		GnuCashAccountImpl acct = new GnuCashAccountImpl(jwsdpAcct, gcshFile);
 		LOGGER.debug("createAccount: Generated new account: " + acct.getID());
@@ -117,6 +121,7 @@ public class FileAccountManager {
 		GnuCashAccount retval = acctMap.get(acctID);
 		if ( retval == null ) {
 			LOGGER.error("getAccountByID: No Account with ID '" + acctID + "'. We know " + acctMap.size() + " accounts.");
+//			System.err.println("getAccountByID: No Account with ID '" + acctID + "'. We know " + acctMap.size() + " accounts.");
 		}
 
 		return retval;
@@ -161,7 +166,7 @@ public class FileAccountManager {
 		if ( name == null ) {
 			throw new IllegalArgumentException("argument <name> is null");
 		}
-		
+
 		if ( name.trim().equals("") ) {
 			throw new IllegalArgumentException("argument <name> is empty");
 		}
@@ -173,11 +178,11 @@ public class FileAccountManager {
 		if ( expr == null ) {
 			throw new IllegalArgumentException("argument <expr> is null");
 		}
-		
+
 		if ( expr.trim().equals("") ) {
 			throw new IllegalArgumentException("argument <expr> is empty");
 		}
-		
+
 		if ( acctMap == null ) {
 			throw new IllegalStateException("no root-element loaded");
 		}
@@ -218,11 +223,11 @@ public class FileAccountManager {
 		if ( name == null ) {
 			throw new IllegalArgumentException("argument <name> is null");
 		}
-		
+
 		if ( name.trim().equals("") ) {
 			throw new IllegalArgumentException("argument <name> is empty");
 		}
-		
+
 		List<GnuCashAccount> acctList = getAccountsByName(name, qualif, false);
 		if ( acctList.size() == 0 )
 			throw new NoEntryFoundException();
@@ -269,7 +274,7 @@ public class FileAccountManager {
 
 	/*
 	 * First try to fetch the account by id, then fall back to traversing all
-	 * accounts to get if by it's name.
+	 * accounts to get if by its name.
 	 */
 	public GnuCashAccount getAccountByIDorName(final GCshAcctID acctID, final String name)
 			throws NoEntryFoundException, TooManyEntriesFoundException {
@@ -288,7 +293,7 @@ public class FileAccountManager {
 		if ( name.trim().equals("") ) {
 			throw new IllegalArgumentException("argument <name> is empty");
 		}
-		
+
 		GnuCashAccount retval = getAccountByID(acctID);
 		if ( retval == null ) {
 			retval = getAccountByNameUniq(name, true);
@@ -299,7 +304,7 @@ public class FileAccountManager {
 
 	/*
 	 * First try to fetch the account by id, then fall back to traversing all
-	 * accounts to get if by it's name.
+	 * accounts to get if by its name.
 	 */
 	public GnuCashAccount getAccountByIDorNameEx(final GCshAcctID acctID, final String name)
 			throws NoEntryFoundException, TooManyEntriesFoundException {
@@ -380,7 +385,7 @@ public class FileAccountManager {
 
 		GCshAcctLot retval = acctLotMap.get(lotID);
 		if ( retval == null ) {
-			LOGGER.warn("getAccountLotByID: No Account-Lot with id '" + lotID + "'. We know " + acctLotMap.size() + " account lots.");
+			LOGGER.warn("getAccountLotByID: No Account-Lot with ID '" + lotID + "'. We know " + acctLotMap.size() + " account lots.");
 		}
 
 		return retval;
@@ -408,9 +413,9 @@ public class FileAccountManager {
 				result.add(acct);
 			} catch (RuntimeException e) {
 				LOGGER.error("getAccounts_readAfresh: [RuntimeException] Problem in " + getClass().getName()
-						+ ".getAccounts_readAfresh: " + "ignoring illegal Account entry with id="
+						+ ".getAccounts_readAfresh: " + "ignoring illegal Account entry with ID="
 						+ jwsdpAcct.getActId().getValue(), e);
-//		System.err.println("getAccounts_readAfresh: ignoring illegal Account entry with id: " + jwsdpAcct.getActID().getValue());
+//		System.err.println("getAccounts_readAfresh: ignoring illegal Account entry with ID: " + jwsdpAcct.getActId().getValue());
 //		System.err.println("  " + e.getMessage());
 			}
 		}
@@ -460,9 +465,9 @@ public class FileAccountManager {
 					result.add(lot);
 				} catch (RuntimeException e) {
 					LOGGER.error("getAccountLots_readAfresh(1): [RuntimeException] Problem in "
-							+ "ignoring illegal Account Lot entry with id="
+							+ "ignoring illegal Account Lot entry with ID="
 							+ jwsdpAcctLot.getLotId().getValue(), e);
-//			System.err.println("getAccountLots_readAfresh(1): ignoring illegal Account Lot entry with id: " + jwsdpAcctLot.getLotID().getValue());
+//			System.err.println("getAccountLots_readAfresh(1): ignoring illegal Account Lot entry with ID: " + jwsdpAcctLot.getLotID().getValue());
 //			System.err.println("  " + e.getMessage());
 				}
 			} // for jwsdpAcctLot
@@ -482,9 +487,9 @@ public class FileAccountManager {
 						result.add(lot);
 					} catch (RuntimeException e) {
 						LOGGER.error("getAccountLots_readAfresh(2): [RuntimeException] Problem in "
-								+ "ignoring illegal Account Lot entry with id="
+								+ "ignoring illegal Account Lot entry with ID="
 								+ jwsdpAcctLot.getLotId().getValue(), e);
-//			System.err.println("getAccountLots_readAfresh(2): ignoring illegal Account Lot entry with id: " + jwsdpAcctLot.getLotID().getValue());
+//			System.err.println("getAccountLots_readAfresh(2): ignoring illegal Account Lot entry with ID: " + jwsdpAcctLot.getLotID().getValue());
 //			System.err.println("  " + e.getMessage());
 					}
 				} // for jwsdpAcctLot
@@ -581,8 +586,6 @@ public class FileAccountManager {
 
 		return result;
 	}
-
-	// ---------------------------
 
 	public List<GnuCashAccount> getTopAccounts() {
 		List<GnuCashAccount> result = new ArrayList<GnuCashAccount>();
