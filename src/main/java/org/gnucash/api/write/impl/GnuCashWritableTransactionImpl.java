@@ -31,8 +31,6 @@ import org.gnucash.base.basetypes.simple.GCshTrxID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import xyz.schnorxoborx.base.beanbase.TransactionSplitNotFoundException;
-
 /**
  * Extension of GnuCashTransactionImpl to allow read-write access instead of
  * read-only access.
@@ -41,14 +39,9 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
                                             implements GnuCashWritableTransaction 
 {
 
-    /**
-     * Our logger for debug- and error-ourput.
-     */
     private static final Logger LOGGER = LoggerFactory.getLogger(GnuCashWritableTransactionImpl.class);
 
-    /**
-     * Our helper to implement the GnuCashWritableObject-interface.
-     */
+    // Our helper to implement the GnuCashWritableObject-interface.
     private final GnuCashWritableObjectImpl helper = new GnuCashWritableObjectImpl(getWritableGnuCashFile(), this);
 
     // -----------------------------------------------------------
