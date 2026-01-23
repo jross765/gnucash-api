@@ -138,7 +138,7 @@ public class GnuCashWritableVendorBillImpl extends GnuCashWritableGenerInvoiceIm
 							// Check if it's a payment transaction.
 							// If so, add it to the invoice's list of payment transactions.
 							if ( splt.getAction() == GnuCashTransactionSplit.Action.PAYMENT ) {
-								addPayingTransaction(splt);
+								addPayingTransactionSplit(splt);
 							}
 						} // if lotID
 					} // for invc
