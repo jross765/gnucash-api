@@ -3,6 +3,7 @@ package org.gnucash.api.write;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.GnuCashCommodity;
 import org.gnucash.api.read.GnuCashPrice;
 import org.gnucash.api.write.hlp.GnuCashWritableObject;
@@ -144,5 +145,7 @@ public interface GnuCashWritablePrice extends GnuCashPrice,
      * @see #getValue()
      */
     void setValue(FixedPointNumber val);
+
+    void setValue(BigFraction val);
 
 }

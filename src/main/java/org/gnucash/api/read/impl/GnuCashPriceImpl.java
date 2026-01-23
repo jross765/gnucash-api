@@ -7,6 +7,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Currency;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.Const;
 import org.gnucash.api.generated.Price;
 import org.gnucash.api.generated.Price.PriceCommodity;
@@ -266,6 +267,14 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 			return null;
 
 		return new FixedPointNumber(jwsdpPeer.getPriceValue());
+	}
+
+	@Override
+	public BigFraction getValueRat() {
+		if ( jwsdpPeer.getPriceValue() == null )
+			return null;
+
+		return BigFraction.parse(jwsdpPeer.getPriceValue());
 	}
 
 	@Override

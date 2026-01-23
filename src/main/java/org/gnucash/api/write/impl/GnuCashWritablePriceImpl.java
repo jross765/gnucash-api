@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.Const;
 import org.gnucash.api.generated.GncPricedb;
 import org.gnucash.api.generated.ObjectFactory;
@@ -260,9 +261,24 @@ public class GnuCashWritablePriceImpl extends GnuCashPriceImpl
 
     @Override
     public void setValue(FixedPointNumber val) {
+		if ( val == null ) {
+			throw new IllegalArgumentException("argument <val> is null");
+		}
+
     	jwsdpPeer.setPriceValue(val.toGnuCashString());
     	getWritableGnuCashFile().setModified(true);
     }
+
+	@Override
+	// ::TODO
+	public void setValue(final BigFraction val) {
+		if ( val == null ) {
+			throw new IllegalArgumentException("argument <val> is null");
+		}
+
+		FixedPointNumber temp = FixedPointNumber.of(val);
+		setValue(temp);
+	}
 
     // ---------------------------------------------------------------
     

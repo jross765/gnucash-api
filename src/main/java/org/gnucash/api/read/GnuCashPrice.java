@@ -3,6 +3,7 @@ package org.gnucash.api.read;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.hlp.GnuCashObject;
 import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
@@ -145,6 +146,8 @@ public interface GnuCashPrice extends Comparable<GnuCashPrice>,
     // String getTypeStr();
 
     FixedPointNumber getValue();
+    
+    BigFraction      getValueRat();
     
     String getValueFormatted();
     
