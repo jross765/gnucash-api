@@ -46,7 +46,6 @@ import org.gnucash.base.basetypes.simple.GCshEmplID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcEntrID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcID;
 import org.gnucash.base.basetypes.simple.GCshGenerJobID;
-import org.gnucash.base.basetypes.simple.GCshID;
 import org.gnucash.base.basetypes.simple.GCshPrcID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
 import org.gnucash.base.basetypes.simple.GCshTrxID;
@@ -145,22 +144,39 @@ public interface GnuCashWritableFile extends GnuCashFile,
     // ----------------------------
 
     /**
+     * @param type 
+     * @param cmdtyCurrID 
+     * @param parentID 
+     * @param name 
      * @return a new account that is already added to this file as a top-level
      *         account
      */
-    @Deprecated
-    GnuCashWritableAccount createWritableAccount();
-
     GnuCashWritableAccount createWritableAccount(GnuCashAccount.Type type,
 			  									 GCshCmdtyCurrID cmdtyCurrID,
 			  									 GCshAcctID parentID,
 			  									 String name);
 
+    /**
+     * @param type 
+     * @param cmdtyID 
+     * @param parentID 
+     * @param name 
+     * @return a new account that is already added to this file as a top-level
+     *         account
+     */
     GnuCashWritableAccount createWritableAccount(GnuCashAccount.Type type, 
     											 GCshCmdtyID cmdtyID,
     											 GCshAcctID parentID,
     											 String name);
 
+    /**
+     * @param type 
+     * @param currID 
+     * @param parentID 
+     * @param name 
+     * @return a new account that is already added to this file as a top-level
+     *         account
+     */
     GnuCashWritableAccount createWritableAccount(GnuCashAccount.Type type, 
     											 GCshCurrID currID,
     											 GCshAcctID parentID,
@@ -201,7 +217,7 @@ public interface GnuCashWritableFile extends GnuCashFile,
      * @param spltID
      * @return
      * 
-     * #see {@link #getTransactionSplitByID(GCshID)}
+     * #see {@link #getTransactionSplitByID(GCshSpltID)}
      */
     GnuCashWritableTransactionSplit getWritableTransactionSplitByID(GCshSpltID spltID);
 
@@ -219,7 +235,7 @@ public interface GnuCashWritableFile extends GnuCashFile,
      * @param id the id to look for
      * @return A modifiable version of the invoice.
      *
-     * @see #getGenerInvoiceByID(GCshID)
+     * @see #getGenerInvoiceByID(GCshGenerInvcID)
      */
     GnuCashWritableGenerInvoice getWritableGenerInvoiceByID(GCshGenerInvcID invcID);
 
@@ -351,7 +367,7 @@ public interface GnuCashWritableFile extends GnuCashFile,
 
     /**
      * @param invcEntrID 
-     * @see GnuCashFile#getGenerInvoiceEntryByID(GCshID)
+     * @see GnuCashFile#getGenerInvoiceEntryByID(GCshGenerInvcEntrID)
      * @param id the id to look for
      * @return A modifiable version of the invoice entry.
      */
@@ -434,7 +450,7 @@ public interface GnuCashWritableFile extends GnuCashFile,
     // ---------------------------------------------------------------
 
     /**
-     * @see GnuCashFile#getGenerJobByID(GCshID)
+     * @see GnuCashFile#getGenerJobByID(GCshGenerJobID)
      * @param jobID the id of the job to fetch
      * @return A modifiable version of the job or null of not found.
      */
@@ -522,7 +538,9 @@ public interface GnuCashWritableFile extends GnuCashFile,
 	 * @param name  Security name
      * @return a new commodity with no values that is already added to this file
      */
-    GnuCashWritableCommodity createWritableCommodity(GCshCmdtyID qualifID, String code, String name);
+    GnuCashWritableCommodity createWritableCommodity(GCshCmdtyID cmdtyID, String code, String name);
+
+    GnuCashWritableCommodity createWritableCommodity(GCshCurrID currID, String code, String name);
 
     /**
      * @param cmdty the commodity to remove

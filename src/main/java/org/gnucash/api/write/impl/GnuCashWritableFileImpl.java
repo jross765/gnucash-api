@@ -166,85 +166,27 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 
 	/**
 	 * @param file the file to load
-	 * @throws IOException                   on bsic io-problems such as a
+	 * @throws IOException                   on basic io-problems such as a
 	 *                                       FileNotFoundException
 	 */
 	public GnuCashWritableFileImpl(final File file) throws IOException {
 		super(file);
 		setModified(false);
-
-    	// CAUTION: The order matters
-		acctMgr = new org.gnucash.api.write.impl.hlp.FileAccountManager(this);
-		trxMgr = new org.gnucash.api.write.impl.hlp.FileTransactionManager(this);
-
-		invcMgr = new org.gnucash.api.write.impl.hlp.FileInvoiceManager(this);
-		invcEntrMgr = new org.gnucash.api.write.impl.hlp.FileInvoiceEntryManager(this);
-
-		custMgr = new org.gnucash.api.write.impl.hlp.FileCustomerManager(this);
-		vendMgr = new org.gnucash.api.write.impl.hlp.FileVendorManager(this);
-		emplMgr = new org.gnucash.api.write.impl.hlp.FileEmployeeManager(this);
-		jobMgr = new org.gnucash.api.write.impl.hlp.FileJobManager(this);
-
-		cmdtyMgr = new org.gnucash.api.write.impl.hlp.FileCommodityManager(this);
-		prcMgr = new org.gnucash.api.write.impl.hlp.FilePriceManager(this);
 	}
 
 	public GnuCashWritableFileImpl(final File file, boolean withProgBar) throws IOException {
 		super(file, withProgBar);
 		setModified(false);
-
-    	// CAUTION: The order matters
-		acctMgr = new org.gnucash.api.write.impl.hlp.FileAccountManager(this);
-		trxMgr = new org.gnucash.api.write.impl.hlp.FileTransactionManager(this, withProgBar);
-
-		invcMgr = new org.gnucash.api.write.impl.hlp.FileInvoiceManager(this);
-		invcEntrMgr = new org.gnucash.api.write.impl.hlp.FileInvoiceEntryManager(this);
-
-		custMgr = new org.gnucash.api.write.impl.hlp.FileCustomerManager(this);
-		vendMgr = new org.gnucash.api.write.impl.hlp.FileVendorManager(this);
-		emplMgr = new org.gnucash.api.write.impl.hlp.FileEmployeeManager(this);
-		jobMgr = new org.gnucash.api.write.impl.hlp.FileJobManager(this);
-
-		cmdtyMgr = new org.gnucash.api.write.impl.hlp.FileCommodityManager(this);
-		prcMgr = new org.gnucash.api.write.impl.hlp.FilePriceManager(this);
 	}
 
 	public GnuCashWritableFileImpl(final InputStream is) throws IOException {
 		super(is);
-
-    	// CAUTION: The order matters
-		acctMgr = new org.gnucash.api.write.impl.hlp.FileAccountManager(this);
-		trxMgr = new org.gnucash.api.write.impl.hlp.FileTransactionManager(this);
-
-		invcMgr = new org.gnucash.api.write.impl.hlp.FileInvoiceManager(this);
-		invcEntrMgr = new org.gnucash.api.write.impl.hlp.FileInvoiceEntryManager(this);
-
-		custMgr = new org.gnucash.api.write.impl.hlp.FileCustomerManager(this);
-		vendMgr = new org.gnucash.api.write.impl.hlp.FileVendorManager(this);
-		emplMgr = new org.gnucash.api.write.impl.hlp.FileEmployeeManager(this);
-		jobMgr = new org.gnucash.api.write.impl.hlp.FileJobManager(this);
-
-		cmdtyMgr = new org.gnucash.api.write.impl.hlp.FileCommodityManager(this);
-		prcMgr = new org.gnucash.api.write.impl.hlp.FilePriceManager(this);
+		setModified(false);
 	}
 
 	public GnuCashWritableFileImpl(final InputStream is, boolean withProgBar) throws IOException {
 		super(is, withProgBar);
-
-    	// CAUTION: The order matters
-		acctMgr = new org.gnucash.api.write.impl.hlp.FileAccountManager(this);
-		trxMgr = new org.gnucash.api.write.impl.hlp.FileTransactionManager(this, withProgBar);
-
-		invcMgr = new org.gnucash.api.write.impl.hlp.FileInvoiceManager(this);
-		invcEntrMgr = new org.gnucash.api.write.impl.hlp.FileInvoiceEntryManager(this);
-
-		custMgr = new org.gnucash.api.write.impl.hlp.FileCustomerManager(this);
-		vendMgr = new org.gnucash.api.write.impl.hlp.FileVendorManager(this);
-		emplMgr = new org.gnucash.api.write.impl.hlp.FileEmployeeManager(this);
-		jobMgr = new org.gnucash.api.write.impl.hlp.FileJobManager(this);
-
-		cmdtyMgr = new org.gnucash.api.write.impl.hlp.FileCommodityManager(this);
-		prcMgr = new org.gnucash.api.write.impl.hlp.FilePriceManager(this);
+		setModified(false);
 	}
 
 	// ---------------------------------------------------------------
@@ -479,6 +421,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalArgumentException("argument <type> is empty");
 		}
 		
+		// 1) Search for existing
 		for ( GncCountData gncCountData : getRootElement().getGncBook().getGncCountData() ) {
 			if ( type.equals(gncCountData.getCdType()) ) {
 				gncCountData.setValue(gncCountData.getValue() + val);
@@ -487,7 +430,16 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			}
 		}
 
-		throw new IllegalArgumentException("Unknown type '" + type + "'");
+		// 2) Create new, if does not exist yet
+		LOGGER.warn( "incrementCountDataForCore: Count data for type '" + type + "' not found" );
+		LOGGER.warn( "incrementCountDataForCore: Will generate it" );
+		GncCountData gncCntDat = getObjectFactory().createGncCountData();
+		gncCntDat.setCdType(type);
+		gncCntDat.setValue(val);
+		getRootElement().getGncBook().getGncCountData().add( gncCntDat );
+		LOGGER.warn( "incrementCountDataForCore: Generated count data for type '" + type + "'" );
+		
+//		throw new IllegalArgumentException("Unknown type '" + type + "'");
 	}
 
 	/**
@@ -585,22 +537,59 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 
 	// ---------------------------------------------------------------
 
-	/**
-	 * @return the underlying JAXB-element
-	 * @see GnuCashWritableFile#getRootElement()
-	 */
-	@SuppressWarnings("exports")
+	// CAUTION: In this method, the order of the instantiation of the classes matters,
+	// and it's even more complicated than in the ro-variant of the method
+	// (the one that is overloaded here).
 	@Override
-	public GncV2 getRootElement() {
-		return super.getRootElement();
-	}
+	protected void loadEntityMgrs(final GncV2 rootElt, boolean withProgBar) {
+		LOGGER.debug("loadEntityMgrs: called");
+		
+		// Prices
+		// Caution: the price manager has to be instantiated
+		// *before* loading the price database
+		prcMgr  = new org.gnucash.api.write.impl.hlp.FilePriceManager(this);
+		loadPriceDatabase(rootElt, withProgBar);
+		
+		// ---
+		// Hack: There are complicated circular dependencies
+		// (as opposed to the r/o variant of this method that
+		// is overloaded here).
+		// ==> Some entity managers have to be instantiated twice: 
+		// First time in r/o variant, second time in r/w variant. 
+		// ::TODO: Check whether we can do that more elegantly / efficiently. 
+		invcMgr = new org.gnucash.api.read.impl.hlp.FileInvoiceManager(this);
 
-	/**
-	 * @see #getRootElement()
-	 */
-	@Override
-	protected void setRootElement(final GncV2 rootElement, boolean withProgBar) {
-		super.setRootElement(rootElement, withProgBar);
+		// ---
+
+		// ::TODO ::CHECK
+//	if (rootElt.getGncBook().getBookSlots() == null) {
+//		rootElt.getGncBook().setBookSlots((new ObjectFactory()).createSlotsType());
+//	}
+
+		// ::TODO ::CHECK
+		// myGnuCashObject = new GnuCashWritableObjectImpl(this);
+		
+		// Init helper entity managers / fill maps
+    	// CAUTION: The order matters
+		trxMgr      = new org.gnucash.api.write.impl.hlp.FileTransactionManager(this, withProgBar);
+		acctMgr     = new org.gnucash.api.write.impl.hlp.FileAccountManager(this);
+		
+		invcMgr     = new org.gnucash.api.write.impl.hlp.FileInvoiceManager(this);
+		invcEntrMgr = new org.gnucash.api.write.impl.hlp.FileInvoiceEntryManager(this);
+
+		custMgr     = new org.gnucash.api.write.impl.hlp.FileCustomerManager(this);
+		vendMgr     = new org.gnucash.api.write.impl.hlp.FileVendorManager(this);
+		emplMgr     = new org.gnucash.api.write.impl.hlp.FileEmployeeManager(this);
+		jobMgr      = new org.gnucash.api.write.impl.hlp.FileJobManager(this);
+		
+		cmdtyMgr    = new org.gnucash.api.write.impl.hlp.FileCommodityManager(this);
+
+		taxTabMgr   = new org.gnucash.api.write.impl.hlp.FileTaxTableManager(this);
+		bllTrmMgr   = new org.gnucash.api.write.impl.hlp.FileBillTermsManager(this);
+		
+		// ---
+
+		checkForUnknownBookElts();
 	}
 
 	// ---------------------------------------------------------------
@@ -636,27 +625,31 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	 * @param acctID the unique account-id
 	 * @return A modifiable version of the account or null if not found.
 	 * 
-	 * @see #getAccountByID(GCshID)
+	 * @see #getAccountByID(GCshAcctID)
 	 */
 	@Override
 	public GnuCashWritableAccount getWritableAccountByID(final GCshAcctID acctID) {
 		if ( acctID == null ) {
-			throw new IllegalArgumentException("argument <name> is null");
+			throw new IllegalArgumentException("argument <acctID> is null");
 		}
 
-		if ( !acctID.isSet() ) {
-			throw new IllegalArgumentException("argument <name> is not set");
+		if ( ! acctID.isSet() ) {
+			throw new IllegalArgumentException("argument <acctID> is not set");
 		}
 
+		GnuCashAccount acct = super.getAccountByID(acctID);
+		if ( acct == null ) {
+			LOGGER.error("getWritableAccountByID: Could not get account object (ID: " + acctID + ")");
+//			System.err.println("getWritableAccountByID: Could not get account object (ID: " + acctID + ")");
+			throw new RuntimeException("Could not get account object (ID: " + acctID + ")");
+		}
+		
 		try {
-			GnuCashAccount acct = super.getAccountByID(acctID);
 			return new GnuCashWritableAccountImpl((GnuCashAccountImpl) acct, true);
 		} catch (Exception exc) {
-			LOGGER.error(
-					"getWritableAccountByID: Could not instantiate writable account object from read-only account object (ID: "
-							+ acctID + ")");
-			throw new RuntimeException(
-					"Could not instantiate writable account object from read-only account object (ID: " + acctID + ")");
+			LOGGER.error("getWritableAccountByID: Could not instantiate writable account object from read-only account object (ID: " + acctID + ")");
+//			System.err.println("getWritableAccountByID: Could not instantiate writable account object from read-only account object (ID: " + acctID + ")");
+			throw new RuntimeException("Could not instantiate writable account object from read-only account object (ID: " + acctID + ")");
 		}
 	}
 
@@ -682,7 +675,8 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		TreeSet<GnuCashWritableAccount> retval = new TreeSet<GnuCashWritableAccount>();
 
 		for ( GnuCashAccount acct : getAccounts() ) {
-			retval.add((GnuCashWritableAccount) acct);
+			GnuCashWritableAccount wrtblAcct = new GnuCashWritableAccountImpl((GnuCashAccountImpl) acct, true);
+			retval.add(wrtblAcct);
 		}
 
 		return retval;
@@ -734,8 +728,9 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 				if ( acct == root ) {
 					continue;
 				}
-				((GnuCashWritableAccount) acct).setParentAccount(root);
-
+				// ((GnuCashWritableAccount) acct).setParentAccount(root);
+				GnuCashWritableAccount wrtblAcct = new GnuCashWritableAccountImpl((GnuCashAccountImpl) acct, false);
+				wrtblAcct.setParentAccount(root);
 			}
 			rootAcctList = rootAccounts2;
 		}
@@ -744,16 +739,6 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	}
 
 	// ----------------------------
-
-	@Override
-	@Deprecated
-	public GnuCashWritableAccount createWritableAccount() {
-		GnuCashWritableAccount acct = new GnuCashWritableAccountImpl(this);
-		((org.gnucash.api.write.impl.hlp.FileAccountManager) super.acctMgr)
-			.addAccount(acct);
-		
-		return acct;
-	}
 
 	@Override
 	public GnuCashWritableAccount createWritableAccount(GnuCashAccount.Type type,
@@ -793,6 +778,10 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	 */
 	@Override
 	public void removeAccount(final GnuCashWritableAccount acct) {
+		if ( acct.hasLots() ) {
+			throw new IllegalStateException("cannot remove account while it contains lots");
+		}
+
 		if ( acct.hasTransactions() ) {
 			throw new IllegalStateException("cannot remove account while it contains transaction-splits");
 		}
@@ -801,10 +790,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		((org.gnucash.api.write.impl.hlp.FileAccountManager) super.acctMgr)
 			.removeAccount(acct);
 		
-		// 2) Remove lots, if any
-		((GnuCashWritableAccountImpl) acct).removeLots();
-
-		// 3) remove account
+		// 2) remove account
 		getRootElement().getGncBook().getBookElements().remove(((GnuCashWritableAccountImpl) acct).getJwsdpPeer());
 		setModified(true);
 	}
@@ -812,7 +798,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	// ---------------------------------------------------------------
 
 	/**
-	 * @see #getTransactionByID(GCshID)
+	 * @see #getTransactionByID(GCshTrxID)
 	 */
 	@Override
 	public GnuCashWritableTransaction getWritableTransactionByID(final GCshTrxID trxID) {
@@ -937,7 +923,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	 * @param spltID
 	 * @return
 	 * 
-	 * @see #getTransactionSplitByID(GCshID)
+	 * @see #getTransactionSplitByID(GCshSpltID)
 	 */
 	@Override
 	public GnuCashWritableTransactionSplit getWritableTransactionSplitByID(final GCshSpltID spltID) {
@@ -951,7 +937,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 
 		GnuCashTransactionSplit splt = super.getTransactionSplitByID(spltID);
 		// ::TODO
-		// !!! Diese nicht-triviale Änderung nochmal ganz genau abtesten !!!
+		// !!! Diese nicht-triviale Aenderung nochmal ganz genau abtesten !!!
 		return new GnuCashWritableTransactionSplitImpl((GnuCashTransactionSplitImpl) splt, false, false);
 	}
 
@@ -1397,7 +1383,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	// ---------------------------------------------------------------
 
 	/**
-	 * @see #getCustomerByID(GCshID)
+	 * @see #getCustomerByID(GCshCustID)
 	 */
 	@Override
 	public GnuCashWritableCustomer getWritableCustomerByID(final GCshCustID custID) {
@@ -1453,7 +1439,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	// ---------------------------------------------------------------
 
 	/**
-	 * @see #getVendorByID(GCshID)
+	 * @see #getVendorByID(GCshVendID)
 	 */
 	@Override
 	public GnuCashWritableVendor getWritableVendorByID(final GCshVendID vendID) {
@@ -1510,7 +1496,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	// ---------------------------------------------------------------
 
 	/**
-	 * @see #getEmployeeByID(GCshID)
+	 * @see #getEmployeeByID(GCshEmplID)
 	 */
 	@Override
 	public GnuCashWritableEmployee getWritableEmployeeByID(final GCshEmplID emplID) {
@@ -1570,7 +1556,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	 * @param jobID the id of the job to fetch
 	 * @return A modifiable version of the job or null of not found.
 	 * 
-	 * @see #getGenerJobByID(GCshID)
+	 * @see #getGenerJobByID(GCshGenerJobID)
 	 */
 	@Override
 	public GnuCashWritableGenerJob getWritableGenerJobByID(final GCshGenerJobID jobID) {
@@ -1796,10 +1782,25 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	@Override
 	public GnuCashWritableCommodity createWritableCommodity(
 			final GCshCmdtyID cmdtyID,
-			final String code, // <-- e.g., ISIN
+			final String code, // <-- e.g., the ISIN (not the string "ISIN")
 			final String name) {
 		GnuCashWritableCommodityImpl cmdty = new GnuCashWritableCommodityImpl(this, cmdtyID);
 		cmdty.setQualifID(cmdtyID);
+		cmdty.setXCode(code);
+		cmdty.setName(name);
+		((org.gnucash.api.write.impl.hlp.FileCommodityManager) super.cmdtyMgr)
+			.addCommodity(cmdty);
+		
+		return cmdty;
+	}
+
+	@Override
+	public GnuCashWritableCommodity createWritableCommodity(
+			final GCshCurrID currID,
+			final String code, // <-- e.g., "USD", "EUR", etc.
+			final String name) {
+		GnuCashWritableCommodityImpl cmdty = new GnuCashWritableCommodityImpl(this, currID);
+		cmdty.setQualifID(currID);
 		cmdty.setXCode(code);
 		cmdty.setName(name);
 		((org.gnucash.api.write.impl.hlp.FileCommodityManager) super.cmdtyMgr)
@@ -1860,7 +1861,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		if ( pCmdtySpace == null ) {
 			throw new IllegalArgumentException("argument <pCmdtySpace> is null");
 		}
-		
+
 		if ( pCmdtyID == null ) {
 			throw new IllegalArgumentException("argument <pCmdtyID> is null");
 		}

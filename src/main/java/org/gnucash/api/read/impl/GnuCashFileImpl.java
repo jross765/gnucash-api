@@ -54,6 +54,7 @@ import org.gnucash.api.read.GnuCashVendor;
 import org.gnucash.api.read.aux.GCshBillTerms;
 import org.gnucash.api.read.aux.GCshOwner;
 import org.gnucash.api.read.aux.GCshTaxTable;
+import org.gnucash.api.read.hlp.GnuCashObject;
 import org.gnucash.api.read.impl.aux.GCshFileMetaInfo;
 import org.gnucash.api.read.impl.aux.GCshFileStats;
 import org.gnucash.api.read.impl.hlp.FileAccountManager;
@@ -68,7 +69,6 @@ import org.gnucash.api.read.impl.hlp.FilePriceManager;
 import org.gnucash.api.read.impl.hlp.FileTaxTableManager;
 import org.gnucash.api.read.impl.hlp.FileTransactionManager;
 import org.gnucash.api.read.impl.hlp.FileVendorManager;
-import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.api.read.impl.hlp.GnuCashPubIDManager;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
 import org.gnucash.api.read.impl.hlp.NamespaceRemoverReader;
@@ -89,7 +89,6 @@ import org.gnucash.base.basetypes.simple.GCshEmplID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcEntrID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcID;
 import org.gnucash.base.basetypes.simple.GCshGenerJobID;
-import org.gnucash.base.basetypes.simple.GCshID;
 import org.gnucash.base.basetypes.simple.GCshPrcID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
 import org.gnucash.base.basetypes.simple.GCshTrxID;
@@ -136,7 +135,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	// ----------------------------
 
 	private GncV2 rootElement;
-	private GnuCashObjectImpl myGnuCashObject;
+	protected GnuCashObject myGnuCashObject; // ::TODO ::CHECK: really needed?
 
 	// ----------------------------
 
@@ -171,7 +170,6 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	 * @param pFile the file to load and initialize from
 	 * @throws IOException                   on low level reading-errors
 	 *                                       (FileNotFoundException if not found)
-	 * @see #loadFile(File)
 	 */
 	public GnuCashFileImpl(final File pFile) throws IOException {
 		super();
@@ -184,10 +182,9 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	}
 
 	/**
-	 * @param pFile the file to load and initialize from
+	 * @param is the input stream to load and initialize from
 	 * @throws IOException                   on low level reading-errors
 	 *                                       (FileNotFoundException if not found)
-	 * @see #loadFile(File)
 	 */
 	public GnuCashFileImpl(final InputStream is) throws IOException {
 		super();
@@ -302,6 +299,8 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	 * Get count data for specific type.
 	 *
 	 * @param type the type to set it for
+	 * 
+	 * @return 
 	 */
 	public int getCountDataFor(final String type) {
 		if ( type == null ) {
@@ -364,7 +363,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	// ---------------------------------------------------------------
 
 	/**
-	 * @see #getAccountsByParentID(GCshID)
+	 * @see #getAccountsByParentID(GCshAcctID)
 	 */
 	@Override
 	public GnuCashAccount getAccountByID(final GCshAcctID acctID) {
@@ -410,7 +409,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	 * @return null if not found
 	 * @throws TooManyEntriesFoundException
 	 * @throws NoEntryFoundException
-	 * @see #getAccountByID(GCshID)
+	 * @see #getAccountByID(GCshAcctID)
 	 * @see #getAccountsByName(String)
 	 */
 	@Override
@@ -555,7 +554,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 		return trxMgr.getTransactionSplitByID(spltID);
 	}
 
-    public GnuCashTransactionSplit getTransactionSplitByAcctIDAndTrxID(GCshAcctID acctID, GCshTrxID trxID) {
+    public GnuCashTransactionSplit getTransactionSplitByAcctIDAndTrxID(final GCshAcctID acctID, final GCshTrxID trxID) {
 		if ( acctID == null ) {
 			throw new IllegalArgumentException("argument <acctID> is null");
 		}
@@ -868,7 +867,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	// ---------------------------------------------------------------
 
 	@Override
-	public GnuCashVendor getVendorByID(GCshVendID vendID) {
+	public GnuCashVendor getVendorByID(final GCshVendID vendID) {
 		return vendMgr.getVendorByID(vendID);
 	}
 
@@ -1231,67 +1230,67 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	/**
 	 * Set the new root-element and load all accounts, transactions,... from it.
 	 *
-	 * @param pRootElement the new root-element
+	 * @param rootElt the new root-element
 	 */
-	protected void setRootElement(final GncV2 pRootElement, boolean withProgBar) {
-		if ( pRootElement == null ) {
-			throw new IllegalArgumentException("argument <pRootElement> is null");
+	protected void setRootElement(final GncV2 rootElt, boolean withProgBar) {
+		if ( rootElt == null ) {
+			throw new IllegalArgumentException("argument <rootElt> is null");
 		}
 
-		LOGGER.debug("setRootElement (read-version)");
+		rootElement = rootElt;
 
-		rootElement = pRootElement;
+    	loadEntityMgrs(rootElt, withProgBar);
+	}
 
-		// ---
+	// CAUTION: In this method, the order of the instantiation of the classes matters! 
+	protected void loadEntityMgrs(final GncV2 rootElt, boolean withProgBar) {
+		LOGGER.debug("loadEntityMgrs: called");
+		
 		// Prices
 		// Caution: the price manager has to be instantiated
 		// *before* loading the price database
-
 		prcMgr = new FilePriceManager(this);
+		loadPriceDatabase(rootElt, withProgBar);
 
-		loadPriceDatabase(pRootElement, withProgBar);
-//	if (pRootElement.getGncBook().getBookSlots() == null) {
-//	    pRootElement.getGncBook().setBookSlots((new ObjectFactory()).createSlotsType());
+		// ---
+
+		// ::TODO ::CHECK
+//	if (rootElt.getGncBook().getBookSlots() == null) {
+//	    rootElt.getGncBook().setBookSlots((new ObjectFactory()).createSlotsType());
 //	}
 
-		// ---
+		// ::TODO ::CHECK
+		// myGnuCashObject = new GnuCashObjectImpl(this);
 
-		myGnuCashObject = new GnuCashObjectImpl(this);
-
-		// ---
 		// Init helper entity managers / fill maps
-
-		acctMgr = new FileAccountManager(this);
-
-		invcMgr = new FileInvoiceManager(this);
-
+    	// CAUTION: The order matters
+		acctMgr     = new FileAccountManager(this);
+		
+		invcMgr     = new FileInvoiceManager(this);
 		// Caution: invoice entries refer to invoices,
 		// therefore they have to be loaded after them
 		invcEntrMgr = new FileInvoiceEntryManager(this);
-
+		
 		// Caution: transactions refer to invoices,
 		// therefore they have to be loaded after them
-		trxMgr = new FileTransactionManager(this, withProgBar);
-
-		custMgr = new FileCustomerManager(this);
-
-		vendMgr = new FileVendorManager(this);
-
-		emplMgr = new FileEmployeeManager(this);
-
-		jobMgr = new FileJobManager(this);
-
-		cmdtyMgr = new FileCommodityManager(this);
-
-		// ---
-
-		taxTabMgr = new FileTaxTableManager(this);
-
-		bllTrmMgr = new FileBillTermsManager(this);
+		trxMgr      = new FileTransactionManager(this, withProgBar);
+		custMgr     = new FileCustomerManager(this);
+		vendMgr     = new FileVendorManager(this);
+		emplMgr     = new FileEmployeeManager(this);
+		jobMgr      = new FileJobManager(this);
+		
+		cmdtyMgr    = new FileCommodityManager(this);
+		
+		taxTabMgr   = new FileTaxTableManager(this);
+		bllTrmMgr   = new FileBillTermsManager(this);
 
 		// ---
 
-		// check for unknown book-elements
+		checkForUnknownBookElts();
+	}
+
+	protected void checkForUnknownBookElts()
+	{
 		for ( Object bookElement : getRootElement().getGncBook().getBookElements() ) {
 			if ( bookElement instanceof GncTransaction ) {
 				continue;
@@ -1327,8 +1326,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 				continue;
 			}
 
-			throw new IllegalArgumentException(
-					"<gnc:book> contains unknown element [" + bookElement.getClass().getName() + "]");
+			throw new IllegalArgumentException("<gnc:book> contains unknown element [" + bookElement.getClass().getName() + "]");
 		}
 	}
 
@@ -1345,7 +1343,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 			noPriceDB = false;
 
 		if ( priceDB.getVersion() != 1 ) {
-			LOGGER.warn("loadPriceDatabase: The library only supports the price-DB format V. 1, "
+			LOGGER.error("loadPriceDatabase: The library only supports the price-DB format V. 1, "
 					+ "but the file has version " + priceDB.getVersion() + ". " + "Prices will not be loaded.");
 		} else {
 			if ( withProgBar )
@@ -1360,11 +1358,11 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 		}
 	}
 
-	private void loadPriceDatabaseCore(GncPricedb priceDB) {
+	private void loadPriceDatabaseCore(final GncPricedb priceDB) {
 		loadPriceDatabaseCore_woProgBar(priceDB);
 	}
 	
-	private void loadPriceDatabaseCore_woProgBar(GncPricedb priceDB) {
+	private void loadPriceDatabaseCore_woProgBar(final GncPricedb priceDB) {
 //		getCurrencyTable().clear();
 //		getCurrencyTable().setConversionFactor(GCshCmdtyCurrNameSpace.CURRENCY, 
 //		                               getDefaultCurrencyID(), 
@@ -1408,7 +1406,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 		} // for price
 	}
 	
-	private void loadPriceDatabaseCore_wProgBar(GncPricedb priceDB) {
+	private void loadPriceDatabaseCore_wProgBar(final GncPricedb priceDB) {
 //		getCurrencyTable().clear();
 //		getCurrencyTable().setConversionFactor(GCshCmdtyCurrNameSpace.CURRENCY, 
 //		                               getDefaultCurrencyID(), 
@@ -1416,8 +1414,8 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 
 		String baseCurrency = getDefaultCurrencyID();
 
-		for ( Price price : ProgressBar.wrap( priceDB.getPrice(), "Price DB") ) {
-			Price.PriceCommodity fromCmdtyCurr = price.getPriceCommodity();
+		for ( Price jwsdpPrc : ProgressBar.wrap( priceDB.getPrice(), "Price DB") ) {
+			Price.PriceCommodity fromCmdtyCurr = jwsdpPrc.getPriceCommodity();
 //	    	Price.PriceCurrency  toCurr = price.getPriceCurrency();
 //	    	System.err.println("tt " + fromCmdtyCurr.getCmdtySpace() + ":" + fromCmdtyCurr.getCmdtyID() + 
 //	                       " --> " + toCurr.getCmdtySpace() + ":" + toCurr.getCmdtyID());
@@ -1438,18 +1436,18 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 
 			// get the latest price in the file and insert it into
 			// our currency table
-			FixedPointNumber factor = getLatestPrice(
-					new GCshCmdtyCurrID(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId()));
+			FixedPointNumber factor = getLatestPrice(new GCshCmdtyCurrID(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId()));
+			LOGGER.debug("loadPriceDatabaseCore: latest price for '" + fromCmdtyCurr.getCmdtySpace() + ":" + fromCmdtyCurr.getCmdtyId() + "': " + factor);
 
 			if ( factor != null ) {
 				getCurrencyTable().setConversionFactor(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId(),
 						factor);
 			} else {
-				LOGGER.warn("loadPriceDatabaseCore: The GnuCash file defines a factor for a commodity '"
+				LOGGER.warn("loadPriceDatabaseCore: The GnuCash file defines a factor for '"
 						+ fromCmdtyCurr.getCmdtySpace() + ":" + fromCmdtyCurr.getCmdtyId()
 						+ "' but has no commodity for it");
 			}
-		} // for price
+		} // for jwsdpPrc
 	}
 
 	// ---------------------------------------------------------------
