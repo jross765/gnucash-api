@@ -475,10 +475,11 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 			throw new IllegalArgumentException("argument <name> is empty");
 		}
 
-		if ( getGnuCashFile().getTopAccountIDs().contains(getID()) ||
+		if ( /* getGnuCashFile().getTopAccountIDs().contains(getID() ) || */
 			 getGnuCashFile().getRootAccountID().equals(getID()) ) {
-			LOGGER.error("Setting name is forbidden for root and top-level accounts");
-			throw new UnsupportedOperationException("Setting name is forbidden for root and top-level accounts");
+			// Sic, allowed for top-level accounts (as opposed to sister project)
+			LOGGER.error("Setting name is forbidden for root accounts");
+			throw new UnsupportedOperationException("Setting name is forbidden for root accounts");
 		}
 
 		String oldName = getName();
@@ -730,7 +731,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 			throw new UnsupportedOperationException("Setting parent-account ID is forbidden for root and top-level accounts");
 		}
 
-		GnuCashAccount oldPrntAcctID = null;
+		GCshAcctID oldPrntAcctID = null;
 		GncAccount.ActParent jwsdpPrntID = getJwsdpPeer().getActParent();
 		if ( jwsdpPrntID == null ) {
 			jwsdpPrntID = ((GnuCashWritableFileImpl) getWritableGnuCashFile()).getObjectFactory()
@@ -740,7 +741,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 			getJwsdpPeer().setActParent(jwsdpPrntID);
 
 		} else {
-			oldPrntAcctID = getParentAccount();
+			oldPrntAcctID = getParentAccount().getID();
 			jwsdpPrntID.setValue(prntAcctID.toString());
 		}
 		setIsModified();
@@ -1050,6 +1051,30 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 	public void clean() {
 		LOGGER.debug("clean: [account-id=" + getID() + "]");
 		HasWritableUserDefinedAttributesImpl.cleanSlots(getJwsdpPeer().getActSlots());
+	}
+
+	// ---------------------------------------------------------------
+	
+	@Override
+	public void setHidden()
+	{
+		if ( isHidden() )
+			return;
+		
+		if ( getUserDefinedAttribute(Const.SLOT_KEY_ACCT_HIDDEN) == null ) {
+			addUserDefinedAttribute(Const.XML_DATA_TYPE_STRING, Const.SLOT_KEY_ACCT_HIDDEN, "true");
+		} else {
+			setUserDefinedAttribute(Const.SLOT_KEY_ACCT_HIDDEN, "true");
+		}
+	}
+
+	@Override
+	public void unsetHidden()
+	{
+		if ( ! isHidden() )
+			return;
+		
+		removeUserDefinedAttribute(Const.SLOT_KEY_ACCT_HIDDEN);
 	}
 
 	// ---------------------------------------------------------------

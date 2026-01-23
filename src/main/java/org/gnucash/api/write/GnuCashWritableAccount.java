@@ -176,6 +176,10 @@ public interface GnuCashWritableAccount extends GnuCashAccount,
     void removeLot(GCshWritableAccountLot lot);
 
     // ---------------------------------------------------------------
+    
+    void setHidden();
+    
+    void unsetHidden();
 
     /**
      * Remove this account from the system.<br/>
