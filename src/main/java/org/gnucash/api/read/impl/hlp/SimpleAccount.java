@@ -117,9 +117,9 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 			}
 
 			return "UNKNOWN" + SEPARATOR + getName();
+		} else {
+			return acc.getQualifiedName() + SEPARATOR + getName();
 		}
-
-		return acc.getQualifiedName() + SEPARATOR + getName();
 	}
 
 	@Override
@@ -299,6 +299,9 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 
 	@Override
 	public GnuCashTransactionSplit getLastSplitBeforeRecursive(final LocalDate date) {
+		if ( date == null ) {
+			throw new IllegalArgumentException("argument <date> is null");
+		}
 
 		GnuCashTransactionSplit lastSplit = null;
 
@@ -333,6 +336,10 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 
 	@Override
 	public boolean hasTransactions() {
+		if ( this.getTransactionSplits() == null ) {
+			return false;
+		}
+		
 		return this.getTransactionSplits().size() > 0;
 	}
 
@@ -355,6 +362,10 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 
 	@Override
 	public boolean hasLots() {
+		if ( this.getLots() == null ) {
+			return false;
+		}
+			
 		return this.getLots().size() > 0;
 	}
     
