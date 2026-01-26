@@ -15,6 +15,7 @@ import org.gnucash.api.read.GnuCashTransaction;
 import org.gnucash.api.read.GnuCashTransactionSplit;
 import org.gnucash.api.read.aux.GCshAcctLot;
 import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
 import org.gnucash.base.basetypes.simple.aux.GCshLotID;
@@ -124,6 +125,9 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 
 	@Override
 	public GnuCashAccount getParentAccount() {
+		if ( isRootAccount() )
+			return null;
+
 		GCshAcctID parentID = getParentAccountID();
 		if ( parentID == null ) {
 			return null;
@@ -185,6 +189,18 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	@Override
 	public BigFraction getBalanceRat(final LocalDate date, final GCshCmdtyCurrID cmdtyCurrID) {
 		return AccountBalanceHelper_BF.getBalance(date, cmdtyCurrID, this);
+	}
+
+	// ---
+
+	@Override
+	public FixedPointNumber getBalance(final LocalDate date, final GCshCmdtyID cmdtyID) {
+		return AccountBalanceHelper_FP.getBalance(date, cmdtyID, this);
+	}
+
+	@Override
+	public BigFraction getBalanceRat(final LocalDate date, final GCshCmdtyID cmdtyID) {
+		return AccountBalanceHelper_BF.getBalance(date, cmdtyID, this);
 	}
 
 	// ---
@@ -259,6 +275,18 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 		return AccountBalanceHelper_BF.getBalanceRecursive(date, cmdtyCurrID, this);
 	}
 
+	// ---
+
+	@Override
+	public FixedPointNumber getBalanceRecursive(final LocalDate date, final GCshCmdtyID cmdtyID) {
+		return AccountBalanceHelper_FP.getBalanceRecursive(date, cmdtyID, this);
+	}
+	
+	@Override
+	public BigFraction getBalanceRecursiveRat(final LocalDate date, final GCshCmdtyID cmdtyID) {
+		return AccountBalanceHelper_BF.getBalanceRecursive(date, cmdtyID, this);
+	}
+	
 	// ---
 
 	@Override
