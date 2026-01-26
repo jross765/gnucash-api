@@ -19,6 +19,7 @@ import org.gnucash.api.write.impl.hlp.GnuCashWritableObjectImpl;
 import org.gnucash.api.write.impl.hlp.HasWritableUserDefinedAttributesImpl;
 import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.complex.InvalidCmdtyCurrTypeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +67,18 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
     	super(createCommodity_int(file, cmdtyID), file);
     }
 
+    /**
+     * Please use ${@link GnuCashWritableFile#createWritableCommodity()}.
+     *
+     * @param file the file we belong to
+     * @param id   the ID we shall have
+     */
+    protected GnuCashWritableCommodityImpl(
+    		final GnuCashWritableFileImpl file,
+    		final GCshCurrID currID) {
+    	super(createCommodity_int(file, currID), file);
+    }
+
     public GnuCashWritableCommodityImpl(GnuCashCommodityImpl cmdty) {
     	super(cmdty.getJwsdpPeer(), cmdty.getGnuCashFile());
     }
@@ -87,8 +100,7 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
     // ---------------------------------------------------------------
 
     /**
-     * Creates a new Transaction and add's it to the given GnuCash file Don't modify
-     * the ID of the new transaction!
+     * Creates a new non-currency Commodity and adds it to the given GnuCash file.
      *
      * @param file the file we will belong to
      * @param guid the ID we shall have
@@ -101,7 +113,7 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
 			throw new IllegalArgumentException("argument <cmdtyID> is null");
 		}
 
-		if ( !cmdtyID.isSet() ) {
+		if ( ! cmdtyID.isSet() ) {
 			throw new IllegalArgumentException("argument <cmdtyID> is not set");
 		}
 
@@ -117,7 +129,43 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
 		file.getRootElement().getGncBook().getBookElements().add(jwsdpCmdty);
 		file.setModified(true);
 
-		LOGGER.debug("createCommodity_int: Created new commodity (core): " + jwsdpCmdty.getCmdtySpace() + ":"
+		LOGGER.debug("createCommodity_int (1): Created new commodity (core): " + jwsdpCmdty.getCmdtySpace() + ":"
+				+ jwsdpCmdty.getCmdtyId());
+
+		return jwsdpCmdty;
+    }
+
+    /**
+     * Creates a new currency Commodity and adds it to the given GnuCash file.
+     *
+     * @param file the file we will belong to
+     * @param guid the ID we shall have
+     * @return a new jwsdp-peer already entered into th jwsdp-peer of the file
+     */
+    protected static GncCommodity createCommodity_int(
+    		final GnuCashWritableFileImpl file,
+    		final GCshCurrID currID) {
+		if ( currID == null ) {
+			throw new IllegalArgumentException("argument <currID> is null");
+		}
+
+		if ( ! currID.isSet() ) {
+			throw new IllegalArgumentException("argument <currID> is not set");
+		}
+
+		GncCommodity jwsdpCmdty = file.createGncGncCommodityType();
+
+		jwsdpCmdty.setCmdtyFraction(Const.CMDTY_FRACTION_DEFAULT);
+		jwsdpCmdty.setVersion(Const.XML_FORMAT_VERSION);
+		jwsdpCmdty.setCmdtyName(currID.getCode());
+		jwsdpCmdty.setCmdtySpace(currID.getNameSpace());
+		jwsdpCmdty.setCmdtyId(currID.getCode());
+		// jwsdpCmdty.setCmdtyXcode(currID.getCode());
+
+		file.getRootElement().getGncBook().getBookElements().add(jwsdpCmdty);
+		file.setModified(true);
+
+		LOGGER.debug("createCommodity_int (2): Created new commodity (core): " + jwsdpCmdty.getCmdtySpace() + ":"
 				+ jwsdpCmdty.getCmdtyId());
 
 		return jwsdpCmdty;
