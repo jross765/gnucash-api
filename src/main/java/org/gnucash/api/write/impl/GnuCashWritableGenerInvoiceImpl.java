@@ -136,22 +136,24 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 
     	// Paying transactions
 		if ( addPayTrx ) {
-			for ( GnuCashTransaction trx : invc.getGnuCashFile().getTransactions() ) {
-				for ( GnuCashTransactionSplit splt : trx.getSplits() ) {
-					GCshLotID lot = splt.getLotID();
-					if ( lot != null ) {
-						GCshLotID lotID = invc.getLotID();
-						if ( lotID != null && lotID.equals(lot) ) {
-							// Check if it's a payment transaction.
-							// If so, add it to the invoice's list of payment transactions.
-							if ( splt.getAction() == GnuCashTransactionSplit.Action.PAYMENT ) {
-								addPayingTransaction(splt);
-							}
-						} // if lotID
-					} // if lot
-				} // for splt
-			} // for trx
-		}
+			GCshLotID invcLotID = invc.getLotID();
+			if ( invcLotID != null ) {
+				for ( GnuCashTransaction trx : invc.getGnuCashFile().getTransactions() ) {
+					for ( GnuCashTransactionSplit splt : trx.getSplits() ) {
+						GCshLotID spltLotID = splt.getLotID();
+						if ( spltLotID != null ) {
+							if ( invcLotID.equals(spltLotID) ) {
+								// Check if it's a payment transaction.
+								// If so, add it to the invoice's list of payment transactions.
+								if ( splt.getAction() == GnuCashTransactionSplit.Action.PAYMENT ) {
+									addPayingTransactionSplit(splt);
+								}
+							} // if lotID
+						} // if lot
+					} // for splt
+				} // for trx
+			} // if invcLotID
+		} // if addPayTrx
     }
 
     public GnuCashWritableGenerInvoiceImpl(final GnuCashGenerInvoiceImpl invc) {
