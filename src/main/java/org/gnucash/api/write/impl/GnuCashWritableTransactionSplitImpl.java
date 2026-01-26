@@ -326,6 +326,8 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		}
 	}
 
+	@Override
+	// ::TODO
 	public void setValue(final BigFraction val) {
 		if ( val == null ) {
 			throw new IllegalArgumentException("argument <val> is null");

@@ -122,7 +122,7 @@ public class GCshWritableAccountLotImpl extends GCshAcctLotImpl
      * remove this lot from its account.
      */
     public void remove() {
-    	getAccount().remove(this);
+    	getAccount().removeLot(this);
     }
 
 	// ---------------------------------------------------------------

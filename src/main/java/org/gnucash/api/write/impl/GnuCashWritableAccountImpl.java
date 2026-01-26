@@ -233,7 +233,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 
 	/**
 	 * Remove this account from the system.<br/>
-	 * Throws IllegalStateException if this account has splits or childres.
+	 * Throws IllegalStateException if this account has splits or children.
 	 */
 	@Override
 	public void remove() {

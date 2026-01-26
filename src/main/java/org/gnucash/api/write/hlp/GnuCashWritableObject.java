@@ -1,14 +1,15 @@
 package org.gnucash.api.write.hlp;
 
+import org.gnucash.api.read.hlp.GnuCashObject;
 import org.gnucash.api.write.GnuCashWritableFile;
 
 /**
  * Interface that all interfaces for writable GnuCash entities shall implement
  */
-public interface GnuCashWritableObject {
+public interface GnuCashWritableObject extends GnuCashObject {
 
     /**
-     * @return the File we belong to.
+     * @return the file we belong to.
      */
     GnuCashWritableFile getWritableGnuCashFile();
 
