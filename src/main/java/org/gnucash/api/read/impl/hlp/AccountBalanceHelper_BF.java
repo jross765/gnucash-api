@@ -19,8 +19,6 @@ import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import xyz.schnorxoborx.base.numbers.FixedPointNumber; // sic
-
 public class AccountBalanceHelper_BF
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AccountBalanceHelper_BF.class);
@@ -91,17 +89,19 @@ public class AccountBalanceHelper_BF
 			return null;
 		}
 	
-		if ( ! priceTab.convertToBaseCurrency(FixedPointNumber.of(retval), cmdtyCurrID) ) {
-			Collection<String> currList = acct.getGnuCashFile().getCurrencyTable()
-					.getCurrencies(acct.getCmdtyCurrID().getNameSpace());
+		retval = priceTab.convertToBaseCurrencyRat(retval, cmdtyCurrID);
+		if ( retval == null ) {
+			Collection<String> codeList = acct.getGnuCashFile().getCurrencyTable()
+					.getCodes(acct.getCmdtyCurrID().getNameSpace());
 			LOGGER.error("getBalance: Cannot transfer " + "from our currency '"
 					+ acct.getCmdtyCurrID().toString() + "' to the base-currency " + " \n(we know "
 					+ acct.getGnuCashFile().getCurrencyTable().getNameSpaces().size() + " currency-namespaces and "
-					+ (currList == null ? "no" : "" + currList.size()) + " currencies in our namespace)");
+					+ (codeList == null ? "no" : "" + codeList.size()) + " currencies in our namespace)");
 			return null;
 		}
 	
-		if ( ! priceTab.convertFromBaseCurrency(FixedPointNumber.of(retval), cmdtyCurrID) ) {
+		retval = priceTab.convertFromBaseCurrencyRat(retval, cmdtyCurrID);
+		if ( retval == null ) {
 			LOGGER.error("getBalance: Cannot transfer " + "from base-currenty to given currency '"
 					+ cmdtyCurrID.toString() + "'");
 			return null;
@@ -138,23 +138,19 @@ public class AccountBalanceHelper_BF
 			return null;
 		}
 
-		// BEGIN ::TODO: 
-		// Works, but is ugly.
-		// Have that symmetrical with FP-variant
-		FixedPointNumber hlp = FixedPointNumber.of(retval);
-		if ( ! priceTab.convertToBaseCurrency(hlp, acct.getCmdtyCurrID()) ) {
+		retval = priceTab.convertToBaseCurrencyRat(retval, acct.getCmdtyCurrID());
+		if ( retval == null ) {
 			LOGGER.warn("getBalance: Cannot transfer " + "from our currency '"
 					+ acct.getCmdtyCurrID().toString() + "' to the base-currency");
 			return null;
 		}
 
-		if ( ! priceTab.convertFromBaseCurrency(hlp, new GCshCurrID(curr)) ) {
+		retval = priceTab.convertFromBaseCurrencyRat(retval, new GCshCurrID(curr));
+		if ( retval == null ) {
 			LOGGER.warn("getBalance: Cannot transfer " + "from base-currenty to given currency '"
 					+ curr + "'");
 			return null;
 		}
-		retval = hlp.toBigFraction();
-		// END ::TODO
 
 		return retval;
 	}
@@ -283,4 +279,23 @@ public class AccountBalanceHelper_BF
 		cf.setCurrency(acct.getCurrency());
 		return cf.format(getBalanceRecursive(acct).bigDecimalValue());
 	}
+	
+	// ---------------------------------------------------------------
+	// Helpers -- balance pre-computed
+	
+	public static String formatBalance(SimpleAccount acct, BigFraction blnc) {
+		Locale lcl = Locale.getDefault();
+		return formatBalance(acct, blnc, lcl);
+	}
+	
+	public static String formatBalance(SimpleAccount acct, BigFraction blnc, Locale lcl) {
+		NumberFormat nf = acct.getCurrencyFormat(lcl);
+    	if ( acct.getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
+    		nf.setCurrency(Currency.getInstance(acct.getCmdtyCurrID().getCode()));
+    		return nf.format(blnc.doubleValue());
+    	} else {
+    		return nf.format(blnc.doubleValue()) + " " + acct.getCmdtyCurrID().getCode().toString();
+    	}
+	}
+
 }

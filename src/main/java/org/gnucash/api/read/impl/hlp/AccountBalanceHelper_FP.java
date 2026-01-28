@@ -64,6 +64,14 @@ public class AccountBalanceHelper_FP
 
 	public static FixedPointNumber getBalance(final LocalDate date, final GCshCmdtyCurrID cmdtyCurrID,
 											  final SimpleAccount acct) {
+		if ( cmdtyCurrID == null ) {
+			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
+		}
+
+		if ( ! cmdtyCurrID.isSet() ) {
+			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
+		}
+
 		FixedPointNumber retval = getBalance(date, acct);
 
 		if ( retval == null ) {
@@ -79,22 +87,23 @@ public class AccountBalanceHelper_FP
 		ComplexPriceTable priceTab = acct.getGnuCashFile().getCurrencyTable();
 	
 		if ( priceTab == null ) {
-			LOGGER.error("getBalance: Cannot transfer "
-					+ "to given currency because we have no currency-table");
+			LOGGER.error("getBalance: Cannot transfer to given currency because we have no currency-table");
 			return null;
 		}
 	
-		if ( ! priceTab.convertToBaseCurrency(retval, cmdtyCurrID) ) {
-			Collection<String> currList = acct.getGnuCashFile().getCurrencyTable()
-					.getCurrencies(acct.getCmdtyCurrID().getNameSpace());
+		retval = priceTab.convertToBaseCurrency(retval, cmdtyCurrID);
+		if ( retval == null ) {
+			Collection<String> codeList = acct.getGnuCashFile().getCurrencyTable()
+					.getCodes(acct.getCmdtyCurrID().getNameSpace());
 			LOGGER.error("getBalance: Cannot transfer " + "from our currency '"
 					+ acct.getCmdtyCurrID().toString() + "' to the base-currency " + " \n(we know "
 					+ acct.getGnuCashFile().getCurrencyTable().getNameSpaces().size() + " currency-namespaces and "
-					+ (currList == null ? "no" : "" + currList.size()) + " currencies in our namespace)");
+					+ (codeList == null ? "no" : "" + codeList.size()) + " currencies in our namespace)");
 			return null;
 		}
 	
-		if ( ! priceTab.convertFromBaseCurrency(retval, cmdtyCurrID) ) {
+		retval = priceTab.convertFromBaseCurrency(retval, cmdtyCurrID);
+		if ( retval == null ) {
 			LOGGER.error("getBalance: Cannot transfer " + "from base-currenty to given currency '"
 					+ cmdtyCurrID.toString() + "'");
 			return null;
@@ -127,18 +136,19 @@ public class AccountBalanceHelper_FP
 		ComplexPriceTable priceTab = acct.getGnuCashFile().getCurrencyTable();
 
 		if ( priceTab == null ) {
-			LOGGER.warn("getBalance: Cannot transfer "
-					+ "to given currency because we have no currency-table");
+			LOGGER.warn("getBalance: Cannot transfer to given currency because we have no currency-table");
 			return null;
 		}
 
-		if ( ! priceTab.convertToBaseCurrency(retval, acct.getCmdtyCurrID()) ) {
+		retval = priceTab.convertToBaseCurrency(retval, acct.getCmdtyCurrID());
+		if ( retval == null ) {
 			LOGGER.warn("getBalance: Cannot transfer " + "from our currency '"
 					+ acct.getCmdtyCurrID().toString() + "' to the base-currency");
 			return null;
 		}
 
-		if ( ! priceTab.convertFromBaseCurrency(retval, new GCshCurrID(curr)) ) {
+		retval = priceTab.convertFromBaseCurrency(retval, new GCshCurrID(curr));
+		if ( retval == null ) {
 			LOGGER.warn("getBalance: Cannot transfer " + "from base-currenty to given currency '"
 					+ curr + "'");
 			return null;
@@ -198,6 +208,14 @@ public class AccountBalanceHelper_FP
 
 	public static FixedPointNumber getBalanceRecursive(final LocalDate date, final GCshCmdtyCurrID cmdtyCurrID,
 													   final SimpleAccount acct) {
+		if ( cmdtyCurrID == null ) {
+			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
+		}
+
+		if ( ! cmdtyCurrID.isSet() ) {
+			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
+		}
+
 			if ( cmdtyCurrID.getType() == GCshCmdtyCurrID.Type.CURRENCY )
 				return getBalanceRecursive(date, new GCshCurrID(cmdtyCurrID.getCode()).getCurrency(), acct);
 			else
