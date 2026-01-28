@@ -1,28 +1,24 @@
 package org.gnucash.api.read.impl.hlp;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Currency;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.Const;
 import org.gnucash.api.generated.GncPricedb;
 import org.gnucash.api.generated.GncV2;
 import org.gnucash.api.generated.Price;
-import org.gnucash.api.generated.Price.PriceCommodity;
-import org.gnucash.api.generated.Price.PriceCurrency;
 import org.gnucash.api.read.GnuCashPrice;
 import org.gnucash.api.read.impl.GnuCashFileImpl;
 import org.gnucash.api.read.impl.GnuCashPriceImpl;
 import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.simple.GCshPrcID;
@@ -35,9 +31,11 @@ public class FilePriceManager {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(FilePriceManager.class);
     
+    // ---------------------------------------------------------------
+    
     public static final DateFormat PRICE_QUOTE_DATE_FORMAT = new SimpleDateFormat(Const.STANDARD_DATE_FORMAT);
 
-    private static final int RECURS_DEPTH_MAX = 5; // ::MAGIC
+    static final int RECURS_DEPTH_MAX = 5; // ::MAGIC
 
     // ---------------------------------------------------------------
     
@@ -221,225 +219,44 @@ public class FilePriceManager {
 
 	// ---------------------------------------------------------------
 
-//    public FixedPointNumber getLatestPrice(final String cmdtyCurrIDStr) {
-//      try {
-//        // See if it's a currency
-//        GCshCurrID currID = new GCshCurrID(cmdtyCurrIDStr);
-//	    return getLatestPrice(currID);
-//      } catch ( Exception exc ) {
-//        // It's a security
-//	    GCshCmdtyID cmdtyID = new GCshCmdtyID(GCshCmdtyCurrID.Type.SECURITY_GENERAL, cmdtyCurrIDStr);
-//	    return getLatestPrice(cmdtyID);
-//      }
-//    }
-
 	public FixedPointNumber getLatestPrice(final GCshCmdtyCurrID cmdtyCurrID) {
-		if ( cmdtyCurrID == null ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
-		}
-		
-		if ( ! cmdtyCurrID.isSet() ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
-		}
-
-		return getLatestPrice(cmdtyCurrID, 0);
+		return PriceHelper_FP.getLatestPrice(cmdtyCurrID, 
+											 gcshFile, priceDB);
 	}
 
-	public FixedPointNumber getLatestPrice(final String pCmdtySpace, final String pCmdtyId) {
-		if ( pCmdtySpace == null ) {
-			throw new IllegalArgumentException("argument <pCmdtySpace> is null");
-		}
-		
-		if ( pCmdtySpace.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <pCmdtySpace> is empty");
-		}
-		
-		if ( pCmdtyId == null ) {
-			throw new IllegalArgumentException("argument <pCmdtyId> is null");
-		}
-		
-		if ( pCmdtyId.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <pCmdtyId> is empty");
-		}
-		
-		return getLatestPrice(new GCshCmdtyCurrID(pCmdtySpace, pCmdtyId), 0);
+	public FixedPointNumber getLatestPrice(final Currency curr) {
+		return PriceHelper_FP.getLatestPrice(curr, 
+											 gcshFile, priceDB);
 	}
 
-	// ----------------------------
-
-	/**
-	 * @param pCmdtySpace the name space for pCmdtyId
-	 * @param pCmdtyId    the currency-name
-	 * @param depth       used for recursion. Always call with '0' for aborting
-	 *                    recursive quotes (quotes to other then the base- currency)
-	 *                    we abort if the depth reached RECURS_DEPTH_MAX + 1.
-	 * @return the latest price-quote in the KMyMoney file in the default-currency
-	 * @see {@link GnuCashFile#getLatestPrice(String, String)}
-	 * @see #getDefaultCurrencyID()
-	 */
-	private FixedPointNumber getLatestPrice(final GCshCmdtyCurrID cmdtyCurrID, final int depth) {
-		if ( cmdtyCurrID == null ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
-		}
-		
-		if ( ! cmdtyCurrID.isSet() ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
-		}
-
-		// System.err.println("depth: " + depth);
-
-		Date latestDate = null;
-		FixedPointNumber latestQuote = null;
-		FixedPointNumber factor = FixedPointNumber.ONE.copy(); // factor is used if the quote is not to our base-currency
-		final int maxRecursionDepth = RECURS_DEPTH_MAX;
-
-		for ( Price priceQuote : priceDB.getPrice() ) {
-			if ( priceQuote == null ) {
-				LOGGER.warn(
-						"getLatestPrice: GnuCash file contains null price-quotes - there may be a problem with JWSDP");
-				continue;
-			}
-
-			PriceCommodity fromCmdtyCurr = priceQuote.getPriceCommodity();
-			PriceCurrency toCurr = priceQuote.getPriceCurrency();
-
-			if ( fromCmdtyCurr == null ) {
-				LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes without from-commodity/currency: '"
-						+ priceQuote.toString() + "'");
-				continue;
-			}
-
-			if ( toCurr == null ) {
-				LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes without to-currency: '"
-						+ priceQuote.toString() + "'");
-				continue;
-			}
-
-			try {
-				if ( fromCmdtyCurr.getCmdtySpace() == null ) {
-					LOGGER.warn(
-							"getLatestPrice: GnuCash file contains price-quotes with from-commodity/currency without name space: id='"
-									+ priceQuote.getPriceId().getValue() + "'");
-					continue;
-				}
-
-				if ( fromCmdtyCurr.getCmdtyId() == null ) {
-					LOGGER.warn(
-							"getLatestPrice: GnuCash file contains price-quotes with from-commodity/currency without code: id='"
-									+ priceQuote.getPriceId().getValue() + "'");
-					continue;
-				}
-
-				if ( toCurr.getCmdtySpace() == null ) {
-					LOGGER.warn(
-							"getLatestPrice: GnuCash file contains price-quotes with to-currency without name space: id='"
-									+ priceQuote.getPriceId().getValue() + "'");
-					continue;
-				}
-
-				if ( toCurr.getCmdtyId() == null ) {
-					LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes with to-currency without code: id='"
-							+ priceQuote.getPriceId().getValue() + "'");
-					continue;
-				}
-
-				if ( priceQuote.getPriceTime() == null ) {
-					LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes without timestamp id='"
-							+ priceQuote.getPriceId().getValue() + "'");
-					continue;
-				}
-
-				if ( priceQuote.getPriceValue() == null ) {
-					LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes without value id='"
-							+ priceQuote.getPriceId().getValue() + "'");
-					continue;
-				}
-
-				/*
-				 * if (priceQuote.getPriceCommodity().getCmdtySpace().equals("FUND") &&
-				 * priceQuote.getPriceType() == null) {
-				 * LOGGER.warn("getLatestPrice: GnuCash file contains FUND-price-quotes" +
-				 * " with no type id='" + priceQuote.getPriceID().getValue() + "'"); continue; }
-				 */
-
-				if ( !(fromCmdtyCurr.getCmdtySpace().equals(cmdtyCurrID.getNameSpace())
-						&& fromCmdtyCurr.getCmdtyId().equals(cmdtyCurrID.getCode())) ) {
-					continue;
-				}
-
-				/*
-				 * if (priceQuote.getPriceCommodity().getCmdtySpace().equals("FUND") &&
-				 * (priceQuote.getPriceType() == null ||
-				 * !priceQuote.getPriceType().equals("last") )) {
-				 * LOGGER.warn("getLatestPrice: ignoring FUND-price-quote of unknown type '" +
-				 * priceQuote.getPriceType() + "' expecting 'last' "); continue; }
-				 */
-
-				// BEGIN core
-				if ( !toCurr.getCmdtySpace().equals(GCshCmdtyCurrNameSpace.CURRENCY) ) {
-					// is commodity
-					if ( depth > maxRecursionDepth ) {
-						LOGGER.warn("getLatestPrice: Ignoring price-quote that is not in an ISO4217-currency"
-								+ " but in '" + toCurr.getCmdtySpace() + ":" + toCurr.getCmdtyId() + "'");
-						continue;
-					}
-					factor = getLatestPrice(new GCshCmdtyID(toCurr.getCmdtySpace(), toCurr.getCmdtyId()), depth + 1);
-				} else {
-					// is currency
-					if ( !toCurr.getCmdtyId().equals(gcshFile.getDefaultCurrencyID()) ) {
-						if ( depth > maxRecursionDepth ) {
-							LOGGER.warn("Ignoring price-quote that is not in " + gcshFile.getDefaultCurrencyID()
-									+ " but in '" + toCurr.getCmdtySpace() + ":" + toCurr.getCmdtyId() + "'");
-							continue;
-						}
-						factor = getLatestPrice(new GCshCurrID(toCurr.getCmdtyId()), depth + 1);
-					}
-				}
-				// END core
-
-				Date date = PRICE_QUOTE_DATE_FORMAT.parse(priceQuote.getPriceTime().getTsDate());
-
-				if ( latestDate == null || latestDate.before(date) ) {
-					latestDate = date;
-					latestQuote = new FixedPointNumber(priceQuote.getPriceValue());
-					LOGGER.debug("getLatestPrice: getLatestPrice(pCmdtyCurrID='" + cmdtyCurrID.toString()
-							+ "') converted " + latestQuote + " <= " + priceQuote.getPriceValue());
-				}
-
-			} catch (NumberFormatException e) {
-				LOGGER.error("getLatestPrice: [NumberFormatException] Problem in " + getClass().getName()
-						+ ".getLatestPrice(pCmdtyCurrID='" + cmdtyCurrID.toString() + "')! Ignoring a bad price-quote '"
-						+ priceQuote + "'", e);
-			} catch (ParseException e) {
-				LOGGER.error("getLatestPrice: [ParseException] Problem in " + getClass().getName() + " "
-						+ cmdtyCurrID.toString() + "')! Ignoring a bad price-quote '" + priceQuote + "'", e);
-			} catch (NullPointerException e) {
-				LOGGER.error("getLatestPrice: [NullPointerException] Problem in " + getClass().getName()
-						+ ".getLatestPrice(pCmdtyCurrID='" + cmdtyCurrID.toString() + "')! Ignoring a bad price-quote '"
-						+ priceQuote + "'", e);
-			} catch (ArithmeticException e) {
-				LOGGER.error("getLatestPrice: [ArithmeticException] Problem in " + getClass().getName()
-						+ ".getLatestPrice(pCmdtyCurrID='" + cmdtyCurrID.toString() + "')! Ignoring a bad price-quote '"
-						+ priceQuote + "'", e);
-			}
-		} // for priceQuote
-
-		LOGGER.debug("getLatestPrice: " + getClass().getName() + ".getLatestPrice(pCmdtyCurrID='"
-				+ cmdtyCurrID.toString() + "')= " + latestQuote + " from " + latestDate);
-
-		if ( latestQuote == null ) {
-			return null;
-		}
-
-		if ( factor == null ) {
-			factor = FixedPointNumber.ONE.copy();
-		}
-
-		return factor.multiply(latestQuote);
+	@Deprecated
+	public FixedPointNumber getLatestPrice(final String pCmdtySpace, final String pCmdtyID) {
+		GCshCmdtyCurrID cmdtyCurrID = new GCshCmdtyCurrID(pCmdtySpace, pCmdtyID);
+		return PriceHelper_FP.getLatestPrice(cmdtyCurrID, 
+											 gcshFile, priceDB);
 	}
 
 	// ----------------------------
 	
+	public BigFraction getLatestPriceRat(final GCshCmdtyCurrID cmdtyCurrID) {
+		return PriceHelper_BF.getLatestPrice(cmdtyCurrID,
+											 gcshFile, priceDB);
+	}
+
+	public BigFraction getLatestPriceRat(final Currency curr) {
+		return PriceHelper_BF.getLatestPrice(curr,
+											 gcshFile, priceDB);
+	}
+
+	@Deprecated
+	public BigFraction getLatestPriceRat(final String pCmdtySpace, final String pCmdtyID) {
+		GCshCmdtyCurrID cmdtyCurrID = new GCshCmdtyCurrID(pCmdtySpace, pCmdtyID);
+		return PriceHelper_BF.getLatestPrice(cmdtyCurrID,
+											 gcshFile, priceDB);
+	}
+
+	// ---------------------------------------------------------------
+
 	private List<Price> getPrices_raw() {
 		List<Price> result = new ArrayList<Price>();
 
