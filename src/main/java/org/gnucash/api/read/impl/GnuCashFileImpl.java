@@ -17,6 +17,7 @@ import java.util.Currency;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.Const;
 import org.gnucash.api.currency.ComplexPriceTable;
 import org.gnucash.api.generated.GncAccount;
@@ -1212,9 +1213,26 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public BigFraction getLatestPriceRat(final GCshCmdtyCurrID cmdtyCurrID) {
+		return prcMgr.getLatestPriceRat(cmdtyCurrID);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@Deprecated
 	public FixedPointNumber getLatestPrice(final String pCmdtySpace, final String pCmdtyId) {
 		return prcMgr.getLatestPrice(pCmdtySpace, pCmdtyId);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Deprecated
+	public BigFraction getLatestPriceRat(final String pCmdtySpace, final String pCmdtyId) {
+		return prcMgr.getLatestPriceRat(pCmdtySpace, pCmdtyId);
 	}
 
 	// ---------------------------------------------------------------
@@ -1378,8 +1396,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 
 			// Check if we already have a latest price for this commodity
 			// (= currency, fund, ...)
-			if ( getCurrencyTable().getConversionFactor(fromCmdtyCurr.getCmdtySpace(),
-					fromCmdtyCurr.getCmdtyId()) != null ) {
+			if ( getCurrencyTable().getConversionFactor(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId()) != null ) {
 				continue;
 			}
 
@@ -1393,6 +1410,20 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 			// get the latest price in the file and insert it into
 			// our currency table
 			FixedPointNumber factor = getLatestPrice(
+					new GCshCmdtyCurrID(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId()));
+
+			if ( factor != null ) {
+				getCurrencyTable().setConversionFactor(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId(),
+						factor);
+			} else {
+				LOGGER.warn("loadPriceDatabaseCore: The GnuCash file defines a factor for a commodity '"
+						+ fromCmdtyCurr.getCmdtySpace() + ":" + fromCmdtyCurr.getCmdtyId()
+						+ "' but has no commodity for it");
+			}
+			
+			// get the latest price in the file and insert it into
+			// our currency table
+			BigFraction factorRat = getLatestPriceRat(
 					new GCshCmdtyCurrID(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId()));
 
 			if ( factor != null ) {
@@ -1422,8 +1453,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 
 			// Check if we already have a latest price for this commodity
 			// (= currency, fund, ...)
-			if ( getCurrencyTable().getConversionFactor(fromCmdtyCurr.getCmdtySpace(),
-					fromCmdtyCurr.getCmdtyId()) != null ) {
+			if ( getCurrencyTable().getConversionFactor(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId()) != null ) {
 				continue;
 			}
 

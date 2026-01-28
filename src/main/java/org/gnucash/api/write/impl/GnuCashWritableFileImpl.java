@@ -1854,16 +1854,28 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	public void addCurrency(final String pCmdtySpace, final String pCmdtyID, final FixedPointNumber conversionFactor,
 			final int pCmdtyNameFraction, final String pCmdtyName) {
 
-		if ( conversionFactor == null ) {
-			throw new IllegalArgumentException("argument <conversionFactor> is null");
-		}
-		
 		if ( pCmdtySpace == null ) {
 			throw new IllegalArgumentException("argument <pCmdtySpace> is null");
 		}
 
+		if ( pCmdtySpace.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <pCmdtySpace> is empty");
+		}
+
 		if ( pCmdtyID == null ) {
 			throw new IllegalArgumentException("argument <pCmdtyID> is null");
+		}
+		
+		if ( pCmdtyID.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <pCmdtyID> is empty");
+		}
+
+		if ( conversionFactor == null ) {
+			throw new IllegalArgumentException("argument <conversionFactor> is null");
+		}
+		
+		if ( pCmdtyNameFraction <= 0 ) {
+			throw new IllegalArgumentException("argument <pCmdtyNameFraction> is <= 0");
 		}
 		
 		if ( pCmdtyName == null ) {

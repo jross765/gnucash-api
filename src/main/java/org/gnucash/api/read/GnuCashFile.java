@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Currency;
 import java.util.List;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.currency.ComplexPriceTable;
 import org.gnucash.api.read.GnuCashAccount.Type;
 import org.gnucash.api.read.aux.GCshBillTerms;
@@ -979,10 +980,15 @@ public interface GnuCashFile extends GnuCashObject,
      * @param pCmdtyId    the currency-name
      * @return the latest price-quote in the GnuCash file in EURO
      */
-    FixedPointNumber getLatestPrice(final GCshCmdtyCurrID cmdtyCurrID);
+    FixedPointNumber getLatestPrice(GCshCmdtyCurrID cmdtyCurrID);
+
+    BigFraction      getLatestPriceRat(GCshCmdtyCurrID cmdtyCurrID);
 
     @Deprecated
-    FixedPointNumber getLatestPrice(final String pCmdtySpace, final String pCmdtyId);
+    FixedPointNumber getLatestPrice(String pCmdtySpace, String pCmdtyId);
+    
+    @Deprecated
+    BigFraction      getLatestPriceRat(String pCmdtySpace, String pCmdtyId);
     
     // ---------------------------------------------------------------
     
