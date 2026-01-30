@@ -1850,9 +1850,15 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	 * @param pCmdtyNameFraction number of decimal-places after the comma
 	 * @param pCmdtyName         common name of the new currency
 	 */
+	// ::TODO: ::CHECK: Is this method really needed? If not, get rid of it.
+	// ::TODO: Improve interface / provide variants
 	@Override
-	public void addCurrency(final String pCmdtySpace, final String pCmdtyID, final FixedPointNumber conversionFactor,
-			final int pCmdtyNameFraction, final String pCmdtyName) {
+	public void addCurrency(
+			final String pCmdtySpace, 
+			final String pCmdtyID, 
+			final FixedPointNumber conversionFactor,
+			final int pCmdtyNameFraction,
+			final String pCmdtyName) {
 
 		if ( pCmdtySpace == null ) {
 			throw new IllegalArgumentException("argument <pCmdtySpace> is null");
@@ -1880,6 +1886,10 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		
 		if ( pCmdtyName == null ) {
 			throw new IllegalArgumentException("argument <pCmdtyName> is null");
+		}
+		
+		if ( pCmdtyName.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <pCmdtyName> is empty");
 		}
 		
 		if ( getCurrencyTable().getConversionFactor(pCmdtySpace, pCmdtyID) == null ) {
