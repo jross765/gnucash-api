@@ -11,6 +11,8 @@ import java.util.Map;
 import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,8 +26,8 @@ public class ComplexPriceTable implements Serializable {
 	// ---------------------------------------------------------------
 
 	public interface ComplexPriceTableChangeListener {
-		void conversionFactorChanged(final String currency, final FixedPointNumber factor);
-		void conversionFactorChanged(final String currency, final BigFraction factor);
+		void conversionFactorChanged(final String cmdtyCurrIDStr, final FixedPointNumber factor);
+		void conversionFactorChanged(final String cmdtyCurrIDStr, final BigFraction factor);
 	}
 
 	// -----------------------------------------------------------
@@ -34,17 +36,15 @@ public class ComplexPriceTable implements Serializable {
 
 	// -----------------------------------------------------------
 
-	private Map<String, SimplePriceTable> nameSpace2PrcTab = null;
+	private Map<GCshCmdtyCurrID.Type, SimplePriceTable> cmdtyCurrType2PrcTab = null;
 
 	// -----------------------------------------------------------
 
 	public ComplexPriceTable() {
-		nameSpace2PrcTab = new HashMap<String, SimplePriceTable>();
+		cmdtyCurrType2PrcTab = new HashMap<GCshCmdtyCurrID.Type, SimplePriceTable>();
 
-		addForNameSpace(GCshCmdtyCurrNameSpace.CURRENCY, new SimpleCurrencyExchRateTable());
-		// CAUTION: We do not / cannot add a default commodity name space as
-		// in sister project JKMyMoneyLib, because we do not know in advance which
-		// name spaces are going to be used.
+		addTabForType(GCshCmdtyCurrID.Type.CURRENCY);
+		addTabForType(GCshCmdtyCurrID.Type.SECURITY);
 	}
 
 	// -----------------------------------------------------------
@@ -65,13 +65,13 @@ public class ComplexPriceTable implements Serializable {
 		listeners.remove(listener);
 	}
 
-	protected void firePriceTableChanged(final String code, final FixedPointNumber factor) {
-		if ( code == null ) {
-			throw new IllegalArgumentException("argument <code> is null");
+	protected void firePriceTableChanged(final String cmdtyCurrIDStr, final FixedPointNumber factor) {
+		if ( cmdtyCurrIDStr == null ) {
+			throw new IllegalArgumentException("argument <cmdtyCurrIDStr> is null");
 		}
 
-		if ( code.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <code> is empty");
+		if ( cmdtyCurrIDStr.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <cmdtyCurrIDStr> is empty");
 		}
 		
 		if ( factor == null ) {
@@ -82,23 +82,23 @@ public class ComplexPriceTable implements Serializable {
 		// In the sister project, we had to remove this check (cf. comment there).
 		// What about GnuCash?
 		if ( factor.compareTo(FixedPointNumber.ZERO) <= 0 ) {
-			throw new IllegalArgumentException("argument <factor> must be > 0");
+			throw new IllegalArgumentException("argument <factor> is <= 0");
 		}
 		
 		if ( listeners != null ) {
 			for ( ComplexPriceTableChangeListener listener : listeners ) {
-				listener.conversionFactorChanged(code, factor);
+				listener.conversionFactorChanged(cmdtyCurrIDStr, factor);
 			}
 		}
 	}
 
-	protected void firePriceTableChanged(final String code, final BigFraction factor) {
-		if ( code == null ) {
-			throw new IllegalArgumentException("argument <code> is null");
+	protected void firePriceTableChanged(final String cmdtyCurrIDStr, final BigFraction factor) {
+		if ( cmdtyCurrIDStr == null ) {
+			throw new IllegalArgumentException("argument <cmdtyCurrIDStr> is null");
 		}
 
-		if ( code.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <code> is empty");
+		if ( cmdtyCurrIDStr.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <cmdtyCurrIDStr> is empty");
 		}
 		
 		if ( factor == null ) {
@@ -109,12 +109,12 @@ public class ComplexPriceTable implements Serializable {
 		// In the sister project, we had to remove this check (cf. comment there).
 		// What about GnuCash?
 		if ( factor.compareTo(BigFraction.ZERO) <= 0 ) {
-			throw new IllegalArgumentException("argument <factor> must be > 0");
+			throw new IllegalArgumentException("argument <factor> is <= 0");
 		}
 		
 		if ( listeners != null ) {
 			for ( ComplexPriceTableChangeListener listener : listeners ) {
-				listener.conversionFactorChanged(code, factor);
+				listener.conversionFactorChanged(cmdtyCurrIDStr, factor);
 			}
 		}
 	}
@@ -187,57 +187,54 @@ public class ComplexPriceTable implements Serializable {
 	//
 	// -------------------------------------------------------
 
-	/**
-	 * Add a new name space with no conversion-factors.<br/>
-	 * Will not overwrite an existing name space.
-	 *
-	 * @param nameSpace the new nameSpace to add.
-	 */
-	public void addForNameSpace(final String nameSpace) {
-		if ( nameSpace == null ) {
-			throw new IllegalArgumentException("argument <nameSpace> is null");
-		}
-
-		if ( nameSpace.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <nameSpace> is empty");
-		}
-
-		if ( nameSpace2PrcTab.keySet().contains(nameSpace) ) {
-			return;
-		}
-
-		if ( nameSpace.equals(GCshCmdtyCurrNameSpace.CURRENCY) ) {
+	private void addTabForType(final GCshCmdtyCurrID.Type type) {
+		if ( type == GCshCmdtyCurrID.Type.CURRENCY ) {
 			SimpleCurrencyExchRateTable table = new SimpleCurrencyExchRateTable();
-			table.clear();
-			addForNameSpace(nameSpace, table);
+			addTabForType(type, table, false);
 		} else {
 			SimpleCommodityQuoteTable table = new SimpleCommodityQuoteTable();
-			table.clear();
-			addForNameSpace(nameSpace, table);
+			addTabForType(type, table, false);
 		}
 	}
 
-	/**
-	 * Add a new name space with an initial set of conversion-factors.
-	 *
-	 * @param nameSpace the new nameSpace to add.
-	 * @param table     an initial set of conversion-factors.
-	 */
-	public void addForNameSpace(final String nameSpace, final SimplePriceTable table) {
-		if ( nameSpace == null ) {
-			throw new IllegalArgumentException("argument <nameSpace> is null");
-		}
-
-		if ( nameSpace.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <nameSpace> is empty");
-		}
-
+	private void addTabForType(final GCshCmdtyCurrID.Type type, final SimplePriceTable table, boolean clear) {
 		if ( table == null ) {
 			throw new IllegalArgumentException("argument <table> is null");
 		}
 
-		nameSpace2PrcTab.put(nameSpace, table);
-		LOGGER.debug("addForNameSpace: Added new table for name space '" + nameSpace + "'");
+		if ( cmdtyCurrType2PrcTab == null ) {
+			throw new IllegalStateException("Meta table is not set"); 
+		}
+		
+		if ( cmdtyCurrType2PrcTab.keySet().contains(type) ) {
+			throw new IllegalStateException("Simple table already exists for type " + type);
+		}
+
+		if ( clear ) {
+			cmdtyCurrType2PrcTab.clear();
+			LOGGER.debug("addTabForType: Cleared table for type " + type);
+		}
+		
+		cmdtyCurrType2PrcTab.put(type, table);
+		LOGGER.debug("addTabForType: Added new table for type " + type);
+	}
+
+	public List<GCshCmdtyCurrID.Type> getTabTypes() {
+		if ( cmdtyCurrType2PrcTab == null ) {
+			throw new IllegalStateException("Meta table is not set"); 
+		}
+		
+		ArrayList<GCshCmdtyCurrID.Type> result = new ArrayList<GCshCmdtyCurrID.Type>(cmdtyCurrType2PrcTab.keySet());
+		Collections.sort(result);
+		return result;
+	}
+
+	protected SimplePriceTable getTabByType(final GCshCmdtyCurrID.Type type) {
+		if ( cmdtyCurrType2PrcTab == null ) {
+			throw new IllegalStateException("Meta table is not set"); 
+		}
+		
+		return cmdtyCurrType2PrcTab.get(type);
 	}
 
 	// ---------------------------------------------------------------
@@ -248,6 +245,7 @@ public class ComplexPriceTable implements Serializable {
 	 * @return the factor to convert the price specified by the name-space-code-pair
 	 * @see SimplePriceTable#setConversionFactor(java.lang.String, FixedPointNumber)
 	 */
+	@Deprecated
 	public FixedPointNumber getConversionFactor(final String nameSpace, final String code) {
 		if ( nameSpace == null ) {
 			throw new IllegalArgumentException("argument <nameSpace> is null");
@@ -265,12 +263,13 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <code> is empty");
 		}
 
-		SimplePriceTable table = getByNamespace(nameSpace);
-		if ( table == null ) {
-			return null;
+		if ( nameSpace.equals( GCshCmdtyCurrNameSpace.CURRENCY ) ) {
+			GCshCurrID currID = new GCshCurrID(code);
+			return getConversionFactor(currID);
+		} else {
+			GCshCmdtyID cmdtyID = new GCshCmdtyID(nameSpace, code);
+			return getConversionFactor(cmdtyID);
 		}
-
-		return table.getConversionFactor(code);
 	}
 
 	public FixedPointNumber getConversionFactor(final GCshCmdtyCurrID cmdtyCurrID) {
@@ -282,7 +281,21 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
 		}
 
-		return getConversionFactor(cmdtyCurrID.getNameSpace(), cmdtyCurrID.getCode());
+		SimplePriceTable table = getTabByType(cmdtyCurrID.getType());
+		if ( table == null ) {
+        	LOGGER.error("getConversionFactor: Cannot get simple conversion table for commodity/currency ID " + cmdtyCurrID);
+			return null;
+		}
+
+		if ( cmdtyCurrID.getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
+			GCshCurrID currID = new GCshCurrID(cmdtyCurrID.getCode());
+			return ((SimpleCurrencyExchRateTable) table).getConversionFactor(currID);
+		} else if ( cmdtyCurrID.getType() == GCshCmdtyCurrID.Type.SECURITY ) {
+			GCshCmdtyID cmdtyID = new GCshCmdtyID(cmdtyCurrID.getNameSpace(), cmdtyCurrID.getCode());
+			return ((SimpleCommodityQuoteTable) table).getConversionFactor(cmdtyID);
+		}
+		
+		return null; // Compiler happy
 	}
 
 	public FixedPointNumber getConversionFactor(final Currency curr) {
@@ -290,7 +303,8 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <curr> is null");
 		}
 
-		return getConversionFactor(GCshCmdtyCurrNameSpace.CURRENCY, curr.getCurrencyCode());
+		GCshCurrID currID = new GCshCurrID(curr);
+		return getConversionFactor(currID);
 	}
 
 	// ----------------------------
@@ -311,13 +325,14 @@ public class ComplexPriceTable implements Serializable {
 		if ( code.trim().equals("") ) {
 			throw new IllegalArgumentException("argument <code> is empty");
 		}
-
-		SimplePriceTable table = getByNamespace(nameSpace);
-		if ( table == null ) {
-			return null;
+		
+		if ( nameSpace.equals( GCshCmdtyCurrNameSpace.CURRENCY ) ) {
+			GCshCurrID currID = new GCshCurrID(code);
+			return getConversionFactorRat(currID);
+		} else {
+			GCshCmdtyID cmdtyID = new GCshCmdtyID(nameSpace, code);
+			return getConversionFactorRat(cmdtyID);
 		}
-
-		return table.getConversionFactorRat(code);
 	}
 
 	public BigFraction getConversionFactorRat(final GCshCmdtyCurrID cmdtyCurrID) {
@@ -329,7 +344,21 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
 		}
 
-		return getConversionFactorRat(cmdtyCurrID.getNameSpace(), cmdtyCurrID.getCode());
+		SimplePriceTable table = getTabByType(cmdtyCurrID.getType());
+		if ( table == null ) {
+        	LOGGER.error("getConversionFactorRat: Cannot get simple conversion table for commodity/currency ID " + cmdtyCurrID);
+			return null;
+		}
+
+		if ( cmdtyCurrID.getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
+			GCshCurrID currID = new GCshCurrID(cmdtyCurrID.getCode());
+			return ((SimpleCurrencyExchRateTable) table).getConversionFactorRat(currID);
+		} else if ( cmdtyCurrID.getType() == GCshCmdtyCurrID.Type.SECURITY ) {
+			GCshCmdtyID cmdtyID = new GCshCmdtyID(cmdtyCurrID.getNameSpace(), cmdtyCurrID.getCode());
+			return ((SimpleCommodityQuoteTable) table).getConversionFactorRat(cmdtyID);
+		}
+		
+		return null; // Compiler happy
 	}
 
 	public BigFraction getConversionFactorRat(final Currency curr) {
@@ -337,22 +366,22 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <curr> is null");
 		}
 
-		return getConversionFactorRat(GCshCmdtyCurrNameSpace.CURRENCY, curr.getCurrencyCode());
+		GCshCurrID currID = new GCshCurrID(curr);
+		return getConversionFactorRat(currID);
 	}
 
 	// ----------------------------
 
 	/**
 	 * If the nameSpace does not exist yet, it is created.
-	 * 
 	 * @param nameSpace 
 	 * @param code 
 	 * @param factor 
 	 *
 	 * @see SimplePriceTable#setConversionFactor(java.lang.String, FixedPointNumber)
 	 */
-	public void setConversionFactor(final String nameSpace, final String code,
-			final FixedPointNumber factor) {
+	@Deprecated
+	public void setConversionFactor(final String nameSpace, final String code, final FixedPointNumber factor) {
 		if ( nameSpace == null ) {
 			throw new IllegalArgumentException("argument <nameSpace> is null");
 		}
@@ -360,7 +389,7 @@ public class ComplexPriceTable implements Serializable {
 		if ( nameSpace.trim().equals("") ) {
 			throw new IllegalArgumentException("argument <nameSpace> is empty");
 		}
-
+		
 		if ( code == null ) {
 			throw new IllegalArgumentException("argument <code> is null");
 		}
@@ -368,28 +397,23 @@ public class ComplexPriceTable implements Serializable {
 		if ( code.trim().equals("") ) {
 			throw new IllegalArgumentException("argument <code> is empty");
 		}
-
-		if ( factor == null ) {
-		    throw new IllegalArgumentException("argument <factor> is null");
-		}
 		
-		// ::TODO ::CHECK
-		// In the sister project, we had to remove this check (cf. comment there).
-		// What about GnuCash?
-		if ( factor.compareTo(FixedPointNumber.ZERO) <= 0 ) {
-			throw new IllegalArgumentException("argument <factor> must be > 0");
+		GCshCmdtyCurrID cmdtyCurrID = new GCshCmdtyCurrID(nameSpace, code);
+		setConversionFactor(cmdtyCurrID, factor);
+	}
+	
+	@Deprecated
+	public void setConversionFactor(final String cmdtyCurrIDStr, final FixedPointNumber factor) {
+		if ( cmdtyCurrIDStr == null ) {
+			throw new IllegalArgumentException("argument <cmdtyCurrIDStr> is null");
 		}
 
-		SimplePriceTable table = getByNamespace(nameSpace);
-		if ( table == null ) {
-			addForNameSpace(nameSpace);
-			table = getByNamespace(nameSpace);
+		if ( cmdtyCurrIDStr.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <cmdtyCurrIDStr> is empty");
 		}
 
-		table.setConversionFactor(code, factor);
-		table.setConversionFactorRat(code, factor.toBigFraction());
-
-		firePriceTableChanged(code, factor);
+		GCshCmdtyCurrID cmdtyCurrID = GCshCmdtyCurrID.parse(cmdtyCurrIDStr);
+		setConversionFactor(cmdtyCurrID, factor);
 	}
 
 	public void setConversionFactor(final GCshCmdtyCurrID cmdtyCurrID, final FixedPointNumber factor) {
@@ -401,12 +425,79 @@ public class ComplexPriceTable implements Serializable {
 		    throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
 		}
 	
+		if ( cmdtyCurrID.getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
+			GCshCurrID currID = new GCshCurrID(cmdtyCurrID.getCode());
+			setConversionFactor(currID, factor);
+		} else if ( cmdtyCurrID.getType() == GCshCmdtyCurrID.Type.SECURITY ) {
+			GCshCmdtyID cmdtyID = new GCshCmdtyID(cmdtyCurrID.getNameSpace(), cmdtyCurrID.getCode());
+			setConversionFactor(cmdtyID, factor);
+		}
+
+		firePriceTableChanged(cmdtyCurrID.toString(), factor);
+	}
+	
+	public void setConversionFactor(final GCshCmdtyID cmdtyID, final FixedPointNumber factor) {
+		if ( cmdtyID == null ) {
+		    throw new IllegalArgumentException("argument <cmdtyID> is null");
+		}
+	
+		if ( ! cmdtyID.isSet() ) {
+		    throw new IllegalArgumentException("argument <cmdtyID> is not set");
+		}
+	
 		if ( factor == null ) {
 		    throw new IllegalArgumentException("argument <factor> is null");
 		}
 	
-		setConversionFactor(cmdtyCurrID.getNameSpace(), cmdtyCurrID.getCode(),
-			            factor);
+		// ::TODO ::CHECK
+		// In the sister project, we had to remove this check (cf. comment there).
+		// What about GnuCash?
+		if ( factor.compareTo(FixedPointNumber.ZERO) <= 0 ) {
+			throw new IllegalArgumentException("argument <factor> must be > 0");
+		}
+
+		SimplePriceTable table = getTabByType(GCshCmdtyCurrID.Type.SECURITY);
+		if ( table == null ) {
+        	LOGGER.error("setConversionFactor: Cannot get simple conversion table for commodity/currency ID " + cmdtyID);
+			return;
+		}
+
+		((SimpleCommodityQuoteTable) table).setConversionFactor(cmdtyID, factor);
+		((SimpleCommodityQuoteTable) table).setConversionFactorRat(cmdtyID, factor.toBigFraction());
+
+		firePriceTableChanged(cmdtyID.toString(), factor);
+	}
+	
+	public void setConversionFactor(final GCshCurrID currID, final FixedPointNumber factor) {
+		if ( currID == null ) {
+		    throw new IllegalArgumentException("argument <currID> is null");
+		}
+	
+		if ( ! currID.isSet() ) {
+		    throw new IllegalArgumentException("argument <currID> is not set");
+		}
+	
+		if ( factor == null ) {
+		    throw new IllegalArgumentException("argument <factor> is null");
+		}
+	
+		// ::TODO ::CHECK
+		// In the sister project, we had to remove this check (cf. comment there).
+		// What about GnuCash?
+		if ( factor.compareTo(FixedPointNumber.ZERO) <= 0 ) {
+			throw new IllegalArgumentException("argument <factor> must be > 0");
+		}
+
+		SimplePriceTable table = getTabByType(GCshCmdtyCurrID.Type.CURRENCY);
+		if ( table == null ) {
+        	LOGGER.error("setConversionFactor: Cannot get simple conversion table for currency ID " + currID);
+			return;
+		}
+
+		((SimpleCurrencyExchRateTable) table).setConversionFactor(currID, factor);
+		((SimpleCurrencyExchRateTable) table).setConversionFactorRat(currID, factor.toBigFraction());
+
+		firePriceTableChanged(currID.toString(), factor);
 	}
 	
 	public void setConversionFactor(final Currency curr, final FixedPointNumber factor) {
@@ -418,14 +509,14 @@ public class ComplexPriceTable implements Serializable {
 		    throw new IllegalArgumentException("argument <factor> is null");
 		}
 	
-		GCshCmdtyCurrID cmdtyCurrID = new GCshCmdtyCurrID(curr);
-		setConversionFactor(cmdtyCurrID, factor);
+		GCshCurrID currID = new GCshCurrID(curr);
+		setConversionFactor(currID, factor);
 	}
 	
 	// ----------------------------
 
-	public void setConversionFactorRat(final String nameSpace, final String code,
-			final BigFraction factor) {
+	@Deprecated
+	public void setConversionFactorRat( final String nameSpace, final String code, final BigFraction factor) {
 		if ( nameSpace == null ) {
 			throw new IllegalArgumentException("argument <nameSpace> is null");
 		}
@@ -433,7 +524,7 @@ public class ComplexPriceTable implements Serializable {
 		if ( nameSpace.trim().equals("") ) {
 			throw new IllegalArgumentException("argument <nameSpace> is empty");
 		}
-
+		
 		if ( code == null ) {
 			throw new IllegalArgumentException("argument <code> is null");
 		}
@@ -441,28 +532,23 @@ public class ComplexPriceTable implements Serializable {
 		if ( code.trim().equals("") ) {
 			throw new IllegalArgumentException("argument <code> is empty");
 		}
+		
+		GCshCmdtyCurrID cmdtyCurrID = new GCshCmdtyCurrID(nameSpace, code);
+		setConversionFactorRat(cmdtyCurrID, factor);
+	}
 
-		if ( factor == null ) {
-		    throw new IllegalArgumentException("argument <factor> is null");
+	@Deprecated
+	public void setConversionFactorRat( final String cmdtyCurrIDStr, final BigFraction factor) {
+		if ( cmdtyCurrIDStr == null ) {
+			throw new IllegalArgumentException("argument <cmdtyCurrIDStr> is null");
+		}
+
+		if ( cmdtyCurrIDStr.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <cmdtyCurrIDStr> is empty");
 		}
 		
-		// ::TODO ::CHECK
-		// In the sister project, we had to remove this check (cf. comment there).
-		// What about GnuCash?
-		if ( factor.compareTo(BigFraction.ZERO) <= 0 ) {
-			throw new IllegalArgumentException("argument <factor> must be > 0");
-		}
-
-		SimplePriceTable table = getByNamespace(nameSpace);
-		if ( table == null ) {
-			addForNameSpace(nameSpace);
-			table = getByNamespace(nameSpace);
-		}
-
-		table.setConversionFactor(code, FixedPointNumber.of(factor));
-		table.setConversionFactorRat(code, factor);
-
-		firePriceTableChanged(code, factor);
+		GCshCmdtyCurrID cmdtyCurrID = GCshCmdtyCurrID.parse(cmdtyCurrIDStr);
+		setConversionFactorRat(cmdtyCurrID, factor);
 	}
 
 	public void setConversionFactorRat(final GCshCmdtyCurrID cmdtyCurrID, final BigFraction factor) {
@@ -474,12 +560,79 @@ public class ComplexPriceTable implements Serializable {
 		    throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
 		}
 	
+		if ( cmdtyCurrID.getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
+			GCshCurrID currID = new GCshCurrID(cmdtyCurrID.getCode());
+			setConversionFactorRat(currID, factor);
+		} else if ( cmdtyCurrID.getType() == GCshCmdtyCurrID.Type.SECURITY ) {
+			GCshCmdtyID cmdtyID = new GCshCmdtyID(cmdtyCurrID.getNameSpace(), cmdtyCurrID.getCode());
+			setConversionFactorRat(cmdtyID, factor);
+		}
+
+		firePriceTableChanged(cmdtyCurrID.toString(), factor);
+	}
+	
+	public void setConversionFactorRat(final GCshCmdtyID cmdtyID, final BigFraction factor) {
+		if ( cmdtyID == null ) {
+		    throw new IllegalArgumentException("argument <cmdtyID> is null");
+		}
+	
+		if ( ! cmdtyID.isSet() ) {
+		    throw new IllegalArgumentException("argument <cmdtyID> is not set");
+		}
+	
 		if ( factor == null ) {
 		    throw new IllegalArgumentException("argument <factor> is null");
 		}
 	
-		setConversionFactorRat(cmdtyCurrID.getNameSpace(), cmdtyCurrID.getCode(),
-			            factor);
+		// ::TODO ::CHECK
+		// In the sister project, we had to remove this check (cf. comment there).
+		// What about GnuCash?
+		if ( factor.compareTo(BigFraction.ZERO) <= 0 ) {
+			throw new IllegalArgumentException("argument <factor> must be > 0");
+		}
+
+		SimplePriceTable table = getTabByType(GCshCmdtyCurrID.Type.SECURITY);
+		if ( table == null ) {
+        	LOGGER.error("setConversionFactorRat: Cannot get simple conversion table for commodity ID " + cmdtyID);
+			return;
+		}
+
+		((SimpleCommodityQuoteTable) table).setConversionFactor(cmdtyID, FixedPointNumber.of(factor));
+		((SimpleCommodityQuoteTable) table).setConversionFactorRat(cmdtyID, factor);
+
+		firePriceTableChanged(cmdtyID.toString(), factor);
+	}
+	
+	public void setConversionFactorRat(final GCshCurrID currID, final BigFraction factor) {
+		if ( currID == null ) {
+		    throw new IllegalArgumentException("argument <currID> is null");
+		}
+	
+		if ( ! currID.isSet() ) {
+		    throw new IllegalArgumentException("argument <currID> is not set");
+		}
+	
+		if ( factor == null ) {
+		    throw new IllegalArgumentException("argument <factor> is null");
+		}
+	
+		// ::TODO ::CHECK
+		// In the sister project, we had to remove this check (cf. comment there).
+		// What about GnuCash?
+		if ( factor.compareTo(BigFraction.ZERO) <= 0 ) {
+			throw new IllegalArgumentException("argument <factor> must be > 0");
+		}
+
+		SimplePriceTable table = getTabByType(GCshCmdtyCurrID.Type.CURRENCY);
+		if ( table == null ) {
+        	LOGGER.error("setConversionFactorRat: Cannot get simple conversion table for currency ID " + currID);
+			return;
+		}
+
+		((SimpleCurrencyExchRateTable) table).setConversionFactor(currID, FixedPointNumber.of(factor));
+		((SimpleCurrencyExchRateTable) table).setConversionFactorRat(currID, factor);
+
+		firePriceTableChanged(currID.toString(), factor);
 	}
 	
 	public void setConversionFactorRat(final Currency curr, final BigFraction factor) {
@@ -491,7 +644,7 @@ public class ComplexPriceTable implements Serializable {
 		    throw new IllegalArgumentException("argument <factor> is null");
 		}
 	
-		GCshCmdtyCurrID cmdtyCurrID = new GCshCmdtyCurrID(curr);
+		GCshCurrID cmdtyCurrID = new GCshCurrID(curr);
 		setConversionFactorRat(cmdtyCurrID, factor);
 	}
 	
@@ -500,7 +653,7 @@ public class ComplexPriceTable implements Serializable {
 	/**
 	 * @param pValue 
 	 * @param cmdtyCurrID 
-	 * @return return the price of the given commodity/currency in base currencies
+	 * @return the price of the given commodity/currency in base currencies
 	 * @see SimplePriceTable#convertFromBaseCurrency(FixedPointNumber,
 	 *      java.lang.String)
 	 */
@@ -516,13 +669,21 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set"); 
 		}
 		
-		SimplePriceTable table = getByNamespace(cmdtyCurrID.getNameSpace());
+		SimplePriceTable table = getTabByType(cmdtyCurrID.getType());
 		if ( table == null ) {
         	LOGGER.error("convertFromBaseCurrency: Cannot get simple conversion table for value = " + pValue + " and code = '" + cmdtyCurrID + "'");
 			return null;
 		}
 
-		return table.convertFromBaseCurrency(pValue, cmdtyCurrID.getCode());
+		if ( cmdtyCurrID.getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
+			GCshCurrID currID = new GCshCurrID(cmdtyCurrID.getCode());
+			return ((SimpleCurrencyExchRateTable) table).convertFromBaseCurrency(pValue, currID);
+		} else if ( cmdtyCurrID.getType() == GCshCmdtyCurrID.Type.SECURITY ) {
+			GCshCmdtyID cmdtyID = new GCshCmdtyID(cmdtyCurrID.getNameSpace(), cmdtyCurrID.getCode());
+			return ((SimpleCommodityQuoteTable) table).convertFromBaseCurrency(pValue, cmdtyID);
+		}
+		
+		return null; // Compiler happy
 	}
 
 	public FixedPointNumber convertFromBaseCurrency(final FixedPointNumber pValue,  final Currency curr) {
@@ -533,7 +694,7 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <curr> is null"); 
 		}
 		
-		GCshCmdtyCurrID cmdtyCurrID = new GCshCmdtyCurrID(curr);
+		GCshCurrID cmdtyCurrID = new GCshCurrID(curr);
 		return convertFromBaseCurrency(pValue, cmdtyCurrID);
 	}
 
@@ -551,13 +712,21 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set"); 
 		}
 		
-		SimplePriceTable table = getByNamespace(cmdtyCurrID.getNameSpace());
+		SimplePriceTable table = getTabByType(cmdtyCurrID.getType());
 		if ( table == null ) {
         	LOGGER.error("convertFromBaseCurrencyRat: Cannot get simple conversion table for value = " + pValue + " and code = '" + cmdtyCurrID + "'");
 			return null;
 		}
 
-		return table.convertFromBaseCurrencyRat(pValue, cmdtyCurrID.getCode());
+		if ( cmdtyCurrID.getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
+			GCshCurrID currID = new GCshCurrID(cmdtyCurrID.getCode());
+			return ((SimpleCurrencyExchRateTable) table).convertFromBaseCurrencyRat(pValue, currID);
+		} else if ( cmdtyCurrID.getType() == GCshCmdtyCurrID.Type.SECURITY ) {
+			GCshCmdtyID cmdtyID = new GCshCmdtyID(cmdtyCurrID.getNameSpace(), cmdtyCurrID.getCode());
+			return ((SimpleCommodityQuoteTable) table).convertFromBaseCurrencyRat(pValue, cmdtyID);
+		}
+		
+		return null; // Compiler happy
 	}
 	
 	public BigFraction convertFromBaseCurrencyRat(final BigFraction pValue, final Currency curr) {
@@ -568,7 +737,7 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <curr> is null"); 
 		}
 		
-		GCshCmdtyCurrID cmdtyCurrID = new GCshCmdtyCurrID(curr);
+		GCshCurrID cmdtyCurrID = new GCshCurrID(curr);
 		return convertFromBaseCurrencyRat(pValue, cmdtyCurrID);
 	}
 
@@ -586,13 +755,21 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set"); 
 		}
 		
-		SimplePriceTable table = getByNamespace(cmdtyCurrID.getNameSpace());
+		SimplePriceTable table = getTabByType(cmdtyCurrID.getType());
 		if ( table == null ) {
         	LOGGER.error("convertToBaseCurrency: Cannot get simple conversion table for value = " + pValue + " and code = '" + cmdtyCurrID + "'");
 			return null;
 		}
 
-		return table.convertToBaseCurrency(pValue, cmdtyCurrID.getCode());
+		if ( cmdtyCurrID.getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
+			GCshCurrID currID = new GCshCurrID(cmdtyCurrID.getCode());
+			return ((SimpleCurrencyExchRateTable) table).convertToBaseCurrency(pValue, currID);
+		} else if ( cmdtyCurrID.getType() == GCshCmdtyCurrID.Type.SECURITY ) {
+			GCshCmdtyID cmdtyID = new GCshCmdtyID(cmdtyCurrID.getNameSpace(), cmdtyCurrID.getCode());
+			return ((SimpleCommodityQuoteTable) table).convertToBaseCurrency(pValue, cmdtyID);
+		}
+		
+		return null; // Compiler happy
 	}
 
 	public FixedPointNumber convertToBaseCurrency(final FixedPointNumber pValue, final Currency curr) {
@@ -603,8 +780,8 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <curr> is null"); 
 		}
 		
-		GCshCmdtyCurrID cmdtyCurrID = new GCshCmdtyCurrID(curr);
-		return convertToBaseCurrency(pValue, cmdtyCurrID);
+		GCshCurrID currID = new GCshCurrID(curr);
+		return convertToBaseCurrency(pValue, currID);
 	}
 
 	// ----------------------------
@@ -621,13 +798,21 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set"); 
 		}
 		
-		SimplePriceTable table = getByNamespace(cmdtyCurrID.getNameSpace());
+		SimplePriceTable table = getTabByType(cmdtyCurrID.getType());
 		if ( table == null ) {
         	LOGGER.error("convertToBaseCurrencyRat: Cannot get simple conversion table for value = " + pValue + " and code = '" + cmdtyCurrID + "'");
 			return null;
 		}
 
-		return table.convertToBaseCurrencyRat(pValue, cmdtyCurrID.getCode());
+		if ( cmdtyCurrID.getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
+			GCshCurrID currID = new GCshCurrID(cmdtyCurrID.getCode());
+			return ((SimpleCurrencyExchRateTable) table).convertToBaseCurrencyRat(pValue, currID);
+		} else if ( cmdtyCurrID.getType() == GCshCmdtyCurrID.Type.SECURITY ) {
+			GCshCmdtyID cmdtyID = new GCshCmdtyID(cmdtyCurrID.getNameSpace(), cmdtyCurrID.getCode());
+			return ((SimpleCommodityQuoteTable) table).convertToBaseCurrencyRat(pValue, cmdtyID);
+		}
+		
+		return null; // Compiler happy
 	}
 	
 	public BigFraction convertToBaseCurrencyRat(final BigFraction pValue, final Currency curr) {
@@ -638,56 +823,18 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <curr> is null"); 
 		}
 		
-		GCshCmdtyCurrID cmdtyCurrID = new GCshCmdtyCurrID(curr);
-		return convertToBaseCurrencyRat(pValue, cmdtyCurrID);
+		GCshCurrID currID = new GCshCurrID(curr);
+		return convertToBaseCurrencyRat(pValue, currID);
 	}
 
 	// ---------------------------------------------------------------
 
-	public List<String> getNameSpaces() {
-		if ( nameSpace2PrcTab == null ) {
-			throw new IllegalStateException("table is not set"); 
-		}
-		
-		ArrayList<String> result = new ArrayList<String>(nameSpace2PrcTab.keySet());
-		Collections.sort(result);
-		return result;
-	}
-
 	/**
-	 * @param nameSpace
-	 * @return
-	 */
-	protected SimplePriceTable getByNamespace(final String nameSpace) {
-		if ( nameSpace == null ) {
-			throw new IllegalArgumentException("argument <nameSpace> is null"); 
-		}
-		
-		if ( nameSpace.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <nameSpace> is empty"); 
-		}
-		
-		if ( nameSpace2PrcTab == null ) {
-			throw new IllegalStateException("table is not set"); 
-		}
-		
-		return nameSpace2PrcTab.get(nameSpace);
-	}
-
-	/**
-	 * @param nameSpace
+	 * @param type
 	 * @return list of currencies in the given name space
 	 */
-	public List<String> getCodes(final String nameSpace) {
-		if ( nameSpace == null ) {
-			throw new IllegalArgumentException("argument <nameSpace> is null"); 
-		}
-		
-		if ( nameSpace.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <nameSpace> is empty"); 
-		}
-		
-		SimplePriceTable table = getByNamespace(nameSpace);
+	public List<String> getCodes(final GCshCmdtyCurrID.Type type) {
+		SimplePriceTable table = getTabByType(type);
 		if ( table == null ) {
 			return new ArrayList<String>();
 		}
@@ -701,15 +848,15 @@ public class ComplexPriceTable implements Serializable {
 	 * @see SimplePriceTable#clear()
 	 */
 	public void clear() {
-		if ( nameSpace2PrcTab == null ) {
-			throw new IllegalStateException("table is not set"); 
+		if ( cmdtyCurrType2PrcTab == null ) {
+			throw new IllegalStateException("Meta table is not set"); 
 		}
 		
-		for ( String nameSpace : nameSpace2PrcTab.keySet() ) {
-			nameSpace2PrcTab.get(nameSpace).clear();
+		for ( GCshCmdtyCurrID.Type type : cmdtyCurrType2PrcTab.keySet() ) {
+			cmdtyCurrType2PrcTab.get(type).clear();
 		}
 
-		nameSpace2PrcTab.clear();
+		cmdtyCurrType2PrcTab.clear();
 	}
 
 	// ---------------------------------------------------------------
@@ -718,11 +865,11 @@ public class ComplexPriceTable implements Serializable {
 	public String toString() {
 		String result = "ComplexPriceTable [\n";
 
-		for ( String nameSpace : getNameSpaces() ) {
+		for ( GCshCmdtyCurrID.Type type : getTabTypes() ) {
 			result += "=======================================\n";
-			result += "Name space: " + nameSpace + "\n";
+			result += "Type: " + type + "\n";
 			result += "=======================================\n";
-			result += getByNamespace(nameSpace).toString() + "\n";
+			result += getTabByType(type).toString() + "\n";
 		}
 
 		result += "]";

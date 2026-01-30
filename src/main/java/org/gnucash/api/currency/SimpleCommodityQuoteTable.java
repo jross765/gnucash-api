@@ -23,39 +23,42 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
     // -----------------------------------------------------------
 
     /*
-     * The two objects map a *non-qualified* commodity code (e.g. "MBG" or "FR0000120644") 
+     * The two objects map a *fully-qualified* commodity ID (e.g. "EURONEXT:MBG" or "ISIN:FR0000120644")
+     * (*not* the security code (such as "MBG" or "FR0000120644") 
      * to a factor (in two variants: FixedPointNumber and BigFraction).
      * In order to get the value in the base-currency, the factor is to be multiplied with 
-     * an amount of that commodity.
+     * an amount of that security.
      */
-    private Map<String, FixedPointNumber> mCmdtyCode2Factor    = null; // String, because unqualified
-    private Map<String, BigFraction>      mCmdtyCode2FactorRat = null; // dto.
+    private Map<String, FixedPointNumber> cmdtyID2Factor    = null; // String, because unqualified
+    private Map<String, BigFraction>      cmdtyID2FactorRat = null; // dto.
 
     // -----------------------------------------------------------
 
     public SimpleCommodityQuoteTable() {
-    	mCmdtyCode2Factor    = new Hashtable<String, FixedPointNumber>();
-    	mCmdtyCode2FactorRat = new Hashtable<String, BigFraction>();
+    	cmdtyID2Factor    = new Hashtable<String, FixedPointNumber>();
+    	cmdtyID2FactorRat = new Hashtable<String, BigFraction>();
     }
 
     // -----------------------------------------------------------
 
     /**
-     * @param cmdtyCode a currency-name in capital letters(e.g. "GBP")
+     * @param cmdtyIDStr a commodity ID (e.g. "EURONEXT:MBG")
      * @return a factor {@link FixedPointNumber} that is to be multiplied with an
      *         amount of that currency to get the value in the base-currency.
      */
     @Override
-    public FixedPointNumber getConversionFactor(final String cmdtyCode) {
-		if ( cmdtyCode == null ) {
-			throw new IllegalArgumentException("argument <cmdtyCode> is null");
+    @Deprecated
+    public FixedPointNumber getConversionFactor(final String cmdtyIDStr) {
+		if ( cmdtyIDStr == null ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
 		}
 
-		if ( cmdtyCode.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyCode> is empty");
+		if ( cmdtyIDStr.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
 		}
 
-    	return mCmdtyCode2Factor.get(cmdtyCode);
+		GCshCmdtyID cmdtyID = GCshCmdtyID.parse(cmdtyIDStr);
+    	return getConversionFactor(cmdtyID);
     }
 
     public FixedPointNumber getConversionFactor(final GCshCmdtyID cmdtyID) {
@@ -67,20 +70,22 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
 			throw new IllegalArgumentException("argument <cmdtyID> is mot set");
 		}
 
-    	return mCmdtyCode2Factor.get(cmdtyID.getCode());
+    	return cmdtyID2Factor.get(cmdtyID.toString());
     }
 
     @Override
-    public BigFraction getConversionFactorRat(final String cmdtyCode) {
-		if ( cmdtyCode == null ) {
-			throw new IllegalArgumentException("argument <cmdtyCode> is null");
+    @Deprecated
+    public BigFraction getConversionFactorRat(final String cmdtyIDStr) {
+		if ( cmdtyIDStr == null ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
 		}
 
-		if ( cmdtyCode.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyCode> is empty");
+		if ( cmdtyIDStr.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
 		}
 
-    	return mCmdtyCode2FactorRat.get(cmdtyCode);
+		GCshCmdtyID cmdtyID = GCshCmdtyID.parse(cmdtyIDStr);
+    	return getConversionFactorRat(cmdtyID);
     }
     
     public BigFraction getConversionFactorRat(final GCshCmdtyID cmdtyID) {
@@ -92,32 +97,33 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
 			throw new IllegalArgumentException("argument <cmdtyID> is not set");
 		}
 
-    	return mCmdtyCode2FactorRat.get(cmdtyID.getCode());
+    	return cmdtyID2FactorRat.get(cmdtyID.toString());
     }
 
     // ----------------------------
 
     /**
-     * @param cmdtyCode a currency-name in capital letters(e.g. "GBP")
+     * @param cmdtyIDStr a a commodity ID (e.g. "EURONEXT:MBG")
      * @param factor              a factor {@link FixedPointNumber} that is to be
      *                            multiplied with an amount of that currency to get
      *                            the value in the base-currency.
      */
     @Override
-    public void setConversionFactor(final String cmdtyCode, final FixedPointNumber factor) {
-		if ( cmdtyCode == null ) {
-			throw new IllegalArgumentException("argument <cmdtyCode> is null");
+    public void setConversionFactor(final String cmdtyIDStr, final FixedPointNumber factor) {
+		if ( cmdtyIDStr == null ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
 		}
 
-		if ( cmdtyCode.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyCode> is empty");
+		if ( cmdtyIDStr.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
 		}
 
 		if ( factor == null ) {
 			throw new IllegalArgumentException("argument <factor> is null");
 		}
 
-    	mCmdtyCode2Factor.put(cmdtyCode, factor);
+		GCshCmdtyID cmdtyID = GCshCmdtyID.parse(cmdtyIDStr);
+		setConversionFactor(cmdtyID, factor);
     }
 
     public void setConversionFactor(final GCshCmdtyID cmdtyID, final FixedPointNumber factor) {
@@ -133,29 +139,32 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
 			throw new IllegalArgumentException("argument <factor> is null");
 		}
 
-		mCmdtyCode2Factor.put(cmdtyID.getCode(), factor);
+		cmdtyID2Factor.put(cmdtyID.toString(), factor);
+		// System.err.println("SimpleCommodityQuoteTable.setConversionFactor: no. of entries: " + cmdtyID2FactorRat.size());
     }
 
     // ----------------------------
 
 	@Override
-	public void setConversionFactorRat(final String cmdtyCode, final BigFraction factor) {
-		if ( cmdtyCode == null ) {
-			throw new IllegalArgumentException("argument <cmdtyCode> is null");
+	@Deprecated
+	public void setConversionFactorRat(final String cmdtyIDStr, final BigFraction factor) {
+		if ( cmdtyIDStr == null ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
 		}
 
-		if ( cmdtyCode.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyCode> is empty");
+		if ( cmdtyIDStr.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
 		}
 
 		if ( factor == null ) {
 			throw new IllegalArgumentException("argument <factor> is null");
 		}
 
-    	mCmdtyCode2FactorRat.put(cmdtyCode, factor);
+		GCshCmdtyID cmdtyID = GCshCmdtyID.parse(cmdtyIDStr);
+		setConversionFactorRat(cmdtyID, factor);
 	}
 
-    public void setConversionFactor(final GCshCmdtyID cmdtyID, final BigFraction factor) {
+    public void setConversionFactorRat(final GCshCmdtyID cmdtyID, final BigFraction factor) {
 		if ( cmdtyID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyID> is null");
 		}
@@ -168,40 +177,34 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
 			throw new IllegalArgumentException("argument <factor> is null");
 		}
 
-		mCmdtyCode2FactorRat.put(cmdtyID.getCode(), factor);
+		cmdtyID2FactorRat.put(cmdtyID.toString(), factor);
+		// System.err.println("SimpleCommodityQuoteTable.setConversionFactorRat: no. of entries: " + cmdtyID2FactorRat.size());
     }
 
     // ---------------------------------------------------------------
 
     /**
      * @param value               the value to convert
-     * @param cmdtyID the currency to convert to
+     * @param cmdtyIDStr the currency to convert to
      * @return false if the conversion is not possible
      */
     @Override
-    public FixedPointNumber convertFromBaseCurrency(final FixedPointNumber value, final String cmdtyID) {
+    @Deprecated
+    public FixedPointNumber convertFromBaseCurrency(final FixedPointNumber value, final String cmdtyIDStr) {
 		if ( value == null ) {
 			throw new IllegalArgumentException("argument <value> is null");
 		}
 
-		if ( cmdtyID == null ) {
-			throw new IllegalArgumentException("argument <cmdtyID> is null");
+		if ( cmdtyIDStr == null ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
 		}
 
-		if ( cmdtyID.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyID> is empty");
+		if ( cmdtyIDStr.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
 		}
 
-        FixedPointNumber factor = getConversionFactor(cmdtyID);
-        if ( factor == null ) {
-        	LOGGER.error("convertFromBaseCurrency: Cannot get conversion factor for value = " + value + " and code = '" + cmdtyID + "'");
-            return null;
-        }
-        
-        // CAUTION: mutable
-        FixedPointNumber result = value.copy();
-        result.divide(factor);
-        return result;
+		GCshCmdtyID cmdtyID = GCshCmdtyID.parse(cmdtyIDStr);
+		return convertFromBaseCurrency(value, cmdtyID);
     }
 
     public FixedPointNumber convertFromBaseCurrency(final FixedPointNumber value, final GCshCmdtyID cmdtyID) {
@@ -217,33 +220,37 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
 			throw new IllegalArgumentException("argument <cmdtyID> is not set");
 		}
 
-        return convertFromBaseCurrency(value, cmdtyID.getCode());
+        FixedPointNumber factor = getConversionFactor(cmdtyID);
+        if ( factor == null ) {
+        	LOGGER.error("convertFromBaseCurrency: Cannot get conversion factor for value = " + value + " and code = '" + cmdtyID + "'");
+            return null;
+        }
+        
+        // CAUTION: mutable
+        FixedPointNumber result = value.copy();
+        result.divide(factor);
+        return result;
     }
 
     // ----------------------------
 
 	@Override
-	public BigFraction convertFromBaseCurrencyRat(final BigFraction value, final String cmdtyID) {
+	@Deprecated
+	public BigFraction convertFromBaseCurrencyRat(final BigFraction value, final String cmdtyIDStr) {
 		if ( value == null ) {
 			throw new IllegalArgumentException("argument <value> is null");
 		}
 
-		if ( cmdtyID == null ) {
-			throw new IllegalArgumentException("argument <cmdtyID> is null");
+		if ( cmdtyIDStr == null ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
 		}
 
-		if ( cmdtyID.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyID> is empty");
+		if ( cmdtyIDStr.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
 		}
 
-		BigFraction factor = getConversionFactorRat(cmdtyID);
-        if ( factor == null ) {
-        	LOGGER.error("convertFromBaseCurrencyRat: Cannot get conversion factor for value = " + value + " and code = '" + cmdtyID + "'");
-            return null;
-        }
-        
-        // CAUTION: immutable
-        return value.divide(factor);
+		GCshCmdtyID cmdtyID = GCshCmdtyID.parse(cmdtyIDStr);
+		return convertFromBaseCurrencyRat(value, cmdtyID);
 	}
 
 	public BigFraction convertFromBaseCurrencyRat(final BigFraction value, final GCshCmdtyID cmdtyID) {
@@ -259,40 +266,40 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
 			throw new IllegalArgumentException("argument <cmdtyID> is not set");
 		}
 
-        return convertFromBaseCurrencyRat(value, cmdtyID.getCode());
+		BigFraction factor = getConversionFactorRat(cmdtyID);
+        if ( factor == null ) {
+        	LOGGER.error("convertFromBaseCurrencyRat: Cannot get conversion factor for value = " + value + " and code = '" + cmdtyID + "'");
+            return null;
+        }
+        
+        // CAUTION: immutable
+        return value.divide(factor);
 	}
 
     // ----------------------------
 
     /**
      * @param value           the value to convert
-     * @param cmdtyID it's currency
+     * @param cmdtyIDStr the commodity's ID
      * @return false if the conversion is not possible
      */
     @Override
-    public FixedPointNumber convertToBaseCurrency(final FixedPointNumber value, final String cmdtyID) {
+    @Deprecated
+    public FixedPointNumber convertToBaseCurrency(final FixedPointNumber value, final String cmdtyIDStr) {
 		if ( value == null ) {
 			throw new IllegalArgumentException("argument <value> is null");
 		}
 
-		if ( cmdtyID == null ) {
-			throw new IllegalArgumentException("argument <cmdtyID> is null");
+		if ( cmdtyIDStr == null ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
 		}
 
-		if ( cmdtyID.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyID> is empty");
+		if ( cmdtyIDStr.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
 		}
 
-		FixedPointNumber factor = getConversionFactor(cmdtyID);
-		if ( factor == null ) {
-        	LOGGER.error("convertToBaseCurrency: Cannot get conversion factor for value = " + value + " and code = '" + cmdtyID + "'");
-			return null;
-		}
-		
-        // CAUTION: mutable
-        FixedPointNumber result = value.copy();
-        result.multiply(factor);
-		return result;
+		GCshCmdtyID cmdtyID = GCshCmdtyID.parse(cmdtyIDStr);
+		return convertToBaseCurrency(value, cmdtyID);
     }
 
     public FixedPointNumber convertToBaseCurrency(final FixedPointNumber value, final GCshCmdtyID cmdtyID) {
@@ -308,33 +315,37 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
 			throw new IllegalArgumentException("argument <cmdtyID> is not set");
 		}
 
-		return convertToBaseCurrency(value, cmdtyID.getCode());
+		FixedPointNumber factor = getConversionFactor(cmdtyID);
+		if ( factor == null ) {
+        	LOGGER.error("convertToBaseCurrency: Cannot get conversion factor for value = " + value + " and code = '" + cmdtyID + "'");
+			return null;
+		}
+		
+        // CAUTION: mutable
+        FixedPointNumber result = value.copy();
+        result.multiply(factor);
+		return result;
     }
 
     // ----------------------------
 
 	@Override
-	public BigFraction convertToBaseCurrencyRat(final BigFraction value, final String cmdtyID) {
+	@Deprecated
+	public BigFraction convertToBaseCurrencyRat(final BigFraction value, final String cmdtyIDStr) {
 		if ( value == null ) {
 			throw new IllegalArgumentException("argument <value> is null");
 		}
 
-		if ( cmdtyID == null ) {
-			throw new IllegalArgumentException("argument <cmdtyID> is null");
+		if ( cmdtyIDStr == null ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
 		}
 
-		if ( cmdtyID.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyID> is empty");
+		if ( cmdtyIDStr.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
 		}
 
-		BigFraction factor = getConversionFactorRat(cmdtyID);
-		if ( factor == null ) {
-        	LOGGER.error("convertToBaseCurrencyRat: Cannot get conversion factor for value = " + value + " and code = '" + cmdtyID + "'");
-            return null;
-		}
-		
-        // CAUTION: immutable
-		return value.multiply(factor);
+		GCshCmdtyID cmdtyID = GCshCmdtyID.parse(cmdtyIDStr);
+		return convertToBaseCurrencyRat(value, cmdtyID);
 	}
 
 	public BigFraction convertToBaseCurrencyRat(final BigFraction value, final GCshCmdtyID cmdtyID) {
@@ -350,7 +361,14 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
 			throw new IllegalArgumentException("argument <cmdtyID> is not set");
 		}
 
-		return convertToBaseCurrencyRat(value, cmdtyID.getCode());
+		BigFraction factor = getConversionFactorRat(cmdtyID);
+		if ( factor == null ) {
+        	LOGGER.error("convertToBaseCurrencyRat: Cannot get conversion factor for value = " + value + " and code = '" + cmdtyID + "'");
+            return null;
+		}
+		
+        // CAUTION: immutable
+		return value.multiply(factor);
 	}
 
     // ---------------------------------------------------------------
@@ -360,11 +378,16 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
      */
     @Override
     public List<String> getCodes() {
-		if ( mCmdtyCode2Factor == null ) {
+		if ( cmdtyID2Factor == null ) {
 			throw new IllegalStateException("table is not set");
 		}
 
-    	return new ArrayList<String>(mCmdtyCode2Factor.keySet());
+		ArrayList<String> result = new ArrayList<String>();
+    	for ( String key : cmdtyID2Factor.keySet() ) {
+    		result.add(key.toString());
+    	}
+    	
+    	return result;
     }
     
     /**
@@ -372,13 +395,13 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
      */
     @Override
     public void clear() {
-		if ( mCmdtyCode2Factor == null ||
-			 mCmdtyCode2FactorRat == null ) {
+		if ( cmdtyID2Factor == null ||
+			 cmdtyID2FactorRat == null ) {
 			throw new IllegalStateException("table is not set");
 		}
 
-        mCmdtyCode2Factor.clear();
-        mCmdtyCode2FactorRat.clear();
+        cmdtyID2Factor.clear();
+        cmdtyID2FactorRat.clear();
     }
 
     // ---------------------------------------------------------------
@@ -387,14 +410,14 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
     public String toString() {
     	String result = "SimpleCommodityQuoteTable [\n";
 	
-    	result += "No. of entries (FP): " + mCmdtyCode2Factor.size() + "\n";
-    	result += "No. of entries (BF): " + mCmdtyCode2FactorRat.size() + "\n";
+    	result += "No. of entries (FP): " + cmdtyID2Factor.size() + "\n";
+    	result += "No. of entries (BF): " + cmdtyID2FactorRat.size() + "\n";
 	
     	result += "Entries:\n";
-    	for ( String cmdtyID : mCmdtyCode2Factor.keySet() ) {
+    	for ( String cmdtyID : cmdtyID2Factor.keySet() ) {
     		result += " - " + cmdtyID + ";";
-    		result += mCmdtyCode2Factor.get(cmdtyID) + ";";
-    		result += mCmdtyCode2FactorRat.get(cmdtyID) + "\n";
+    		result += cmdtyID2Factor.get(cmdtyID) + ";";
+    		result += cmdtyID2FactorRat.get(cmdtyID) + "\n";
     	}
 	
     	result += "]";

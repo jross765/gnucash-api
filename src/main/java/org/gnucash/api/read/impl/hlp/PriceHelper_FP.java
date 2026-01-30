@@ -1,7 +1,6 @@
 package org.gnucash.api.read.impl.hlp;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.Currency;
 import java.util.Date;
 
@@ -71,44 +70,9 @@ public class PriceHelper_FP {
 			throw new IllegalArgumentException("argument <priceDB> is null");
 		}
 
-		return getLatestPrice(new GCshCmdtyCurrID(curr),
+		return getLatestPrice(new GCshCurrID(curr),
 							  gcshFile, priceDB, 0);
 	}
-
-    /*
-	public static FixedPointNumber getLatestPrice(
-			final String pCmdtySpace, 
-			final GnuCashFile gcshFile,
-			final GncPricedb priceDB,
-			final String pCmdtyId) {
-		if ( pCmdtySpace == null ) {
-			throw new IllegalArgumentException("argument <pCmdtySpace> is null");
-		}
-		
-		if ( pCmdtySpace.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <pCmdtySpace> is empty");
-		}
-		
-		if ( gcshFile == null ) {
-			throw new IllegalArgumentException("argument <gcshFile> is null");
-		}
-
-		if ( priceDB == null ) {
-			throw new IllegalArgumentException("argument <priceDB> is null");
-		}
-
-		if ( pCmdtyId == null ) {
-			throw new IllegalArgumentException("argument <pCmdtyId> is null");
-		}
-		
-		if ( pCmdtyId.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <pCmdtyId> is empty");
-		}
-		
-		return getLatestPrice(new GCshCmdtyCurrID(pCmdtySpace, pCmdtyId),
-							  gcshFile, priceDB, 0);
-	}
-	*/
 
 	// ----------------------------
 
@@ -255,30 +219,15 @@ public class PriceHelper_FP {
 				if ( latestDate == null || latestDate.before(date) ) {
 					latestDate = date;
 					latestQuote = new FixedPointNumber(priceQuote.getPriceValue());
-					LOGGER.debug("getLatestPrice: getLatestPrice(pCmdtyCurrID='" + cmdtyCurrID.toString()
-							+ "') converted " + latestQuote + " <= " + priceQuote.getPriceValue());
+					LOGGER.debug("getLatestPrice: pCmdtyCurrID='" + cmdtyCurrID.toString() + "' converted " + latestQuote + " <= " + priceQuote.getPriceValue());
 				}
 
-			} catch (NumberFormatException e) {
-				LOGGER.error("getLatestPrice: [NumberFormatException] Problem in " + PriceHelper_FP.class.getName()
-						+ ".getLatestPrice(pCmdtyCurrID='" + cmdtyCurrID.toString() + "')! Ignoring a bad price-quote '"
-						+ priceQuote + "'", e);
-			} catch (ParseException e) {
-				LOGGER.error("getLatestPrice: [ParseException] Problem in " + PriceHelper_FP.class.getName() + " "
-						+ cmdtyCurrID.toString() + "')! Ignoring a bad price-quote '" + priceQuote + "'", e);
-			} catch (NullPointerException e) {
-				LOGGER.error("getLatestPrice: [NullPointerException] Problem in " + PriceHelper_FP.class.getName()
-						+ ".getLatestPrice(pCmdtyCurrID='" + cmdtyCurrID.toString() + "')! Ignoring a bad price-quote '"
-						+ priceQuote + "'", e);
-			} catch (ArithmeticException e) {
-				LOGGER.error("getLatestPrice: [ArithmeticException] Problem in " + PriceHelper_FP.class.getName()
-						+ ".getLatestPrice(pCmdtyCurrID='" + cmdtyCurrID.toString() + "')! Ignoring a bad price-quote '"
-						+ priceQuote + "'", e);
+			} catch (Exception e) {
+				LOGGER.error("getLatestPrice: [ArithmeticException]: pCmdtyCurrID='" + cmdtyCurrID.toString() + "'! Ignoring a bad price-quote '" + priceQuote + "'", e);
 			}
 		} // for priceQuote
 
-		LOGGER.debug("getLatestPrice: " + PriceHelper_FP.class.getName() + ".getLatestPrice(pCmdtyCurrID='"
-				+ cmdtyCurrID.toString() + "')= " + latestQuote + " from " + latestDate);
+		LOGGER.debug("getLatestPrice: pCmdtyCurrID='" + cmdtyCurrID.toString() + "' = " + latestQuote + " from " + latestDate);
 
 		if ( latestQuote == null ) {
 			return null;

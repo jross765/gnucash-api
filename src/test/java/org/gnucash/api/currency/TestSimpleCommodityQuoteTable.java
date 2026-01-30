@@ -10,7 +10,11 @@ import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.ConstTest;
 import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.impl.GnuCashFileImpl;
+import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID_Exchange;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID_SecIdType;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -57,49 +61,40 @@ public class TestSimpleCommodityQuoteTable {
 	// -----------------------------------------------------------------
 
 	@Test
-	public void test01_1() throws Exception {
+	public void test01() throws Exception {
 		complPriceTab = gcshFile.getCurrencyTable();
 		assertNotEquals(null, complPriceTab);
 
-		simplPriceTab = complPriceTab.getByNamespace(GCshCmdtyCurrNameSpace.Exchange.EURONEXT.toString());
+		simplPriceTab = complPriceTab.getTabByType(GCshCmdtyCurrID.Type.SECURITY);
 		assertNotEquals(null, simplPriceTab);
 
-		assertEquals(2, simplPriceTab.getCodes().size());
+		assertEquals(4, simplPriceTab.getCodes().size());
 		
 		List<String> currCodeArr = simplPriceTab.getCodes();
-		assertEquals("SAP", currCodeArr.get(0));
-		assertEquals("MBG", currCodeArr.get(1));
+		assertEquals("EURONEXT:SAP",      currCodeArr.get(0));
+		assertEquals("EURONEXT:MBG",      currCodeArr.get(1));
+		assertEquals("ISIN:FR0000120644", currCodeArr.get(2));
+		assertEquals("ISIN:DE000BASF111", currCodeArr.get(3));
 
-		assertEquals(145.0, simplPriceTab.getConversionFactor("SAP").doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(145,   simplPriceTab.getConversionFactorRat("SAP").getNumerator().intValue());
-		assertEquals(1,     simplPriceTab.getConversionFactorRat("SAP").getDenominator().intValue());
+		GCshCmdtyID cmdtyID = new GCshCmdtyID_Exchange(GCshCmdtyCurrNameSpace.Exchange.EURONEXT, "SAP");
+		assertEquals(145.0, ((SimpleCommodityQuoteTable) simplPriceTab).getConversionFactor(cmdtyID).doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(145,   ((SimpleCommodityQuoteTable) simplPriceTab).getConversionFactorRat(cmdtyID).getNumerator().intValue());
+		assertEquals(1,     ((SimpleCommodityQuoteTable) simplPriceTab).getConversionFactorRat(cmdtyID).getDenominator().intValue());
 		
-		assertEquals(11.265, simplPriceTab.getConversionFactor("MBG").doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(2253,   simplPriceTab.getConversionFactorRat("MBG").getNumerator().intValue());
-		assertEquals(200,    simplPriceTab.getConversionFactorRat("MBG").getDenominator().intValue());
-	}
+		cmdtyID = new GCshCmdtyID_Exchange(GCshCmdtyCurrNameSpace.Exchange.EURONEXT, "MBG");
+		assertEquals(11.265, ((SimpleCommodityQuoteTable) simplPriceTab).getConversionFactor(cmdtyID).doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(2253,   ((SimpleCommodityQuoteTable) simplPriceTab).getConversionFactorRat(cmdtyID).getNumerator().intValue());
+		assertEquals(200,    ((SimpleCommodityQuoteTable) simplPriceTab).getConversionFactorRat(cmdtyID).getDenominator().intValue());
 
-	@Test
-	public void test01_2() throws Exception {
-		complPriceTab = gcshFile.getCurrencyTable();
-		assertNotEquals(null, complPriceTab);
-
-		simplPriceTab = complPriceTab.getByNamespace(GCshCmdtyCurrNameSpace.SecIdType.ISIN.toString());
-		assertNotEquals(null, simplPriceTab);
-
-		assertEquals(2, simplPriceTab.getCodes().size());
+		cmdtyID = new GCshCmdtyID_SecIdType(GCshCmdtyCurrNameSpace.SecIdType.ISIN, "FR0000120644");
+		assertEquals(53.58, ((SimpleCommodityQuoteTable) simplPriceTab).getConversionFactor(cmdtyID).doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(2679,  ((SimpleCommodityQuoteTable) simplPriceTab).getConversionFactorRat(cmdtyID).getNumerator().intValue());
+		assertEquals(50,    ((SimpleCommodityQuoteTable) simplPriceTab).getConversionFactorRat(cmdtyID).getDenominator().intValue());
 		
-		List<String> currCodeArr = simplPriceTab.getCodes();
-		assertEquals("FR0000120644", currCodeArr.get(0));
-		assertEquals("DE000BASF111", currCodeArr.get(1));
-
-		assertEquals(53.58, simplPriceTab.getConversionFactor("FR0000120644").doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(2679,  simplPriceTab.getConversionFactorRat("FR0000120644").getNumerator().intValue());
-		assertEquals(50,    simplPriceTab.getConversionFactorRat("FR0000120644").getDenominator().intValue());
-		
-		assertEquals(46.3, simplPriceTab.getConversionFactor("DE000BASF111").doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(463,  simplPriceTab.getConversionFactorRat("DE000BASF111").getNumerator().intValue());
-		assertEquals(10,   simplPriceTab.getConversionFactorRat("DE000BASF111").getDenominator().intValue());
+		cmdtyID = new GCshCmdtyID_SecIdType(GCshCmdtyCurrNameSpace.SecIdType.ISIN, "DE000BASF111");
+		assertEquals(46.3, ((SimpleCommodityQuoteTable) simplPriceTab).getConversionFactor(cmdtyID).doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(463,  ((SimpleCommodityQuoteTable) simplPriceTab).getConversionFactorRat(cmdtyID).getNumerator().intValue());
+		assertEquals(10,   ((SimpleCommodityQuoteTable) simplPriceTab).getConversionFactorRat(cmdtyID).getDenominator().intValue());
 	}
 
 	@Test
@@ -107,19 +102,21 @@ public class TestSimpleCommodityQuoteTable {
 		complPriceTab = gcshFile.getCurrencyTable();
 		assertNotEquals(null, complPriceTab);
 
-		simplPriceTab = complPriceTab.getByNamespace(GCshCmdtyCurrNameSpace.Exchange.EURONEXT.toString());
+		simplPriceTab = complPriceTab.getTabByType(GCshCmdtyCurrID.Type.SECURITY);
 		assertNotEquals(null, simplPriceTab);
 
+		GCshCmdtyID_Exchange cmdtyID = new GCshCmdtyID_Exchange(GCshCmdtyCurrNameSpace.Exchange.EURONEXT, "SAP");
 		FixedPointNumber valFP = new FixedPointNumber("101.0");
 		BigFraction      valBF = BigFraction.of(101, 1);
 		assertEquals(valFP.doubleValue(), valBF.doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(14645, simplPriceTab.convertToBaseCurrency(valFP, "SAP").doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(14645, simplPriceTab.convertToBaseCurrencyRat(valBF, "SAP").getNumerator().intValue());
-		assertEquals(1,     simplPriceTab.convertToBaseCurrencyRat(valBF, "SAP").getDenominator().intValue());
+		assertEquals(14645, ((SimpleCommodityQuoteTable) simplPriceTab).convertToBaseCurrency(valFP, cmdtyID).doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(14645, ((SimpleCommodityQuoteTable) simplPriceTab).convertToBaseCurrencyRat(valBF, cmdtyID).getNumerator().intValue());
+		assertEquals(1,     ((SimpleCommodityQuoteTable) simplPriceTab).convertToBaseCurrencyRat(valBF, cmdtyID).getDenominator().intValue());
 
-		assertEquals(1137.765, simplPriceTab.convertToBaseCurrency(valFP, "MBG").doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(227553,   simplPriceTab.convertToBaseCurrencyRat(valBF, "MBG").getNumerator().intValue());
-		assertEquals(200,      simplPriceTab.convertToBaseCurrencyRat(valBF, "MBG").getDenominator().intValue());
+		cmdtyID = new GCshCmdtyID_Exchange(GCshCmdtyCurrNameSpace.Exchange.EURONEXT, "MBG");
+		assertEquals(1137.765, ((SimpleCommodityQuoteTable) simplPriceTab).convertToBaseCurrency(valFP, cmdtyID).doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(227553,   ((SimpleCommodityQuoteTable) simplPriceTab).convertToBaseCurrencyRat(valBF, cmdtyID).getNumerator().intValue());
+		assertEquals(200,      ((SimpleCommodityQuoteTable) simplPriceTab).convertToBaseCurrencyRat(valBF, cmdtyID).getDenominator().intValue());
 	}
 
 	@Test
@@ -127,22 +124,24 @@ public class TestSimpleCommodityQuoteTable {
 		complPriceTab = gcshFile.getCurrencyTable();
 		assertNotEquals(null, complPriceTab);
 
-		simplPriceTab = complPriceTab.getByNamespace(GCshCmdtyCurrNameSpace.Exchange.EURONEXT.toString());
+		simplPriceTab = complPriceTab.getTabByType(GCshCmdtyCurrID.Type.SECURITY);
 		assertNotEquals(null, simplPriceTab);
 
+		GCshCmdtyID_Exchange cmdtyID = new GCshCmdtyID_Exchange(GCshCmdtyCurrNameSpace.Exchange.EURONEXT, "SAP");
 		FixedPointNumber valFP = new FixedPointNumber("14645");
 		BigFraction      valBF = BigFraction.of(14645, 1);
 		assertEquals(valFP.doubleValue(), valBF.doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(101.0, simplPriceTab.convertFromBaseCurrency(valFP, "SAP").doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(101,   simplPriceTab.convertFromBaseCurrencyRat(valBF, "SAP").getNumerator().intValue());
-		assertEquals(1,     simplPriceTab.convertFromBaseCurrencyRat(valBF, "SAP").getDenominator().intValue());
+		assertEquals(101.0, ((SimpleCommodityQuoteTable) simplPriceTab).convertFromBaseCurrency(valFP, cmdtyID).doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(101,   ((SimpleCommodityQuoteTable) simplPriceTab).convertFromBaseCurrencyRat(valBF, cmdtyID).getNumerator().intValue());
+		assertEquals(1,     ((SimpleCommodityQuoteTable) simplPriceTab).convertFromBaseCurrencyRat(valBF, cmdtyID).getDenominator().intValue());
 
+		cmdtyID = new GCshCmdtyID_Exchange(GCshCmdtyCurrNameSpace.Exchange.EURONEXT, "MBG");
 		valFP = new FixedPointNumber("1137.765");
 		valBF = BigFraction.of(227553, 200);
 		assertEquals(valFP.doubleValue(), valBF.doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(101.0, simplPriceTab.convertFromBaseCurrency(valFP, "MBG").doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(101,   simplPriceTab.convertFromBaseCurrencyRat(valBF, "MBG").getNumerator().intValue());
-		assertEquals(1,     simplPriceTab.convertFromBaseCurrencyRat(valBF, "MBG").getDenominator().intValue());
+		assertEquals(101.0, ((SimpleCommodityQuoteTable) simplPriceTab).convertFromBaseCurrency(valFP, cmdtyID).doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(101,   ((SimpleCommodityQuoteTable) simplPriceTab).convertFromBaseCurrencyRat(valBF, cmdtyID).getNumerator().intValue());
+		assertEquals(1,     ((SimpleCommodityQuoteTable) simplPriceTab).convertFromBaseCurrencyRat(valBF, cmdtyID).getDenominator().intValue());
 	}
 
 	@Test
@@ -150,19 +149,21 @@ public class TestSimpleCommodityQuoteTable {
 		complPriceTab = gcshFile.getCurrencyTable();
 		assertNotEquals(null, complPriceTab);
 
-		simplPriceTab = complPriceTab.getByNamespace(GCshCmdtyCurrNameSpace.SecIdType.ISIN.toString());
+		simplPriceTab = complPriceTab.getTabByType(GCshCmdtyCurrID.Type.SECURITY);
 		assertNotEquals(null, simplPriceTab);
 
+		GCshCmdtyID_SecIdType cmdtyID = new GCshCmdtyID_SecIdType(GCshCmdtyCurrNameSpace.SecIdType.ISIN, "FR0000120644");
 		FixedPointNumber valFP = new FixedPointNumber("101.0");
 		BigFraction      valBF = BigFraction.of(101, 1);
 		assertEquals(valFP.doubleValue(), valBF.doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(5411.58, simplPriceTab.convertToBaseCurrency(valFP, "FR0000120644").doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(270579,  simplPriceTab.convertToBaseCurrencyRat(valBF, "FR0000120644").getNumerator().intValue());
-		assertEquals(50,      simplPriceTab.convertToBaseCurrencyRat(valBF, "FR0000120644").getDenominator().intValue());
+		assertEquals(5411.58, ((SimpleCommodityQuoteTable) simplPriceTab).convertToBaseCurrency(valFP, cmdtyID).doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(270579,  ((SimpleCommodityQuoteTable) simplPriceTab).convertToBaseCurrencyRat(valBF, cmdtyID).getNumerator().intValue());
+		assertEquals(50,      ((SimpleCommodityQuoteTable) simplPriceTab).convertToBaseCurrencyRat(valBF, cmdtyID).getDenominator().intValue());
 
-		assertEquals(4676.3, simplPriceTab.convertToBaseCurrency(valFP, "DE000BASF111").doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(46763,  simplPriceTab.convertToBaseCurrencyRat(valBF, "DE000BASF111").getNumerator().intValue());
-		assertEquals(10,     simplPriceTab.convertToBaseCurrencyRat(valBF, "DE000BASF111").getDenominator().intValue());
+		cmdtyID = new GCshCmdtyID_SecIdType(GCshCmdtyCurrNameSpace.SecIdType.ISIN, "DE000BASF111");
+		assertEquals(4676.3, ((SimpleCommodityQuoteTable) simplPriceTab).convertToBaseCurrency(valFP, cmdtyID).doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(46763,  ((SimpleCommodityQuoteTable) simplPriceTab).convertToBaseCurrencyRat(valBF, cmdtyID).getNumerator().intValue());
+		assertEquals(10,     ((SimpleCommodityQuoteTable) simplPriceTab).convertToBaseCurrencyRat(valBF, cmdtyID).getDenominator().intValue());
 	}
 
 	@Test
@@ -170,21 +171,23 @@ public class TestSimpleCommodityQuoteTable {
 		complPriceTab = gcshFile.getCurrencyTable();
 		assertNotEquals(null, complPriceTab);
 
-		simplPriceTab = complPriceTab.getByNamespace(GCshCmdtyCurrNameSpace.SecIdType.ISIN.toString());
+		simplPriceTab = complPriceTab.getTabByType(GCshCmdtyCurrID.Type.SECURITY);
 		assertNotEquals(null, simplPriceTab);
 
+		GCshCmdtyID_SecIdType cmdtyID = new GCshCmdtyID_SecIdType(GCshCmdtyCurrNameSpace.SecIdType.ISIN, "FR0000120644");
 		FixedPointNumber valFP = new FixedPointNumber("5411.58");
 		BigFraction      valBF = BigFraction.of(270579, 50);
 		assertEquals(valFP.doubleValue(), valBF.doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(101.0, simplPriceTab.convertFromBaseCurrency(valFP, "FR0000120644").doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(101,   simplPriceTab.convertFromBaseCurrencyRat(valBF, "FR0000120644").getNumerator().intValue());
-		assertEquals(1,     simplPriceTab.convertFromBaseCurrencyRat(valBF, "FR0000120644").getDenominator().intValue());
+		assertEquals(101.0, ((SimpleCommodityQuoteTable) simplPriceTab).convertFromBaseCurrency(valFP, cmdtyID).doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(101,   ((SimpleCommodityQuoteTable) simplPriceTab).convertFromBaseCurrencyRat(valBF, cmdtyID).getNumerator().intValue());
+		assertEquals(1,     ((SimpleCommodityQuoteTable) simplPriceTab).convertFromBaseCurrencyRat(valBF, cmdtyID).getDenominator().intValue());
 
+		cmdtyID = new GCshCmdtyID_SecIdType(GCshCmdtyCurrNameSpace.SecIdType.ISIN, "DE000BASF111");
 		valFP = new FixedPointNumber("4676.3");
 		valBF = BigFraction.of(46763, 10);
 		assertEquals(valFP.doubleValue(), valBF.doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(101.0, simplPriceTab.convertFromBaseCurrency(valFP, "DE000BASF111").doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(101,   simplPriceTab.convertFromBaseCurrencyRat(valBF, "DE000BASF111").getNumerator().intValue());
-		assertEquals(1,     simplPriceTab.convertFromBaseCurrencyRat(valBF, "DE000BASF111").getDenominator().intValue());
+		assertEquals(101.0, ((SimpleCommodityQuoteTable) simplPriceTab).convertFromBaseCurrency(valFP, cmdtyID).doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(101,   ((SimpleCommodityQuoteTable) simplPriceTab).convertFromBaseCurrencyRat(valBF, cmdtyID).getNumerator().intValue());
+		assertEquals(1,     ((SimpleCommodityQuoteTable) simplPriceTab).convertFromBaseCurrencyRat(valBF, cmdtyID).getDenominator().intValue());
 	}
 }

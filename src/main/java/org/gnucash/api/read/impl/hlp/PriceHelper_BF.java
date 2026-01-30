@@ -70,44 +70,9 @@ public class PriceHelper_BF {
 			throw new IllegalArgumentException("argument <priceDB> is null");
 		}
 
-		return getLatestPrice(new GCshCmdtyCurrID(curr),
+		return getLatestPrice(new GCshCurrID(curr),
 							  gcshFile, priceDB, 0);
 	}
-
-    /*
-	public static BigFraction getLatestPrice(
-			final String pCmdtySpace, 
-			final GnuCashFile gcshFile,
-			final GncPricedb priceDB,
-			final String pCmdtyId) {
-		if ( pCmdtySpace == null ) {
-			throw new IllegalArgumentException("argument <pCmdtySpace> is null");
-		}
-		
-		if ( pCmdtySpace.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <pCmdtySpace> is empty");
-		}
-		
-		if ( gcshFile == null ) {
-			throw new IllegalArgumentException("argument <gcshFile> is null");
-		}
-
-		if ( priceDB == null ) {
-			throw new IllegalArgumentException("argument <priceDB> is null");
-		}
-
-		if ( pCmdtyId == null ) {
-			throw new IllegalArgumentException("argument <pCmdtyId> is null");
-		}
-		
-		if ( pCmdtyId.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <pCmdtyId> is empty");
-		}
-		
-		return getLatestPrice(new GCshCmdtyCurrID(pCmdtySpace, pCmdtyId),
-							  gcshFile, priceDB, 0);
-	}
-	*/
 
 	// ----------------------------
 

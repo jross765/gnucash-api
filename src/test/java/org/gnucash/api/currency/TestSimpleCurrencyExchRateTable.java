@@ -10,14 +10,15 @@ import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.ConstTest;
 import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.impl.GnuCashFileImpl;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
+import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
+import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.junit.Before;
 import org.junit.Test;
 
 import junit.framework.JUnit4TestAdapter;
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
-public class TestSimpleCurrencyQuoteTable {
+public class TestSimpleCurrencyExchRateTable {
 	private GnuCashFile gcshFile = null;
 	private ComplexPriceTable complPriceTab = null;
 	private SimplePriceTable simplPriceTab = null;
@@ -30,7 +31,7 @@ public class TestSimpleCurrencyQuoteTable {
 
 	@SuppressWarnings("exports")
 	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(TestSimpleCurrencyQuoteTable.class);
+		return new JUnit4TestAdapter(TestSimpleCurrencyExchRateTable.class);
 	}
 
 	@Before
@@ -61,18 +62,19 @@ public class TestSimpleCurrencyQuoteTable {
 		complPriceTab = gcshFile.getCurrencyTable();
 		assertNotEquals(null, complPriceTab);
 
-		simplPriceTab = complPriceTab.getByNamespace(GCshCmdtyCurrNameSpace.CURRENCY);
+		simplPriceTab = complPriceTab.getTabByType(GCshCmdtyCurrID.Type.CURRENCY);
 		assertNotEquals(null, simplPriceTab);
 
 		assertEquals(2, simplPriceTab.getCodes().size());
 		
 		List<String> currCodeArr = simplPriceTab.getCodes();
-		assertEquals(ConstTest.DEFAULT_CURRENCY, currCodeArr.get(0));
-		assertEquals("USD", currCodeArr.get(1));
+		assertEquals("CURRENCY:EUR", currCodeArr.get(0));
+		assertEquals("CURRENCY:USD", currCodeArr.get(1));
 
-		assertEquals(0.93, simplPriceTab.getConversionFactor("USD").doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(93,   simplPriceTab.getConversionFactorRat("USD").getNumerator().intValue());
-		assertEquals(100,  simplPriceTab.getConversionFactorRat("USD").getDenominator().intValue());
+		GCshCurrID currID = new GCshCurrID("USD");
+		assertEquals(0.93, ((SimpleCurrencyExchRateTable) simplPriceTab).getConversionFactor(currID).doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(93,   ((SimpleCurrencyExchRateTable) simplPriceTab).getConversionFactorRat(currID).getNumerator().intValue());
+		assertEquals(100,  ((SimpleCurrencyExchRateTable) simplPriceTab).getConversionFactorRat(currID).getDenominator().intValue());
 	}
 
 	@Test
@@ -80,15 +82,16 @@ public class TestSimpleCurrencyQuoteTable {
 		complPriceTab = gcshFile.getCurrencyTable();
 		assertNotEquals(null, complPriceTab);
 
-		simplPriceTab = complPriceTab.getByNamespace(GCshCmdtyCurrNameSpace.CURRENCY);
+		simplPriceTab = complPriceTab.getTabByType(GCshCmdtyCurrID.Type.CURRENCY);
 		assertNotEquals(null, simplPriceTab);
 
+		GCshCurrID currID = new GCshCurrID("USD");
 		FixedPointNumber valFP = new FixedPointNumber("101.0");
 		BigFraction      valBF = BigFraction.of(101, 1);
 		assertEquals(valFP.doubleValue(), valBF.doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(93.93, simplPriceTab.convertToBaseCurrency(valFP, "USD").doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(9393,  simplPriceTab.convertToBaseCurrencyRat(valBF, "USD").getNumerator().intValue());
-		assertEquals(100,   simplPriceTab.convertToBaseCurrencyRat(valBF, "USD").getDenominator().intValue());
+		assertEquals(93.93, ((SimpleCurrencyExchRateTable) simplPriceTab).convertToBaseCurrency(valFP, currID).doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(9393,  ((SimpleCurrencyExchRateTable) simplPriceTab).convertToBaseCurrencyRat(valBF, currID).getNumerator().intValue());
+		assertEquals(100,   ((SimpleCurrencyExchRateTable) simplPriceTab).convertToBaseCurrencyRat(valBF, currID).getDenominator().intValue());
 	}
 
 	@Test
@@ -96,14 +99,15 @@ public class TestSimpleCurrencyQuoteTable {
 		complPriceTab = gcshFile.getCurrencyTable();
 		assertNotEquals(null, complPriceTab);
 
-		simplPriceTab = complPriceTab.getByNamespace(GCshCmdtyCurrNameSpace.CURRENCY);
+		simplPriceTab = complPriceTab.getTabByType(GCshCmdtyCurrID.Type.CURRENCY);
 		assertNotEquals(null, simplPriceTab);
 
+		GCshCurrID currID = new GCshCurrID("USD");
 		FixedPointNumber valFP = new FixedPointNumber("93.93");
 		BigFraction      valBF = BigFraction.of(9393, 100);
 		assertEquals(valFP.doubleValue(), valBF.doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(101.0, simplPriceTab.convertFromBaseCurrency(valFP, "USD").doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(101,   simplPriceTab.convertFromBaseCurrencyRat(valBF, "USD").getNumerator().intValue());
-		assertEquals(1,     simplPriceTab.convertFromBaseCurrencyRat(valBF, "USD").getDenominator().intValue());
+		assertEquals(101.0, ((SimpleCurrencyExchRateTable) simplPriceTab).convertFromBaseCurrency(valFP, currID).doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(101,   ((SimpleCurrencyExchRateTable) simplPriceTab).convertFromBaseCurrencyRat(valBF, currID).getNumerator().intValue());
+		assertEquals(1,     ((SimpleCurrencyExchRateTable) simplPriceTab).convertFromBaseCurrencyRat(valBF, currID).getDenominator().intValue());
 	}
 }
