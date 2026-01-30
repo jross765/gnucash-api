@@ -16,6 +16,7 @@ import org.gnucash.api.read.GnuCashTransactionSplit;
 import org.gnucash.api.read.aux.GCshAcctLot;
 import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
 import org.gnucash.base.basetypes.simple.aux.GCshLotID;
@@ -201,6 +202,18 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	@Override
 	public BigFraction getBalanceRat(final LocalDate date, final GCshCmdtyID cmdtyID) {
 		return AccountBalanceHelper_BF.getBalance(date, cmdtyID, this);
+	}
+
+	// ---
+
+	@Override
+	public FixedPointNumber getBalance(final LocalDate date, final GCshCurrID currID) {
+		return AccountBalanceHelper_FP.getBalance(date, currID, this);
+	}
+
+	@Override
+	public BigFraction getBalanceRat(final LocalDate date, final GCshCurrID currID) {
+		return AccountBalanceHelper_BF.getBalance(date, currID, this);
 	}
 
 	// ---

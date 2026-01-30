@@ -13,6 +13,7 @@ import org.gnucash.api.read.hlp.HasTransactions;
 import org.gnucash.api.read.hlp.HasUserDefinedAttributes;
 import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.aux.GCshLotID;
 
@@ -245,6 +246,8 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
 
     BigFraction      getBalanceRat(LocalDate date);
 
+    // ----------------------------
+
     /**
      * Be aware that the result is in the currency of this account!
      *
@@ -256,6 +259,8 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
     FixedPointNumber getBalance(LocalDate date, List<GnuCashTransactionSplit> after);
 
     BigFraction      getBalanceRat(LocalDate date, List<GnuCashTransactionSplit> after);
+    
+    // ----------------------------
 
     FixedPointNumber getBalance(LocalDate date, GCshCmdtyCurrID cmdtyCurrID);
 
@@ -265,9 +270,15 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
 
     BigFraction      getBalanceRat(LocalDate date, GCshCmdtyID cmdtyID);
 
+    FixedPointNumber getBalance(LocalDate date, GCshCurrID currID);
+
+    BigFraction      getBalanceRat(LocalDate date, GCshCurrID currID);
+
     FixedPointNumber getBalance(LocalDate date, Currency curr);
 
     BigFraction      getBalanceRat(LocalDate date, Currency curr);
+
+    // ----------------------------
 
     /**
      * @param lastSpltIncl last split to be included
