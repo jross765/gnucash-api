@@ -24,7 +24,6 @@ import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID_SecIdType;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcID;
-import org.gnucash.base.basetypes.simple.GCshID;
 import org.gnucash.base.basetypes.simple.GCshTrxID;
 import org.junit.Before;
 import org.junit.Rule;
