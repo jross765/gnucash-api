@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Collection;
 import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
@@ -85,7 +84,6 @@ public class AccountBalanceHelper_FP
 		}
 	
 		ComplexPriceTable priceTab = acct.getGnuCashFile().getCurrencyTable();
-	
 		if ( priceTab == null ) {
 			LOGGER.error("getBalance: Cannot transfer to given currency because we have no currency-table");
 			return null;
@@ -93,12 +91,8 @@ public class AccountBalanceHelper_FP
 	
 		retval = priceTab.convertToBaseCurrency(retval, cmdtyCurrID);
 		if ( retval == null ) {
-			Collection<String> codeList = acct.getGnuCashFile().getCurrencyTable()
-					.getCodes(acct.getCmdtyCurrID().getNameSpace());
 			LOGGER.error("getBalance: Cannot transfer " + "from our currency '"
-					+ acct.getCmdtyCurrID().toString() + "' to the base-currency " + " \n(we know "
-					+ acct.getGnuCashFile().getCurrencyTable().getNameSpaces().size() + " currency-namespaces and "
-					+ (codeList == null ? "no" : "" + codeList.size()) + " currencies in our namespace)");
+					+ acct.getCmdtyCurrID().toString() + "' to the base-currency!");
 			return null;
 		}
 	

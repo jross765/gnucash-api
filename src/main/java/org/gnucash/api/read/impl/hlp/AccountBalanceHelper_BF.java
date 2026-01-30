@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Collection;
 import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
@@ -91,12 +90,8 @@ public class AccountBalanceHelper_BF
 	
 		retval = priceTab.convertToBaseCurrencyRat(retval, cmdtyCurrID);
 		if ( retval == null ) {
-			Collection<String> codeList = acct.getGnuCashFile().getCurrencyTable()
-					.getCodes(acct.getCmdtyCurrID().getNameSpace());
 			LOGGER.error("getBalance: Cannot transfer " + "from our currency '"
-					+ acct.getCmdtyCurrID().toString() + "' to the base-currency " + " \n(we know "
-					+ acct.getGnuCashFile().getCurrencyTable().getNameSpaces().size() + " currency-namespaces and "
-					+ (codeList == null ? "no" : "" + codeList.size()) + " currencies in our namespace)");
+					+ acct.getCmdtyCurrID().toString() + "' to the base-currency!");
 			return null;
 		}
 	
