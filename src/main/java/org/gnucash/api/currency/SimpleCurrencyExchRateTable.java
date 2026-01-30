@@ -46,24 +46,10 @@ public class SimpleCurrencyExchRateTable implements SimplePriceTable,
     // -----------------------------------------------------------
 
     /**
-     * @param iso4217CurrCode a currency-name in capital letters(e.g. "GBP")
+     * @param currID a currency-name in capital letters(e.g. "GBP")
      * @return a factor {@link FixedPointNumber} that is to be multiplied with an
      *         amount of that currency to get the value in the base-currency.
      */
-    @Override
-    public FixedPointNumber getConversionFactor(final String iso4217CurrCode) {
-		if ( iso4217CurrCode == null ) {
-			throw new IllegalArgumentException("argument <iso4217CurrCode> is null");
-		}
-
-		if ( iso4217CurrCode.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <iso4217CurrCode> is empty");
-		}
-
-		GCshCurrID currID = new GCshCurrID(iso4217CurrCode);
-    	return getConversionFactor(currID);
-    }
-
     public FixedPointNumber getConversionFactor(final GCshCurrID currID) {
 		if ( currID == null ) {
 			throw new IllegalArgumentException("argument <currID> is null");
@@ -85,20 +71,6 @@ public class SimpleCurrencyExchRateTable implements SimplePriceTable,
     	return getConversionFactor(currID);
     }
 
-    @Override
-    public BigFraction getConversionFactorRat(final String iso4217CurrCode) {
-		if ( iso4217CurrCode == null ) {
-			throw new IllegalArgumentException("argument <iso4217CurrCode> is null");
-		}
-
-		if ( iso4217CurrCode.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <iso4217CurrCode> is empty");
-		}
-
-		GCshCurrID currID = new GCshCurrID(iso4217CurrCode);
-    	return getConversionFactorRat(currID);
-    }
-    
     public BigFraction getConversionFactorRat(final GCshCurrID currID) {
 		if ( currID == null ) {
 			throw new IllegalArgumentException("argument <currID> is null");
@@ -123,26 +95,11 @@ public class SimpleCurrencyExchRateTable implements SimplePriceTable,
     // ----------------------------
 
     /**
-     * @param iso4217CurrCode a currency-name in capital letters(e.g. "GBP")
+     * @param currID a currency-name in capital letters(e.g. "GBP")
      * @param factor          a factor {@link FixedPointNumber} that is to be
      *                        multiplied with an amount of that currency to get the
      *                        value in the base-currency.
      */
-    @Override
-    @Deprecated
-    public void setConversionFactor(final String iso4217CurrCode, final FixedPointNumber factor) {
-		if ( iso4217CurrCode == null ) {
-			throw new IllegalArgumentException("argument <iso4217CurrCode> is null");
-		}
-
-		if ( iso4217CurrCode.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <iso4217CurrCode> is empty");
-		}
-
-		GCshCurrID currID = new GCshCurrID(iso4217CurrCode);
-		setConversionFactor(currID, factor);
-    }
-
     public void setConversionFactor(final GCshCurrID currID, final FixedPointNumber factor) {
 		if ( currID == null ) {
 			throw new IllegalArgumentException("argument <currID> is null");
@@ -165,21 +122,6 @@ public class SimpleCurrencyExchRateTable implements SimplePriceTable,
     }
 
     // ----------------------------
-
-    @Override
-    @Deprecated
-    public void setConversionFactorRat(final String iso4217CurrCode, final BigFraction factor) {
-		if ( iso4217CurrCode == null ) {
-			throw new IllegalArgumentException("argument <iso4217CurrCode> is null");
-		}
-
-		if ( iso4217CurrCode.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <iso4217CurrCode> is empty");
-		}
-
-		GCshCurrID currID = new GCshCurrID(iso4217CurrCode);
-		setConversionFactorRat(currID, factor);
-    }
 
     public void setConversionFactorRat(final GCshCurrID currID, final BigFraction factor) {
 		if ( currID == null ) {
@@ -265,24 +207,6 @@ public class SimpleCurrencyExchRateTable implements SimplePriceTable,
     }
 
     // ----------------------------
-
-    @Override
-    public BigFraction convertFromBaseCurrencyRat(final BigFraction value, final String iso4217CurrencyCode) {
-		if ( value == null ) {
-			throw new IllegalArgumentException("argument <value> is null");
-		}
-
-		if ( iso4217CurrencyCode == null ) {
-			throw new IllegalArgumentException("argument <iso4217CurrencyCode> is null");
-		}
-
-		if ( iso4217CurrencyCode.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <iso4217CurrencyCode> is empty");
-		}
-
-		GCshCurrID currID = new GCshCurrID(iso4217CurrencyCode);
-		return convertFromBaseCurrencyRat(value, currID);
-    }
 
     public BigFraction convertFromBaseCurrencyRat(final BigFraction value, final GCshCurrID currID) {
 		if ( value == null ) {
@@ -388,24 +312,6 @@ public class SimpleCurrencyExchRateTable implements SimplePriceTable,
     }
 
     // ----------------------------
-
-    @Override
-    public BigFraction convertToBaseCurrencyRat(final BigFraction value, final String iso4217CurrencyCode) {
-		if ( value == null ) {
-			throw new IllegalArgumentException("argument <value> is null");
-		}
-
-		if ( iso4217CurrencyCode == null ) {
-			throw new IllegalArgumentException("argument <iso4217CurrencyCode> is null");
-		}
-
-		if ( iso4217CurrencyCode.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <iso4217CurrencyCode> is empty");
-		}
-
-		GCshCurrID currID = new GCshCurrID(iso4217CurrencyCode);
-		return convertToBaseCurrencyRat(value, currID);
-    }
 
     public BigFraction convertToBaseCurrencyRat(final BigFraction value, final GCshCurrID currID) {
 		if ( value == null ) {

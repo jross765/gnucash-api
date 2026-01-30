@@ -42,25 +42,10 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
     // -----------------------------------------------------------
 
     /**
-     * @param cmdtyIDStr a commodity ID (e.g. "EURONEXT:MBG")
+     * @param cmdtyID a commodity ID (e.g. "EURONEXT:MBG")
      * @return a factor {@link FixedPointNumber} that is to be multiplied with an
      *         amount of that currency to get the value in the base-currency.
      */
-    @Override
-    @Deprecated
-    public FixedPointNumber getConversionFactor(final String cmdtyIDStr) {
-		if ( cmdtyIDStr == null ) {
-			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
-		}
-
-		if ( cmdtyIDStr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
-		}
-
-		GCshCmdtyID cmdtyID = GCshCmdtyID.parse(cmdtyIDStr);
-    	return getConversionFactor(cmdtyID);
-    }
-
     public FixedPointNumber getConversionFactor(final GCshCmdtyID cmdtyID) {
 		if ( cmdtyID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyID> is null");
@@ -73,21 +58,6 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
     	return cmdtyID2Factor.get(cmdtyID.toString());
     }
 
-    @Override
-    @Deprecated
-    public BigFraction getConversionFactorRat(final String cmdtyIDStr) {
-		if ( cmdtyIDStr == null ) {
-			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
-		}
-
-		if ( cmdtyIDStr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
-		}
-
-		GCshCmdtyID cmdtyID = GCshCmdtyID.parse(cmdtyIDStr);
-    	return getConversionFactorRat(cmdtyID);
-    }
-    
     public BigFraction getConversionFactorRat(final GCshCmdtyID cmdtyID) {
 		if ( cmdtyID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyID> is null");
@@ -103,29 +73,11 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
     // ----------------------------
 
     /**
-     * @param cmdtyIDStr a a commodity ID (e.g. "EURONEXT:MBG")
+     * @param cmdtyID a a commodity ID (e.g. "EURONEXT:MBG")
      * @param factor              a factor {@link FixedPointNumber} that is to be
      *                            multiplied with an amount of that currency to get
      *                            the value in the base-currency.
      */
-    @Override
-    public void setConversionFactor(final String cmdtyIDStr, final FixedPointNumber factor) {
-		if ( cmdtyIDStr == null ) {
-			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
-		}
-
-		if ( cmdtyIDStr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
-		}
-
-		if ( factor == null ) {
-			throw new IllegalArgumentException("argument <factor> is null");
-		}
-
-		GCshCmdtyID cmdtyID = GCshCmdtyID.parse(cmdtyIDStr);
-		setConversionFactor(cmdtyID, factor);
-    }
-
     public void setConversionFactor(final GCshCmdtyID cmdtyID, final FixedPointNumber factor) {
 		if ( cmdtyID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyID> is null");
@@ -144,25 +96,6 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
     }
 
     // ----------------------------
-
-	@Override
-	@Deprecated
-	public void setConversionFactorRat(final String cmdtyIDStr, final BigFraction factor) {
-		if ( cmdtyIDStr == null ) {
-			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
-		}
-
-		if ( cmdtyIDStr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
-		}
-
-		if ( factor == null ) {
-			throw new IllegalArgumentException("argument <factor> is null");
-		}
-
-		GCshCmdtyID cmdtyID = GCshCmdtyID.parse(cmdtyIDStr);
-		setConversionFactorRat(cmdtyID, factor);
-	}
 
     public void setConversionFactorRat(final GCshCmdtyID cmdtyID, final BigFraction factor) {
 		if ( cmdtyID == null ) {
@@ -185,28 +118,9 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
 
     /**
      * @param value               the value to convert
-     * @param cmdtyIDStr the currency to convert to
+     * @param cmdtyID the currency to convert to
      * @return false if the conversion is not possible
      */
-    @Override
-    @Deprecated
-    public FixedPointNumber convertFromBaseCurrency(final FixedPointNumber value, final String cmdtyIDStr) {
-		if ( value == null ) {
-			throw new IllegalArgumentException("argument <value> is null");
-		}
-
-		if ( cmdtyIDStr == null ) {
-			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
-		}
-
-		if ( cmdtyIDStr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
-		}
-
-		GCshCmdtyID cmdtyID = GCshCmdtyID.parse(cmdtyIDStr);
-		return convertFromBaseCurrency(value, cmdtyID);
-    }
-
     public FixedPointNumber convertFromBaseCurrency(final FixedPointNumber value, final GCshCmdtyID cmdtyID) {
 		if ( value == null ) {
 			throw new IllegalArgumentException("argument <value> is null");
@@ -233,25 +147,6 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
     }
 
     // ----------------------------
-
-	@Override
-	@Deprecated
-	public BigFraction convertFromBaseCurrencyRat(final BigFraction value, final String cmdtyIDStr) {
-		if ( value == null ) {
-			throw new IllegalArgumentException("argument <value> is null");
-		}
-
-		if ( cmdtyIDStr == null ) {
-			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
-		}
-
-		if ( cmdtyIDStr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
-		}
-
-		GCshCmdtyID cmdtyID = GCshCmdtyID.parse(cmdtyIDStr);
-		return convertFromBaseCurrencyRat(value, cmdtyID);
-	}
 
 	public BigFraction convertFromBaseCurrencyRat(final BigFraction value, final GCshCmdtyID cmdtyID) {
 		if ( value == null ) {
@@ -280,28 +175,9 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
 
     /**
      * @param value           the value to convert
-     * @param cmdtyIDStr the commodity's ID
+     * @param cmdtyID the commodity's ID
      * @return false if the conversion is not possible
      */
-    @Override
-    @Deprecated
-    public FixedPointNumber convertToBaseCurrency(final FixedPointNumber value, final String cmdtyIDStr) {
-		if ( value == null ) {
-			throw new IllegalArgumentException("argument <value> is null");
-		}
-
-		if ( cmdtyIDStr == null ) {
-			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
-		}
-
-		if ( cmdtyIDStr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
-		}
-
-		GCshCmdtyID cmdtyID = GCshCmdtyID.parse(cmdtyIDStr);
-		return convertToBaseCurrency(value, cmdtyID);
-    }
-
     public FixedPointNumber convertToBaseCurrency(final FixedPointNumber value, final GCshCmdtyID cmdtyID) {
 		if ( value == null ) {
 			throw new IllegalArgumentException("argument <value> is null");
@@ -328,25 +204,6 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
     }
 
     // ----------------------------
-
-	@Override
-	@Deprecated
-	public BigFraction convertToBaseCurrencyRat(final BigFraction value, final String cmdtyIDStr) {
-		if ( value == null ) {
-			throw new IllegalArgumentException("argument <value> is null");
-		}
-
-		if ( cmdtyIDStr == null ) {
-			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
-		}
-
-		if ( cmdtyIDStr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
-		}
-
-		GCshCmdtyID cmdtyID = GCshCmdtyID.parse(cmdtyIDStr);
-		return convertToBaseCurrencyRat(value, cmdtyID);
-	}
 
 	public BigFraction convertToBaseCurrencyRat(final BigFraction value, final GCshCmdtyID cmdtyID) {
 		if ( value == null ) {
