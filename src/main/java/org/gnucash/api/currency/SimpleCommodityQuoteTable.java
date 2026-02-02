@@ -92,7 +92,6 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
 		}
 
 		cmdtyID2Factor.put(cmdtyID.toString(), factor);
-		// System.err.println("SimpleCommodityQuoteTable.setConversionFactor: no. of entries: " + cmdtyID2FactorRat.size());
     }
 
     // ----------------------------
@@ -111,7 +110,6 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
 		}
 
 		cmdtyID2FactorRat.put(cmdtyID.toString(), factor);
-		// System.err.println("SimpleCommodityQuoteTable.setConversionFactorRat: no. of entries: " + cmdtyID2FactorRat.size());
     }
 
     // ---------------------------------------------------------------

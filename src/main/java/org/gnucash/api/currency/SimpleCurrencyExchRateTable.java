@@ -151,23 +151,6 @@ public class SimpleCurrencyExchRateTable implements SimplePriceTable,
      * @param iso4217CurrencyCode the currency to convert to
      * @return false if the conversion is not possible
      */
-    public FixedPointNumber convertFromBaseCurrency(final FixedPointNumber value, final String iso4217CurrencyCode) {
-		if ( value == null ) {
-			throw new IllegalArgumentException("argument <value> is null");
-		}
-
-		if ( iso4217CurrencyCode == null ) {
-			throw new IllegalArgumentException("argument <iso4217CurrencyCode> is null");
-		}
-
-		if ( iso4217CurrencyCode.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <iso4217CurrencyCode> is empty");
-		}
-
-		GCshCurrID currID = new GCshCurrID(iso4217CurrencyCode);
-		return convertFromBaseCurrency(value, currID);
-	}
-
     public FixedPointNumber convertFromBaseCurrency(final FixedPointNumber value, final GCshCurrID currID) {
 		if ( value == null ) {
 			throw new IllegalArgumentException("argument <value> is null");
@@ -251,23 +234,6 @@ public class SimpleCurrencyExchRateTable implements SimplePriceTable,
      * @param iso4217CurrencyCode it's currency
      * @return false if the conversion is not possible
      */
-    public FixedPointNumber convertToBaseCurrency(final FixedPointNumber value, final String iso4217CurrencyCode) {
-		if ( value == null ) {
-			throw new IllegalArgumentException("argument <value> is null");
-		}
-
-		if ( iso4217CurrencyCode == null ) {
-			throw new IllegalArgumentException("argument <iso4217CurrencyCode> is null");
-		}
-
-		if ( iso4217CurrencyCode.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <iso4217CurrencyCode> is empty");
-		}
-
-		GCshCurrID currID = new GCshCurrID(iso4217CurrencyCode);
-		return convertToBaseCurrency(value, currID);
-    }
-
     public FixedPointNumber convertToBaseCurrency(final FixedPointNumber value, final GCshCurrID currID) {
 		if ( value == null ) {
 			throw new IllegalArgumentException("argument <value> is null");

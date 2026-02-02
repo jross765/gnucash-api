@@ -59,7 +59,7 @@ public class ComplexPriceTable implements Serializable {
 
 	public void removeComplexPriceTableChangeListener(final ComplexPriceTableChangeListener listener) {
 		if ( listeners == null ) {
-			listeners = new ArrayList<>();
+			listeners = new ArrayList<ComplexPriceTableChangeListener>();
 		}
 		
 		listeners.remove(listener);
@@ -374,6 +374,7 @@ public class ComplexPriceTable implements Serializable {
 
 	/**
 	 * If the nameSpace does not exist yet, it is created.
+	 * 
 	 * @param nameSpace 
 	 * @param code 
 	 * @param factor 
@@ -602,7 +603,7 @@ public class ComplexPriceTable implements Serializable {
 
 		firePriceTableChanged(cmdtyID.toString(), factor);
 	}
-	
+
 	public void setConversionFactorRat(final GCshCurrID currID, final BigFraction factor) {
 		if ( currID == null ) {
 		    throw new IllegalArgumentException("argument <currID> is null");
@@ -744,8 +745,9 @@ public class ComplexPriceTable implements Serializable {
 	// ----------------------------
 
 	public FixedPointNumber convertToBaseCurrency(final FixedPointNumber pValue, final GCshCmdtyCurrID cmdtyCurrID) {
-		if ( pValue == null )
+		if ( pValue == null ) {
 			throw new IllegalArgumentException("argument <pValue> is null");
+		}
 
 		if ( cmdtyCurrID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyCurrID> is null"); 
@@ -787,8 +789,9 @@ public class ComplexPriceTable implements Serializable {
 	// ----------------------------
 
 	public BigFraction convertToBaseCurrencyRat(final BigFraction pValue, final GCshCmdtyCurrID cmdtyCurrID) {
-		if ( pValue == null )
+		if ( pValue == null ) {
 			throw new IllegalArgumentException("argument <pValue> is null");
+		}
 
 		if ( cmdtyCurrID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyCurrID> is null"); 
@@ -866,10 +869,12 @@ public class ComplexPriceTable implements Serializable {
 		String result = "ComplexPriceTable [\n";
 
 		for ( GCshCmdtyCurrID.Type type : getTabTypes() ) {
-			result += "=======================================\n";
-			result += "Type: " + type + "\n";
-			result += "=======================================\n";
-			result += getTabByType(type).toString() + "\n";
+			if ( type != GCshCmdtyCurrID.Type.UNSET ) {
+				result += "=======================================\n";
+				result += "Type: " + type + "\n";
+				result += "=======================================\n";
+				result += getTabByType(type).toString() + "\n";
+			}
 		}
 
 		result += "]";
