@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.numbers.fraction.BigFraction;
-import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +46,7 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
      * @return a factor {@link FixedPointNumber} that is to be multiplied with an
      *         amount of that currency to get the value in the base-currency.
      */
-    public FixedPointNumber getConversionFactor(final GCshCmdtyID cmdtyID) {
+    public FixedPointNumber getConversionFactor(final GCshSecID cmdtyID) {
 		if ( cmdtyID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyID> is null");
 		}
@@ -58,7 +58,7 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
     	return cmdtyID2Factor.get(cmdtyID.toString());
     }
 
-    public BigFraction getConversionFactorRat(final GCshCmdtyID cmdtyID) {
+    public BigFraction getConversionFactorRat(final GCshSecID cmdtyID) {
 		if ( cmdtyID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyID> is null");
 		}
@@ -78,7 +78,7 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
      *                            multiplied with an amount of that currency to get
      *                            the value in the base-currency.
      */
-    public void setConversionFactor(final GCshCmdtyID cmdtyID, final FixedPointNumber factor) {
+    public void setConversionFactor(final GCshSecID cmdtyID, final FixedPointNumber factor) {
 		if ( cmdtyID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyID> is null");
 		}
@@ -96,7 +96,7 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
 
     // ----------------------------
 
-    public void setConversionFactorRat(final GCshCmdtyID cmdtyID, final BigFraction factor) {
+    public void setConversionFactorRat(final GCshSecID cmdtyID, final BigFraction factor) {
 		if ( cmdtyID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyID> is null");
 		}
@@ -119,7 +119,7 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
      * @param cmdtyID the currency to convert to
      * @return false if the conversion is not possible
      */
-    public FixedPointNumber convertFromBaseCurrency(final FixedPointNumber value, final GCshCmdtyID cmdtyID) {
+    public FixedPointNumber convertFromBaseCurrency(final FixedPointNumber value, final GCshSecID cmdtyID) {
 		if ( value == null ) {
 			throw new IllegalArgumentException("argument <value> is null");
 		}
@@ -146,7 +146,7 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
 
     // ----------------------------
 
-	public BigFraction convertFromBaseCurrencyRat(final BigFraction value, final GCshCmdtyID cmdtyID) {
+	public BigFraction convertFromBaseCurrencyRat(final BigFraction value, final GCshSecID cmdtyID) {
 		if ( value == null ) {
 			throw new IllegalArgumentException("argument <value> is null");
 		}
@@ -176,7 +176,7 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
      * @param cmdtyID the commodity's ID
      * @return false if the conversion is not possible
      */
-    public FixedPointNumber convertToBaseCurrency(final FixedPointNumber value, final GCshCmdtyID cmdtyID) {
+    public FixedPointNumber convertToBaseCurrency(final FixedPointNumber value, final GCshSecID cmdtyID) {
 		if ( value == null ) {
 			throw new IllegalArgumentException("argument <value> is null");
 		}
@@ -203,7 +203,7 @@ public class SimpleCommodityQuoteTable implements SimplePriceTable,
 
     // ----------------------------
 
-	public BigFraction convertToBaseCurrencyRat(final BigFraction value, final GCshCmdtyID cmdtyID) {
+	public BigFraction convertToBaseCurrencyRat(final BigFraction value, final GCshSecID cmdtyID) {
 		if ( value == null ) {
 			throw new IllegalArgumentException("argument <value> is null");
 		}

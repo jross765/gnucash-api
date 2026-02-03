@@ -69,7 +69,7 @@ import org.gnucash.api.write.spec.GnuCashWritableJobInvoice;
 import org.gnucash.api.write.spec.GnuCashWritableJobInvoiceEntry;
 import org.gnucash.api.write.spec.GnuCashWritableVendorBill;
 import org.gnucash.api.write.spec.GnuCashWritableVendorBillEntry;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcEntrID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcID;
@@ -574,7 +574,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 		{
 			GncGncInvoice.InvoiceCurrency currency = fact.createGncGncInvoiceInvoiceCurrency();
 			currency.setCmdtyId(file.getDefaultCurrencyID());
-			currency.setCmdtySpace(GCshCmdtyCurrNameSpace.CURRENCY);
+			currency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
 			jwsdpInvc.setInvoiceCurrency(currency);
 		}
 
@@ -667,7 +667,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 		{
 			GncGncInvoice.InvoiceCurrency currency = fact.createGncGncInvoiceInvoiceCurrency();
 			currency.setCmdtyId(file.getDefaultCurrencyID());
-			currency.setCmdtySpace(GCshCmdtyCurrNameSpace.CURRENCY);
+			currency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
 			jwsdpInvc.setInvoiceCurrency(currency);
 		}
 
@@ -757,7 +757,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 		{
 			GncGncInvoice.InvoiceCurrency currency = fact.createGncGncInvoiceInvoiceCurrency();
 			currency.setCmdtyId(file.getDefaultCurrencyID());
-			currency.setCmdtySpace(GCshCmdtyCurrNameSpace.CURRENCY);
+			currency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
 			jwsdpInvc.setInvoiceCurrency(currency);
 		}
 
@@ -850,7 +850,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 		{
 			GncGncInvoice.InvoiceCurrency currency = fact.createGncGncInvoiceInvoiceCurrency();
 			currency.setCmdtyId(file.getDefaultCurrencyID());
-			currency.setCmdtySpace(GCshCmdtyCurrNameSpace.CURRENCY);
+			currency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
 			jwsdpInvc.setInvoiceCurrency(currency);
 		}
 

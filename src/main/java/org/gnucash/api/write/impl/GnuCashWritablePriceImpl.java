@@ -17,11 +17,11 @@ import org.gnucash.api.read.impl.GnuCashPriceImpl;
 import org.gnucash.api.write.GnuCashWritableFile;
 import org.gnucash.api.write.GnuCashWritablePrice;
 import org.gnucash.api.write.impl.hlp.GnuCashWritableObjectImpl;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
-import org.gnucash.base.basetypes.complex.InvalidCmdtyCurrTypeException;
+import org.gnucash.base.basetypes.complex.InvalidCmdtyTypeException;
 import org.gnucash.base.basetypes.simple.GCshID;
 import org.gnucash.base.basetypes.simple.GCshPrcID;
 import org.slf4j.Logger;
@@ -118,7 +118,7 @@ public class GnuCashWritablePriceImpl extends GnuCashPriceImpl
     
         {
             Price.PriceCurrency curr = factory.createPricePriceCurrency();
-            curr.setCmdtySpace(GCshCmdtyCurrNameSpace.CURRENCY);
+            curr.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
             curr.setCmdtyId(file.getDefaultCurrencyID());
             prc.setPriceCurrency(curr);
         }
@@ -145,14 +145,14 @@ public class GnuCashWritablePriceImpl extends GnuCashPriceImpl
     // ---------------------------------------------------------------
 
     @Override
-    public void setFromCmdtyCurrQualifID(GCshCmdtyCurrID qualifID) {
+    public void setFromCmdtyCurrQualifID(GCshCmdtyID qualifID) {
     	jwsdpPeer.getPriceCommodity().setCmdtySpace(qualifID.getNameSpace());
     	jwsdpPeer.getPriceCommodity().setCmdtyId(qualifID.getCode());
     	getWritableGnuCashFile().setModified(true);
     }
 
     @Override
-    public void setFromCommodityQualifID(GCshCmdtyID qualifID) {
+    public void setFromCommodityQualifID(GCshSecID qualifID) {
     	jwsdpPeer.getPriceCommodity().setCmdtySpace(qualifID.getNameSpace());
     	jwsdpPeer.getPriceCommodity().setCmdtyId(qualifID.getCode());
     	getWritableGnuCashFile().setModified(true);
@@ -183,9 +183,9 @@ public class GnuCashWritablePriceImpl extends GnuCashPriceImpl
     // ----------------------------
 
     @Override
-    public void setToCurrencyQualifID(GCshCmdtyCurrID qualifID) {
-    	if ( ! qualifID.getNameSpace().equals(GCshCmdtyCurrNameSpace.CURRENCY) )
-    		throw new InvalidCmdtyCurrTypeException("Is not a currency: " + qualifID.toString());
+    public void setToCurrencyQualifID(GCshCmdtyID qualifID) {
+    	if ( ! qualifID.getNameSpace().equals(GCshCmdtyNameSpace.CURRENCY) )
+    		throw new InvalidCmdtyTypeException("Is not a currency: " + qualifID.toString());
 	
     	jwsdpPeer.getPriceCurrency().setCmdtySpace(qualifID.getNameSpace());
     	jwsdpPeer.getPriceCurrency().setCmdtyId(qualifID.getCode());
@@ -290,7 +290,7 @@ public class GnuCashWritablePriceImpl extends GnuCashPriceImpl
 
 		try {
 			result += ", cmdty-qualif-id='" + getFromCmdtyCurrQualifID() + "'";
-		} catch (InvalidCmdtyCurrTypeException e) {
+		} catch (InvalidCmdtyTypeException e) {
 			result += ", cmdty-qualif-id=" + "ERROR";
 		}
 

@@ -9,7 +9,7 @@ import org.gnucash.api.read.GnuCashTransaction;
 import org.gnucash.api.write.hlp.GnuCashWritableObject;
 import org.gnucash.api.write.hlp.HasWritableAttachment;
 import org.gnucash.api.write.hlp.HasWritableUserDefinedAttributes;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
 
 /**
@@ -31,7 +31,7 @@ public interface GnuCashWritableTransaction extends GnuCashTransaction,
 
      * @see #getCmdtyCurrID()
      */
-    void setCmdtyCurrID(GCshCmdtyCurrID cmdtyCurrID);
+    void setCmdtyCurrID(GCshCmdtyID cmdtyCurrID);
 
     /**
      * The GnuCash file is the top-level class to contain everything.

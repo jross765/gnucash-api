@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.gnucash.api.read.hlp.GnuCashObject;
 import org.gnucash.api.read.hlp.HasUserDefinedAttributes;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 
 /**
  * In GnuCash lingo, "commodity" is an umbrella term for
@@ -27,7 +27,7 @@ public interface GnuCashCommodity extends Comparable<GnuCashCommodity>,
      *         separated by a colon. This is used to make the so-called ID
      *         a real ID (i.e., unique).
      */
-    GCshCmdtyCurrID getQualifID();
+    GCshCmdtyID getQualifID();
 
     String getSymbol();
 

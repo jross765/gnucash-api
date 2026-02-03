@@ -9,7 +9,7 @@ import org.gnucash.api.generated.GncTransaction;
 import org.gnucash.api.read.hlp.GnuCashObject;
 import org.gnucash.api.read.hlp.HasAttachment;
 import org.gnucash.api.read.hlp.HasUserDefinedAttributes;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
 import org.gnucash.base.basetypes.simple.GCshTrxID;
 
@@ -165,7 +165,7 @@ public interface GnuCashTransaction extends Comparable<GnuCashTransaction>,
 
     boolean isBalancedRat();
 
-    GCshCmdtyCurrID getCmdtyCurrID();
+    GCshCmdtyID getCmdtyCurrID();
 
     /**
      * The result is in the currency of the transaction.<br/>

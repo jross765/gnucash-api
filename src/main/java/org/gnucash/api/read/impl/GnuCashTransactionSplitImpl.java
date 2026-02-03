@@ -13,7 +13,7 @@ import org.gnucash.api.read.GnuCashTransaction;
 import org.gnucash.api.read.GnuCashTransactionSplit;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
@@ -246,7 +246,7 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
      */
     public String getValueFormatted(final Locale lcl) {
 		NumberFormat nf = getValueCurrencyFormat(lcl);
-		if ( getTransaction().getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
+		if ( getTransaction().getCmdtyCurrID().getType() == GCshCmdtyID.Type.CURRENCY ) {
 			nf.setCurrency(new GCshCurrID(getTransaction().getCmdtyCurrID()).getCurrency());
 			return nf.format(getValue().getBigDecimal());
 		} else {
@@ -281,7 +281,7 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
      */
     public String getQuantityFormatted(final Locale lcl) {
 		NumberFormat nf = getQuantityCurrencyFormat(lcl);
-		if ( getAccount().getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
+		if ( getAccount().getCmdtyCurrID().getType() == GCshCmdtyID.Type.CURRENCY ) {
 			nf.setCurrency(new GCshCurrID(getAccount().getCmdtyCurrID()).getCurrency());
 			return nf.format(getQuantity().getBigDecimal());
 		} else {

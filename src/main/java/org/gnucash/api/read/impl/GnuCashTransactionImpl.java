@@ -21,7 +21,7 @@ import org.gnucash.api.read.GnuCashTransaction;
 import org.gnucash.api.read.GnuCashTransactionSplit;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
@@ -166,15 +166,15 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     /**
      * {@inheritDoc}
      */
-    public GCshCmdtyCurrID getCmdtyCurrID() {
-    	GCshCmdtyCurrID result = new GCshCmdtyCurrID(jwsdpPeer.getTrnCurrency().getCmdtySpace(), 
+    public GCshCmdtyID getCmdtyCurrID() {
+    	GCshCmdtyID result = new GCshCmdtyID(jwsdpPeer.getTrnCurrency().getCmdtySpace(), 
     												 jwsdpPeer.getTrnCurrency().getCmdtyId());
     	return result;
     }
 
 	public Currency getCurrency() {
-		if ( getCmdtyCurrID().getType() != GCshCmdtyCurrID.Type.CURRENCY ) {
-			throw new IllegalStateException("Transaction commodity/currency is not of type " + GCshCmdtyCurrID.Type.CURRENCY);
+		if ( getCmdtyCurrID().getType() != GCshCmdtyID.Type.CURRENCY ) {
+			throw new IllegalStateException("Transaction commodity/currency is not of type " + GCshCmdtyID.Type.CURRENCY);
 		}
 
 		String gcshCurrID = getCmdtyCurrID().getCode();
@@ -192,7 +192,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 	
 	protected NumberFormat getCurrencyFormat(Locale lcl) {
 		// The currency may have changed
-		if ( getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
+		if ( getCmdtyCurrID().getType() == GCshCmdtyID.Type.CURRENCY ) {
 			currencyFormat = NumberFormat.getCurrencyInstance(lcl);
 			Currency curr = getCurrency();
 			currencyFormat.setCurrency(curr);
@@ -240,7 +240,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
      */
     public String getBalanceFormatted(final Locale lcl) {
 		NumberFormat cf = NumberFormat.getInstance(lcl);
-		if ( getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
+		if ( getCmdtyCurrID().getType() == GCshCmdtyID.Type.CURRENCY ) {
 			cf.setCurrency(new GCshCurrID(getCmdtyCurrID()).getCurrency());
 		} else {
 			cf.setCurrency(null);
@@ -268,7 +268,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
      */
     public String getNegatedBalanceFormatted(final Locale lcl) {
 		NumberFormat nf = NumberFormat.getInstance(lcl);
-		if ( getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
+		if ( getCmdtyCurrID().getType() == GCshCmdtyID.Type.CURRENCY ) {
 			nf.setCurrency(new GCshCurrID(getCmdtyCurrID()).getCurrency());
 		} else {
 			nf.setCurrency(null);

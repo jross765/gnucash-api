@@ -14,8 +14,8 @@ import org.gnucash.api.write.GnuCashWritableTransaction;
 import org.gnucash.api.write.GnuCashWritableTransactionSplit;
 import org.gnucash.api.write.impl.hlp.GnuCashWritableObjectImpl;
 import org.gnucash.api.write.impl.hlp.HasWritableUserDefinedAttributesImpl;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
-import org.gnucash.base.basetypes.complex.InvalidCmdtyCurrIDException;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.InvalidCmdtyIDException;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshID;
 import org.gnucash.base.basetypes.simple.GCshIDNotSetException;
@@ -220,13 +220,13 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		if ( transaction == null ) {
 			return false;
 		}
-		GCshCmdtyCurrID acctCmdtyCurrID = acct.getCmdtyCurrID();
+		GCshCmdtyID acctCmdtyCurrID = acct.getCmdtyCurrID();
 		if ( acctCmdtyCurrID == null ) {
 			return false;
 		}
 
 		// Important: Don't forget to cast the IDs to their most basic type
-		return ((GCshCmdtyCurrID) acctCmdtyCurrID).equals((GCshCmdtyCurrID) transaction.getCmdtyCurrID());
+		return ((GCshCmdtyID) acctCmdtyCurrID).equals((GCshCmdtyID) transaction.getCmdtyCurrID());
     }
 
     /**
@@ -360,7 +360,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 				throw e;
 			} catch (ParseException e1) {
 				throw e;
-			} catch (InvalidCmdtyCurrIDException e1) {
+			} catch (InvalidCmdtyIDException e1) {
 				throw e;
 			}
 		}

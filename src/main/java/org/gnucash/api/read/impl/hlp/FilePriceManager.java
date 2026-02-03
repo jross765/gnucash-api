@@ -18,8 +18,8 @@ import org.gnucash.api.generated.Price;
 import org.gnucash.api.read.GnuCashPrice;
 import org.gnucash.api.read.impl.GnuCashFileImpl;
 import org.gnucash.api.read.impl.GnuCashPriceImpl;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.simple.GCshPrcID;
 import org.slf4j.Logger;
@@ -111,7 +111,7 @@ public class FilePriceManager {
 
 	// ---------------------------------------------------------------
 	
-	public GnuCashPrice getPriceByCmdtyIDDate(final GCshCmdtyID cmdtyID, final LocalDate date) {
+	public GnuCashPrice getPriceByCmdtyIDDate(final GCshSecID cmdtyID, final LocalDate date) {
 		return getPriceByCmdtyCurrIDDate(cmdtyID, date);
 	}
 	
@@ -128,7 +128,7 @@ public class FilePriceManager {
 		return getPriceByCmdtyCurrIDDate(currID, date);
 	}
 
-	public GnuCashPrice getPriceByCmdtyCurrIDDate(final GCshCmdtyCurrID cmdtyCurrID, final LocalDate date) {
+	public GnuCashPrice getPriceByCmdtyCurrIDDate(final GCshCmdtyID cmdtyCurrID, final LocalDate date) {
 		if ( cmdtyCurrID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
 		}
@@ -163,7 +163,7 @@ public class FilePriceManager {
 		return Collections.unmodifiableList(temp);
 	}
 	
-	public List<GnuCashPrice> getPricesByCmdtyID(final GCshCmdtyID cmdtyID) {
+	public List<GnuCashPrice> getPricesByCmdtyID(final GCshSecID cmdtyID) {
 		if ( cmdtyID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyID> is null");
 		}
@@ -196,7 +196,7 @@ public class FilePriceManager {
 		return getPricesByCmdtyCurrID(currID);
 	}
 	
-	public List<GnuCashPrice> getPricesByCmdtyCurrID(final GCshCmdtyCurrID cmdtyCurrID) {
+	public List<GnuCashPrice> getPricesByCmdtyCurrID(final GCshCmdtyID cmdtyCurrID) {
 		if ( cmdtyCurrID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
 		}
@@ -219,7 +219,7 @@ public class FilePriceManager {
 
 	// ---------------------------------------------------------------
 
-	public FixedPointNumber getLatestPrice(final GCshCmdtyCurrID cmdtyCurrID) {
+	public FixedPointNumber getLatestPrice(final GCshCmdtyID cmdtyCurrID) {
 		return PriceHelper_FP.getLatestPrice(cmdtyCurrID, 
 											 gcshFile, priceDB);
 	}
@@ -231,14 +231,14 @@ public class FilePriceManager {
 
 	@Deprecated
 	public FixedPointNumber getLatestPrice(final String pCmdtySpace, final String pCmdtyID) {
-		GCshCmdtyCurrID cmdtyCurrID = new GCshCmdtyCurrID(pCmdtySpace, pCmdtyID);
+		GCshCmdtyID cmdtyCurrID = new GCshCmdtyID(pCmdtySpace, pCmdtyID);
 		return PriceHelper_FP.getLatestPrice(cmdtyCurrID, 
 											 gcshFile, priceDB);
 	}
 
 	// ----------------------------
 	
-	public BigFraction getLatestPriceRat(final GCshCmdtyCurrID cmdtyCurrID) {
+	public BigFraction getLatestPriceRat(final GCshCmdtyID cmdtyCurrID) {
 		return PriceHelper_BF.getLatestPrice(cmdtyCurrID,
 											 gcshFile, priceDB);
 	}
@@ -250,7 +250,7 @@ public class FilePriceManager {
 
 	@Deprecated
 	public BigFraction getLatestPriceRat(final String pCmdtySpace, final String pCmdtyID) {
-		GCshCmdtyCurrID cmdtyCurrID = new GCshCmdtyCurrID(pCmdtySpace, pCmdtyID);
+		GCshCmdtyID cmdtyCurrID = new GCshCmdtyID(pCmdtySpace, pCmdtyID);
 		return PriceHelper_BF.getLatestPrice(cmdtyCurrID,
 											 gcshFile, priceDB);
 	}

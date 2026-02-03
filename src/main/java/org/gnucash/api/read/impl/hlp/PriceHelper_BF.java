@@ -11,9 +11,9 @@ import org.gnucash.api.generated.Price;
 import org.gnucash.api.generated.Price.PriceCommodity;
 import org.gnucash.api.generated.Price.PriceCurrency;
 import org.gnucash.api.read.GnuCashFile;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +31,7 @@ public class PriceHelper_BF {
 	// ---------------------------------------------------------------
 
     public static BigFraction getLatestPrice(
-			final GCshCmdtyCurrID cmdtyCurrID,
+			final GCshCmdtyID cmdtyCurrID,
 			final GnuCashFile gcshFile,
 			final GncPricedb priceDB) {
 		if ( cmdtyCurrID == null ) {
@@ -77,7 +77,7 @@ public class PriceHelper_BF {
 	// ----------------------------
 
 	private static BigFraction getLatestPrice(
-			final GCshCmdtyCurrID cmdtyCurrID,
+			final GCshCmdtyID cmdtyCurrID,
 			final GnuCashFile gcshFile,
 			final GncPricedb priceDB,
 			final int depth) {
@@ -189,14 +189,14 @@ public class PriceHelper_BF {
 				 */
 
 				// BEGIN core
-				if ( !toCurr.getCmdtySpace().equals(GCshCmdtyCurrNameSpace.CURRENCY) ) {
+				if ( !toCurr.getCmdtySpace().equals(GCshCmdtyNameSpace.CURRENCY) ) {
 					// is commodity
 					if ( depth > maxRecursionDepth ) {
 						LOGGER.warn("getLatestPrice: Ignoring price-quote that is not in an ISO4217-currency"
 								+ " but in '" + toCurr.getCmdtySpace() + ":" + toCurr.getCmdtyId() + "'");
 						continue;
 					}
-					factor = getLatestPrice(new GCshCmdtyID(toCurr.getCmdtySpace(), toCurr.getCmdtyId()), 
+					factor = getLatestPrice(new GCshSecID(toCurr.getCmdtySpace(), toCurr.getCmdtyId()), 
 											gcshFile, priceDB, 
 											depth + 1);
 				} else {

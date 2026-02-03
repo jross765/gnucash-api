@@ -5,7 +5,7 @@ import java.util.List;
 import org.gnucash.api.read.GnuCashCommodity;
 import org.gnucash.api.write.hlp.GnuCashWritableObject;
 import org.gnucash.api.write.hlp.HasWritableUserDefinedAttributes;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 
 /**
  * Commodity that can be modified.
@@ -54,7 +54,7 @@ public interface GnuCashWritableCommodity extends GnuCashCommodity,
      * 
      * @see #getQualifID()
      */
-    void setQualifID(GCshCmdtyCurrID qualifID);
+    void setQualifID(GCshCmdtyID qualifID);
 
     /**
      * 

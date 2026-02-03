@@ -8,7 +8,7 @@ import java.util.Collection;
 
 import org.gnucash.api.ConstTest;
 import org.gnucash.api.read.GnuCashCommodity;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -68,7 +68,7 @@ public class TestFileCommodityManager {
 		mgr = gcshInFile.getCommodityManager();
 		
 		Collection<GnuCashCommodity> cmdtyColl = mgr.getCommodities();
-		GCshCmdtyCurrID qualifID = new GCshCmdtyCurrID("ISIN", "DE000BASF111");
+		GCshCmdtyID qualifID = new GCshCmdtyID("ISIN", "DE000BASF111");
 		GnuCashCommodity cmdty = mgr.getCommodityByQualifID(qualifID);
 		assertTrue(cmdtyColl.contains(cmdty));
 	}

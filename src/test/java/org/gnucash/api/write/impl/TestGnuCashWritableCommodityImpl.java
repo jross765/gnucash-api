@@ -17,12 +17,12 @@ import org.gnucash.api.read.impl.TestGnuCashCommodityImpl;
 import org.gnucash.api.read.impl.aux.GCshFileStats;
 import org.gnucash.api.write.GnuCashWritableCommodity;
 import org.gnucash.api.write.ObjectCascadeException;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
-import org.gnucash.base.basetypes.complex.GCshCmdtyID_Exchange;
-import org.gnucash.base.basetypes.complex.GCshCmdtyID_MIC;
-import org.gnucash.base.basetypes.complex.GCshCmdtyID_SecIdType;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
+import org.gnucash.base.basetypes.complex.GCshSecID;
+import org.gnucash.base.basetypes.complex.GCshSecID_Exchange;
+import org.gnucash.base.basetypes.complex.GCshSecID_MIC;
+import org.gnucash.base.basetypes.complex.GCshSecID_SecIdType;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,19 +35,19 @@ import org.w3c.dom.NodeList;
 import junit.framework.JUnit4TestAdapter;
 
 public class TestGnuCashWritableCommodityImpl {
-	public static final GCshCmdtyCurrNameSpace.Exchange CMDTY_1_EXCH = TestGnuCashCommodityImpl.CMDTY_1_EXCH;
+	public static final GCshCmdtyNameSpace.Exchange CMDTY_1_EXCH = TestGnuCashCommodityImpl.CMDTY_1_EXCH;
 	public static final String CMDTY_1_ID = TestGnuCashCommodityImpl.CMDTY_1_ID;
 	public static final String CMDTY_1_ISIN = TestGnuCashCommodityImpl.CMDTY_1_ISIN;
 
-	public static final GCshCmdtyCurrNameSpace.Exchange CMDTY_2_EXCH = TestGnuCashCommodityImpl.CMDTY_2_EXCH;
+	public static final GCshCmdtyNameSpace.Exchange CMDTY_2_EXCH = TestGnuCashCommodityImpl.CMDTY_2_EXCH;
 	public static final String CMDTY_2_ID = TestGnuCashCommodityImpl.CMDTY_2_ID;
 	public static final String CMDTY_2_ISIN = TestGnuCashCommodityImpl.CMDTY_2_ISIN;
 
-	public static final GCshCmdtyCurrNameSpace.SecIdType CMDTY_3_SECIDTYPE = GCshCmdtyCurrNameSpace.SecIdType.ISIN;
+	public static final GCshCmdtyNameSpace.SecIdType CMDTY_3_SECIDTYPE = GCshCmdtyNameSpace.SecIdType.ISIN;
 	public static final String CMDTY_3_ID = TestGnuCashCommodityImpl.CMDTY_3_ID;
 	public static final String CMDTY_3_ISIN = TestGnuCashCommodityImpl.CMDTY_3_ISIN;
 
-	public static final GCshCmdtyCurrNameSpace.SecIdType CMDTY_4_SECIDTYPE = GCshCmdtyCurrNameSpace.SecIdType.ISIN;
+	public static final GCshCmdtyNameSpace.SecIdType CMDTY_4_SECIDTYPE = GCshCmdtyNameSpace.SecIdType.ISIN;
 	public static final String CMDTY_4_ID = TestGnuCashCommodityImpl.CMDTY_4_ID;
 	public static final String CMDTY_4_ISIN = TestGnuCashCommodityImpl.CMDTY_4_ISIN;
 
@@ -59,9 +59,9 @@ public class TestGnuCashWritableCommodityImpl {
 	private GCshFileStats gcshInFileStats = null;
 	private GCshFileStats gcshOutFileStats = null;
 
-	private GCshCmdtyID newID = new GCshCmdtyID("POOPOO", "BEST");
+	private GCshSecID newID = new GCshSecID("POOPOO", "BEST");
 
-	private GCshCmdtyCurrID cmdtyCurrID1 = null;
+	private GCshCmdtyID cmdtyCurrID1 = null;
 	//    private GCshCmdtyCurrID cmdtyCurrID2 = null;
 	//    private GCshCmdtyCurrID cmdtyCurrID3 = null;
 
@@ -103,7 +103,7 @@ public class TestGnuCashWritableCommodityImpl {
 
 		// ---
 
-		cmdtyCurrID1 = new GCshCmdtyID_Exchange(CMDTY_1_EXCH, CMDTY_1_ID);
+		cmdtyCurrID1 = new GCshSecID_Exchange(CMDTY_1_EXCH, CMDTY_1_ID);
 		//    cmdtyCurrID2 = new GCshCmdtyID_Exchange(CMDTY_2_EXCH, CMDTY_2_ID);
 		//    cmdtyCurrID3 = new GCshCmdtyID_SecIdType(CMDTY_3_SECIDTYPE, CMDTY_3_ID);
 	}
@@ -249,7 +249,7 @@ public class TestGnuCashWritableCommodityImpl {
 	public void test03_2_1() throws Exception {
 		GnuCashWritableCommodity cmdty = 
 				gcshInFile.createWritableCommodity(
-						new GCshCmdtyID_Exchange(GCshCmdtyCurrNameSpace.Exchange.NASDAQ, "SCAM"),
+						new GCshSecID_Exchange(GCshCmdtyNameSpace.Exchange.NASDAQ, "SCAM"),
 						"US0123456789",
 						"Scam and Screw Corp.");
 
@@ -334,7 +334,7 @@ public class TestGnuCashWritableCommodityImpl {
 		assertEquals(Node.ELEMENT_NODE, lastNode.getNodeType());
 		Element elt = (Element) lastNode;
 		assertEquals("Scam and Screw Corp.", elt.getElementsByTagName("cmdty:name").item(0).getTextContent());
-		assertEquals(GCshCmdtyCurrNameSpace.Exchange.NASDAQ.toString(),
+		assertEquals(GCshCmdtyNameSpace.Exchange.NASDAQ.toString(),
 				elt.getElementsByTagName("cmdty:space").item(0).getTextContent());
 		assertEquals("SCAM", elt.getElementsByTagName("cmdty:id").item(0).getTextContent());
 	}
@@ -345,25 +345,25 @@ public class TestGnuCashWritableCommodityImpl {
 	public void test03_2_2() throws Exception {
 		GnuCashWritableCommodity cmdty1 = 
 				gcshInFile.createWritableCommodity(
-						new GCshCmdtyID_Exchange(GCshCmdtyCurrNameSpace.Exchange.NASDAQ, "SCAM"),
+						new GCshSecID_Exchange(GCshCmdtyNameSpace.Exchange.NASDAQ, "SCAM"),
 						"US0123456789",
 						"Scam and Screw Corp.");
 
 		GnuCashWritableCommodity cmdty2 = 
 				gcshInFile.createWritableCommodity(
-						new GCshCmdtyID_MIC(GCshCmdtyCurrNameSpace.MIC.XBRU, "CHOC"),
+						new GCshSecID_MIC(GCshCmdtyNameSpace.MIC.XBRU, "CHOC"),
 						"BE0123456789",
 						"Chocolaterie de la Grande Place");
 
 		GnuCashWritableCommodity cmdty3 = 
 				gcshInFile.createWritableCommodity(
-						new GCshCmdtyID_Exchange(GCshCmdtyCurrNameSpace.Exchange.EURONEXT, "FOUS"),
+						new GCshSecID_Exchange(GCshCmdtyNameSpace.Exchange.EURONEXT, "FOUS"),
 						"FR0123456789",
 						"Ils sont fous ces dingos!");
 
 		GnuCashWritableCommodity cmdty4 = 
 				gcshInFile.createWritableCommodity(
-						new GCshCmdtyID_SecIdType(GCshCmdtyCurrNameSpace.SecIdType.ISIN, "GB10000A2222"),
+						new GCshSecID_SecIdType(GCshCmdtyNameSpace.SecIdType.ISIN, "GB10000A2222"),
 						"GB10000A2222",
 						"Ye Ole National British Trade Company Ltd.");
 
@@ -400,7 +400,7 @@ public class TestGnuCashWritableCommodityImpl {
 		assertEquals(Node.ELEMENT_NODE, node.getNodeType());
 		Element elt = (Element) node;
 		assertEquals("Scam and Screw Corp.", elt.getElementsByTagName("cmdty:name").item(0).getTextContent());
-		assertEquals(GCshCmdtyCurrNameSpace.Exchange.NASDAQ.toString(),
+		assertEquals(GCshCmdtyNameSpace.Exchange.NASDAQ.toString(),
 				elt.getElementsByTagName("cmdty:space").item(0).getTextContent());
 		assertEquals("SCAM", elt.getElementsByTagName("cmdty:id").item(0).getTextContent());
 		assertEquals("US0123456789", elt.getElementsByTagName("cmdty:xcode").item(0).getTextContent());
@@ -410,7 +410,7 @@ public class TestGnuCashWritableCommodityImpl {
 		elt = (Element) node;
 		assertEquals("Chocolaterie de la Grande Place",
 				elt.getElementsByTagName("cmdty:name").item(0).getTextContent());
-		assertEquals(GCshCmdtyCurrNameSpace.MIC.XBRU.toString(),
+		assertEquals(GCshCmdtyNameSpace.MIC.XBRU.toString(),
 				elt.getElementsByTagName("cmdty:space").item(0).getTextContent());
 		assertEquals("CHOC", elt.getElementsByTagName("cmdty:id").item(0).getTextContent());
 		assertEquals("BE0123456789", elt.getElementsByTagName("cmdty:xcode").item(0).getTextContent());
@@ -419,7 +419,7 @@ public class TestGnuCashWritableCommodityImpl {
 		assertEquals(Node.ELEMENT_NODE, node.getNodeType());
 		elt = (Element) node;
 		assertEquals("Ils sont fous ces dingos!", elt.getElementsByTagName("cmdty:name").item(0).getTextContent());
-		assertEquals(GCshCmdtyCurrNameSpace.Exchange.EURONEXT.toString(),
+		assertEquals(GCshCmdtyNameSpace.Exchange.EURONEXT.toString(),
 				elt.getElementsByTagName("cmdty:space").item(0).getTextContent());
 		assertEquals("FOUS", elt.getElementsByTagName("cmdty:id").item(0).getTextContent());
 		assertEquals("FR0123456789", elt.getElementsByTagName("cmdty:xcode").item(0).getTextContent());
@@ -429,7 +429,7 @@ public class TestGnuCashWritableCommodityImpl {
 		elt = (Element) node;
 		assertEquals("Ye Ole National British Trade Company Ltd.",
 				elt.getElementsByTagName("cmdty:name").item(0).getTextContent());
-		assertEquals(GCshCmdtyCurrNameSpace.SecIdType.ISIN.toString(),
+		assertEquals(GCshCmdtyNameSpace.SecIdType.ISIN.toString(),
 				elt.getElementsByTagName("cmdty:space").item(0).getTextContent());
 		assertEquals("GB10000A2222", elt.getElementsByTagName("cmdty:id").item(0).getTextContent());
 		assertEquals("GB10000A2222", elt.getElementsByTagName("cmdty:xcode").item(0).getTextContent());

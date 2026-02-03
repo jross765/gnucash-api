@@ -114,9 +114,9 @@ import org.gnucash.api.write.spec.GnuCashWritableJobInvoiceEntry;
 import org.gnucash.api.write.spec.GnuCashWritableVendorBill;
 import org.gnucash.api.write.spec.GnuCashWritableVendorBillEntry;
 import org.gnucash.api.write.spec.GnuCashWritableVendorJob;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshCustID;
@@ -742,7 +742,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 
 	@Override
 	public GnuCashWritableAccount createWritableAccount(GnuCashAccount.Type type,
-														GCshCmdtyCurrID cmdtyCurrID,
+														GCshCmdtyID cmdtyCurrID,
 														GCshAcctID parentID,
 														String name) {
 		GnuCashWritableAccount acct = new GnuCashWritableAccountImpl(this);
@@ -759,10 +759,10 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 
 	@Override
     public GnuCashWritableAccount createWritableAccount(GnuCashAccount.Type type,
-    													GCshCmdtyID cmdtyID,
+    													GCshSecID cmdtyID,
     													GCshAcctID parentID,
     													String name) {
-		return createWritableAccount(type, (GCshCmdtyCurrID) cmdtyID, parentID, name);
+		return createWritableAccount(type, (GCshCmdtyID) cmdtyID, parentID, name);
 	}
 
 	@Override
@@ -770,7 +770,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 														GCshCurrID currID,
 														GCshAcctID parentID,
 														String name) {
-		return createWritableAccount(type, (GCshCmdtyCurrID) currID, parentID, name);
+		return createWritableAccount(type, (GCshCmdtyID) currID, parentID, name);
 	}
 
 	/**
@@ -1683,7 +1683,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	// ---------------------------------------------------------------
 
 	@Override
-	public GnuCashWritableCommodity getWritableCommodityByQualifID(final GCshCmdtyCurrID cmdtyID) {
+	public GnuCashWritableCommodity getWritableCommodityByQualifID(final GCshCmdtyID cmdtyID) {
 		if ( cmdtyID == null ) {
 			throw new IllegalArgumentException("argument <cmdtID> is null");
 		}
@@ -1703,20 +1703,20 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	}
 
 	@Override
-	public GnuCashWritableCommodity getWritableCommodityByQualifID(final GCshCmdtyCurrNameSpace.Exchange exchange,
+	public GnuCashWritableCommodity getWritableCommodityByQualifID(final GCshCmdtyNameSpace.Exchange exchange,
 			String id) {
 		GnuCashCommodity cmdty = super.getCommodityByQualifID(exchange, id);
 		return new GnuCashWritableCommodityImpl((GnuCashCommodityImpl) cmdty);
 	}
 
 	@Override
-	public GnuCashWritableCommodity getWritableCommodityByQualifID(final GCshCmdtyCurrNameSpace.MIC mic, String id) {
+	public GnuCashWritableCommodity getWritableCommodityByQualifID(final GCshCmdtyNameSpace.MIC mic, String id) {
 		GnuCashCommodity cmdty = super.getCommodityByQualifID(mic, id);
 		return new GnuCashWritableCommodityImpl((GnuCashCommodityImpl) cmdty);
 	}
 
 	@Override
-	public GnuCashWritableCommodity getWritableCommodityByQualifID(final GCshCmdtyCurrNameSpace.SecIdType secIdType,
+	public GnuCashWritableCommodity getWritableCommodityByQualifID(final GCshCmdtyNameSpace.SecIdType secIdType,
 			String id) {
 		GnuCashCommodity cmdty = super.getCommodityByQualifID(secIdType, id);
 		return new GnuCashWritableCommodityImpl((GnuCashCommodityImpl) cmdty);
@@ -1781,7 +1781,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 
 	@Override
 	public GnuCashWritableCommodity createWritableCommodity(
-			final GCshCmdtyID cmdtyID,
+			final GCshSecID cmdtyID,
 			final String code, // <-- e.g., the ISIN (not the string "ISIN")
 			final String name) {
 		GnuCashWritableCommodityImpl cmdty = new GnuCashWritableCommodityImpl(this, cmdtyID);
@@ -1815,7 +1815,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalArgumentException("argument <cmdty> is null");
 		}
 
-		if ( cmdty.getQualifID().toString().startsWith(GCshCmdtyCurrNameSpace.CURRENCY + GCshCmdtyCurrID.SEPARATOR) ) {
+		if ( cmdty.getQualifID().toString().startsWith(GCshCmdtyNameSpace.CURRENCY + GCshCmdtyID.SEPARATOR) ) {
 			throw new IllegalArgumentException("Currency commodities may not be removed");
 		}
 
@@ -1912,7 +1912,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		currency.setCmdtyId(pCmdtyID);
 
 		Price.PriceCurrency baseCurrency = getObjectFactory().createPricePriceCurrency();
-		baseCurrency.setCmdtySpace(GCshCmdtyCurrNameSpace.CURRENCY);
+		baseCurrency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
 		baseCurrency.setCmdtyId(getDefaultCurrencyID());
 
 		Price newQuote = getObjectFactory().createPrice();
@@ -1956,7 +1956,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	}
 
 	@Override
-	public GnuCashWritablePrice getWritablePriceByCmdtyIDDate(final GCshCmdtyID cmdtyID, final LocalDate date) {
+	public GnuCashWritablePrice getWritablePriceByCmdtyIDDate(final GCshSecID cmdtyID, final LocalDate date) {
 		return getWritablePriceByCmdtyCurrIDDate(cmdtyID, date);
 	}
 	
@@ -1972,7 +1972,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	}
 	
 	@Override
-    public GnuCashWritablePrice getWritablePriceByCmdtyCurrIDDate(final GCshCmdtyCurrID cmdtyCurrID, final LocalDate date) {
+    public GnuCashWritablePrice getWritablePriceByCmdtyCurrIDDate(final GCshCmdtyID cmdtyCurrID, final LocalDate date) {
 		GnuCashPrice prc = prcMgr.getPriceByCmdtyCurrIDDate(cmdtyCurrID, date);
 		return new GnuCashWritablePriceImpl((GnuCashPriceImpl) prc);
     }
@@ -1993,7 +1993,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 
 	@Override
 	public GnuCashWritablePrice createWritablePrice(
-			final GCshCmdtyCurrID fromCmdtyCurrID,
+			final GCshCmdtyID fromCmdtyCurrID,
 			final GCshCurrID toCurrID,
 			final LocalDate date) {
 		GnuCashWritablePrice prc = new GnuCashWritablePriceImpl(this);

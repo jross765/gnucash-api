@@ -14,8 +14,8 @@ import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.GnuCashTransaction;
 import org.gnucash.api.read.GnuCashTransactionSplit;
 import org.gnucash.api.read.aux.GCshAcctLot;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
@@ -183,24 +183,24 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	// ---
 
 	@Override
-	public FixedPointNumber getBalance(final LocalDate date, final GCshCmdtyCurrID cmdtyCurrID) {
+	public FixedPointNumber getBalance(final LocalDate date, final GCshCmdtyID cmdtyCurrID) {
 		return AccountBalanceHelper_FP.getBalance(date, cmdtyCurrID, this);
 	}
 
 	@Override
-	public BigFraction getBalanceRat(final LocalDate date, final GCshCmdtyCurrID cmdtyCurrID) {
+	public BigFraction getBalanceRat(final LocalDate date, final GCshCmdtyID cmdtyCurrID) {
 		return AccountBalanceHelper_BF.getBalance(date, cmdtyCurrID, this);
 	}
 
 	// ---
 
 	@Override
-	public FixedPointNumber getBalance(final LocalDate date, final GCshCmdtyID cmdtyID) {
+	public FixedPointNumber getBalance(final LocalDate date, final GCshSecID cmdtyID) {
 		return AccountBalanceHelper_FP.getBalance(date, cmdtyID, this);
 	}
 
 	@Override
-	public BigFraction getBalanceRat(final LocalDate date, final GCshCmdtyID cmdtyID) {
+	public BigFraction getBalanceRat(final LocalDate date, final GCshSecID cmdtyID) {
 		return AccountBalanceHelper_BF.getBalance(date, cmdtyID, this);
 	}
 
@@ -279,24 +279,24 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	// ---
 
 	@Override
-	public FixedPointNumber getBalanceRecursive(final LocalDate date, final GCshCmdtyCurrID cmdtyCurrID) {
+	public FixedPointNumber getBalanceRecursive(final LocalDate date, final GCshCmdtyID cmdtyCurrID) {
 		return AccountBalanceHelper_FP.getBalanceRecursive(date, cmdtyCurrID, this);
 	}
 
 	@Override
-	public BigFraction getBalanceRecursiveRat(final LocalDate date, final GCshCmdtyCurrID cmdtyCurrID) {
+	public BigFraction getBalanceRecursiveRat(final LocalDate date, final GCshCmdtyID cmdtyCurrID) {
 		return AccountBalanceHelper_BF.getBalanceRecursive(date, cmdtyCurrID, this);
 	}
 
 	// ---
 
 	@Override
-	public FixedPointNumber getBalanceRecursive(final LocalDate date, final GCshCmdtyID cmdtyID) {
+	public FixedPointNumber getBalanceRecursive(final LocalDate date, final GCshSecID cmdtyID) {
 		return AccountBalanceHelper_FP.getBalanceRecursive(date, cmdtyID, this);
 	}
 	
 	@Override
-	public BigFraction getBalanceRecursiveRat(final LocalDate date, final GCshCmdtyID cmdtyID) {
+	public BigFraction getBalanceRecursiveRat(final LocalDate date, final GCshSecID cmdtyID) {
 		return AccountBalanceHelper_BF.getBalanceRecursive(date, cmdtyID, this);
 	}
 	
@@ -416,8 +416,8 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	 * @return null if we are no currency but e.g. a fund
 	 */
 	public Currency getCurrency() {
-		if ( getCmdtyCurrID().getType() != GCshCmdtyCurrID.Type.CURRENCY ) {
-			throw new IllegalStateException("Account commodity/currency is not of type " + GCshCmdtyCurrID.Type.CURRENCY);
+		if ( getCmdtyCurrID().getType() != GCshCmdtyID.Type.CURRENCY ) {
+			throw new IllegalStateException("Account commodity/currency is not of type " + GCshCmdtyID.Type.CURRENCY);
 		}
 
 		String gcshCurrID = getCmdtyCurrID().getCode();
@@ -430,7 +430,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	
 	public NumberFormat getCurrencyFormat(Locale lcl) {
 		// The currency may have changed
-		if ( getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
+		if ( getCmdtyCurrID().getType() == GCshCmdtyID.Type.CURRENCY ) {
 			currencyFormat = NumberFormat.getCurrencyInstance(lcl);
 			Currency curr = getCurrency();
 			currencyFormat.setCurrency(curr);

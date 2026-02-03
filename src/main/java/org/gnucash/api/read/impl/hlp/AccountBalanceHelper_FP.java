@@ -12,7 +12,7 @@ import java.util.Locale;
 import org.gnucash.api.currency.ComplexPriceTable;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashTransactionSplit;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +61,7 @@ public class AccountBalanceHelper_FP
 		return balance;
 	}
 
-	public static FixedPointNumber getBalance(final LocalDate date, final GCshCmdtyCurrID cmdtyCurrID,
+	public static FixedPointNumber getBalance(final LocalDate date, final GCshCmdtyID cmdtyCurrID,
 											  final SimpleAccount acct) {
 		if ( cmdtyCurrID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
@@ -121,7 +121,7 @@ public class AccountBalanceHelper_FP
 		}
 
 		// is conversion needed?
-		if ( acct.getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
+		if ( acct.getCmdtyCurrID().getType() == GCshCmdtyID.Type.CURRENCY ) {
 			if ( acct.getCmdtyCurrID().getCode().equals(curr.getCurrencyCode()) ) {
 				return retval;
 			}
@@ -200,7 +200,7 @@ public class AccountBalanceHelper_FP
 		return getBalanceRecursive(date, acct.getCmdtyCurrID(), acct);
 	}
 
-	public static FixedPointNumber getBalanceRecursive(final LocalDate date, final GCshCmdtyCurrID cmdtyCurrID,
+	public static FixedPointNumber getBalanceRecursive(final LocalDate date, final GCshCmdtyID cmdtyCurrID,
 													   final SimpleAccount acct) {
 		if ( cmdtyCurrID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
@@ -210,7 +210,7 @@ public class AccountBalanceHelper_FP
 			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
 		}
 
-			if ( cmdtyCurrID.getType() == GCshCmdtyCurrID.Type.CURRENCY )
+			if ( cmdtyCurrID.getType() == GCshCmdtyID.Type.CURRENCY )
 				return getBalanceRecursive(date, new GCshCurrID(cmdtyCurrID.getCode()).getCurrency(), acct);
 			else
 				return getBalance(date, cmdtyCurrID, acct); // CAUTION: This assumes that under a stock account,
@@ -286,7 +286,7 @@ public class AccountBalanceHelper_FP
 	
 	public static String formatBalance(SimpleAccount acct, FixedPointNumber blnc, Locale lcl) {
 		NumberFormat nf = acct.getCurrencyFormat(lcl);
-    	if ( acct.getCmdtyCurrID().getType() == GCshCmdtyCurrID.Type.CURRENCY ) {
+    	if ( acct.getCmdtyCurrID().getType() == GCshCmdtyID.Type.CURRENCY ) {
     		nf.setCurrency(Currency.getInstance(acct.getCmdtyCurrID().getCode()));
     		return nf.format(blnc.getBigDecimal());
     	} else {

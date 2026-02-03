@@ -28,7 +28,7 @@ import org.gnucash.api.write.impl.hlp.HasWritableUserDefinedAttributesImpl;
 import org.gnucash.api.write.impl.spec.GnuCashWritableJobInvoiceImpl;
 import org.gnucash.api.write.impl.spec.GnuCashWritableVendorBillImpl;
 import org.gnucash.api.write.spec.GnuCashWritableVendorBill;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
 import org.gnucash.base.basetypes.simple.GCshID;
 import org.gnucash.base.basetypes.simple.GCshVendID;
 import org.slf4j.Logger;
@@ -132,7 +132,7 @@ public class GnuCashWritableVendorImpl extends GnuCashVendorImpl
 		{
 			GncGncVendor.VendorCurrency currency = factory.createGncGncVendorVendorCurrency();
 			currency.setCmdtyId(file.getDefaultCurrencyID());
-			currency.setCmdtySpace(GCshCmdtyCurrNameSpace.CURRENCY);
+			currency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
 			jwsdpVend.setVendorCurrency(currency);
 		}
 

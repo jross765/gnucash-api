@@ -27,7 +27,7 @@ import org.gnucash.api.write.impl.hlp.HasWritableUserDefinedAttributesImpl;
 import org.gnucash.api.write.impl.spec.GnuCashWritableCustomerInvoiceImpl;
 import org.gnucash.api.write.impl.spec.GnuCashWritableJobInvoiceImpl;
 import org.gnucash.api.write.spec.GnuCashWritableCustomerInvoice;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
 import org.gnucash.base.basetypes.simple.GCshCustID;
 import org.gnucash.base.basetypes.simple.GCshID;
 import org.slf4j.Logger;
@@ -153,7 +153,7 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
 		{
 			GncGncCustomer.CustCurrency currency = factory.createGncGncCustomerCustCurrency();
 			currency.setCmdtyId(file.getDefaultCurrencyID());
-			currency.setCmdtySpace(GCshCmdtyCurrNameSpace.CURRENCY);
+			currency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
 			jwsdpCust.setCustCurrency(currency);
 		}
 

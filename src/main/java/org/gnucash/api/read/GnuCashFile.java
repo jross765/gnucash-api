@@ -21,10 +21,10 @@ import org.gnucash.api.read.spec.GnuCashEmployeeVoucher;
 import org.gnucash.api.read.spec.GnuCashJobInvoice;
 import org.gnucash.api.read.spec.GnuCashVendorBill;
 import org.gnucash.api.read.spec.GnuCashVendorJob;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshCustID;
 import org.gnucash.base.basetypes.simple.GCshEmplID;
@@ -274,7 +274,7 @@ public interface GnuCashFile extends GnuCashObject,
      * @return list of all transaction splits (ro-objects)
      *   denominated in the given commodity/currency. 
      */
-    List<GnuCashTransactionSplit> getTransactionSplitsByCmdtyCurrID(GCshCmdtyCurrID cmdtyCurrID);
+    List<GnuCashTransactionSplit> getTransactionSplitsByCmdtyCurrID(GCshCmdtyID cmdtyCurrID);
 
     // ---------------------------------------------------------------
 
@@ -828,35 +828,35 @@ public interface GnuCashFile extends GnuCashObject,
      * @param id the unique ID of the currency/security/commodity to look for
      * @return the currency/security/commodity or null if it's not found
      */
-    GnuCashCommodity getCommodityByQualifID(GCshCmdtyCurrID cmdtyCurrID);
+    GnuCashCommodity getCommodityByQualifID(GCshCmdtyID cmdtyCurrID);
 
     /**
      * @param nameSpace
-     * @param id
+     * @param code
      * @return
      */
-    GnuCashCommodity getCommodityByQualifID(String nameSpace, String id);
+    GnuCashCommodity getCommodityByQualifID(String nameSpace, String code);
 
     /**
      * @param exchange
-     * @param id
+     * @param code
      * @return
      */
-    GnuCashCommodity getCommodityByQualifID(GCshCmdtyCurrNameSpace.Exchange exchange, String id);
+    GnuCashCommodity getCommodityByQualifID(GCshCmdtyNameSpace.Exchange exchange, String code);
 
     /**
      * @param mic
-     * @param id
+     * @param code
      * @return
      */
-    GnuCashCommodity getCommodityByQualifID(GCshCmdtyCurrNameSpace.MIC mic, String id);
+    GnuCashCommodity getCommodityByQualifID(GCshCmdtyNameSpace.MIC mic, String code);
 
     /**
      * @param secIdType
-     * @param id
+     * @param code
      * @return
      */
-    GnuCashCommodity getCommodityByQualifID(GCshCmdtyCurrNameSpace.SecIdType secIdType, String id);
+    GnuCashCommodity getCommodityByQualifID(GCshCmdtyNameSpace.SecIdType secIdType, String code);
 
     /**
      * @param qualifID the unique ID of the currency/security/commodity to look for
@@ -876,7 +876,7 @@ public interface GnuCashFile extends GnuCashObject,
      * not have the right name.
      * @param expr search expression
      * @return null if not found
-     * @see #getCommodityByQualifID(GCshCmdtyCurrID)
+     * @see #getCommodityByQualifID(GCshCmdtyID)
      */
     List<GnuCashCommodity> getCommoditiesByName(String expr);
 
@@ -951,13 +951,13 @@ public interface GnuCashFile extends GnuCashObject,
      */
     GnuCashPrice getPriceByID(GCshPrcID prcID);
 
-	GnuCashPrice getPriceByCmdtyIDDate(GCshCmdtyID cmdtyID, LocalDate date);
+	GnuCashPrice getPriceByCmdtyIDDate(GCshSecID cmdtyID, LocalDate date);
 	
 	GnuCashPrice getPriceByCurrIDDate(GCshCurrID currID, LocalDate date);
 	
 	GnuCashPrice getPriceByCurrDate(Currency curr, LocalDate date);
 	
-    GnuCashPrice getPriceByCmdtyCurrIDDate(GCshCmdtyCurrID cmdtyCurrID, LocalDate date);
+    GnuCashPrice getPriceByCmdtyCurrIDDate(GCshCmdtyID cmdtyCurrID, LocalDate date);
 
     /**
      * @return all prices defined in the book
@@ -966,13 +966,13 @@ public interface GnuCashFile extends GnuCashObject,
     List<GnuCashPrice> getPrices();
 
     // sic: List, not Collection
-	List<GnuCashPrice> getPricesByCmdtyID(GCshCmdtyID cmdtyID);
+	List<GnuCashPrice> getPricesByCmdtyID(GCshSecID cmdtyID);
 	
 	List<GnuCashPrice> getPricesByCurrID(GCshCurrID currID);
 	
 	List<GnuCashPrice> getPricesByCurr(Currency curr);
 	
-	List<GnuCashPrice> getPricesByCmdtyCurrID(GCshCmdtyCurrID cmdtyCurrID);
+	List<GnuCashPrice> getPricesByCmdtyCurrID(GCshCmdtyID cmdtyCurrID);
 	
     /**
      * @param cmdtyCurrID 
@@ -980,9 +980,9 @@ public interface GnuCashFile extends GnuCashObject,
      * @param pCmdtyId    the currency-name
      * @return the latest price-quote in the GnuCash file in EURO
      */
-    FixedPointNumber getLatestPrice(GCshCmdtyCurrID cmdtyCurrID);
+    FixedPointNumber getLatestPrice(GCshCmdtyID cmdtyCurrID);
 
-    BigFraction      getLatestPriceRat(GCshCmdtyCurrID cmdtyCurrID);
+    BigFraction      getLatestPriceRat(GCshCmdtyID cmdtyCurrID);
 
     @Deprecated
     FixedPointNumber getLatestPrice(String pCmdtySpace, String pCmdtyId);

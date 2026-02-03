@@ -12,8 +12,8 @@ import org.gnucash.api.read.GnuCashPrice;
 import org.gnucash.api.read.GnuCashTransactionSplit;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
-import org.gnucash.base.basetypes.complex.InvalidCmdtyCurrTypeException;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.InvalidCmdtyTypeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,13 +71,13 @@ public class GnuCashCommodityImpl extends GnuCashObjectImpl
      * {@inheritDoc}
      */
     @Override
-    public GCshCmdtyCurrID getQualifID() {
+    public GCshCmdtyID getQualifID() {
     	if ( getNameSpace() == null ||
     		 getID() == null ) {
 			return null;
 		}
 	
-    	return new GCshCmdtyCurrID(getNameSpace(), getID());
+    	return new GCshCmdtyID(getNameSpace(), getID());
     }
 
     /**
@@ -123,7 +123,7 @@ public class GnuCashCommodityImpl extends GnuCashObjectImpl
 		List<GnuCashAccount> result = new ArrayList<GnuCashAccount>();
 		
 		for ( GnuCashAccount acct : getGnuCashFile().getAccountsByType(GnuCashAccount.Type.STOCK) ) {
-			GCshCmdtyCurrID cmdtyCurrID = acct.getCmdtyCurrID();
+			GCshCmdtyID cmdtyCurrID = acct.getCmdtyCurrID();
 			if ( this.getQualifID().equals(cmdtyCurrID) ) {
 				result.add(acct);
 			}
@@ -208,7 +208,7 @@ public class GnuCashCommodityImpl extends GnuCashObjectImpl
 
     	try {
     		result += "qualif-id='" + getQualifID().toString() + "'";
-    	} catch (InvalidCmdtyCurrTypeException e) {
+    	} catch (InvalidCmdtyTypeException e) {
     		result += "qualif-id=" + "ERROR";
     	}
 	

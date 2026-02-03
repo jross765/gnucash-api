@@ -20,8 +20,8 @@ import org.gnucash.api.read.impl.TestGnuCashGenerInvoiceImpl;
 import org.gnucash.api.read.impl.TestGnuCashTransactionImpl;
 import org.gnucash.api.read.impl.aux.GCshFileStats;
 import org.gnucash.api.write.GnuCashWritableFile;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
-import org.gnucash.base.basetypes.complex.GCshCmdtyID_SecIdType;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
+import org.gnucash.base.basetypes.complex.GCshSecID_SecIdType;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcID;
 import org.gnucash.base.basetypes.simple.GCshTrxID;
@@ -379,7 +379,7 @@ public class TestGnuCashWritableFileImpl {
 	@Test
 	public void test05_4() throws Exception {
 		// Analogous to test05_1, but with commodities
-		GCshCmdtyID_SecIdType cmdtyCurrID3 = new GCshCmdtyID_SecIdType(GCshCmdtyCurrNameSpace.SecIdType.ISIN, CMDTY_4_ISIN);
+		GCshSecID_SecIdType cmdtyCurrID3 = new GCshSecID_SecIdType(GCshCmdtyNameSpace.SecIdType.ISIN, CMDTY_4_ISIN);
 		GnuCashCommodity cmdty11 = gcshInFile.getCommodityByQualifID(cmdtyCurrID3);
 		GnuCashCommodity cmdty12 = gcshROFile.getCommodityByQualifID(cmdtyCurrID3);
 		assertNotEquals(null, cmdty11);

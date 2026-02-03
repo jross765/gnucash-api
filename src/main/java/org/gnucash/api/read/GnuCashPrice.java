@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 
 import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.hlp.GnuCashObject;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.simple.GCshPrcID;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
@@ -111,9 +111,9 @@ public interface GnuCashPrice extends Comparable<GnuCashPrice>,
 
     // ----------------------------
 
-    GCshCmdtyCurrID getFromCmdtyCurrQualifID();
+    GCshCmdtyID getFromCmdtyCurrQualifID();
 
-    GCshCmdtyID getFromCommodityQualifID();
+    GCshSecID getFromCommodityQualifID();
 
     GCshCurrID getFromCurrencyQualifID();
 

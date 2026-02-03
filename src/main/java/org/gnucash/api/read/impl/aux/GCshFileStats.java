@@ -25,9 +25,9 @@ public class GCshFileStats {
     
     // ---------------------------------------------------------------
 
-    private FileStats_Raw      raw; 
-    private FileStats_Counters cnt; 
-    private FileStats_Cache    che; 
+    protected FileStats_Raw      raw; 
+    protected FileStats_Counters cnt; 
+    protected FileStats_Cache    che; 
 
     // ---------------------------------------------------------------
     

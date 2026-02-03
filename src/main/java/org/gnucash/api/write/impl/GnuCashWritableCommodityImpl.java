@@ -17,10 +17,10 @@ import org.gnucash.api.write.GnuCashWritableFile;
 import org.gnucash.api.write.ObjectCascadeException;
 import org.gnucash.api.write.impl.hlp.GnuCashWritableObjectImpl;
 import org.gnucash.api.write.impl.hlp.HasWritableUserDefinedAttributesImpl;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
-import org.gnucash.base.basetypes.complex.InvalidCmdtyCurrTypeException;
+import org.gnucash.base.basetypes.complex.GCshSecID;
+import org.gnucash.base.basetypes.complex.InvalidCmdtyTypeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +44,7 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
     // ---------------------------------------------------------------
 
     /**
-     * Please use ${@link GnuCashWritableFile#createWritableCommodity(GCshCmdtyID, String, String)
+     * Please use ${@link GnuCashWritableFile#createWritableCommodity(GCshSecID, String, String)
      *
      * @param file      the file we belong to
      * @param jwsdpPeer the JWSDP-object we are facading.
@@ -65,6 +65,18 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
     		final GnuCashWritableFileImpl file,
     		final GCshCmdtyID cmdtyID) {
     	super(createCommodity_int(file, cmdtyID), file);
+    }
+
+    /**
+     * Please use ${@link GnuCashWritableFile#createWritableCommodity()}.
+     *
+     * @param file the file we belong to
+     * @param id   the ID we shall have
+     */
+    protected GnuCashWritableCommodityImpl(
+    		final GnuCashWritableFileImpl file,
+    		final GCshSecID secID) {
+    	super(createCommodity_int(file, secID), file);
     }
 
     /**
@@ -117,19 +129,48 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
 			throw new IllegalArgumentException("argument <cmdtyID> is not set");
 		}
 
+		if ( cmdtyID.getType() == GCshCmdtyID.Type.CURRENCY ) {
+			GCshCurrID currID = new GCshCurrID(cmdtyID.getCode());
+			return createCommodity_int(file, currID);
+		} else if ( cmdtyID.getType() == GCshCmdtyID.Type.CURRENCY ) {
+			GCshSecID secID = new GCshSecID(cmdtyID.getNameSpace(), cmdtyID.getCode());
+			return createCommodity_int(file, secID);
+		}
+		
+		return null; // Compiler happy
+    }
+
+    /**
+     * Creates a new non-currency Commodity and adds it to the given GnuCash file.
+     *
+     * @param file the file we will belong to
+     * @param guid the ID we shall have
+     * @return a new jwsdp-peer already entered into th jwsdp-peer of the file
+     */
+    protected static GncCommodity createCommodity_int(
+    		final GnuCashWritableFileImpl file,
+    		final GCshSecID secID) {
+		if ( secID == null ) {
+			throw new IllegalArgumentException("argument <secID> is null");
+		}
+
+		if ( ! secID.isSet() ) {
+			throw new IllegalArgumentException("argument <secID> is not set");
+		}
+
 		GncCommodity jwsdpCmdty = file.createGncGncCommodityType();
 
 		jwsdpCmdty.setCmdtyFraction(Const.CMDTY_FRACTION_DEFAULT);
 		jwsdpCmdty.setVersion(Const.XML_FORMAT_VERSION);
 		jwsdpCmdty.setCmdtyName("no name given");
-		jwsdpCmdty.setCmdtySpace(cmdtyID.getNameSpace());
-		jwsdpCmdty.setCmdtyId(cmdtyID.getCode());
+		jwsdpCmdty.setCmdtySpace(secID.getNameSpace());
+		jwsdpCmdty.setCmdtyId(secID.getCode());
 		jwsdpCmdty.setCmdtyXcode(Const.CMDTY_XCODE_DEFAULT);
 
 		file.getRootElement().getGncBook().getBookElements().add(jwsdpCmdty);
 		file.setModified(true);
 
-		LOGGER.debug("createCommodity_int (1): Created new commodity (core): " + jwsdpCmdty.getCmdtySpace() + ":"
+		LOGGER.debug("createCommodity_int (sec): Created new commodity (core): " + jwsdpCmdty.getCmdtySpace() + ":"
 				+ jwsdpCmdty.getCmdtyId());
 
 		return jwsdpCmdty;
@@ -165,7 +206,7 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
 		file.getRootElement().getGncBook().getBookElements().add(jwsdpCmdty);
 		file.setModified(true);
 
-		LOGGER.debug("createCommodity_int (2): Created new commodity (core): " + jwsdpCmdty.getCmdtySpace() + ":"
+		LOGGER.debug("createCommodity_int (curr): Created new commodity (core): " + jwsdpCmdty.getCmdtySpace() + ":"
 				+ jwsdpCmdty.getCmdtyId());
 
 		return jwsdpCmdty;
@@ -188,7 +229,7 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
     // ---------------------------------------------------------------
 
     @Override
-    public void setQualifID(GCshCmdtyCurrID qualifId) {
+    public void setQualifID(GCshCmdtyID qualifId) {
 		if ( qualifId == null ) {
 			throw new IllegalArgumentException("argument <qualifID> is null");
 		}
@@ -327,7 +368,7 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
 
 		try {
 			result += "qualif-id='" + getQualifID().toString() + "'";
-		} catch (InvalidCmdtyCurrTypeException e) {
+		} catch (InvalidCmdtyTypeException e) {
 			result += "qualif-id=" + "ERROR";
 		}
 

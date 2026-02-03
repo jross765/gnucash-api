@@ -16,11 +16,11 @@ import org.gnucash.api.read.GnuCashCommodity;
 import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.GnuCashPrice;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
-import org.gnucash.base.basetypes.complex.InvalidCmdtyCurrTypeException;
+import org.gnucash.base.basetypes.complex.InvalidCmdtyTypeException;
 import org.gnucash.base.basetypes.simple.GCshPrcID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,7 +81,7 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 	// ----------------------------
 
 	@Override
-	public GCshCmdtyCurrID getFromCmdtyCurrQualifID() {
+	public GCshCmdtyID getFromCmdtyCurrQualifID() {
 		if ( jwsdpPeer.getPriceCommodity() == null )
 			return null;
 
@@ -89,26 +89,26 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 		if ( cmdty.getCmdtySpace() == null || cmdty.getCmdtyId() == null )
 			return null;
 
-		GCshCmdtyCurrID result = new GCshCmdtyCurrID(cmdty.getCmdtySpace(), cmdty.getCmdtyId());
+		GCshCmdtyID result = new GCshCmdtyID(cmdty.getCmdtySpace(), cmdty.getCmdtyId());
 
 		return result;
 	}
 
 	@Override
-	public GCshCmdtyID getFromCommodityQualifID() {
-		GCshCmdtyCurrID cmdtyCurrID = getFromCmdtyCurrQualifID();
-		return new GCshCmdtyID(cmdtyCurrID);
+	public GCshSecID getFromCommodityQualifID() {
+		GCshCmdtyID cmdtyCurrID = getFromCmdtyCurrQualifID();
+		return new GCshSecID(cmdtyCurrID);
 	}
 
 	@Override
 	public GCshCurrID getFromCurrencyQualifID() {
-		GCshCmdtyCurrID cmdtyCurrID = getFromCmdtyCurrQualifID();
+		GCshCmdtyID cmdtyCurrID = getFromCmdtyCurrQualifID();
 		return new GCshCurrID(cmdtyCurrID);
 	}
 
 	@Override
 	public GnuCashCommodity getFromCommodity() {
-		GCshCmdtyID cmdtyID = getFromCommodityQualifID();
+		GCshSecID cmdtyID = getFromCommodityQualifID();
 		GnuCashCommodity cmdty = getGnuCashFile().getCommodityByQualifID(cmdtyID);
 		return cmdty;
 	}
@@ -150,8 +150,8 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 		if ( curr.getCmdtySpace() == null || curr.getCmdtyId() == null )
 			return null;
 
-		if ( !curr.getCmdtySpace().equals(GCshCmdtyCurrNameSpace.CURRENCY) )
-			throw new InvalidCmdtyCurrTypeException();
+		if ( !curr.getCmdtySpace().equals(GCshCmdtyNameSpace.CURRENCY) )
+			throw new InvalidCmdtyTypeException();
 
 		return curr.getCmdtyId();
 	}
@@ -314,7 +314,7 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 
 		try {
 			result += ", cmdty-qualif-id='" + getFromCmdtyCurrQualifID() + "'";
-		} catch (InvalidCmdtyCurrTypeException e) {
+		} catch (InvalidCmdtyTypeException e) {
 			result += ", cmdty-qualif-id=" + "ERROR";
 		}
 

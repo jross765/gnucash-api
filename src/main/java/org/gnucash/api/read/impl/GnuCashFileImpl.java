@@ -79,11 +79,11 @@ import org.gnucash.api.read.spec.GnuCashEmployeeVoucher;
 import org.gnucash.api.read.spec.GnuCashJobInvoice;
 import org.gnucash.api.read.spec.GnuCashVendorBill;
 import org.gnucash.api.read.spec.GnuCashVendorJob;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
-import org.gnucash.base.basetypes.complex.InvalidCmdtyCurrIDException;
+import org.gnucash.base.basetypes.complex.GCshSecID;
+import org.gnucash.base.basetypes.complex.InvalidCmdtyIDException;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshCustID;
 import org.gnucash.base.basetypes.simple.GCshEmplID;
@@ -177,7 +177,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 		loadFile(pFile, false);
 	}
 
-	public GnuCashFileImpl(final File pFile, boolean withProgBar) throws IOException {
+	public GnuCashFileImpl(final File pFile, final boolean withProgBar) throws IOException {
 		super();
 		loadFile(pFile, withProgBar);
 	}
@@ -192,7 +192,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 		loadInputStream(is, false);
 	}
 
-	public GnuCashFileImpl(final InputStream is, boolean withProgBar) throws IOException {
+	public GnuCashFileImpl(final InputStream is, final boolean withProgBar) throws IOException {
 		super();
 		loadInputStream(is, withProgBar);
 	}
@@ -267,7 +267,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	}
 
 	protected void loadInputStream(InputStream in, boolean withProgBar) throws UnsupportedEncodingException, IOException,
-			InvalidCmdtyCurrIDException {
+			InvalidCmdtyIDException {
 		long start = System.currentTimeMillis();
 
 		NamespaceRemoverReader reader = new NamespaceRemoverReader(new InputStreamReader(in, "utf-8"));
@@ -288,6 +288,9 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 
 		} catch (JAXBException e) {
 			LOGGER.error("loadInputStream: " + e.getMessage(), e);
+			System.err.println(">>>");
+			System.err.println(e.getMessage());
+			System.err.println("<<<");
 			throw new IllegalStateException(e);
 		} finally {
 			reader.close();
@@ -351,7 +354,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 
 			GncAccount jwsdpAccount = (GncAccount) bookElement;
 			if ( jwsdpAccount.getActCommodity() != null ) {
-				if ( jwsdpAccount.getActCommodity().getCmdtySpace().equals(GCshCmdtyCurrNameSpace.CURRENCY) ) {
+				if ( jwsdpAccount.getActCommodity().getCmdtySpace().equals(GCshCmdtyNameSpace.CURRENCY) ) {
 					return jwsdpAccount.getActCommodity().getCmdtyId();
 				}
 			}
@@ -626,7 +629,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 		return trxMgr.getTransactionSplitsByAccountLotID(acctLotID);
 	}
 
-	public List<GnuCashTransactionSplit> getTransactionSplitsByCmdtyCurrID(final GCshCmdtyCurrID cmdtyCurrID) {
+	public List<GnuCashTransactionSplit> getTransactionSplitsByCmdtyCurrID(final GCshCmdtyID cmdtyCurrID) {
 		return trxMgr.getTransactionSplitsByCmdtyCurrID(cmdtyCurrID);
 	}
 
@@ -1029,28 +1032,28 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	// ---------------------------------------------------------------
 
 	@Override
-	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyCurrID qualifID) {
+	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyID qualifID) {
 		return cmdtyMgr.getCommodityByQualifID(qualifID);
 	}
 
 	@Override
-	public GnuCashCommodity getCommodityByQualifID(final String nameSpace, final String id) {
-		return cmdtyMgr.getCommodityByQualifID(nameSpace, id);
+	public GnuCashCommodity getCommodityByQualifID(final String nameSpace, final String code) {
+		return cmdtyMgr.getCommodityByQualifID(nameSpace, code);
 	}
 
 	@Override
-	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyCurrNameSpace.Exchange exchange, String id) {
-		return cmdtyMgr.getCommodityByQualifID(exchange, id);
+	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyNameSpace.Exchange exchange, String code) {
+		return cmdtyMgr.getCommodityByQualifID(exchange, code);
 	}
 
 	@Override
-	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyCurrNameSpace.MIC mic, String id) {
-		return cmdtyMgr.getCommodityByQualifID(mic, id);
+	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyNameSpace.MIC mic, String code) {
+		return cmdtyMgr.getCommodityByQualifID(mic, code);
 	}
 
 	@Override
-	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyCurrNameSpace.SecIdType secIdType, String id) {
-		return cmdtyMgr.getCommodityByQualifID(secIdType, id);
+	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyNameSpace.SecIdType secIdType, String code) {
+		return cmdtyMgr.getCommodityByQualifID(secIdType, code);
 	}
 
 	@Override
@@ -1151,7 +1154,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	
 	// ---------------------------------------------------------------
 
-	public GnuCashPrice getPriceByCmdtyIDDate(final GCshCmdtyID cmdtyID, final LocalDate date) {
+	public GnuCashPrice getPriceByCmdtyIDDate(final GCshSecID cmdtyID, final LocalDate date) {
 		return prcMgr.getPriceByCmdtyIDDate(cmdtyID, date);
 	}
 	
@@ -1163,7 +1166,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 		return prcMgr.getPriceByCurrDate(curr, date);
 	}
 	
-	public GnuCashPrice getPriceByCmdtyCurrIDDate(final GCshCmdtyCurrID cmdtyCurrID, final LocalDate date) {
+	public GnuCashPrice getPriceByCmdtyCurrIDDate(final GCshCmdtyID cmdtyCurrID, final LocalDate date) {
 		return prcMgr.getPriceByCmdtyCurrIDDate(cmdtyCurrID, date);
     }
 
@@ -1178,7 +1181,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	}
 
 	@Override
-	public List<GnuCashPrice> getPricesByCmdtyID(final GCshCmdtyID cmdtyID) {
+	public List<GnuCashPrice> getPricesByCmdtyID(final GCshSecID cmdtyID) {
 		return prcMgr.getPricesByCmdtyCurrID(cmdtyID);
 	}
 
@@ -1193,7 +1196,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	}
 
 	@Override
-	public List<GnuCashPrice> getPricesByCmdtyCurrID(final GCshCmdtyCurrID cmdtyCurrID) {
+	public List<GnuCashPrice> getPricesByCmdtyCurrID(final GCshCmdtyID cmdtyCurrID) {
 		return prcMgr.getPricesByCmdtyCurrID(cmdtyCurrID);
 	}
 
@@ -1205,7 +1208,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public FixedPointNumber getLatestPrice(final GCshCmdtyCurrID cmdtyCurrID) {
+	public FixedPointNumber getLatestPrice(final GCshCmdtyID cmdtyCurrID) {
 		return prcMgr.getLatestPrice(cmdtyCurrID);
 	}
 
@@ -1213,7 +1216,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public BigFraction getLatestPriceRat(final GCshCmdtyCurrID cmdtyCurrID) {
+	public BigFraction getLatestPriceRat(final GCshCmdtyID cmdtyCurrID) {
 		return prcMgr.getLatestPriceRat(cmdtyCurrID);
 	}
 
@@ -1400,7 +1403,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 				continue;
 			}
 
-			if ( fromCmdtyCurr.getCmdtySpace().equals(GCshCmdtyCurrNameSpace.CURRENCY)
+			if ( fromCmdtyCurr.getCmdtySpace().equals(GCshCmdtyNameSpace.CURRENCY)
 					&& fromCmdtyCurr.getCmdtyId().equals(baseCurrency) ) {
 				LOGGER.warn("loadPriceDatabaseCore: Ignoring price-quote for " + baseCurrency + " because "
 						+ baseCurrency + " is our base-currency.");
@@ -1410,7 +1413,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 			// get the latest price in the file and insert it into
 			// our currency table
 			FixedPointNumber factor = getLatestPrice(
-					new GCshCmdtyCurrID(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId()));
+					new GCshCmdtyID(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId()));
 
 			if ( factor != null ) {
 				getCurrencyTable().setConversionFactor(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId(),
@@ -1424,7 +1427,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 			// get the latest price in the file and insert it into
 			// our currency table
 			BigFraction factorRat = getLatestPriceRat(
-					new GCshCmdtyCurrID(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId()));
+					new GCshCmdtyID(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId()));
 
 			if ( factor != null ) {
 				getCurrencyTable().setConversionFactor(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId(),
@@ -1457,7 +1460,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 				continue;
 			}
 
-			if ( fromCmdtyCurr.getCmdtySpace().equals(GCshCmdtyCurrNameSpace.CURRENCY)
+			if ( fromCmdtyCurr.getCmdtySpace().equals(GCshCmdtyNameSpace.CURRENCY)
 					&& fromCmdtyCurr.getCmdtyId().equals(baseCurrency) ) {
 				LOGGER.warn("loadPriceDatabaseCore: Ignoring price-quote for " + baseCurrency + " because "
 						+ baseCurrency + " is our base-currency.");
@@ -1466,7 +1469,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 
 			// get the latest price in the file and insert it into
 			// our currency table
-			FixedPointNumber factor = getLatestPrice(new GCshCmdtyCurrID(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId()));
+			FixedPointNumber factor = getLatestPrice(new GCshCmdtyID(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId()));
 			LOGGER.debug("loadPriceDatabaseCore: latest price for '" + fromCmdtyCurr.getCmdtySpace() + ":" + fromCmdtyCurr.getCmdtyId() + "': " + factor);
 
 			if ( factor != null ) {

@@ -9,10 +9,10 @@ import java.util.List;
 import org.gnucash.api.ConstTest;
 import org.gnucash.api.read.GnuCashCommodity;
 import org.gnucash.api.read.GnuCashFile;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
-import org.gnucash.base.basetypes.complex.GCshCmdtyID_Exchange;
-import org.gnucash.base.basetypes.complex.GCshCmdtyID_SecIdType;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
+import org.gnucash.base.basetypes.complex.GCshSecID_Exchange;
+import org.gnucash.base.basetypes.complex.GCshSecID_SecIdType;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,24 +20,24 @@ import junit.framework.JUnit4TestAdapter;
 
 public class TestGnuCashCommodityImpl {
 	// Mercedes-Benz Group AG
-	public static final GCshCmdtyCurrNameSpace.Exchange CMDTY_1_EXCH = GCshCmdtyCurrNameSpace.Exchange.EURONEXT;
+	public static final GCshCmdtyNameSpace.Exchange CMDTY_1_EXCH = GCshCmdtyNameSpace.Exchange.EURONEXT;
 	public static final String CMDTY_1_ID = "MBG";
 	public static final String CMDTY_1_ISIN = "DE0007100000";
 
 	// SAP SE
-	public static final GCshCmdtyCurrNameSpace.Exchange CMDTY_2_EXCH = GCshCmdtyCurrNameSpace.Exchange.EURONEXT;
+	public static final GCshCmdtyNameSpace.Exchange CMDTY_2_EXCH = GCshCmdtyNameSpace.Exchange.EURONEXT;
 	public static final String CMDTY_2_ID = "SAP";
 	public static final String CMDTY_2_ISIN = "DE0007164600";
 
 	// AstraZeneca Plc
 	// Note that in the SecIDType variants, the ISIN/CUSIP/SEDOL/WKN/whatever
 	// is stored twice in the object, redundantly
-	public static final GCshCmdtyCurrNameSpace.SecIdType CMDTY_3_SECIDTYPE = GCshCmdtyCurrNameSpace.SecIdType.ISIN;
+	public static final GCshCmdtyNameSpace.SecIdType CMDTY_3_SECIDTYPE = GCshCmdtyNameSpace.SecIdType.ISIN;
 	public static final String CMDTY_3_ID = "GB0009895292";
 	public static final String CMDTY_3_ISIN = CMDTY_3_ID;
 
 	// Coca Cola
-	public static final GCshCmdtyCurrNameSpace.SecIdType CMDTY_4_SECIDTYPE = GCshCmdtyCurrNameSpace.SecIdType.ISIN;
+	public static final GCshCmdtyNameSpace.SecIdType CMDTY_4_SECIDTYPE = GCshCmdtyNameSpace.SecIdType.ISIN;
 	public static final String CMDTY_4_ID = "US1912161007";
 	public static final String CMDTY_4_ISIN = CMDTY_4_ID;
 
@@ -46,9 +46,9 @@ public class TestGnuCashCommodityImpl {
 	private GnuCashFile gcshFile = null;
 	private GnuCashCommodity cmdty = null;
 
-	private GCshCmdtyCurrID cmdtyCurrID1 = null;
-	private GCshCmdtyCurrID cmdtyCurrID2 = null;
-	private GCshCmdtyCurrID cmdtyCurrID3 = null;
+	private GCshCmdtyID cmdtyCurrID1 = null;
+	private GCshCmdtyID cmdtyCurrID2 = null;
+	private GCshCmdtyID cmdtyCurrID3 = null;
 
 	// -----------------------------------------------------------------
 
@@ -83,9 +83,9 @@ public class TestGnuCashCommodityImpl {
 
 		// ---
 
-		cmdtyCurrID1 = new GCshCmdtyID_Exchange(CMDTY_1_EXCH, CMDTY_1_ID);
-		cmdtyCurrID2 = new GCshCmdtyID_Exchange(CMDTY_2_EXCH, CMDTY_2_ID);
-		cmdtyCurrID3 = new GCshCmdtyID_SecIdType(CMDTY_3_SECIDTYPE, CMDTY_3_ID);
+		cmdtyCurrID1 = new GCshSecID_Exchange(CMDTY_1_EXCH, CMDTY_1_ID);
+		cmdtyCurrID2 = new GCshSecID_Exchange(CMDTY_2_EXCH, CMDTY_2_ID);
+		cmdtyCurrID3 = new GCshSecID_SecIdType(CMDTY_3_SECIDTYPE, CMDTY_3_ID);
 	}
 
 	// -----------------------------------------------------------------
@@ -93,9 +93,9 @@ public class TestGnuCashCommodityImpl {
 	@Test
 	public void test00() throws Exception {
 		// Cf. TestCmdtyCurrID -- let's just double-check
-		assertEquals(CMDTY_1_EXCH.toString() + GCshCmdtyCurrID.SEPARATOR + CMDTY_1_ID, cmdtyCurrID1.toString());
-		assertEquals(CMDTY_2_EXCH.toString() + GCshCmdtyCurrID.SEPARATOR + CMDTY_2_ID, cmdtyCurrID2.toString());
-		assertEquals(CMDTY_3_SECIDTYPE.toString() + GCshCmdtyCurrID.SEPARATOR + CMDTY_3_ID, cmdtyCurrID3.toString());
+		assertEquals(CMDTY_1_EXCH.toString() + GCshCmdtyID.SEPARATOR + CMDTY_1_ID, cmdtyCurrID1.toString());
+		assertEquals(CMDTY_2_EXCH.toString() + GCshCmdtyID.SEPARATOR + CMDTY_2_ID, cmdtyCurrID2.toString());
+		assertEquals(CMDTY_3_SECIDTYPE.toString() + GCshCmdtyID.SEPARATOR + CMDTY_3_ID, cmdtyCurrID3.toString());
 	}
 
 	// ------------------------------

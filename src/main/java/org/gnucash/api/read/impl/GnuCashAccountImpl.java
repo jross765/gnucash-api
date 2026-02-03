@@ -21,9 +21,9 @@ import org.gnucash.api.read.impl.aux.GCshAcctReconInfoImpl;
 import org.gnucash.api.read.impl.hlp.AccountBalanceHelper_FP;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
 import org.gnucash.api.read.impl.hlp.SimpleAccount;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
-import org.gnucash.base.basetypes.complex.InvalidCmdtyCurrTypeException;
+import org.gnucash.base.basetypes.complex.InvalidCmdtyTypeException;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -206,16 +206,25 @@ public class GnuCashAccountImpl extends SimpleAccount
 	 * {@inheritDoc}
 	 */
     @Override
-	public GCshCmdtyCurrID getCmdtyCurrID() {
+	public GCshCmdtyID getCmdtyID() {
     	if ( jwsdpPeer.getActCommodity() == null &&
     		 jwsdpPeer.getActType().equals(Type.ROOT.toString()) ) {
     		return new GCshCurrID(); // default-currency because gnucash 2.2 has no currency on the root-account
     	}
 	
-    	GCshCmdtyCurrID result = new GCshCmdtyCurrID(jwsdpPeer.getActCommodity().getCmdtySpace(),
+    	GCshCmdtyID result = new GCshCmdtyID(jwsdpPeer.getActCommodity().getCmdtySpace(),
     												 jwsdpPeer.getActCommodity().getCmdtyId()); 
 	
     	return result;
+	}
+    
+    /**
+	 * {@inheritDoc}
+	 */
+    @Override
+    @Deprecated
+	public GCshCmdtyID getCmdtyCurrID() {
+    	return getCmdtyID();
 	}
     
     // ----------------------------
@@ -473,7 +482,7 @@ public class GnuCashAccountImpl extends SimpleAccount
     	buffer.append(", commodity/currency='");
     	try {
     		buffer.append(getCmdtyCurrID() + "'");
-    	} catch (InvalidCmdtyCurrTypeException e) {
+    	} catch (InvalidCmdtyTypeException e) {
     		buffer.append("ERROR");
     	}
 	

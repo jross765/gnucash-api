@@ -23,8 +23,8 @@ import org.gnucash.api.write.GnuCashWritableTransaction;
 import org.gnucash.api.write.GnuCashWritableTransactionSplit;
 import org.gnucash.api.write.impl.hlp.GnuCashWritableObjectImpl;
 import org.gnucash.api.write.impl.hlp.HasWritableUserDefinedAttributesImpl;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
 import org.gnucash.base.basetypes.simple.GCshID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
 import org.gnucash.base.basetypes.simple.GCshTrxID;
@@ -166,7 +166,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
         {
             GncTransaction.TrnCurrency currency = factory.createGncTransactionTrnCurrency();
             currency.setCmdtyId(file.getDefaultCurrencyID());
-            currency.setCmdtySpace(GCshCmdtyCurrNameSpace.CURRENCY);
+            currency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
             jwsdpTrx.setTrnCurrency(currency);
         }
     
@@ -325,7 +325,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
      * @param cmdtyCurrID the new commodity/currency name-space/code
      * 
      */
-    public void setCmdtyCurrID(final GCshCmdtyCurrID cmdtyCurrID) {
+    public void setCmdtyCurrID(final GCshCmdtyID cmdtyCurrID) {
     	this.getJwsdpPeer().getTrnCurrency().setCmdtySpace(cmdtyCurrID.getNameSpace());
     	this.getJwsdpPeer().getTrnCurrency().setCmdtyId(cmdtyCurrID.getCode());
     	getWritableFile().setModified(true);

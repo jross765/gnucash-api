@@ -33,9 +33,9 @@ import org.gnucash.api.write.aux.GCshWritableAccountLot;
 import org.gnucash.api.write.impl.aux.GCshWritableAccountLotImpl;
 import org.gnucash.api.write.impl.hlp.GnuCashWritableObjectImpl;
 import org.gnucash.api.write.impl.hlp.HasWritableUserDefinedAttributesImpl;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
-import org.gnucash.base.basetypes.complex.InvalidCmdtyCurrTypeException;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
+import org.gnucash.base.basetypes.complex.InvalidCmdtyTypeException;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
@@ -185,7 +185,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 		{
 			GncAccount.ActCommodity currency = factory.createGncAccountActCommodity();
 			currency.setCmdtyId(file.getDefaultCurrencyID());
-			currency.setCmdtySpace(GCshCmdtyCurrNameSpace.CURRENCY);
+			currency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
 			jwsdpAcct.setActCommodity(currency);
 		}
 
@@ -567,7 +567,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setCmdtyCurrID(final GCshCmdtyCurrID cmdtyCurrID) {
+	public void setCmdtyCurrID(final GCshCmdtyID cmdtyCurrID) {
 		if ( cmdtyCurrID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
 		}
@@ -1103,7 +1103,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 		buffer.append(", commodity/currency='");
 		try {
 			buffer.append(getCmdtyCurrID() + "'");
-		} catch (InvalidCmdtyCurrTypeException e) {
+		} catch (InvalidCmdtyTypeException e) {
 			buffer.append("ERROR");
 		}
 

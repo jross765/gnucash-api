@@ -12,9 +12,9 @@ import org.gnucash.api.generated.GncV2;
 import org.gnucash.api.read.GnuCashCommodity;
 import org.gnucash.api.read.impl.GnuCashCommodityImpl;
 import org.gnucash.api.read.impl.GnuCashFileImpl;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
-import org.gnucash.base.basetypes.complex.InvalidCmdtyCurrTypeException;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
+import org.gnucash.base.basetypes.complex.InvalidCmdtyTypeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,7 +69,7 @@ public class FileCommodityManager {
 				GnuCashCommodityImpl cmdty = createCommodity(jwsdpCmdty);
 				try {
 					cmdtyMap.put(cmdty.getQualifID().toString(), cmdty);
-				} catch (InvalidCmdtyCurrTypeException e) {
+				} catch (InvalidCmdtyTypeException e) {
 					LOGGER.error("initMap1: Could not add Commodity to map: " + cmdty.toString());
 				}
 			} catch (RuntimeException e) {
@@ -88,7 +88,7 @@ public class FileCommodityManager {
 			GnuCashCommodity cmdty = cmdtyMap.get(qualifID);
 			try {
 				xCodeMap.put(cmdty.getXCode(), cmdty.getQualifID().toString());
-			} catch (InvalidCmdtyCurrTypeException e) {
+			} catch (InvalidCmdtyTypeException e) {
 				LOGGER.error("initMap2: Could not add element to map: " + cmdty.getXCode());
 			}
 		}
@@ -104,7 +104,7 @@ public class FileCommodityManager {
 
 	// ---------------------------------------------------------------
 
-	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyCurrID qualifID) {
+	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyID qualifID) {
 		if ( qualifID == null ) {
 			throw new IllegalArgumentException("argument <qualifID> is null");
 		}
@@ -133,11 +133,11 @@ public class FileCommodityManager {
 			throw new IllegalArgumentException("argument <id> is empty");
 		}
 
-		return getCommodityByQualifID(nameSpace + GCshCmdtyCurrID.SEPARATOR + id);
+		return getCommodityByQualifID(nameSpace + GCshCmdtyID.SEPARATOR + id);
 	}
 
-	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyCurrNameSpace.Exchange exch, String id) {
-		if ( exch == GCshCmdtyCurrNameSpace.Exchange.UNSET ) {
+	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyNameSpace.Exchange exch, String id) {
+		if ( exch == GCshCmdtyNameSpace.Exchange.UNSET ) {
 			throw new IllegalArgumentException("argument <exch> is not set");
 		}
 		
@@ -149,11 +149,11 @@ public class FileCommodityManager {
 			throw new IllegalArgumentException("argument <id> is empty");
 		}
 
-		return getCommodityByQualifID(exch.toString() + GCshCmdtyCurrID.SEPARATOR + id);
+		return getCommodityByQualifID(exch.toString() + GCshCmdtyID.SEPARATOR + id);
 	}
 
-	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyCurrNameSpace.MIC mic, String id) {
-		if ( mic == GCshCmdtyCurrNameSpace.MIC.UNSET ) {
+	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyNameSpace.MIC mic, String id) {
+		if ( mic == GCshCmdtyNameSpace.MIC.UNSET ) {
 			throw new IllegalArgumentException("argument <mic> is not set");
 		}
 		
@@ -165,11 +165,11 @@ public class FileCommodityManager {
 			throw new IllegalArgumentException("argument <id> is empty");
 		}
 
-		return getCommodityByQualifID(mic.toString() + GCshCmdtyCurrID.SEPARATOR + id);
+		return getCommodityByQualifID(mic.toString() + GCshCmdtyID.SEPARATOR + id);
 	}
 
-	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyCurrNameSpace.SecIdType secIdType, String id) {
-		if ( secIdType == GCshCmdtyCurrNameSpace.SecIdType.UNSET ) {
+	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyNameSpace.SecIdType secIdType, String id) {
+		if ( secIdType == GCshCmdtyNameSpace.SecIdType.UNSET ) {
 			throw new IllegalArgumentException("argument <secIdType> is not set");
 		}
 		
@@ -181,7 +181,7 @@ public class FileCommodityManager {
 			throw new IllegalArgumentException("argument <id> is empty");
 		}
 
-		return getCommodityByQualifID(secIdType.toString() + GCshCmdtyCurrID.SEPARATOR + id);
+		return getCommodityByQualifID(secIdType.toString() + GCshCmdtyID.SEPARATOR + id);
 	}
 
 	public GnuCashCommodity getCommodityByQualifID(final String qualifID) {

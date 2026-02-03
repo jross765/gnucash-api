@@ -36,9 +36,9 @@ import org.gnucash.api.write.spec.GnuCashWritableJobInvoiceEntry;
 import org.gnucash.api.write.spec.GnuCashWritableVendorBill;
 import org.gnucash.api.write.spec.GnuCashWritableVendorBillEntry;
 import org.gnucash.api.write.spec.GnuCashWritableVendorJob;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshCustID;
@@ -152,7 +152,7 @@ public interface GnuCashWritableFile extends GnuCashFile,
      *         account
      */
     GnuCashWritableAccount createWritableAccount(GnuCashAccount.Type type,
-			  									 GCshCmdtyCurrID cmdtyCurrID,
+			  									 GCshCmdtyID cmdtyCurrID,
 			  									 GCshAcctID parentID,
 			  									 String name);
 
@@ -165,7 +165,7 @@ public interface GnuCashWritableFile extends GnuCashFile,
      *         account
      */
     GnuCashWritableAccount createWritableAccount(GnuCashAccount.Type type, 
-    											 GCshCmdtyID cmdtyID,
+    											 GCshSecID cmdtyID,
     											 GCshAcctID parentID,
     											 String name);
 
@@ -499,15 +499,15 @@ public interface GnuCashWritableFile extends GnuCashFile,
 
     // ---------------------------------------------------------------
 
-    GnuCashWritableCommodity getWritableCommodityByQualifID(GCshCmdtyCurrID cmdtyID);
+    GnuCashWritableCommodity getWritableCommodityByQualifID(GCshCmdtyID cmdtyID);
 
     GnuCashWritableCommodity getWritableCommodityByQualifID(String nameSpace, String id);
 
-    GnuCashWritableCommodity getWritableCommodityByQualifID(GCshCmdtyCurrNameSpace.Exchange exchange, String id);
+    GnuCashWritableCommodity getWritableCommodityByQualifID(GCshCmdtyNameSpace.Exchange exchange, String id);
 
-    GnuCashWritableCommodity getWritableCommodityByQualifID(GCshCmdtyCurrNameSpace.MIC mic, String id);
+    GnuCashWritableCommodity getWritableCommodityByQualifID(GCshCmdtyNameSpace.MIC mic, String id);
 
-    GnuCashWritableCommodity getWritableCommodityByQualifID(GCshCmdtyCurrNameSpace.SecIdType secIdType, String id);
+    GnuCashWritableCommodity getWritableCommodityByQualifID(GCshCmdtyNameSpace.SecIdType secIdType, String id);
 
     GnuCashWritableCommodity getWritableCommodityByQualifID(String qualifID);
 
@@ -538,7 +538,7 @@ public interface GnuCashWritableFile extends GnuCashFile,
 	 * @param name  Security name
      * @return a new commodity with no values that is already added to this file
      */
-    GnuCashWritableCommodity createWritableCommodity(GCshCmdtyID cmdtyID, String code, String name);
+    GnuCashWritableCommodity createWritableCommodity(GCshSecID cmdtyID, String code, String name);
 
     GnuCashWritableCommodity createWritableCommodity(GCshCurrID currID, String code, String name);
 
@@ -567,13 +567,13 @@ public interface GnuCashWritableFile extends GnuCashFile,
 
     GnuCashWritablePrice getWritablePriceByID(GCshPrcID prcID);
 
-    GnuCashWritablePrice getWritablePriceByCmdtyIDDate(GCshCmdtyID cmdtyID, LocalDate date);
+    GnuCashWritablePrice getWritablePriceByCmdtyIDDate(GCshSecID cmdtyID, LocalDate date);
 	
     GnuCashWritablePrice getWritablePriceByCurrIDDate(GCshCurrID currID, LocalDate date);
 	
     GnuCashWritablePrice getWritablePriceByCurrDate(Currency curr, LocalDate date);
 	
-    GnuCashWritablePrice getWritablePriceByCmdtyCurrIDDate(GCshCmdtyCurrID cmdtyCurrID, LocalDate date);
+    GnuCashWritablePrice getWritablePriceByCmdtyCurrIDDate(GCshCmdtyID cmdtyCurrID, LocalDate date);
     
     Collection<GnuCashWritablePrice> getWritablePrices();
 
@@ -585,7 +585,7 @@ public interface GnuCashWritableFile extends GnuCashFile,
      * @param date 
      * @return a new price object with no values that is already added to this file
      */
-    GnuCashWritablePrice createWritablePrice(GCshCmdtyCurrID fromCmdtyCurrID, GCshCurrID toCurrID,
+    GnuCashWritablePrice createWritablePrice(GCshCmdtyID fromCmdtyCurrID, GCshCurrID toCurrID,
 											 LocalDate date);
 
     /**

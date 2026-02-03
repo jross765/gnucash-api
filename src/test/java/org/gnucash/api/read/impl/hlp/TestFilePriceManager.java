@@ -9,8 +9,8 @@ import java.util.Currency;
 
 import org.gnucash.api.ConstTest;
 import org.gnucash.api.read.GnuCashPrice;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
-import org.gnucash.base.basetypes.complex.GCshCmdtyID_Exchange;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
+import org.gnucash.base.basetypes.complex.GCshSecID_Exchange;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.simple.GCshPrcID;
 import org.junit.Before;
@@ -86,7 +86,7 @@ public class TestFilePriceManager {
 	public void test03_1() throws Exception {
 		mgr = gcshFile.getPriceManager();
 		
-		GCshCmdtyID_Exchange cmdtyID = new GCshCmdtyID_Exchange(GCshCmdtyCurrNameSpace.Exchange.EURONEXT, "MBG");
+		GCshSecID_Exchange cmdtyID = new GCshSecID_Exchange(GCshCmdtyNameSpace.Exchange.EURONEXT, "MBG");
 		assertEquals(11.265, mgr.getLatestPrice(cmdtyID).doubleValue(), ConstTest.DIFF_TOLERANCE);
 		assertEquals(2253,   mgr.getLatestPriceRat(cmdtyID).getNumerator().intValue());
 		assertEquals(200,    mgr.getLatestPriceRat(cmdtyID).getDenominator().intValue());
@@ -110,16 +110,16 @@ public class TestFilePriceManager {
 	public void test03_3() throws Exception {
 		mgr = gcshFile.getPriceManager();
 		
-		assertEquals(11.265, mgr.getLatestPrice(GCshCmdtyCurrNameSpace.Exchange.EURONEXT.toString(), "MBG").doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(2253,   mgr.getLatestPriceRat(GCshCmdtyCurrNameSpace.Exchange.EURONEXT.toString(), "MBG").getNumerator().intValue());
-		assertEquals(200,    mgr.getLatestPriceRat(GCshCmdtyCurrNameSpace.Exchange.EURONEXT.toString(), "MBG").getDenominator().intValue());
+		assertEquals(11.265, mgr.getLatestPrice(GCshCmdtyNameSpace.Exchange.EURONEXT.toString(), "MBG").doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(2253,   mgr.getLatestPriceRat(GCshCmdtyNameSpace.Exchange.EURONEXT.toString(), "MBG").getNumerator().intValue());
+		assertEquals(200,    mgr.getLatestPriceRat(GCshCmdtyNameSpace.Exchange.EURONEXT.toString(), "MBG").getDenominator().intValue());
 
-		assertEquals(null, mgr.getLatestPrice(GCshCmdtyCurrNameSpace.CURRENCY, "EUR"));    // ::CHECK
-		assertEquals(null, mgr.getLatestPriceRat(GCshCmdtyCurrNameSpace.CURRENCY, "EUR")); // ::CHECK
+		assertEquals(null, mgr.getLatestPrice(GCshCmdtyNameSpace.CURRENCY, "EUR"));    // ::CHECK
+		assertEquals(null, mgr.getLatestPriceRat(GCshCmdtyNameSpace.CURRENCY, "EUR")); // ::CHECK
 		
-		assertEquals(0.93, mgr.getLatestPrice(GCshCmdtyCurrNameSpace.CURRENCY, "USD").doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(93,   mgr.getLatestPriceRat(GCshCmdtyCurrNameSpace.CURRENCY, "USD").getNumerator().intValue());
-		assertEquals(100,  mgr.getLatestPriceRat(GCshCmdtyCurrNameSpace.CURRENCY, "USD").getDenominator().intValue());
+		assertEquals(0.93, mgr.getLatestPrice(GCshCmdtyNameSpace.CURRENCY, "USD").doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(93,   mgr.getLatestPriceRat(GCshCmdtyNameSpace.CURRENCY, "USD").getNumerator().intValue());
+		assertEquals(100,  mgr.getLatestPriceRat(GCshCmdtyNameSpace.CURRENCY, "USD").getDenominator().intValue());
 	}
 
 	@Test

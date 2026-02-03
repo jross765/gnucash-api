@@ -12,9 +12,9 @@ import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.GnuCashGenerInvoice;
 import org.gnucash.api.read.GnuCashTransaction;
 import org.gnucash.api.read.impl.GnuCashFileImpl;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
-import org.gnucash.base.basetypes.complex.GCshCmdtyID_Exchange;
-import org.gnucash.base.basetypes.complex.GCshCmdtyID_SecIdType;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
+import org.gnucash.base.basetypes.complex.GCshSecID_Exchange;
+import org.gnucash.base.basetypes.complex.GCshSecID_SecIdType;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcID;
 import org.gnucash.base.basetypes.simple.GCshTrxID;
@@ -35,8 +35,8 @@ public class TestHasUserDefinedAttributesImpl {
 	public static final GCshGenerInvcID INVC_2_ID = new GCshGenerInvcID( "8de4467c17e04bb2895fb68cc07fc4df" );
 	public static final GCshGenerInvcID INVC_3_ID = new GCshGenerInvcID( "169331c9860642cf84b04f3e3151058a" );
 
-	public static final GCshCmdtyID_Exchange  CMDTY_1_ID = new GCshCmdtyID_Exchange( GCshCmdtyCurrNameSpace.Exchange.EURONEXT, "MBG" );
-	public static final GCshCmdtyID_SecIdType CMDTY_2_ID = new GCshCmdtyID_SecIdType( GCshCmdtyCurrNameSpace.SecIdType.ISIN, "DE000BASF111" );
+	public static final GCshSecID_Exchange  CMDTY_1_ID = new GCshSecID_Exchange( GCshCmdtyNameSpace.Exchange.EURONEXT, "MBG" );
+	public static final GCshSecID_SecIdType CMDTY_2_ID = new GCshSecID_SecIdType( GCshCmdtyNameSpace.SecIdType.ISIN, "DE000BASF111" );
 
 	// -----------------------------------------------------------------
 

@@ -10,7 +10,7 @@ import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.ConstTest;
 import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.impl.GnuCashFileImpl;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.junit.Before;
 import org.junit.Test;
@@ -62,7 +62,7 @@ public class TestSimpleCurrencyExchRateTable {
 		complPriceTab = gcshFile.getCurrencyTable();
 		assertNotEquals(null, complPriceTab);
 
-		simplPriceTab = complPriceTab.getTabByType(GCshCmdtyCurrID.Type.CURRENCY);
+		simplPriceTab = complPriceTab.getTabByType(GCshCmdtyID.Type.CURRENCY);
 		assertNotEquals(null, simplPriceTab);
 
 		assertEquals(2, simplPriceTab.getCodes().size());
@@ -82,7 +82,7 @@ public class TestSimpleCurrencyExchRateTable {
 		complPriceTab = gcshFile.getCurrencyTable();
 		assertNotEquals(null, complPriceTab);
 
-		simplPriceTab = complPriceTab.getTabByType(GCshCmdtyCurrID.Type.CURRENCY);
+		simplPriceTab = complPriceTab.getTabByType(GCshCmdtyID.Type.CURRENCY);
 		assertNotEquals(null, simplPriceTab);
 
 		GCshCurrID currID = new GCshCurrID("USD");
@@ -99,7 +99,7 @@ public class TestSimpleCurrencyExchRateTable {
 		complPriceTab = gcshFile.getCurrencyTable();
 		assertNotEquals(null, complPriceTab);
 
-		simplPriceTab = complPriceTab.getTabByType(GCshCmdtyCurrID.Type.CURRENCY);
+		simplPriceTab = complPriceTab.getTabByType(GCshCmdtyID.Type.CURRENCY);
 		assertNotEquals(null, simplPriceTab);
 
 		GCshCurrID currID = new GCshCurrID("USD");

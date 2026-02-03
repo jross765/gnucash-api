@@ -24,7 +24,7 @@ import org.gnucash.api.write.impl.hlp.GnuCashWritableObjectImpl;
 import org.gnucash.api.write.impl.hlp.HasWritableUserDefinedAttributesImpl;
 import org.gnucash.api.write.impl.spec.GnuCashWritableEmployeeVoucherImpl;
 import org.gnucash.api.write.spec.GnuCashWritableEmployeeVoucher;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrNameSpace;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
 import org.gnucash.base.basetypes.simple.GCshEmplID;
 import org.gnucash.base.basetypes.simple.GCshID;
 import org.slf4j.Logger;
@@ -150,7 +150,7 @@ public class GnuCashWritableEmployeeImpl extends GnuCashEmployeeImpl
 		{
 			GncGncEmployee.EmployeeCurrency currency = factory.createGncGncEmployeeEmployeeCurrency();
 			currency.setCmdtyId(file.getDefaultCurrencyID());
-			currency.setCmdtySpace(GCshCmdtyCurrNameSpace.CURRENCY);
+			currency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
 			jwsdpEmpl.setEmployeeCurrency(currency);
 		}
 

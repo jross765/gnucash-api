@@ -7,8 +7,8 @@ import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.GnuCashCommodity;
 import org.gnucash.api.read.GnuCashPrice;
 import org.gnucash.api.write.hlp.GnuCashWritableObject;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
@@ -28,7 +28,7 @@ public interface GnuCashWritablePrice extends GnuCashPrice,
 	 * 
 	 * @see #getFromCmdtyCurrQualifID()
 	 */
-    void setFromCmdtyCurrQualifID(GCshCmdtyCurrID qualifID);
+    void setFromCmdtyCurrQualifID(GCshCmdtyID qualifID);
 
     /**
      * 
@@ -36,7 +36,7 @@ public interface GnuCashWritablePrice extends GnuCashPrice,
      * 
 	 * @see #getFromCmdtyCurrQualifID()
      */
-    void setFromCommodityQualifID(GCshCmdtyID qualifID);
+    void setFromCommodityQualifID(GCshSecID qualifID);
 
     /**
      * 
@@ -78,7 +78,7 @@ public interface GnuCashWritablePrice extends GnuCashPrice,
      * 
      * @see #getToCurrencyQualifID()
      */
-    void setToCurrencyQualifID(GCshCmdtyCurrID qualifID);
+    void setToCurrencyQualifID(GCshCmdtyID qualifID);
 
     /**
      * 

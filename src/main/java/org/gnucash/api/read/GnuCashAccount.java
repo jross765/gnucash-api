@@ -11,9 +11,9 @@ import org.gnucash.api.read.aux.GCshAcctLot;
 import org.gnucash.api.read.aux.GCshAcctReconInfo;
 import org.gnucash.api.read.hlp.HasTransactions;
 import org.gnucash.api.read.hlp.HasUserDefinedAttributes;
-import org.gnucash.base.basetypes.complex.GCshCmdtyCurrID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.aux.GCshLotID;
 
@@ -176,9 +176,12 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
 
     /**
      * 
-     * @return commodity/currency ID
+     * @return commodity (security/currency) ID
      */
-    GCshCmdtyCurrID getCmdtyCurrID();
+    GCshCmdtyID getCmdtyID();
+
+    @Deprecated
+    GCshCmdtyID getCmdtyCurrID();
 
     // -----------------------------------------------------------------
 
@@ -262,13 +265,13 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
     
     // ----------------------------
 
-    FixedPointNumber getBalance(LocalDate date, GCshCmdtyCurrID cmdtyCurrID);
+    FixedPointNumber getBalance(LocalDate date, GCshCmdtyID cmdtyCurrID);
 
-    BigFraction      getBalanceRat(LocalDate date, GCshCmdtyCurrID cmdtyCurrID);
+    BigFraction      getBalanceRat(LocalDate date, GCshCmdtyID cmdtyCurrID);
 
-    FixedPointNumber getBalance(LocalDate date, GCshCmdtyID cmdtyID);
+    FixedPointNumber getBalance(LocalDate date, GCshSecID cmdtyID);
 
-    BigFraction      getBalanceRat(LocalDate date, GCshCmdtyID cmdtyID);
+    BigFraction      getBalanceRat(LocalDate date, GCshSecID cmdtyID);
 
     FixedPointNumber getBalance(LocalDate date, GCshCurrID currID);
 
@@ -339,9 +342,9 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      * @return Gets the balance including all sub-accounts.
      * @see GnuCashAccount#getBalanceRecursive(LocalDate)
      */
-    FixedPointNumber getBalanceRecursive(LocalDate date, GCshCmdtyCurrID cmdtyCurrID);
+    FixedPointNumber getBalanceRecursive(LocalDate date, GCshCmdtyID cmdtyCurrID);
 
-    BigFraction      getBalanceRecursiveRat(LocalDate date, GCshCmdtyCurrID cmdtyCurrID);
+    BigFraction      getBalanceRecursiveRat(LocalDate date, GCshCmdtyID cmdtyCurrID);
 
     /**
      * 
@@ -349,9 +352,9 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      * @param cmdtyID
      * @return
      */
-    FixedPointNumber getBalanceRecursive(LocalDate date, GCshCmdtyID cmdtyID);
+    FixedPointNumber getBalanceRecursive(LocalDate date, GCshSecID cmdtyID);
 
-    BigFraction      getBalanceRecursiveRat(LocalDate date, GCshCmdtyID cmdtyID);
+    BigFraction      getBalanceRecursiveRat(LocalDate date, GCshSecID cmdtyID);
 
     /**
      * Ignores accounts for which this conversion is not possible.
