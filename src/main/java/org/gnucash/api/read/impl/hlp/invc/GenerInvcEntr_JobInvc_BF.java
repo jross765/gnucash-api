@@ -12,7 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class GenerInvcEntr_JobInvc_BF {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GenerInvcEntr_JobInvc_BF.class);
+    @SuppressWarnings("unused")
+	private static final Logger LOGGER = LoggerFactory.getLogger(GenerInvcEntr_JobInvc_BF.class);
 
     // ---------------------------------------------------------------
 

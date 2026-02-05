@@ -8,8 +8,7 @@ import org.gnucash.api.read.spec.GnuCashJobInvoice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Customer_IncOutst_BF 
-{
+public class Customer_IncOutst_BF {
     @SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(Customer_IncOutst_BF.class);
 

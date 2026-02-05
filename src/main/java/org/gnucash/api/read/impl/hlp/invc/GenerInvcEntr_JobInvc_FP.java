@@ -13,7 +13,8 @@ import org.slf4j.LoggerFactory;
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 public class GenerInvcEntr_JobInvc_FP {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GenerInvcEntr_JobInvc_FP.class);
+    @SuppressWarnings("unused")
+	private static final Logger LOGGER = LoggerFactory.getLogger(GenerInvcEntr_JobInvc_FP.class);
 
     // ---------------------------------------------------------------
 
