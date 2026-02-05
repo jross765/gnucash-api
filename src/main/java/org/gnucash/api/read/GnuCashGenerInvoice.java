@@ -6,15 +6,19 @@ import java.util.List;
 import org.gnucash.api.generated.GncGncInvoice;
 import org.gnucash.api.generated.GncGncInvoice.InvoiceOwner;
 import org.gnucash.api.read.aux.GCshOwner;
+import org.gnucash.api.read.hlp.GnuCashGenerInvoice_Cust_BF;
 import org.gnucash.api.read.hlp.GnuCashGenerInvoice_Cust_FP;
 import org.gnucash.api.read.hlp.GnuCashGenerInvoice_Cust_Rest;
 import org.gnucash.api.read.hlp.GnuCashGenerInvoice_Cust_Str;
+import org.gnucash.api.read.hlp.GnuCashGenerInvoice_Empl_BF;
 import org.gnucash.api.read.hlp.GnuCashGenerInvoice_Empl_FP;
 import org.gnucash.api.read.hlp.GnuCashGenerInvoice_Empl_Rest;
 import org.gnucash.api.read.hlp.GnuCashGenerInvoice_Empl_Str;
+import org.gnucash.api.read.hlp.GnuCashGenerInvoice_Job_BF;
 import org.gnucash.api.read.hlp.GnuCashGenerInvoice_Job_FP;
 import org.gnucash.api.read.hlp.GnuCashGenerInvoice_Job_Rest;
 import org.gnucash.api.read.hlp.GnuCashGenerInvoice_Job_Str;
+import org.gnucash.api.read.hlp.GnuCashGenerInvoice_Vend_BF;
 import org.gnucash.api.read.hlp.GnuCashGenerInvoice_Vend_FP;
 import org.gnucash.api.read.hlp.GnuCashGenerInvoice_Vend_Rest;
 import org.gnucash.api.read.hlp.GnuCashGenerInvoice_Vend_Str;
@@ -66,15 +70,19 @@ import org.gnucash.base.basetypes.simple.aux.GCshLotID;
  */
 public interface GnuCashGenerInvoice extends Comparable<GnuCashGenerInvoice>,
                                              GnuCashGenerInvoice_Cust_FP,
+                                             GnuCashGenerInvoice_Cust_BF,
                                              GnuCashGenerInvoice_Cust_Str,
                                              GnuCashGenerInvoice_Cust_Rest,
                                              GnuCashGenerInvoice_Vend_FP,
+                                             GnuCashGenerInvoice_Vend_BF,
                                              GnuCashGenerInvoice_Vend_Str,
                                              GnuCashGenerInvoice_Vend_Rest,
                                              GnuCashGenerInvoice_Empl_FP,
+                                             GnuCashGenerInvoice_Empl_BF,
                                              GnuCashGenerInvoice_Empl_Str,
                                              GnuCashGenerInvoice_Empl_Rest,
                                              GnuCashGenerInvoice_Job_FP,
+                                             GnuCashGenerInvoice_Job_BF,
                                              GnuCashGenerInvoice_Job_Str,
                                              GnuCashGenerInvoice_Job_Rest,
                                              GnuCashObject,

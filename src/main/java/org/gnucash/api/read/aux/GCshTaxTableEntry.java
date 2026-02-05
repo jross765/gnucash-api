@@ -1,5 +1,6 @@
 package org.gnucash.api.read.aux;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 
@@ -34,4 +35,5 @@ public interface GCshTaxTableEntry {
      */
     FixedPointNumber getAmount();
 
+    BigFraction      getAmountRat();
 }

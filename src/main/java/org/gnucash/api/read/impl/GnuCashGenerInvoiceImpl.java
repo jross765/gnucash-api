@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.Const;
 import org.gnucash.api.generated.GncGncInvoice;
 import org.gnucash.api.generated.GncGncInvoice.InvoiceOwner;
@@ -20,9 +21,13 @@ import org.gnucash.api.read.GnuCashTransaction;
 import org.gnucash.api.read.GnuCashTransactionSplit;
 import org.gnucash.api.read.aux.GCshOwner;
 import org.gnucash.api.read.impl.aux.GCshTaxedSumImpl;
+import org.gnucash.api.read.impl.hlp.GenerInvc_CustInvc_BF;
 import org.gnucash.api.read.impl.hlp.GenerInvc_CustInvc_FP;
+import org.gnucash.api.read.impl.hlp.GenerInvc_EmplVch_BF;
 import org.gnucash.api.read.impl.hlp.GenerInvc_EmplVch_FP;
+import org.gnucash.api.read.impl.hlp.GenerInvc_JobInvc_BF;
 import org.gnucash.api.read.impl.hlp.GenerInvc_JobInvc_FP;
+import org.gnucash.api.read.impl.hlp.GenerInvc_VendBll_BF;
 import org.gnucash.api.read.impl.hlp.GenerInvc_VendBll_FP;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
@@ -480,6 +485,65 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 		return GenerInvc_CustInvc_FP.getCustInvcAmountWithoutTaxes(this);
 	}
 
+	// -----------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BigFraction getCustInvcAmountUnpaidWithTaxesRat() {
+		return getCustInvcAmountUnpaidWithTaxesRat_int();
+	}
+	
+	private BigFraction getCustInvcAmountUnpaidWithTaxesRat_int() {
+		return GenerInvc_CustInvc_BF.getCustInvcAmountUnpaidWithTaxes(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BigFraction getCustInvcAmountPaidWithTaxesRat() {
+		return getCustInvcAmountPaidWithTaxesRat_int();
+	}
+	
+	private BigFraction getCustInvcAmountPaidWithTaxesRat_int() {
+		return GenerInvc_CustInvc_BF.getCustInvcAmountPaidWithTaxes(this);
+	}
+
+	@Override
+	public BigFraction getCustInvcAmountPaidWithoutTaxesRat() {
+		return getCustInvcAmountPaidWithoutTaxesRat_int();
+	}
+	
+	private BigFraction getCustInvcAmountPaidWithoutTaxesRat_int() {
+		return GenerInvc_CustInvc_BF.getCustInvcAmountPaidWithoutTaxes(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BigFraction getCustInvcAmountWithTaxesRat() {
+		return getCustInvcAmountWithTaxesRat_int();
+	}
+	
+	private BigFraction getCustInvcAmountWithTaxesRat_int() {
+		return GenerInvc_CustInvc_BF.getCustInvcAmountWithTaxes(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BigFraction getCustInvcAmountWithoutTaxesRat() {
+		return getCustInvcAmountWithoutTaxesRat_int();
+	}
+	
+	private BigFraction getCustInvcAmountWithoutTaxesRat_int() {
+		return GenerInvc_CustInvc_BF.getCustInvcAmountWithoutTaxes(this);
+	}
+
 	// ------------------------------
 
 	/**
@@ -601,6 +665,65 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 		return GenerInvc_VendBll_FP.getVendBllAmountWithoutTaxes(this);
 	}
 
+	// -----------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BigFraction getVendBllAmountUnpaidWithTaxesRat() {
+		return getVendBllAmountUnpaidWithTaxesRat_int();
+	}
+	
+	private BigFraction getVendBllAmountUnpaidWithTaxesRat_int() {
+		return GenerInvc_VendBll_BF.getVendBllAmountUnpaidWithTaxes(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BigFraction getVendBllAmountPaidWithTaxesRat() {
+		return getVendBllAmountPaidWithTaxesRat_int();
+	}
+	
+	private BigFraction getVendBllAmountPaidWithTaxesRat_int() {
+		return GenerInvc_VendBll_BF.getVendBllAmountPaidWithTaxes(this);
+	}
+
+	@Override
+	public BigFraction getVendBllAmountPaidWithoutTaxesRat() {
+		return getVendBllAmountPaidWithoutTaxesRat_int();
+	}
+	
+	private BigFraction getVendBllAmountPaidWithoutTaxesRat_int() {
+		return GenerInvc_VendBll_BF.getVendBllAmountPaidWithoutTaxes(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BigFraction getVendBllAmountWithTaxesRat() {
+		return getVendBllAmountWithTaxesRat_int();
+	}
+	
+	private BigFraction getVendBllAmountWithTaxesRat_int() {
+		return GenerInvc_VendBll_BF.getVendBllAmountWithTaxes(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BigFraction getVendBllAmountWithoutTaxesRat() {
+		return getVendBllAmountWithoutTaxesRat_int();
+	}
+	
+	private BigFraction getVendBllAmountWithoutTaxesRat_int() {
+		return GenerInvc_VendBll_BF.getVendBllAmountWithoutTaxes(this);
+	}
+
 	// ------------------------------
 
 	/**
@@ -702,6 +825,45 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 		return GenerInvc_EmplVch_FP.getEmplVchAmountWithoutTaxes(this);
 	}
 
+	// -----------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BigFraction getEmplVchAmountUnpaidWithTaxesRat() {
+		return GenerInvc_EmplVch_BF.getEmplVchAmountUnpaidWithTaxes(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BigFraction getEmplVchAmountPaidWithTaxesRat() {
+		return GenerInvc_EmplVch_BF.getEmplVchAmountPaidWithTaxes(this);
+	}
+
+	@Override
+	public BigFraction getEmplVchAmountPaidWithoutTaxesRat() {
+		return GenerInvc_EmplVch_BF.getEmplVchAmountPaidWithoutTaxes(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BigFraction getEmplVchAmountWithTaxesRat() {
+		return GenerInvc_EmplVch_BF.getEmplVchAmountWithTaxes(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BigFraction getEmplVchAmountWithoutTaxesRat() {
+		return GenerInvc_EmplVch_BF.getEmplVchAmountWithoutTaxes(this);
+	}
+
 	// ------------------------------
 
 	/**
@@ -786,7 +948,49 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 		return GenerInvc_JobInvc_FP.getJobInvcAmountWithoutTaxes(this);
 	}
 
-// ----------------------------
+	// ---------------------------------------------------------------
+
+	/**
+	 * @return what the customer must still pay (incl. taxes)
+	 */
+	@Override
+	public BigFraction getJobInvcAmountUnpaidWithTaxesRat() {
+		return GenerInvc_JobInvc_BF.getJobInvcAmountUnpaidWithTaxes(this);
+	}
+
+	/**
+	 * @return what the customer has already pay (incl. taxes)
+	 */
+	@Override
+	public BigFraction getJobInvcAmountPaidWithTaxesRat() {
+		return GenerInvc_JobInvc_BF.getJobInvcAmountPaidWithTaxes(this);
+	}
+
+	/**
+	 * @return what the customer has already pay (incl. taxes)
+	 */
+	@Override
+	public BigFraction getJobInvcAmountPaidWithoutTaxesRat() {
+		return GenerInvc_JobInvc_BF.getJobInvcAmountPaidWithoutTaxes(this);
+	}
+
+	/**
+	 * @return what the customer needs to pay in total (incl. taxes)
+	 */
+	@Override
+	public BigFraction getJobInvcAmountWithTaxesRat() {
+		return GenerInvc_JobInvc_BF.getJobInvcAmountWithTaxes(this);
+	}
+
+	/**
+	 * @return what the customer needs to pay in total (excl. taxes)
+	 */
+	@Override
+	public BigFraction getJobInvcAmountWithoutTaxesRat() {
+		return GenerInvc_JobInvc_BF.getJobInvcAmountWithoutTaxes(this);
+	}
+
+	// ----------------------------
 
 	/**
 	 * Formating uses the default-locale's currency-format.

@@ -2,6 +2,7 @@ package org.gnucash.api.read.impl.aux;
 
 import java.util.Objects;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.generated.GncGncTaxTable;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashFile;
@@ -99,11 +100,19 @@ public class GCshTaxTableEntryImpl implements GCshTaxTableEntry {
     }
 
     /**
-     * @return the amount the tax is
+     * {@inheritDoc}
      */
     @Override
     public FixedPointNumber getAmount() {
     	return new FixedPointNumber(getJwsdpPeer().getTteAmount());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigFraction getAmountRat() {
+    	return BigFraction.parse(getJwsdpPeer().getTteAmount());
     }
 
     // ---------------------------------------------------------------

@@ -3,13 +3,26 @@ package org.gnucash.api.read;
 import java.time.ZonedDateTime;
 import java.util.Locale;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.Const_LocSpec;
 import org.gnucash.api.generated.GncGncEntry;
 import org.gnucash.api.read.aux.GCshOwner;
-import org.gnucash.api.read.hlp.GnuCashGenerInvoiceEntry_Cust;
-import org.gnucash.api.read.hlp.GnuCashGenerInvoiceEntry_Empl;
-import org.gnucash.api.read.hlp.GnuCashGenerInvoiceEntry_Job;
-import org.gnucash.api.read.hlp.GnuCashGenerInvoiceEntry_Vend;
+import org.gnucash.api.read.hlp.GnuCashGenerInvoiceEntry_Cust_BF;
+import org.gnucash.api.read.hlp.GnuCashGenerInvoiceEntry_Cust_FP;
+import org.gnucash.api.read.hlp.GnuCashGenerInvoiceEntry_Cust_Rest;
+import org.gnucash.api.read.hlp.GnuCashGenerInvoiceEntry_Cust_Str;
+import org.gnucash.api.read.hlp.GnuCashGenerInvoiceEntry_Empl_BF;
+import org.gnucash.api.read.hlp.GnuCashGenerInvoiceEntry_Empl_FP;
+import org.gnucash.api.read.hlp.GnuCashGenerInvoiceEntry_Empl_Rest;
+import org.gnucash.api.read.hlp.GnuCashGenerInvoiceEntry_Empl_Str;
+import org.gnucash.api.read.hlp.GnuCashGenerInvoiceEntry_Job_BF;
+import org.gnucash.api.read.hlp.GnuCashGenerInvoiceEntry_Job_FP;
+import org.gnucash.api.read.hlp.GnuCashGenerInvoiceEntry_Job_Rest;
+import org.gnucash.api.read.hlp.GnuCashGenerInvoiceEntry_Job_Str;
+import org.gnucash.api.read.hlp.GnuCashGenerInvoiceEntry_Vend_BF;
+import org.gnucash.api.read.hlp.GnuCashGenerInvoiceEntry_Vend_FP;
+import org.gnucash.api.read.hlp.GnuCashGenerInvoiceEntry_Vend_Rest;
+import org.gnucash.api.read.hlp.GnuCashGenerInvoiceEntry_Vend_Str;
 import org.gnucash.api.read.hlp.HasUserDefinedAttributes;
 import org.gnucash.api.read.spec.GnuCashCustomerInvoiceEntry;
 import org.gnucash.api.read.spec.GnuCashEmployeeVoucherEntry;
@@ -41,10 +54,22 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  * @see GnuCashJobInvoiceEntry
  */
 public interface GnuCashGenerInvoiceEntry extends Comparable<GnuCashGenerInvoiceEntry>,
-                                                  GnuCashGenerInvoiceEntry_Cust,
-                                                  GnuCashGenerInvoiceEntry_Vend,
-                                                  GnuCashGenerInvoiceEntry_Empl,
-                                                  GnuCashGenerInvoiceEntry_Job,
+                                                  GnuCashGenerInvoiceEntry_Cust_FP,
+                                                  GnuCashGenerInvoiceEntry_Cust_BF,
+                                                  GnuCashGenerInvoiceEntry_Cust_Str,
+                                                  GnuCashGenerInvoiceEntry_Cust_Rest,
+                                                  GnuCashGenerInvoiceEntry_Vend_FP,
+                                                  GnuCashGenerInvoiceEntry_Vend_BF,
+                                                  GnuCashGenerInvoiceEntry_Vend_Str,
+                                                  GnuCashGenerInvoiceEntry_Vend_Rest,
+                                                  GnuCashGenerInvoiceEntry_Empl_FP,
+                                                  GnuCashGenerInvoiceEntry_Empl_BF,
+                                                  GnuCashGenerInvoiceEntry_Empl_Str,
+                                                  GnuCashGenerInvoiceEntry_Empl_Rest,
+                                                  GnuCashGenerInvoiceEntry_Job_FP,
+                                                  GnuCashGenerInvoiceEntry_Job_BF,
+                                                  GnuCashGenerInvoiceEntry_Job_Str,
+                                                  GnuCashGenerInvoiceEntry_Job_Rest,
                                                   HasUserDefinedAttributes
 {
 
@@ -215,6 +240,8 @@ public interface GnuCashGenerInvoiceEntry extends Comparable<GnuCashGenerInvoice
    *         ${@link #getAction()}.
    */
   FixedPointNumber getQuantity();
+
+  BigFraction      getQuantityRat();
 
   /**
    * @return the number of items of price ${@link #getCustInvcPrice()} and type

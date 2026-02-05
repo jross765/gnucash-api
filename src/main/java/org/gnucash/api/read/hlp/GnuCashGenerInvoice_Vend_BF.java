@@ -4,14 +4,14 @@ import org.apache.commons.numbers.fraction.BigFraction;
 
 public interface GnuCashGenerInvoice_Vend_BF {
 
-    BigFraction getVendBllAmountUnpaidWithTaxes();
+    BigFraction getVendBllAmountUnpaidWithTaxesRat();
 
-    BigFraction getVendBllAmountPaidWithTaxes();
+    BigFraction getVendBllAmountPaidWithTaxesRat();
 
-    BigFraction getVendBllAmountPaidWithoutTaxes();
+    BigFraction getVendBllAmountPaidWithoutTaxesRat();
 
-    BigFraction getVendBllAmountWithTaxes();
+    BigFraction getVendBllAmountWithTaxesRat();
 
-    BigFraction getVendBllAmountWithoutTaxes();
+    BigFraction getVendBllAmountWithoutTaxesRat();
 
 }
