@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.generated.GncGncCustomer;
 import org.gnucash.api.read.GnuCashCustomer;
 import org.gnucash.api.read.GnuCashFile;
@@ -14,6 +15,7 @@ import org.gnucash.api.read.aux.GCshAddress;
 import org.gnucash.api.read.aux.GCshBillTerms;
 import org.gnucash.api.read.aux.GCshTaxTable;
 import org.gnucash.api.read.impl.aux.GCshAddressImpl;
+import org.gnucash.api.read.impl.hlp.Customer_IncOutst_FP;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
 import org.gnucash.api.read.impl.spec.GnuCashCustomerJobImpl;
@@ -240,13 +242,7 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      */
     @Override
 	public FixedPointNumber getIncomeGenerated(GnuCashGenerInvoice.ReadVariant readVar) {
-		if ( readVar == GnuCashGenerInvoice.ReadVariant.DIRECT ) {
-			return getIncomeGenerated_direct();
-		} else if ( readVar == GnuCashGenerInvoice.ReadVariant.VIA_JOB ) {
-			return getIncomeGenerated_viaAllJobs();
-		}
-
-		return null; // Compiler happy
+		return Customer_IncOutst_FP.getIncomeGenerated(this, readVar);
     }
 
     /**
@@ -256,19 +252,7 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      */
     @Override
 	public FixedPointNumber getIncomeGenerated_direct() {
-		FixedPointNumber retval = new FixedPointNumber();
-
-		for ( GnuCashCustomerInvoice invcSpec : getPaidInvoices_direct() ) {
-//		    if ( invcGen.getType().equals(GnuCashGenerInvoice.TYPE_CUSTOMER) ) {
-//		      GnuCashCustomerInvoice invcSpec = new GnuCashCustomerInvoiceImpl(invcGen); 
-			GnuCashCustomer cust = invcSpec.getCustomer();
-			if ( cust.getID().equals(this.getID()) ) {
-				retval.add(invcSpec.getAmountWithoutTaxes());
-			}
-//            } // if invc type
-		} // for
-
-		return retval;
+		return Customer_IncOutst_FP.getIncomeGenerated_direct(this);
     }
 
     /**
@@ -278,20 +262,46 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      */
     @Override
 	public FixedPointNumber getIncomeGenerated_viaAllJobs() {
-		FixedPointNumber retval = new FixedPointNumber();
-
-		for ( GnuCashJobInvoice invcSpec : getPaidInvoices_viaAllJobs() ) {
-//		    if ( invcGen.getType().equals(GnuCashGenerInvoice.TYPE_CUSTOMER) ) {
-//		      GnuCashCustomerInvoice invcSpec = new GnuCashCustomerInvoiceImpl(invcGen); 
-			GnuCashCustomer cust = invcSpec.getCustomer();
-			if ( cust.getID().equals(this.getID()) ) {
-				retval.add(invcSpec.getAmountWithoutTaxes());
-			}
-//            } // if invc type
-		} // for
-
-		return retval;
+		return Customer_IncOutst_FP.getIncomeGenerated_viaAllJobs(this);
     }
+
+    // -------------------------------------
+
+    /**
+     * @return the net sum of payments for invoices to this client
+     *  
+     * @see #getIncomeGenerated_direct()
+     * @see #getIncomeGenerated_viaAllJobs()
+     */
+    @Override
+	public BigFraction getIncomeGeneratedRat(GnuCashGenerInvoice.ReadVariant readVar) {
+		// return Customer_IncOutst_BF.getIncomeGenerated(this, readVar);
+		return null;
+    }
+
+    /**
+     * @return the net sum of payments for invoices to this client
+     * 
+     * @see #getIncomeGenerated_viaAllJobs()
+     */
+    @Override
+	public BigFraction getIncomeGeneratedRat_direct() {
+		// return Customer_IncOutst_BF.getIncomeGenerated_direct(this);
+    	return null;
+    }
+
+    /**
+     * @return the net sum of payments for invoices to this client
+     *  
+     * @see #getIncomeGenerated_direct()
+     */
+    @Override
+	public BigFraction getIncomeGeneratedRat_viaAllJobs() {
+		// return Customer_IncOutst_BF.getIncomeGenerated_viaAllJobs(this);
+    	return null;
+    }
+
+    // -------------------------------------
 
     /**
      * @return formatted according to the current locale's currency-format
@@ -322,13 +332,7 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      */
     @Override
 	public FixedPointNumber getOutstandingValue(GnuCashGenerInvoice.ReadVariant readVar) {
-		if ( readVar == GnuCashGenerInvoice.ReadVariant.DIRECT ) {
-			return getOutstandingValue_direct();
-		} else if ( readVar == GnuCashGenerInvoice.ReadVariant.VIA_JOB ) {
-			return getOutstandingValue_viaAllJobs();
-		}
-
-		return null; // Compiler happy
+		return Customer_IncOutst_FP.getOutstandingValue(this, readVar);
     }
 
     /**
@@ -338,19 +342,7 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      */
     @Override
 	public FixedPointNumber getOutstandingValue_direct() {
-		FixedPointNumber retval = new FixedPointNumber();
-
-		for ( GnuCashCustomerInvoice invcSpec : getUnpaidInvoices_direct() ) {
-//            if ( invcGen.getType().equals(GnuCashGenerInvoice.TYPE_CUSTOMER) ) {
-//              GnuCashCustomerInvoice invcSpec = new GnuCashCustomerInvoiceImpl(invcGen); 
-			GnuCashCustomer cust = invcSpec.getCustomer();
-			if ( cust.getID().equals(this.getID()) ) {
-				retval.add(invcSpec.getAmountUnpaidWithTaxes());
-			}
-//            } // if invc type
-		} // for
-
-		return retval;
+		return Customer_IncOutst_FP.getOutstandingValue_direct(this);
     }
 
     /**
@@ -360,20 +352,46 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      */
     @Override
 	public FixedPointNumber getOutstandingValue_viaAllJobs() {
-		FixedPointNumber retval = new FixedPointNumber();
-
-		for ( GnuCashJobInvoice invcSpec : getUnpaidInvoices_viaAllJobs() ) {
-//            if ( invcGen.getType().equals(GnuCashGenerInvoice.TYPE_CUSTOMER) ) {
-//              GnuCashCustomerInvoice invcSpec = new GnuCashCustomerInvoiceImpl(invcGen); 
-			GnuCashCustomer cust = invcSpec.getCustomer();
-			if ( cust.getID().equals(this.getID()) ) {
-				retval.add(invcSpec.getAmountUnpaidWithTaxes());
-			}
-//            } // if invc type
-		} // for
-
-		return retval;
+		return Customer_IncOutst_FP.getOutstandingValue_viaAllJobs(this);
     }
+
+    // -------------------------------------
+
+    /**
+     * @return the sum of left to pay Unpaid invoiced
+     * 
+     * @see #getOutstandingValue_direct()
+     * @see #getOutstandingValue_viaAllJobs()
+     */
+    @Override
+	public BigFraction getOutstandingValueRat(GnuCashGenerInvoice.ReadVariant readVar) {
+		// return Customer_IncOutst_BF.getOutstandingValue(this, readVar);
+    	return null;
+    }
+
+    /**
+     * @return the sum of left to pay Unpaid invoiced
+     *  
+     * @see #getOutstandingValue_viaAllJobs()
+     */
+    @Override
+	public BigFraction getOutstandingValueRat_direct() {
+//		return Customer_IncOutst_BF.getOutstandingValue_direct(this);
+    	return null;
+    }
+
+    /**
+     * @return the sum of left to pay Unpaid invoiced
+     *  
+     * @see #getOutstandingValue_direct()
+     */
+    @Override
+	public BigFraction getOutstandingValueRat_viaAllJobs() {
+//		return Customer_IncOutst_BF.getOutstandingValue_viaAllJobs(this);
+    	return null;
+    }
+
+    // -----------------------------------------------------------------
 
     /**
      * @return Formatted according to the current locale's currency-format

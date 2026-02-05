@@ -5,6 +5,7 @@ import java.util.List;
 import org.gnucash.api.read.aux.GCshAddress;
 import org.gnucash.api.read.aux.GCshBillTerms;
 import org.gnucash.api.read.aux.GCshTaxTable;
+import org.gnucash.api.read.hlp.GnuCashCustomer_Invc_BF;
 import org.gnucash.api.read.hlp.GnuCashCustomer_Invc_FP;
 import org.gnucash.api.read.hlp.GnuCashCustomer_Invc_Str;
 import org.gnucash.api.read.hlp.GnuCashObject;
@@ -33,6 +34,7 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  */
 public interface GnuCashCustomer extends GnuCashObject,
                                          GnuCashCustomer_Invc_FP,
+                                         GnuCashCustomer_Invc_BF,
                                          GnuCashCustomer_Invc_Str,
                                          HasUserDefinedAttributes,
                                          HasAddress

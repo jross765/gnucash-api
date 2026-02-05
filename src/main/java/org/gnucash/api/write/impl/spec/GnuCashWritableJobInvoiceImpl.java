@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.generated.GncGncInvoice;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashCustomer;
@@ -503,6 +504,33 @@ public class GnuCashWritableJobInvoiceImpl extends GnuCashWritableGenerInvoiceIm
 	@Override
 	public FixedPointNumber getAmountWithoutTaxes() {
 		return getJobInvcAmountWithoutTaxes();
+	}
+
+	// ----------------------------
+
+	@Override
+	public BigFraction getAmountUnpaidWithTaxesRat() {
+		return getJobInvcAmountUnpaidWithTaxesRat();
+	}
+
+	@Override
+	public BigFraction getAmountPaidWithTaxesRat() {
+		return getJobInvcAmountPaidWithTaxesRat();
+	}
+
+	@Override
+	public BigFraction getAmountPaidWithoutTaxesRat() {
+		return getJobInvcAmountPaidWithoutTaxesRat();
+	}
+
+	@Override
+	public BigFraction getAmountWithTaxesRat() {
+		return getJobInvcAmountWithTaxesRat();
+	}
+
+	@Override
+	public BigFraction getAmountWithoutTaxesRat() {
+		return getJobInvcAmountWithoutTaxesRat();
 	}
 
 	// ---------------------------------------------------------------
