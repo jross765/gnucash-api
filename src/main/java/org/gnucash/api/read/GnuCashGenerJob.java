@@ -5,6 +5,7 @@ import java.util.List;
 import org.gnucash.api.generated.GncGncJob;
 import org.gnucash.api.generated.GncGncJob.JobOwner;
 import org.gnucash.api.read.aux.GCshOwner;
+import org.gnucash.api.read.hlp.GnuCashGenerJob_Invc_BF;
 import org.gnucash.api.read.hlp.GnuCashGenerJob_Invc_FP;
 import org.gnucash.api.read.hlp.GnuCashGenerJob_Invc_Str;
 import org.gnucash.api.read.hlp.GnuCashObject;
@@ -33,6 +34,7 @@ import org.gnucash.base.basetypes.simple.GCshID;
  */
 public interface GnuCashGenerJob extends GnuCashObject,
                                          GnuCashGenerJob_Invc_FP,
+                                         GnuCashGenerJob_Invc_BF,
                                          GnuCashGenerJob_Invc_Str
 {
 

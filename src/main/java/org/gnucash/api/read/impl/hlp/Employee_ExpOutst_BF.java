@@ -6,9 +6,9 @@ import org.gnucash.api.read.spec.GnuCashEmployeeVoucher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Employee_ExpOuts_BF {
+public class Employee_ExpOutst_BF {
     @SuppressWarnings("unused")
-	private static final Logger LOGGER = LoggerFactory.getLogger(Employee_ExpOuts_BF.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(Employee_ExpOutst_BF.class);
 
     // ---------------------------------------------------------------
 

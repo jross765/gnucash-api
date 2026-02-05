@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
-public class Employee_ExpOuts_FP {
+public class Employee_ExpOutst_FP {
     @SuppressWarnings("unused")
-	private static final Logger LOGGER = LoggerFactory.getLogger(Employee_ExpOuts_FP.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(Employee_ExpOutst_FP.class);
 
     // ---------------------------------------------------------------
 

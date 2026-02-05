@@ -12,8 +12,8 @@ import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.GnuCashGenerInvoice;
 import org.gnucash.api.read.aux.GCshAddress;
 import org.gnucash.api.read.impl.aux.GCshAddressImpl;
-import org.gnucash.api.read.impl.hlp.Employee_ExpOuts_BF;
-import org.gnucash.api.read.impl.hlp.Employee_ExpOuts_FP;
+import org.gnucash.api.read.impl.hlp.Employee_ExpOutst_BF;
+import org.gnucash.api.read.impl.hlp.Employee_ExpOutst_FP;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
 import org.gnucash.api.read.spec.GnuCashEmployeeVoucher;
@@ -171,7 +171,7 @@ public class GnuCashEmployeeImpl extends GnuCashObjectImpl
      */
     @Override
 	public FixedPointNumber getExpensesGenerated() {
-    	return Employee_ExpOuts_FP.getExpensesGenerated(this);
+    	return Employee_ExpOutst_FP.getExpensesGenerated(this);
     }
 
     /**
@@ -179,7 +179,7 @@ public class GnuCashEmployeeImpl extends GnuCashObjectImpl
      */
     @Override
 	public FixedPointNumber getExpensesGenerated_direct() {
-    	return Employee_ExpOuts_FP.getExpensesGenerated_direct(this);
+    	return Employee_ExpOutst_FP.getExpensesGenerated_direct(this);
     }
 
     // -------------------------------------
@@ -189,7 +189,7 @@ public class GnuCashEmployeeImpl extends GnuCashObjectImpl
      */
     @Override
 	public BigFraction getExpensesGeneratedRat() {
-    	return Employee_ExpOuts_BF.getExpensesGenerated(this);
+    	return Employee_ExpOutst_BF.getExpensesGenerated(this);
     }
 
     /**
@@ -197,7 +197,7 @@ public class GnuCashEmployeeImpl extends GnuCashObjectImpl
      */
     @Override
 	public BigFraction getExpensesGeneratedRat_direct() {
-    	return Employee_ExpOuts_BF.getExpensesGenerated_direct(this);
+    	return Employee_ExpOutst_BF.getExpensesGenerated_direct(this);
     }
 
     // -------------------------------------
@@ -232,7 +232,7 @@ public class GnuCashEmployeeImpl extends GnuCashObjectImpl
      */
     @Override
 	public FixedPointNumber getOutstandingValue() {
-    	return Employee_ExpOuts_FP.getOutstandingValue(this);
+    	return Employee_ExpOutst_FP.getOutstandingValue(this);
     }
 
     /**
@@ -240,7 +240,7 @@ public class GnuCashEmployeeImpl extends GnuCashObjectImpl
      */
     @Override
 	public FixedPointNumber getOutstandingValue_direct() {
-    	return Employee_ExpOuts_FP.getOutstandingValue_direct(this);
+    	return Employee_ExpOutst_FP.getOutstandingValue_direct(this);
     }
 
     // -------------------------------------
@@ -252,7 +252,7 @@ public class GnuCashEmployeeImpl extends GnuCashObjectImpl
      */
     @Override
 	public BigFraction getOutstandingValueRat() {
-    	return Employee_ExpOuts_BF.getOutstandingValue(this);
+    	return Employee_ExpOutst_BF.getOutstandingValue(this);
     }
 
     /**
@@ -260,7 +260,7 @@ public class GnuCashEmployeeImpl extends GnuCashObjectImpl
      */
     @Override
 	public BigFraction getOutstandingValueRat_direct() {
-    	return Employee_ExpOuts_BF.getOutstandingValue_direct(this);
+    	return Employee_ExpOutst_BF.getOutstandingValue_direct(this);
     }
 
     // -------------------------------------

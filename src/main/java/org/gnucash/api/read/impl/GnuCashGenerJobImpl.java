@@ -4,12 +4,15 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.Const;
 import org.gnucash.api.generated.GncGncJob;
 import org.gnucash.api.generated.GncGncJob.JobOwner;
 import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.GnuCashGenerJob;
 import org.gnucash.api.read.aux.GCshOwner;
+import org.gnucash.api.read.impl.hlp.GenerJob_IncOutst_BF;
+import org.gnucash.api.read.impl.hlp.GenerJob_IncOutst_FP;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.api.read.spec.GnuCashJobInvoice;
 import org.gnucash.base.basetypes.simple.GCshGenerJobID;
@@ -155,25 +158,24 @@ public class GnuCashGenerJobImpl extends GnuCashObjectImpl
 	public int getNofOpenInvoices() {
 		return getGnuCashFile().getUnpaidInvoicesForJob(this).size();
 	}
+	
+	// ----------------------------
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public FixedPointNumber getIncomeGenerated() {
-		FixedPointNumber retval = new FixedPointNumber();
-
-		for ( GnuCashJobInvoice invcSpec : getPaidInvoices() ) {
-//				if ( invcGen.getType().equals(GnuCashGenerInvoice.TYPE_JOB) ) {
-//		    		GnuCashJobInvoice invcSpec = new GnuCashJobInvoiceImpl(invcGen);
-			GnuCashGenerJob job = invcSpec.getGenerJob();
-			if ( job.getID().equals(this.getID()) ) {
-				retval.add(invcSpec.getAmountWithoutTaxes());
-			}
-//				} // if invc type
-		} // for
-
-		return retval;
+		return GenerJob_IncOutst_FP.getIncomeGenerated(this);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public BigFraction getIncomeGeneratedRat() {
+		return GenerJob_IncOutst_BF.getIncomeGenerated(this);
+	}
+
+	// ----------------------------
 
 	/**
 	 * {@inheritDoc}
@@ -188,25 +190,24 @@ public class GnuCashGenerJobImpl extends GnuCashObjectImpl
 	public String getIncomeGeneratedFormatted(Locale lcl) {
 		return NumberFormat.getCurrencyInstance(lcl).format(getIncomeGenerated());
 	}
+	
+	// ----------------------------
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public FixedPointNumber getOutstandingValue() {
-		FixedPointNumber retval = new FixedPointNumber();
-
-		for ( GnuCashJobInvoice invcSpec : getUnpaidInvoices() ) {
-//            if ( invcGen.getType().equals(GnuCashGenerInvoice.TYPE_JOB) ) {
-//              GnuCashJobInvoice invcSpec = new GnuCashJobInvoiceImpl(invcGen); 
-			GnuCashGenerJob job = invcSpec.getGenerJob();
-			if ( job.getID().equals(this.getID()) ) {
-				retval.add(invcSpec.getAmountUnpaidWithTaxes());
-			}
-//            } // if invc type
-		} // for
-
-		return retval;
+		return GenerJob_IncOutst_FP.getOutstandingValue(this);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public BigFraction getOutstandingValueRat() {
+		return GenerJob_IncOutst_BF.getOutstandingValue(this);
+	}
+
+	// ----------------------------
 
 	/**
 	 * {@inheritDoc}

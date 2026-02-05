@@ -1,5 +1,6 @@
 package org.gnucash.api.read.impl.hlp;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.GnuCashGenerInvoice;
 import org.gnucash.api.read.GnuCashVendor;
 import org.gnucash.api.read.spec.GnuCashJobInvoice;
@@ -7,15 +8,13 @@ import org.gnucash.api.read.spec.GnuCashVendorBill;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import xyz.schnorxoborx.base.numbers.FixedPointNumber;
-
-public class Vendor_ExpOuts_FP {
+public class Vendor_ExpOutst_BF {
     @SuppressWarnings("unused")
-	private static final Logger LOGGER = LoggerFactory.getLogger(Vendor_ExpOuts_FP.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(Vendor_ExpOutst_BF.class);
 
     // ---------------------------------------------------------------
 
-	public static FixedPointNumber getExpensesGenerated(final GnuCashVendor vend, GnuCashGenerInvoice.ReadVariant readVar) {
+	public static BigFraction getExpensesGenerated(final GnuCashVendor vend, GnuCashGenerInvoice.ReadVariant readVar) {
 		if ( readVar == GnuCashGenerInvoice.ReadVariant.DIRECT ) {
 			return getExpensesGenerated_direct(vend);
 		} else if ( readVar == GnuCashGenerInvoice.ReadVariant.VIA_JOB ) {
@@ -25,15 +24,15 @@ public class Vendor_ExpOuts_FP {
 		return null; // Compiler happy
     }
 
-	public static FixedPointNumber getExpensesGenerated_direct(final GnuCashVendor vend) {
-		FixedPointNumber retval = new FixedPointNumber();
+	public static BigFraction getExpensesGenerated_direct(final GnuCashVendor vend) {
+		BigFraction retval = BigFraction.ZERO;
 
 		for ( GnuCashVendorBill bllSpec : vend.getPaidBills_direct() ) {
 //		    if ( invcGen.getType().equals(GnuCashGenerInvoice.TYPE_VENDOR) ) {
 //		      GnuCashVendorBill bllSpec = new GnuCashVendorBillImpl(invcGen); 
 			GnuCashVendor vend2 = bllSpec.getVendor();
 			if ( vend2.getID().equals(vend.getID()) ) {
-				retval.add(bllSpec.getAmountWithoutTaxes());
+				retval = retval.add(bllSpec.getAmountWithoutTaxesRat());
 			}
 //            } // if bllSpec type
 		} // for
@@ -41,15 +40,15 @@ public class Vendor_ExpOuts_FP {
 		return retval;
     }
 
-	public static FixedPointNumber getExpensesGenerated_viaAllJobs(final GnuCashVendor vend) {
-		FixedPointNumber retval = new FixedPointNumber();
+	public static BigFraction getExpensesGenerated_viaAllJobs(final GnuCashVendor vend) {
+		BigFraction retval = BigFraction.ZERO;
 
 		for ( GnuCashJobInvoice bllSpec : vend.getPaidBills_viaAllJobs() ) {
 //		    if ( invcGen.getType().equals(GnuCashGenerInvoice.TYPE_VENDOR) ) {
 //		      GnuCashVendorBill bllSpec = new GnuCashVendorBillImpl(invcGen); 
 			GnuCashVendor vend2 = bllSpec.getVendor();
 			if ( vend2.getID().equals(vend.getID()) ) {
-				retval.add(bllSpec.getAmountWithoutTaxes());
+				retval = retval.add(bllSpec.getAmountWithoutTaxesRat());
 			}
 //            } // if bllSpec type
 		} // for
@@ -59,7 +58,7 @@ public class Vendor_ExpOuts_FP {
 
     // -------------------------------------
 
-	public static FixedPointNumber getOutstandingValue(final GnuCashVendor vend, GnuCashGenerInvoice.ReadVariant readVar) {
+	public static BigFraction getOutstandingValue(final GnuCashVendor vend, GnuCashGenerInvoice.ReadVariant readVar) {
 		if ( readVar == GnuCashGenerInvoice.ReadVariant.DIRECT ) {
 			return getOutstandingValue_direct(vend);
 		} else if ( readVar == GnuCashGenerInvoice.ReadVariant.VIA_JOB ) {
@@ -69,15 +68,15 @@ public class Vendor_ExpOuts_FP {
 		return null; // Compiler happy
     }
 
-	public static FixedPointNumber getOutstandingValue_direct(final GnuCashVendor vend) {
-		FixedPointNumber retval = new FixedPointNumber();
+	public static BigFraction getOutstandingValue_direct(final GnuCashVendor vend) {
+		BigFraction retval = BigFraction.ZERO;
 
 		for ( GnuCashVendorBill bllSpec : vend.getUnpaidBills_direct() ) {
 //            if ( invcGen.getType().equals(GnuCashGenerInvoice.TYPE_VENDOR) ) {
 //              GnuCashVendorBill bllSpec = new GnuCashVendorBillImpl(invcGen); 
 			GnuCashVendor vend2 = bllSpec.getVendor();
 			if ( vend2.getID().equals(vend.getID()) ) {
-				retval.add(bllSpec.getAmountUnpaidWithTaxes());
+				retval = retval.add(bllSpec.getAmountUnpaidWithTaxesRat());
 			}
 //            } // if bllSpec type
 		} // for
@@ -85,15 +84,15 @@ public class Vendor_ExpOuts_FP {
 		return retval;
     }
 
-	public static FixedPointNumber getOutstandingValue_viaAllJobs(final GnuCashVendor vend) {
-		FixedPointNumber retval = new FixedPointNumber();
+	public static BigFraction getOutstandingValue_viaAllJobs(final GnuCashVendor vend) {
+		BigFraction retval = BigFraction.ZERO;
 
 		for ( GnuCashJobInvoice bllSpec : vend.getUnpaidBills_viaAllJobs() ) {
 //            if ( invcGen.getType().equals(GnuCashGenerInvoice.TYPE_VENDOR) ) {
 //              GnuCashVendorBill bllSpec = new GnuCashVendorBillImpl(invcGen); 
 			GnuCashVendor vend2 = bllSpec.getVendor();
 			if ( vend2.getID().equals(vend.getID()) ) {
-				retval.add(bllSpec.getAmountUnpaidWithTaxes());
+				retval = retval.add(bllSpec.getAmountUnpaidWithTaxesRat());
 			}
 //            } // if bllSpec type
 		} // for
