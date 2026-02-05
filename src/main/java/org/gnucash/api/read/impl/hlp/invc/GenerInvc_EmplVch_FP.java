@@ -60,7 +60,7 @@ public class GenerInvc_EmplVch_FP {
 		// in order to be calculating correctly, that the sums be computed 
 		// without taxes first (grouped by tax%) and then the sums be 
 		// multiplied by the resp. tax% values. 
-		// On the other hand: We are calculating with BigDecimal, i.e.
+		// On the other hand: We are calculating with FixedPointNumber, i.e.
 		// with arbitrary precision, so it does not really matter.
 
 		for ( GnuCashGenerInvoiceEntry entry : invc.getGenerEntries() ) {
