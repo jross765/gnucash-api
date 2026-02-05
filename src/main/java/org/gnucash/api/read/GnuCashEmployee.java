@@ -1,15 +1,14 @@
 package org.gnucash.api.read;
 
 import java.util.List;
-import java.util.Locale;
 
+import org.gnucash.api.read.hlp.GnuCashEmployee_Invc_FP;
+import org.gnucash.api.read.hlp.GnuCashEmployee_Invc_Str;
 import org.gnucash.api.read.hlp.GnuCashObject;
 import org.gnucash.api.read.hlp.HasAddress;
 import org.gnucash.api.read.hlp.HasUserDefinedAttributes;
 import org.gnucash.api.read.spec.GnuCashEmployeeVoucher;
 import org.gnucash.base.basetypes.simple.GCshEmplID;
-
-import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 /**
  * An employee that can hand in expense vouchers and, obviously, receive
@@ -23,6 +22,8 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  * @see GnuCashVendor
  */
 public interface GnuCashEmployee extends GnuCashObject,
+                                         GnuCashEmployee_Invc_FP,
+                                         GnuCashEmployee_Invc_Str,
 										 HasUserDefinedAttributes,
 										 HasAddress
 {
@@ -63,65 +64,6 @@ public interface GnuCashEmployee extends GnuCashObject,
      *         considered Paid.
      */
     int getNofOpenVouchers();
-
-    // -------------------------------------
-
-    /**
-     * @return the sum of payments for invoices to this client
-     */
-    FixedPointNumber getExpensesGenerated();
-
-    /**
-     * @return the sum of payments for invoices to this client
-     */
-    FixedPointNumber getExpensesGenerated_direct();
-
-    /**
-     * @return 
-     *  
-     * @see #getExpensesGenerated() Formatted according to the current locale's
-     *      currency-format
-     */
-    String getExpensesGeneratedFormatted();
-
-    /**
-     * @param lcl 
-     * @return 
-     *  
-     * @see #getExpensesGenerated() Formatted according to the given locale's
-     *      currency-format
-     */
-    String getExpensesGeneratedFormatted(Locale lcl);
-
-    // -------------------------------------
-
-    /**
-     * @return the sum of left to pay Unpaid invoiced
-     */
-    FixedPointNumber getOutstandingValue();
-
-    /**
-     * @return the sum of left to pay Unpaid invoiced
-     */
-    FixedPointNumber getOutstandingValue_direct();
-
-    /**
-     * @return 
-     *  
-     * @see #getOutstandingValue() Formatted according to the current locale's
-     *      currency-format
-     */
-    String getOutstandingValueFormatted();
-
-    /**
-     *
-     * @param lcl 
-     * @return 
-     *  
-     * @see #getOutstandingValue() Formatted according to the given locale's
-     *      currency-format
-     */
-    String getOutstandingValueFormatted(Locale lcl);
 
     // ------------------------------------------------------------
 

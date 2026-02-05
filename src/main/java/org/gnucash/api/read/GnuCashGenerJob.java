@@ -1,19 +1,18 @@
 package org.gnucash.api.read;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.gnucash.api.generated.GncGncJob;
 import org.gnucash.api.generated.GncGncJob.JobOwner;
 import org.gnucash.api.read.aux.GCshOwner;
+import org.gnucash.api.read.hlp.GnuCashGenerJob_Invc_FP;
+import org.gnucash.api.read.hlp.GnuCashGenerJob_Invc_Str;
 import org.gnucash.api.read.hlp.GnuCashObject;
 import org.gnucash.api.read.spec.GnuCashCustomerJob;
 import org.gnucash.api.read.spec.GnuCashJobInvoice;
 import org.gnucash.api.read.spec.GnuCashVendorJob;
 import org.gnucash.base.basetypes.simple.GCshGenerJobID;
 import org.gnucash.base.basetypes.simple.GCshID;
-
-import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 /**
  * This class represents a generic job.
@@ -32,7 +31,10 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  * @see GnuCashCustomerJob
  * @see GnuCashVendorJob
  */
-public interface GnuCashGenerJob extends GnuCashObject {
+public interface GnuCashGenerJob extends GnuCashObject,
+                                         GnuCashGenerJob_Invc_FP,
+                                         GnuCashGenerJob_Invc_Str
+{
 
     public static final GCshOwner.Type TYPE_CUSTOMER = GCshOwner.Type.CUSTOMER;
     public static final GCshOwner.Type TYPE_VENDOR   = GCshOwner.Type.VENDOR;
@@ -96,51 +98,6 @@ public interface GnuCashGenerJob extends GnuCashObject {
      *  
      */
     int getNofOpenInvoices();
-
-    /**
-     * @return the sum of payments for invoices to this client
-     */
-    FixedPointNumber getIncomeGenerated();
-
-    /**
-     * @return 
-     *  
-     * @see #getIncomeGenerated() Formatted according to the current locale's
-     *      currency-format
-     */
-    String getIncomeGeneratedFormatted();
-
-    /**
-     * @param lcl 
-     * @return 
-     *  
-     * @see #getIncomeGenerated() Formatted according to the given locale's
-     *      currency-format
-     */
-    String getIncomeGeneratedFormatted(Locale lcl);
-
-    /**
-     * @return the sum of left to pay Unpaid invoiced
-     */
-    FixedPointNumber getOutstandingValue();
-
-    /**
-     * @return 
-     *  
-     * @see #getOutstandingValue() Formatted according to the current locale's
-     *      currency-format
-     */
-    String getOutstandingValueFormatted();
-
-    /**
-     *
-     * @param lcl 
-     * @return 
-     *  
-     * @see #getOutstandingValue() Formatted according to the given locale's
-     *      currency-format
-     */
-    String getOutstandingValueFormatted(Locale lcl);
 
     // ---------------------------------------------------------------
 

@@ -1,11 +1,12 @@
 package org.gnucash.api.read;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.gnucash.api.read.aux.GCshAddress;
 import org.gnucash.api.read.aux.GCshBillTerms;
 import org.gnucash.api.read.aux.GCshTaxTable;
+import org.gnucash.api.read.hlp.GnuCashCustomer_Invc_FP;
+import org.gnucash.api.read.hlp.GnuCashCustomer_Invc_Str;
 import org.gnucash.api.read.hlp.GnuCashObject;
 import org.gnucash.api.read.hlp.HasAddress;
 import org.gnucash.api.read.hlp.HasUserDefinedAttributes;
@@ -31,6 +32,8 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  * @see GnuCashVendor
  */
 public interface GnuCashCustomer extends GnuCashObject,
+                                         GnuCashCustomer_Invc_FP,
+                                         GnuCashCustomer_Invc_Str,
                                          HasUserDefinedAttributes,
                                          HasAddress
 {
@@ -119,88 +122,6 @@ public interface GnuCashCustomer extends GnuCashObject,
      *         considered paid.
      */
     int getNofOpenInvoices();
-
-    // -------------------------------------
-
-    /**
-     * @param readVar 
-     * @return Returns the sum of payments for invoices to this customer
-     * 
-     * @see #getIncomeGenerated_direct()
-     * @see #getIncomeGenerated_viaAllJobs()
-     *  
-     */
-    FixedPointNumber getIncomeGenerated(GnuCashGenerInvoice.ReadVariant readVar);
-
-    /**
-     * @return Returns the sum of payments for invoices to this customer
-     *  
-     * @see #getIncomeGenerated_viaAllJobs()
-     * @see #getIncomeGenerated(org.gnucash.api.read.GnuCashGenerInvoice.ReadVariant)
-     */
-    FixedPointNumber getIncomeGenerated_direct();
-
-    /**
-     * @return Returns the sum of payments for invoices to this customer
-     *  
-     * @see #getIncomeGenerated_direct()
-     * @see #getIncomeGenerated(org.gnucash.api.read.GnuCashGenerInvoice.ReadVariant)
-     */
-    FixedPointNumber getIncomeGenerated_viaAllJobs();
-
-    /**
-     * @param readVar 
-     * @return  
-     *  
-     * @see #getIncomeGenerated(org.gnucash.api.read.GnuCashGenerInvoice.ReadVariant)
-     */
-    String getIncomeGeneratedFormatted(GnuCashGenerInvoice.ReadVariant readVar);
-
-    /**
-     * @param readVar 
-     * @param lcl 
-     * @return 
-     *  
-     * @see #getIncomeGenerated(org.gnucash.api.read.GnuCashGenerInvoice.ReadVariant)
-     */
-    String getIncomeGeneratedFormatted(GnuCashGenerInvoice.ReadVariant readVar, Locale lcl);
-
-    // -------------------------------------
-
-    /**
-     * @param readVar 
-     * @return the sum of left to pay Unpaid invoiced
-     */
-    FixedPointNumber getOutstandingValue(GnuCashGenerInvoice.ReadVariant readVar);
-
-    /**
-     * @return the sum of left to pay Unpaid invoiced
-     *  
-     */
-    FixedPointNumber getOutstandingValue_direct();
-
-    /**
-     * @return the sum of left to pay Unpaid invoiced
-     */
-    FixedPointNumber getOutstandingValue_viaAllJobs();
-
-    /**
-     * @param readVar 
-     * @return 
-     *  
-     * @see #getOutstandingValue(org.gnucash.api.read.GnuCashGenerInvoice.ReadVariant)
-     */
-    String getOutstandingValueFormatted(GnuCashGenerInvoice.ReadVariant readVar);
-
-    /**
-     *
-     * @param readVar 
-     * @param lcl 
-     * @return 
-     *  
-     * @see #getOutstandingValue(org.gnucash.api.read.GnuCashGenerInvoice.ReadVariant)
-     */
-    String getOutstandingValueFormatted(GnuCashGenerInvoice.ReadVariant readVar, Locale lcl);
 
     // ------------------------------------------------------------
 
