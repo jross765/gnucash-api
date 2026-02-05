@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.generated.GncGncEmployee;
 import org.gnucash.api.read.GnuCashEmployee;
 import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.GnuCashGenerInvoice;
 import org.gnucash.api.read.aux.GCshAddress;
 import org.gnucash.api.read.impl.aux.GCshAddressImpl;
+import org.gnucash.api.read.impl.hlp.Employee_ExpOuts_BF;
+import org.gnucash.api.read.impl.hlp.Employee_ExpOuts_FP;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
 import org.gnucash.api.read.spec.GnuCashEmployeeVoucher;
@@ -168,7 +171,7 @@ public class GnuCashEmployeeImpl extends GnuCashObjectImpl
      */
     @Override
 	public FixedPointNumber getExpensesGenerated() {
-    	return getExpensesGenerated_direct();
+    	return Employee_ExpOuts_FP.getExpensesGenerated(this);
     }
 
     /**
@@ -176,20 +179,28 @@ public class GnuCashEmployeeImpl extends GnuCashObjectImpl
      */
     @Override
 	public FixedPointNumber getExpensesGenerated_direct() {
-		FixedPointNumber retval = new FixedPointNumber();
-
-		for ( GnuCashEmployeeVoucher vchSpec : getPaidVouchers() ) {
-//		    if ( invcGen.getType().equals(GnuCashGenerInvoice.TYPE_EMPLOYEE) ) {
-//		      GnuCashEmployeeVoucher vchSpec = new GnuCashEmployeeVoucherImpl(invcGen); 
-			GnuCashEmployee empl = vchSpec.getEmployee();
-			if ( empl.getID().equals(this.getID()) ) {
-				retval.add(vchSpec.getAmountWithoutTaxes());
-			}
-//            } // if vch type
-		} // for
-
-		return retval;
+    	return Employee_ExpOuts_FP.getExpensesGenerated_direct(this);
     }
+
+    // -------------------------------------
+
+    /**
+     * @return the net sum of payments for invoices to this client
+     */
+    @Override
+	public BigFraction getExpensesGeneratedRat() {
+    	return Employee_ExpOuts_BF.getExpensesGenerated(this);
+    }
+
+    /**
+     * @return the net sum of payments for invoices to this client
+     */
+    @Override
+	public BigFraction getExpensesGeneratedRat_direct() {
+    	return Employee_ExpOuts_BF.getExpensesGenerated_direct(this);
+    }
+
+    // -------------------------------------
 
     /**
      * @return formatted according to the current locale's currency-format
@@ -221,7 +232,7 @@ public class GnuCashEmployeeImpl extends GnuCashObjectImpl
      */
     @Override
 	public FixedPointNumber getOutstandingValue() {
-    	return getOutstandingValue_direct();
+    	return Employee_ExpOuts_FP.getOutstandingValue(this);
     }
 
     /**
@@ -229,20 +240,30 @@ public class GnuCashEmployeeImpl extends GnuCashObjectImpl
      */
     @Override
 	public FixedPointNumber getOutstandingValue_direct() {
-		FixedPointNumber retval = new FixedPointNumber();
-
-		for ( GnuCashEmployeeVoucher vchSpec : getUnpaidVouchers() ) {
-//            if ( invcGen.getType().equals(GnuCashGenerInvoice.TYPE_VENDOR) ) {
-//              GnuCashEmployeeVoucher vchSpec = new GnuCashEmployeeVoucherImpl(invcGen); 
-			GnuCashEmployee empl = vchSpec.getEmployee();
-			if ( empl.getID().equals(this.getID()) ) {
-				retval.add(vchSpec.getAmountUnpaidWithTaxes());
-			}
-//            } // if invc type
-		} // for
-
-		return retval;
+    	return Employee_ExpOuts_FP.getOutstandingValue_direct(this);
     }
+
+    // -------------------------------------
+
+    /**
+     * @return the sum of left to pay Unpaid invoiced
+     * 
+     * @see #getOutstandingValue_direct()
+     */
+    @Override
+	public BigFraction getOutstandingValueRat() {
+    	return Employee_ExpOuts_BF.getOutstandingValue(this);
+    }
+
+    /**
+     * @return the sum of left to pay Unpaid invoiced
+     */
+    @Override
+	public BigFraction getOutstandingValueRat_direct() {
+    	return Employee_ExpOuts_BF.getOutstandingValue_direct(this);
+    }
+
+    // -------------------------------------
 
     /**
      * @return Formatted according to the current locale's currency-format

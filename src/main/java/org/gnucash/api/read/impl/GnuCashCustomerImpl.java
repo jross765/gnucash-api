@@ -15,6 +15,7 @@ import org.gnucash.api.read.aux.GCshAddress;
 import org.gnucash.api.read.aux.GCshBillTerms;
 import org.gnucash.api.read.aux.GCshTaxTable;
 import org.gnucash.api.read.impl.aux.GCshAddressImpl;
+import org.gnucash.api.read.impl.hlp.Customer_IncOutst_BF;
 import org.gnucash.api.read.impl.hlp.Customer_IncOutst_FP;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
@@ -275,8 +276,7 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      */
     @Override
 	public BigFraction getIncomeGeneratedRat(GnuCashGenerInvoice.ReadVariant readVar) {
-		// return Customer_IncOutst_BF.getIncomeGenerated(this, readVar);
-		return null;
+		return Customer_IncOutst_BF.getIncomeGenerated(this, readVar);
     }
 
     /**
@@ -286,8 +286,7 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      */
     @Override
 	public BigFraction getIncomeGeneratedRat_direct() {
-		// return Customer_IncOutst_BF.getIncomeGenerated_direct(this);
-    	return null;
+		return Customer_IncOutst_BF.getIncomeGenerated_direct(this);
     }
 
     /**
@@ -297,8 +296,7 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      */
     @Override
 	public BigFraction getIncomeGeneratedRat_viaAllJobs() {
-		// return Customer_IncOutst_BF.getIncomeGenerated_viaAllJobs(this);
-    	return null;
+		return Customer_IncOutst_BF.getIncomeGenerated_viaAllJobs(this);
     }
 
     // -------------------------------------
@@ -365,8 +363,7 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      */
     @Override
 	public BigFraction getOutstandingValueRat(GnuCashGenerInvoice.ReadVariant readVar) {
-		// return Customer_IncOutst_BF.getOutstandingValue(this, readVar);
-    	return null;
+		return Customer_IncOutst_BF.getOutstandingValue(this, readVar);
     }
 
     /**
@@ -376,8 +373,7 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      */
     @Override
 	public BigFraction getOutstandingValueRat_direct() {
-//		return Customer_IncOutst_BF.getOutstandingValue_direct(this);
-    	return null;
+		return Customer_IncOutst_BF.getOutstandingValue_direct(this);
     }
 
     /**
@@ -387,8 +383,7 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      */
     @Override
 	public BigFraction getOutstandingValueRat_viaAllJobs() {
-//		return Customer_IncOutst_BF.getOutstandingValue_viaAllJobs(this);
-    	return null;
+		return Customer_IncOutst_BF.getOutstandingValue_viaAllJobs(this);
     }
 
     // -----------------------------------------------------------------
