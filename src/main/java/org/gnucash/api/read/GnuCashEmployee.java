@@ -2,12 +2,12 @@ package org.gnucash.api.read;
 
 import java.util.List;
 
-import org.gnucash.api.read.hlp.GnuCashEmployee_Invc_BF;
-import org.gnucash.api.read.hlp.GnuCashEmployee_Invc_FP;
-import org.gnucash.api.read.hlp.GnuCashEmployee_Invc_Str;
 import org.gnucash.api.read.hlp.GnuCashObject;
 import org.gnucash.api.read.hlp.HasAddress;
 import org.gnucash.api.read.hlp.HasUserDefinedAttributes;
+import org.gnucash.api.read.hlp.own.GnuCashEmployee_Invc_BF;
+import org.gnucash.api.read.hlp.own.GnuCashEmployee_Invc_FP;
+import org.gnucash.api.read.hlp.own.GnuCashEmployee_Invc_Str;
 import org.gnucash.api.read.spec.GnuCashEmployeeVoucher;
 import org.gnucash.base.basetypes.simple.GCshEmplID;
 
