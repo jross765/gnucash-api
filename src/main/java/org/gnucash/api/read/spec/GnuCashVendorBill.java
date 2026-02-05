@@ -4,7 +4,9 @@ import java.util.Collection;
 
 import org.gnucash.api.read.GnuCashGenerInvoice;
 import org.gnucash.api.read.GnuCashVendor;
-import org.gnucash.api.read.spec.hlp.SpecInvoiceCommon;
+import org.gnucash.api.read.spec.hlp.SpecInvoiceCommon_FP;
+import org.gnucash.api.read.spec.hlp.SpecInvoiceCommon_Rest;
+import org.gnucash.api.read.spec.hlp.SpecInvoiceCommon_Str;
 import org.gnucash.base.basetypes.simple.GCshVendID;
 import org.gnucash.base.basetypes.simple.spec.GCshVendBllEntrID;
 
@@ -24,7 +26,9 @@ import org.gnucash.base.basetypes.simple.spec.GCshVendBllEntrID;
  * @see GnuCashGenerInvoice
  */
 public interface GnuCashVendorBill extends GnuCashGenerInvoice,
-										   SpecInvoiceCommon
+										   SpecInvoiceCommon_FP,
+										   SpecInvoiceCommon_Str,
+                                           SpecInvoiceCommon_Rest
 {
 
     /**

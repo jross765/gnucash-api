@@ -10,7 +10,7 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  * @see GnuCashVendorBill
  * @see GnuCashJobInvoice
  */
-public interface SpecInvoiceCommon {
+public interface SpecInvoiceCommon_FP {
 
     public FixedPointNumber getAmountUnpaidWithTaxes();
 
@@ -21,23 +21,5 @@ public interface SpecInvoiceCommon {
     public FixedPointNumber getAmountWithTaxes();
     
     public FixedPointNumber getAmountWithoutTaxes();
-
-    // ----------------------------
-
-    public String getAmountUnpaidWithTaxesFormatted();
-
-    public String getAmountPaidWithTaxesFormatted();
-
-    public String getAmountPaidWithoutTaxesFormatted();
-
-    public String getAmountWithTaxesFormatted();
-
-    public String getAmountWithoutTaxesFormatted();
-
-    // ---------------------------------------------------------------
-
-    public boolean isFullyPaid();
-
-    public boolean isNotFullyPaid();
 
 }

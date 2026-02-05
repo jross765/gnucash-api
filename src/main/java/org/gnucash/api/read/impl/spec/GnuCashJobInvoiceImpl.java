@@ -3,6 +3,7 @@ package org.gnucash.api.read.impl.spec;
 import java.util.Collection;
 import java.util.HashSet;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.generated.GncGncInvoice;
 import org.gnucash.api.read.GnuCashCustomer;
 import org.gnucash.api.read.GnuCashFile;
@@ -23,7 +24,10 @@ import org.gnucash.api.read.spec.GnuCashJobInvoiceEntry;
 import org.gnucash.api.read.spec.GnuCashVendorJob;
 import org.gnucash.api.read.spec.WrongInvoiceTypeException;
 import org.gnucash.api.read.spec.WrongJobTypeException;
-import org.gnucash.api.read.spec.hlp.SpecInvoiceCommon;
+import org.gnucash.api.read.spec.hlp.SpecInvoiceCommon_BF;
+import org.gnucash.api.read.spec.hlp.SpecInvoiceCommon_FP;
+import org.gnucash.api.read.spec.hlp.SpecInvoiceCommon_Rest;
+import org.gnucash.api.read.spec.hlp.SpecInvoiceCommon_Str;
 import org.gnucash.base.basetypes.simple.GCshCustID;
 import org.gnucash.base.basetypes.simple.GCshGenerJobID;
 import org.gnucash.base.basetypes.simple.GCshID;
@@ -46,7 +50,10 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  */
 public class GnuCashJobInvoiceImpl extends GnuCashGenerInvoiceImpl
                                    implements GnuCashJobInvoice,
-                                              SpecInvoiceCommon
+                                              SpecInvoiceCommon_FP,
+                                              SpecInvoiceCommon_BF,
+                                              SpecInvoiceCommon_Str,
+                                              SpecInvoiceCommon_Rest
 {
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(GnuCashJobInvoiceImpl.class);
@@ -257,6 +264,35 @@ public class GnuCashJobInvoiceImpl extends GnuCashGenerInvoiceImpl
 		return getJobInvcAmountWithoutTaxes();
 	}
 
+	// ----------------------------
+
+	@Override
+	public BigFraction getAmountUnpaidWithTaxesRat() {
+		return getJobInvcAmountUnpaidWithTaxesRat();
+	}
+
+	@Override
+	public BigFraction getAmountPaidWithTaxesRat() {
+		return getJobInvcAmountPaidWithTaxesRat();
+	}
+
+	@Override
+	public BigFraction getAmountPaidWithoutTaxesRat() {
+		return getJobInvcAmountPaidWithoutTaxesRat();
+	}
+
+	@Override
+	public BigFraction getAmountWithTaxesRat() {
+		return getJobInvcAmountWithTaxesRat();
+	}
+
+	@Override
+	public BigFraction getAmountWithoutTaxesRat() {
+		return getJobInvcAmountWithoutTaxesRat();
+	}
+
+	// ----------------------------
+
 	@Override
 	public String getAmountUnpaidWithTaxesFormatted() {
 		return getJobInvcAmountUnpaidWithTaxesFormatted();
@@ -327,6 +363,8 @@ public class GnuCashJobInvoiceImpl extends GnuCashGenerInvoiceImpl
     throw new WrongInvoiceTypeException();
   }
 
+	// ----------------------------
+
   @Override
   public String getCustInvcAmountUnpaidWithTaxesFormatted() 
   {
@@ -389,6 +427,8 @@ public class GnuCashJobInvoiceImpl extends GnuCashGenerInvoiceImpl
     throw new WrongInvoiceTypeException();
   }
 
+	// ----------------------------
+
   @Override
   public String getVendBllAmountUnpaidWithTaxesFormatted() 
   {
@@ -450,6 +490,8 @@ public class GnuCashJobInvoiceImpl extends GnuCashGenerInvoiceImpl
   {
     throw new WrongInvoiceTypeException();
   }
+
+  // ----------------------------
 
   @Override
   public String getEmplVchAmountUnpaidWithTaxesFormatted() 
