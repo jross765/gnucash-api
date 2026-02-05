@@ -20,6 +20,10 @@ import org.gnucash.api.read.GnuCashTransaction;
 import org.gnucash.api.read.GnuCashTransactionSplit;
 import org.gnucash.api.read.aux.GCshOwner;
 import org.gnucash.api.read.impl.aux.GCshTaxedSumImpl;
+import org.gnucash.api.read.impl.hlp.GenerInvc_CustInvc_FP;
+import org.gnucash.api.read.impl.hlp.GenerInvc_EmplVch_FP;
+import org.gnucash.api.read.impl.hlp.GenerInvc_JobInvc_FP;
+import org.gnucash.api.read.impl.hlp.GenerInvc_VendBll_FP;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
 import org.gnucash.api.read.impl.spec.GnuCashJobInvoiceImpl;
@@ -428,11 +432,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 	
 	private FixedPointNumber getCustInvcAmountUnpaidWithTaxes_int() {
-		if ( getType() != TYPE_CUSTOMER && 
-			 getType() != TYPE_JOB )
-			throw new WrongInvoiceTypeException();
-
-		return getCustInvcAmountWithTaxes_int().copy().subtract(getCustInvcAmountPaidWithTaxes_int());
+		return GenerInvc_CustInvc_FP.getCustInvcAmountUnpaidWithTaxes(this);
 	}
 
 	/**
@@ -444,22 +444,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 	
 	private FixedPointNumber getCustInvcAmountPaidWithTaxes_int() {
-		if ( getType() != TYPE_CUSTOMER && 
-			 getType() != TYPE_JOB )
-			throw new WrongInvoiceTypeException();
-
-		FixedPointNumber takenFromReceivableAccount = new FixedPointNumber();
-		for ( GnuCashTransaction trx : getPayingTransactions() ) {
-			for ( GnuCashTransactionSplit split : trx.getSplits() ) {
-				if ( split.getAccount().getType() == GnuCashAccount.Type.RECEIVABLE ) {
-					if ( !split.getValue().isPositive() ) {
-						takenFromReceivableAccount.subtract(split.getValue());
-					}
-				}
-			} // split
-		} // trx
-
-		return takenFromReceivableAccount;
+		return GenerInvc_CustInvc_FP.getCustInvcAmountPaidWithTaxes(this);
 	}
 
 	@Override
@@ -468,19 +453,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 	
 	private FixedPointNumber getCustInvcAmountPaidWithoutTaxes_int() {
-		if ( getType() != TYPE_CUSTOMER && 
-			 getType() != TYPE_JOB )
-			throw new WrongInvoiceTypeException();
-
-		FixedPointNumber retval = new FixedPointNumber();
-
-		for ( GnuCashGenerInvoiceEntry entry : getGenerEntries() ) {
-			if ( entry.getType() == getType() ) {
-				retval.add(entry.getCustInvcSumExclTaxes());
-			}
-		}
-
-		return retval;
+		return GenerInvc_CustInvc_FP.getCustInvcAmountPaidWithoutTaxes(this);
 	}
 
 	/**
@@ -492,26 +465,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 	
 	private FixedPointNumber getCustInvcAmountWithTaxes_int() {
-		if ( getType() != TYPE_CUSTOMER && 
-			 getType() != TYPE_JOB )
-			throw new WrongInvoiceTypeException();
-
-		FixedPointNumber retval = new FixedPointNumber();
-
-		// Note: On the one hand, good practice and experience mandates,
-		// in order to be calculating correctly, that the sums be computed 
-		// without taxes first (grouped by tax%) and then the sums be 
-		// multiplied by the resp. tax% values. 
-		// On the other hand: We are calculating with BigDecimal, i.e.
-		// with arbitrary precision, so it does not really matter.
-
-		for ( GnuCashGenerInvoiceEntry entry : getGenerEntries() ) {
-			if ( entry.getType() == getType() ) {
-				retval.add(entry.getCustInvcSumInclTaxes());
-			}
-		}
-
-		return retval;
+		return GenerInvc_CustInvc_FP.getCustInvcAmountWithTaxes(this);
 	}
 
 	/**
@@ -523,19 +477,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 	
 	private FixedPointNumber getCustInvcAmountWithoutTaxes_int() {
-		if ( getType() != TYPE_CUSTOMER && 
-			 getType() != TYPE_JOB )
-			throw new WrongInvoiceTypeException();
-
-		FixedPointNumber retval = new FixedPointNumber();
-
-		for ( GnuCashGenerInvoiceEntry entry : getGenerEntries() ) {
-			if ( entry.getType() == getType() ) {
-				retval.add(entry.getCustInvcSumExclTaxes());
-			}
-		}
-
-		return retval;
+		return GenerInvc_CustInvc_FP.getCustInvcAmountWithoutTaxes(this);
 	}
 
 	// ------------------------------
@@ -611,12 +553,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 	
 	private FixedPointNumber getVendBllAmountUnpaidWithTaxes_int() {
-
-		// System.err.println("debug: GnuCashInvoiceImpl.getAmountUnpaid(): "
-		// + "getBillAmountUnpaid()="+getBillAmountWithoutTaxes()+"
-		// getBillAmountPaidWithTaxes()="+getAmountPaidWithTaxes() );
-
-		return getVendBllAmountWithTaxes_int().copy().subtract(getVendBllAmountPaidWithTaxes_int());
+		return GenerInvc_VendBll_FP.getVendBllAmountUnpaidWithTaxes(this);
 	}
 
 	/**
@@ -628,20 +565,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 	
 	private FixedPointNumber getVendBllAmountPaidWithTaxes_int() {
-		FixedPointNumber takenFromPayableAccount = new FixedPointNumber();
-		for ( GnuCashTransaction trx : getPayingTransactions() ) {
-			for ( GnuCashTransactionSplit split : trx.getSplits() ) {
-				if ( split.getAccount().getType() == GnuCashAccount.Type.PAYABLE ) {
-					if ( split.getValue().isPositive() ) {
-						takenFromPayableAccount.add(split.getValue());
-					}
-				}
-			} // split
-		} // trx
-
-		// System.err.println("getBillAmountPaidWithTaxes="+takenFromPayableAccount.doubleValue());
-
-		return takenFromPayableAccount;
+		return GenerInvc_VendBll_FP.getVendBllAmountPaidWithTaxes(this);
 	}
 
 	@Override
@@ -650,15 +574,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 	
 	private FixedPointNumber getVendBllAmountPaidWithoutTaxes_int() {
-		FixedPointNumber retval = new FixedPointNumber();
-
-		for ( GnuCashGenerInvoiceEntry entry : getGenerEntries() ) {
-			if ( entry.getType() == getType() ) {
-				retval.add(entry.getVendBllSumExclTaxes());
-			}
-		}
-
-		return retval;
+		return GenerInvc_VendBll_FP.getVendBllAmountPaidWithoutTaxes(this);
 	}
 
 	/**
@@ -670,22 +586,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 	
 	private FixedPointNumber getVendBllAmountWithTaxes_int() {
-		FixedPointNumber retval = new FixedPointNumber();
-
-		// Note: On the one hand, good practice and experience mandates,
-		// in order to be calculating correctly, that the sums be computed 
-		// without taxes first (grouped by tax%) and then the sums be 
-		// multiplied by the resp. tax% values. 
-		// On the other hand: We are calculating with BigDecimal, i.e.
-		// with arbitrary precision, so it does not really matter.
-
-		for ( GnuCashGenerInvoiceEntry entry : getGenerEntries() ) {
-			if ( entry.getType() == getType() ) {
-				retval.add(entry.getVendBllSumInclTaxes());
-			}
-		}
-
-		return retval;
+		return GenerInvc_VendBll_FP.getVendBllAmountWithTaxes(this);
 	}
 
 	/**
@@ -697,15 +598,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 	
 	private FixedPointNumber getVendBllAmountWithoutTaxes_int() {
-		FixedPointNumber retval = new FixedPointNumber();
-
-		for ( GnuCashGenerInvoiceEntry entry : getGenerEntries() ) {
-			if ( entry.getType() == getType() ) {
-				retval.add(entry.getVendBllSumExclTaxes());
-			}
-		}
-
-		return retval;
+		return GenerInvc_VendBll_FP.getVendBllAmountWithoutTaxes(this);
 	}
 
 	// ------------------------------
@@ -777,11 +670,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 */
 	@Override
 	public FixedPointNumber getEmplVchAmountUnpaidWithTaxes() {
-		// System.err.println("debug: GnuCashInvoiceImpl.getAmountUnpaid(): "
-		// + "getVoucherAmountUnpaid()="+getVoucherAmountWithoutTaxes()+"
-		// getVoucherAmountPaidWithTaxes()="+getAmountPaidWithTaxes() );
-
-		return getEmplVchAmountWithTaxes().copy().subtract(getEmplVchAmountPaidWithTaxes());
+		return GenerInvc_EmplVch_FP.getEmplVchAmountUnpaidWithTaxes(this);
 	}
 
 	/**
@@ -789,33 +678,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 */
 	@Override
 	public FixedPointNumber getEmplVchAmountPaidWithTaxes() {
-		FixedPointNumber takenFromPayableAccount = new FixedPointNumber();
-		for ( GnuCashTransaction trx : getPayingTransactions() ) {
-			for ( GnuCashTransactionSplit split : trx.getSplits() ) {
-				if ( split.getAccount().getType() == GnuCashAccount.Type.PAYABLE ) {
-					if ( split.getValue().isPositive() ) {
-						takenFromPayableAccount.add(split.getValue());
-					}
-				}
-			} // split
-		} // trx
-
-		// System.err.println("getVoucherAmountPaidWithTaxes="+takenFromPayableAccount.doubleValue());
-
-		return takenFromPayableAccount;
+		return GenerInvc_EmplVch_FP.getEmplVchAmountPaidWithTaxes(this);
 	}
 
 	@Override
 	public FixedPointNumber getEmplVchAmountPaidWithoutTaxes() {
-		FixedPointNumber retval = new FixedPointNumber();
-
-		for ( GnuCashGenerInvoiceEntry entry : getGenerEntries() ) {
-			if ( entry.getType() == getType() ) {
-				retval.add(entry.getEmplVchSumExclTaxes());
-			}
-		}
-
-		return retval;
+		return GenerInvc_EmplVch_FP.getEmplVchAmountPaidWithoutTaxes(this);
 	}
 
 	/**
@@ -823,22 +691,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 */
 	@Override
 	public FixedPointNumber getEmplVchAmountWithTaxes() {
-		FixedPointNumber retval = new FixedPointNumber();
-
-		// Note: On the one hand, good practice and experience mandates,
-		// in order to be calculating correctly, that the sums be computed 
-		// without taxes first (grouped by tax%) and then the sums be 
-		// multiplied by the resp. tax% values. 
-		// On the other hand: We are calculating with BigDecimal, i.e.
-		// with arbitrary precision, so it does not really matter.
-
-		for ( GnuCashGenerInvoiceEntry entry : getGenerEntries() ) {
-			if ( entry.getType() == getType() ) {
-				retval.add(entry.getEmplVchSumInclTaxes());
-			}
-		}
-
-		return retval;
+		return GenerInvc_EmplVch_FP.getEmplVchAmountWithTaxes(this);
 	}
 
 	/**
@@ -846,15 +699,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 */
 	@Override
 	public FixedPointNumber getEmplVchAmountWithoutTaxes() {
-		FixedPointNumber retval = new FixedPointNumber();
-
-		for ( GnuCashGenerInvoiceEntry entry : getGenerEntries() ) {
-			if ( entry.getType() == getType() ) {
-				retval.add(entry.getEmplVchSumExclTaxes());
-			}
-		}
-
-		return retval;
+		return GenerInvc_EmplVch_FP.getEmplVchAmountWithoutTaxes(this);
 	}
 
 	// ------------------------------
@@ -906,16 +751,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 */
 	@Override
 	public FixedPointNumber getJobInvcAmountUnpaidWithTaxes() {
-		if ( getType() != TYPE_JOB )
-			throw new WrongInvoiceTypeException();
-
-		GnuCashJobInvoice jobInvc = new GnuCashJobInvoiceImpl(this);
-		if ( jobInvc.getJobType() == GnuCashGenerJob.TYPE_CUSTOMER )
-			return getCustInvcAmountUnpaidWithTaxes_int();
-		else if ( jobInvc.getJobType() == GnuCashGenerJob.TYPE_VENDOR )
-			return getVendBllAmountUnpaidWithTaxes_int();
-
-		return null; // Compiler happy
+		return GenerInvc_JobInvc_FP.getJobInvcAmountUnpaidWithTaxes(this);
 	}
 
 	/**
@@ -923,16 +759,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 */
 	@Override
 	public FixedPointNumber getJobInvcAmountPaidWithTaxes() {
-		if ( getType() != TYPE_JOB )
-			throw new WrongInvoiceTypeException();
-
-		GnuCashJobInvoice jobInvc = new GnuCashJobInvoiceImpl(this);
-		if ( jobInvc.getJobType() == GnuCashGenerJob.TYPE_CUSTOMER )
-			return getCustInvcAmountPaidWithTaxes_int();
-		else if ( jobInvc.getJobType() == GnuCashGenerJob.TYPE_VENDOR )
-			return getVendBllAmountPaidWithTaxes_int();
-
-		return null; // Compiler happy
+		return GenerInvc_JobInvc_FP.getJobInvcAmountPaidWithTaxes(this);
 	}
 
 	/**
@@ -940,16 +767,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 */
 	@Override
 	public FixedPointNumber getJobInvcAmountPaidWithoutTaxes() {
-		if ( getType() != TYPE_JOB )
-			throw new WrongInvoiceTypeException();
-
-		GnuCashJobInvoice jobInvc = new GnuCashJobInvoiceImpl(this);
-		if ( jobInvc.getJobType() == GnuCashGenerJob.TYPE_CUSTOMER )
-			return getCustInvcAmountPaidWithoutTaxes_int();
-		else if ( jobInvc.getJobType() == GnuCashGenerJob.TYPE_VENDOR )
-			return getVendBllAmountPaidWithoutTaxes_int();
-
-		return null; // Compiler happy
+		return GenerInvc_JobInvc_FP.getJobInvcAmountPaidWithoutTaxes(this);
 	}
 
 	/**
@@ -957,16 +775,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 */
 	@Override
 	public FixedPointNumber getJobInvcAmountWithTaxes() {
-		if ( getType() != TYPE_JOB )
-			throw new WrongInvoiceTypeException();
-
-		GnuCashJobInvoice jobInvc = new GnuCashJobInvoiceImpl(this);
-		if ( jobInvc.getJobType() == GnuCashGenerJob.TYPE_CUSTOMER )
-			return getCustInvcAmountWithTaxes_int();
-		else if ( jobInvc.getJobType() == GnuCashGenerJob.TYPE_VENDOR )
-			return getVendBllAmountWithTaxes_int();
-
-		return null; // Compiler happy
+		return GenerInvc_JobInvc_FP.getJobInvcAmountWithTaxes(this);
 	}
 
 	/**
@@ -974,16 +783,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 */
 	@Override
 	public FixedPointNumber getJobInvcAmountWithoutTaxes() {
-		if ( getType() != TYPE_JOB )
-			throw new WrongInvoiceTypeException();
-
-		GnuCashJobInvoice jobInvc = new GnuCashJobInvoiceImpl(this);
-		if ( jobInvc.getJobType() == GnuCashGenerJob.TYPE_CUSTOMER )
-			return getCustInvcAmountWithoutTaxes_int();
-		else if ( jobInvc.getJobType() == GnuCashGenerJob.TYPE_VENDOR )
-			return getVendBllAmountWithoutTaxes_int();
-
-		return null; // Compiler happy
+		return GenerInvc_JobInvc_FP.getJobInvcAmountWithoutTaxes(this);
 	}
 
 // ----------------------------
