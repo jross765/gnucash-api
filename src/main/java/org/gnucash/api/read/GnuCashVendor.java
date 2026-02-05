@@ -5,6 +5,7 @@ import java.util.List;
 import org.gnucash.api.read.aux.GCshBillTerms;
 import org.gnucash.api.read.aux.GCshTaxTable;
 import org.gnucash.api.read.hlp.GnuCashObject;
+import org.gnucash.api.read.hlp.GnuCashVendor_Invc_BF;
 import org.gnucash.api.read.hlp.GnuCashVendor_Invc_FP;
 import org.gnucash.api.read.hlp.GnuCashVendor_Invc_Str;
 import org.gnucash.api.read.hlp.HasAddress;
@@ -30,6 +31,7 @@ import org.gnucash.base.basetypes.simple.aux.GCshTaxTabID;
  */
 public interface GnuCashVendor extends GnuCashObject,
                                        GnuCashVendor_Invc_FP,
+                                       GnuCashVendor_Invc_BF,
                                        GnuCashVendor_Invc_Str,
 									   HasUserDefinedAttributes,
 									   HasAddress

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.generated.GncGncVendor;
 import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.GnuCashGenerInvoice;
@@ -16,6 +17,8 @@ import org.gnucash.api.read.aux.GCshTaxTable;
 import org.gnucash.api.read.impl.aux.GCshAddressImpl;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
+import org.gnucash.api.read.impl.hlp.Vendor_ExpOuts_BF;
+import org.gnucash.api.read.impl.hlp.Vendor_ExpOuts_FP;
 import org.gnucash.api.read.impl.spec.GnuCashVendorJobImpl;
 import org.gnucash.api.read.spec.GnuCashJobInvoice;
 import org.gnucash.api.read.spec.GnuCashVendorBill;
@@ -205,13 +208,7 @@ public class GnuCashVendorImpl extends GnuCashObjectImpl
      */
     @Override
 	public FixedPointNumber getExpensesGenerated(GnuCashGenerInvoice.ReadVariant readVar) {
-		if ( readVar == GnuCashGenerInvoice.ReadVariant.DIRECT ) {
-			return getExpensesGenerated_direct();
-		} else if ( readVar == GnuCashGenerInvoice.ReadVariant.VIA_JOB ) {
-			return getExpensesGenerated_viaAllJobs();
-		}
-
-		return null; // Compiler happy
+		return Vendor_ExpOuts_FP.getExpensesGenerated(this, readVar);
     }
 
     /**
@@ -219,19 +216,7 @@ public class GnuCashVendorImpl extends GnuCashObjectImpl
      */
     @Override
 	public FixedPointNumber getExpensesGenerated_direct() {
-		FixedPointNumber retval = new FixedPointNumber();
-
-		for ( GnuCashVendorBill bllSpec : getPaidBills_direct() ) {
-//		    if ( invcGen.getType().equals(GnuCashGenerInvoice.TYPE_VENDOR) ) {
-//		      GnuCashVendorBill bllSpec = new GnuCashVendorBillImpl(invcGen); 
-			GnuCashVendor vend = bllSpec.getVendor();
-			if ( vend.getID().equals(this.getID()) ) {
-				retval.add(bllSpec.getAmountWithoutTaxes());
-			}
-//            } // if invc type
-		} // for
-
-		return retval;
+		return Vendor_ExpOuts_FP.getExpensesGenerated_direct(this);
     }
 
     /**
@@ -239,20 +224,36 @@ public class GnuCashVendorImpl extends GnuCashObjectImpl
      */
     @Override
 	public FixedPointNumber getExpensesGenerated_viaAllJobs() {
-		FixedPointNumber retval = new FixedPointNumber();
-
-		for ( GnuCashJobInvoice bllSpec : getPaidBills_viaAllJobs() ) {
-//		    if ( invcGen.getType().equals(GnuCashGenerInvoice.TYPE_VENDOR) ) {
-//		      GnuCashVendorBill bllSpec = new GnuCashVendorBillImpl(invcGen); 
-			GnuCashVendor vend = bllSpec.getVendor();
-			if ( vend.getID().equals(this.getID()) ) {
-				retval.add(bllSpec.getAmountWithoutTaxes());
-			}
-//            } // if invc type
-		} // for
-
-		return retval;
+		return Vendor_ExpOuts_FP.getExpensesGenerated_viaAllJobs(this);
     }
+
+    // -------------------------------------
+
+    /**
+     * @return the net sum of payments for invoices to this client
+     */
+    @Override
+	public BigFraction getExpensesGeneratedRat(GnuCashGenerInvoice.ReadVariant readVar) {
+		return Vendor_ExpOuts_BF.getExpensesGenerated(this, readVar);
+    }
+
+    /**
+     * @return the net sum of payments for invoices to this client
+     */
+    @Override
+	public BigFraction getExpensesGeneratedRat_direct() {
+		return Vendor_ExpOuts_BF.getExpensesGenerated_direct(this);
+    }
+
+    /**
+     * @return the net sum of payments for invoices to this client
+     */
+    @Override
+	public BigFraction getExpensesGeneratedRat_viaAllJobs() {
+		return Vendor_ExpOuts_BF.getExpensesGenerated_viaAllJobs(this);
+    }
+
+    // -------------------------------------
 
     /**
      * @return formatted according to the current locale's currency-format
@@ -285,13 +286,7 @@ public class GnuCashVendorImpl extends GnuCashObjectImpl
      */
     @Override
 	public FixedPointNumber getOutstandingValue(GnuCashGenerInvoice.ReadVariant readVar) {
-		if ( readVar == GnuCashGenerInvoice.ReadVariant.DIRECT ) {
-			return getOutstandingValue_direct();
-		} else if ( readVar == GnuCashGenerInvoice.ReadVariant.VIA_JOB ) {
-			return getOutstandingValue_viaAllJobs();
-		}
-
-		return null; // Compiler happy
+		return Vendor_ExpOuts_FP.getOutstandingValue(this, readVar);
     }
 
     /**
@@ -301,19 +296,7 @@ public class GnuCashVendorImpl extends GnuCashObjectImpl
      */
     @Override
 	public FixedPointNumber getOutstandingValue_direct() {
-		FixedPointNumber retval = new FixedPointNumber();
-
-		for ( GnuCashVendorBill bllSpec : getUnpaidBills_direct() ) {
-//            if ( invcGen.getType().equals(GnuCashGenerInvoice.TYPE_VENDOR) ) {
-//              GnuCashVendorBill bllSpec = new GnuCashVendorBillImpl(invcGen); 
-			GnuCashVendor vend = bllSpec.getVendor();
-			if ( vend.getID().equals(this.getID()) ) {
-				retval.add(bllSpec.getAmountUnpaidWithTaxes());
-			}
-//            } // if invc type
-		} // for
-
-		return retval;
+		return Vendor_ExpOuts_FP.getOutstandingValue_direct(this);
     }
 
     /**
@@ -323,20 +306,43 @@ public class GnuCashVendorImpl extends GnuCashObjectImpl
      */
     @Override
 	public FixedPointNumber getOutstandingValue_viaAllJobs() {
-		FixedPointNumber retval = new FixedPointNumber();
-
-		for ( GnuCashJobInvoice bllSpec : getUnpaidBills_viaAllJobs() ) {
-//            if ( invcGen.getType().equals(GnuCashGenerInvoice.TYPE_VENDOR) ) {
-//              GnuCashVendorBill bllSpec = new GnuCashVendorBillImpl(invcGen); 
-			GnuCashVendor vend = bllSpec.getVendor();
-			if ( vend.getID().equals(this.getID()) ) {
-				retval.add(bllSpec.getAmountUnpaidWithTaxes());
-			}
-//            } // if invc type
-		} // for
-
-		return retval;
+		return Vendor_ExpOuts_FP.getOutstandingValue_viaAllJobs(this);
     }
+
+    // -------------------------------------
+
+    /**
+     * @return the sum of left to pay Unpaid invoiced
+     * 
+     * @see #getOutstandingValue_direct()
+     * @see #getOutstandingValue_viaAllJobs()
+     */
+    @Override
+	public BigFraction getOutstandingValueRat(GnuCashGenerInvoice.ReadVariant readVar) {
+		return Vendor_ExpOuts_BF.getOutstandingValue(this, readVar);
+    }
+
+    /**
+     * @return the sum of left to pay Unpaid invoiced
+     *  
+     * @see #getOutstandingValue_viaAllJobs()
+     */
+    @Override
+	public BigFraction getOutstandingValueRat_direct() {
+		return Vendor_ExpOuts_BF.getOutstandingValue_direct(this);
+    }
+
+    /**
+     * @return the sum of left to pay Unpaid invoiced
+     *  
+     * @see #getOutstandingValue_direct()
+     */
+    @Override
+	public BigFraction getOutstandingValueRat_viaAllJobs() {
+		return Vendor_ExpOuts_BF.getOutstandingValue_viaAllJobs(this);
+    }
+
+    // -------------------------------------
 
     /**
      * @return Formatted according to the current locale's currency-format
