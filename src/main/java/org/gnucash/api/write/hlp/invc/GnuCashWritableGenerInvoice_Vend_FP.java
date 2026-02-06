@@ -1,14 +1,14 @@
-package org.gnucash.api.write.hlp;
+package org.gnucash.api.write.hlp.invc;
 
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.TaxTableNotFoundException;
 import org.gnucash.api.read.aux.GCshTaxTable;
-import org.gnucash.api.write.spec.GnuCashWritableEmployeeVoucherEntry;
+import org.gnucash.api.write.spec.GnuCashWritableVendorBillEntry;
 
 import xyz.schnorxoborx.base.beanbase.IllegalTransactionSplitActionException;
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
-public interface GnuCashWritableGenerInvoice_Empl {
+public interface GnuCashWritableGenerInvoice_Vend_FP {
 
     /**
      * create and add a new entry.<br/>
@@ -21,7 +21,7 @@ public interface GnuCashWritableGenerInvoice_Empl {
      * @throws TaxTableNotFoundException
      * @throws IllegalTransactionSplitActionException
      */
-    GnuCashWritableEmployeeVoucherEntry createEmplVchEntry(
+    GnuCashWritableVendorBillEntry createVendBllEntry(
     		GnuCashAccount acct,
     		FixedPointNumber singleUnitPrice,
     		FixedPointNumber quantity)
@@ -39,7 +39,7 @@ public interface GnuCashWritableGenerInvoice_Empl {
      * @throws TaxTableNotFoundException
      * @throws IllegalTransactionSplitActionException
      */
-    GnuCashWritableEmployeeVoucherEntry createEmplVchEntry(
+    GnuCashWritableVendorBillEntry createVendBllEntry(
     		GnuCashAccount acct,
     		FixedPointNumber singleUnitPrice,
     		FixedPointNumber quantity,
@@ -57,7 +57,7 @@ public interface GnuCashWritableGenerInvoice_Empl {
      * @throws TaxTableNotFoundException
      * @throws IllegalTransactionSplitActionException
      */
-    GnuCashWritableEmployeeVoucherEntry createEmplVchEntry(
+    GnuCashWritableVendorBillEntry createVendBllEntry(
     		GnuCashAccount acct,
     		FixedPointNumber singleUnitPrice,
     		FixedPointNumber quantity,

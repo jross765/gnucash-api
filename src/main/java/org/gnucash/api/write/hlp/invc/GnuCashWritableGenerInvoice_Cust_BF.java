@@ -1,14 +1,14 @@
-package org.gnucash.api.write.hlp;
+package org.gnucash.api.write.hlp.invc;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.TaxTableNotFoundException;
 import org.gnucash.api.read.aux.GCshTaxTable;
 import org.gnucash.api.write.spec.GnuCashWritableCustomerInvoiceEntry;
 
 import xyz.schnorxoborx.base.beanbase.IllegalTransactionSplitActionException;
-import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
-public interface GnuCashWritableGenerInvoice_Cust {
+public interface GnuCashWritableGenerInvoice_Cust_BF {
 
     /**
      * create and add a new entry.<br/>
@@ -21,10 +21,10 @@ public interface GnuCashWritableGenerInvoice_Cust {
      * @throws TaxTableNotFoundException
      * @throws IllegalTransactionSplitActionException
      */
-    GnuCashWritableCustomerInvoiceEntry createCustInvcEntry(
+    GnuCashWritableCustomerInvoiceEntry createCustInvcEntryRat(
     		GnuCashAccount acct,
-    		FixedPointNumber singleUnitPrice, 
-    		FixedPointNumber quantity)
+    		BigFraction singleUnitPrice, 
+    		BigFraction quantity)
 	    throws TaxTableNotFoundException, IllegalTransactionSplitActionException;
 
     /**
@@ -39,10 +39,10 @@ public interface GnuCashWritableGenerInvoice_Cust {
      * @throws TaxTableNotFoundException
      * @throws IllegalTransactionSplitActionException
      */
-    GnuCashWritableCustomerInvoiceEntry createCustInvcEntry(
+    GnuCashWritableCustomerInvoiceEntry createCustInvcEntryRat(
     		GnuCashAccount acct,
-    		FixedPointNumber singleUnitPrice, 
-    		FixedPointNumber quantity, 
+    		BigFraction singleUnitPrice, 
+    		BigFraction quantity, 
     		String taxTabName)
 	    throws TaxTableNotFoundException, IllegalTransactionSplitActionException;
 
@@ -57,10 +57,10 @@ public interface GnuCashWritableGenerInvoice_Cust {
      * @throws TaxTableNotFoundException
      * @throws IllegalTransactionSplitActionException
      */
-    GnuCashWritableCustomerInvoiceEntry createCustInvcEntry(
+    GnuCashWritableCustomerInvoiceEntry createCustInvcEntryRat(
     		GnuCashAccount acct,
-    		FixedPointNumber singleUnitPrice,
-    		FixedPointNumber quantity,
+    		BigFraction singleUnitPrice,
+    		BigFraction quantity,
     		GCshTaxTable taxTab)
 	    throws TaxTableNotFoundException, IllegalTransactionSplitActionException,
 	    NumberFormatException;

@@ -1,4 +1,4 @@
-package org.gnucash.api.write.hlp;
+package org.gnucash.api.write.hlp.invc;
 
 import org.gnucash.api.read.TaxTableNotFoundException;
 import org.gnucash.api.read.aux.GCshTaxTable;

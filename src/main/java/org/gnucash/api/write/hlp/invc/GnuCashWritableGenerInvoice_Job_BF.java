@@ -1,5 +1,6 @@
-package org.gnucash.api.write.hlp;
+package org.gnucash.api.write.hlp.invc;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.TaxTableNotFoundException;
 import org.gnucash.api.read.UnknownInvoiceTypeException;
@@ -7,9 +8,8 @@ import org.gnucash.api.read.aux.GCshTaxTable;
 import org.gnucash.api.write.spec.GnuCashWritableJobInvoiceEntry;
 
 import xyz.schnorxoborx.base.beanbase.IllegalTransactionSplitActionException;
-import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
-public interface GnuCashWritableGenerInvoice_Job {
+public interface GnuCashWritableGenerInvoice_Job_BF {
 
     /**
      * create and add a new entry.<br/>
@@ -23,10 +23,10 @@ public interface GnuCashWritableGenerInvoice_Job {
      * @throws UnknownInvoiceTypeException
      * @throws IllegalTransactionSplitActionException
      */
-    GnuCashWritableJobInvoiceEntry createJobInvcEntry(
+    GnuCashWritableJobInvoiceEntry createJobInvcEntryRat(
     		GnuCashAccount acct,
-    		FixedPointNumber singleUnitPrice,
-    		FixedPointNumber quantity) throws TaxTableNotFoundException,
+    		BigFraction singleUnitPrice,
+    		BigFraction quantity) throws TaxTableNotFoundException,
 	    UnknownInvoiceTypeException, IllegalTransactionSplitActionException;
 
     /**
@@ -42,10 +42,10 @@ public interface GnuCashWritableGenerInvoice_Job {
      * @throws UnknownInvoiceTypeException
      * @throws IllegalTransactionSplitActionException
      */
-    GnuCashWritableJobInvoiceEntry createJobInvcEntry(
+    GnuCashWritableJobInvoiceEntry createJobInvcEntryRat(
     		GnuCashAccount acct,
-    		FixedPointNumber singleUnitPrice,
-    		FixedPointNumber quantity,
+    		BigFraction singleUnitPrice,
+    		BigFraction quantity,
 			String taxTabName) throws  TaxTableNotFoundException, 
     	UnknownInvoiceTypeException, IllegalTransactionSplitActionException;
 
@@ -61,10 +61,10 @@ public interface GnuCashWritableGenerInvoice_Job {
      * @throws UnknownInvoiceTypeException
      * @throws IllegalTransactionSplitActionException
      */
-    GnuCashWritableJobInvoiceEntry createJobInvcEntry(
+    GnuCashWritableJobInvoiceEntry createJobInvcEntryRat(
     		GnuCashAccount acct,
-    		FixedPointNumber singleUnitPrice,
-    		FixedPointNumber quantity,
+    		BigFraction singleUnitPrice,
+    		BigFraction quantity,
     		GCshTaxTable taxTab) throws  TaxTableNotFoundException, 
     	UnknownInvoiceTypeException, IllegalTransactionSplitActionException;
 }

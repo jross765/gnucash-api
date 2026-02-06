@@ -8,13 +8,13 @@ import org.gnucash.api.read.GnuCashGenerInvoice;
 import org.gnucash.api.read.GnuCashTransaction;
 import org.gnucash.api.read.TaxTableNotFoundException;
 import org.gnucash.api.read.aux.GCshOwner;
-import org.gnucash.api.write.hlp.GnuCashWritableGenerInvoice_Cust;
-import org.gnucash.api.write.hlp.GnuCashWritableGenerInvoice_Empl;
-import org.gnucash.api.write.hlp.GnuCashWritableGenerInvoice_Job;
-import org.gnucash.api.write.hlp.GnuCashWritableGenerInvoice_Vend;
 import org.gnucash.api.write.hlp.GnuCashWritableObject;
 import org.gnucash.api.write.hlp.HasWritableAttachment;
 import org.gnucash.api.write.hlp.HasWritableUserDefinedAttributes;
+import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoice_Cust_FP;
+import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoice_Empl_FP;
+import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoice_Job_FP;
+import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoice_Vend_FP;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcEntrID;
 import org.gnucash.base.basetypes.simple.GCshID;
 
@@ -30,10 +30,10 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  * @see GnuCashGenerInvoice
  */
 public interface GnuCashWritableGenerInvoice extends GnuCashGenerInvoice,
-                                                     GnuCashWritableGenerInvoice_Cust,
-                                                     GnuCashWritableGenerInvoice_Vend,
-                                                     GnuCashWritableGenerInvoice_Empl,
-                                                     GnuCashWritableGenerInvoice_Job,
+                                                     GnuCashWritableGenerInvoice_Cust_FP,
+                                                     GnuCashWritableGenerInvoice_Vend_FP,
+                                                     GnuCashWritableGenerInvoice_Empl_FP,
+                                                     GnuCashWritableGenerInvoice_Job_FP,
                                                      GnuCashWritableObject,
                                                      HasWritableAttachment,
                                                      HasWritableUserDefinedAttributes
