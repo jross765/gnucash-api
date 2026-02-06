@@ -11,9 +11,13 @@ import org.gnucash.api.read.aux.GCshOwner;
 import org.gnucash.api.write.hlp.GnuCashWritableObject;
 import org.gnucash.api.write.hlp.HasWritableAttachment;
 import org.gnucash.api.write.hlp.HasWritableUserDefinedAttributes;
+import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoice_Cust_BF;
 import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoice_Cust_FP;
+import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoice_Empl_BF;
 import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoice_Empl_FP;
+import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoice_Job_BF;
 import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoice_Job_FP;
+import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoice_Vend_BF;
 import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoice_Vend_FP;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcEntrID;
 import org.gnucash.base.basetypes.simple.GCshID;
@@ -31,9 +35,13 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  */
 public interface GnuCashWritableGenerInvoice extends GnuCashGenerInvoice,
                                                      GnuCashWritableGenerInvoice_Cust_FP,
+                                                     GnuCashWritableGenerInvoice_Cust_BF,
                                                      GnuCashWritableGenerInvoice_Vend_FP,
+                                                     GnuCashWritableGenerInvoice_Vend_BF,
                                                      GnuCashWritableGenerInvoice_Empl_FP,
+                                                     GnuCashWritableGenerInvoice_Empl_BF,
                                                      GnuCashWritableGenerInvoice_Job_FP,
+                                                     GnuCashWritableGenerInvoice_Job_BF,
                                                      GnuCashWritableObject,
                                                      HasWritableAttachment,
                                                      HasWritableUserDefinedAttributes

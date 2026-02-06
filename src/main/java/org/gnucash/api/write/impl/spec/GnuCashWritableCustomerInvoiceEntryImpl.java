@@ -56,18 +56,32 @@ public class GnuCashWritableCustomerInvoiceEntryImpl extends GnuCashWritableGene
 	 * fallback to the first tax table found assigned)
 	 *
 	 * @param invc     the invoice to add this split to
-	 * @param account  the income-account the money comes from
-	 * @param quantity see ${@link GnuCashGenerInvoiceEntry#getQuantity()}
-	 * @param price    see ${@link GnuCashGenerInvoiceEntry#getCustInvcPrice()}}
+	 * @param acct  the income-account the money comes from
+	 * @param qty see ${@link GnuCashGenerInvoiceEntry#getQuantity()}
+	 * @param prc    see ${@link GnuCashGenerInvoiceEntry#getCustInvcPrice()}}
 	 * @throws TaxTableNotFoundException
 	 */
 	public GnuCashWritableCustomerInvoiceEntryImpl(
 			final GnuCashWritableCustomerInvoiceImpl invc,
-			final GnuCashAccount account, 
-			final FixedPointNumber quantity, 
-			final FixedPointNumber price)
+			final GnuCashAccount acct, 
+			final FixedPointNumber qty, 
+			final FixedPointNumber prc)
 			throws TaxTableNotFoundException {
-		super(invc, createCustInvoiceEntry_int(invc, account, quantity, price));
+		super(invc, createCustInvoiceEntry_int(invc, acct, qty, prc));
+
+		// Caution: Call addInvcEntry one level above now
+		// (GnuCashWritableCustomerInvoiceImpl.createCustInvcEntry)
+		// invc.addInvcEntry(this);
+		this.myInvoice = invc;
+	}
+
+	public GnuCashWritableCustomerInvoiceEntryImpl(
+			final GnuCashWritableCustomerInvoiceImpl invc,
+			final GnuCashAccount acct, 
+			final BigFraction qty, 
+			final BigFraction prc)
+			throws TaxTableNotFoundException {
+		super(invc, createCustInvoiceEntryRat_int(invc, acct, qty, prc));
 
 		// Caution: Call addInvcEntry one level above now
 		// (GnuCashWritableCustomerInvoiceImpl.createCustInvcEntry)
@@ -152,43 +166,16 @@ public class GnuCashWritableCustomerInvoiceEntryImpl extends GnuCashWritableGene
     // 	---------------------------------------------------------------
 	
 	@Override
-	public void setPrice(String price)
+	public void setPrice(final FixedPointNumber prc)
 			throws TaxTableNotFoundException {
-		setCustInvcPrice(price);
+		setCustInvcPrice(prc);
 	}
 
 	@Override
-	public void setPrice(FixedPointNumber price)
+	public void setPriceRat(final BigFraction prc)
 			throws TaxTableNotFoundException {
-		setCustInvcPrice(price);
+		setCustInvcPriceRat(prc);
 	}
-
-	/**
-	 * Do not use
-	 */
-    @Override
-    public void setEmplVchPrice(final String n)
-	    throws TaxTableNotFoundException {
-		throw new WrongInvoiceTypeException();
-    }
-
-	/**
-	 * Do not use
-	 */
-    @Override
-    public void setVendBllPrice(final String n)
-	    throws TaxTableNotFoundException {
-		throw new WrongInvoiceTypeException();
-    }
-
-	/**
-	 * Do not use
-	 */
-    @Override
-    public void setJobInvcPrice(final String n)
-	    throws TaxTableNotFoundException {
-		throw new WrongInvoiceTypeException();
-    }
 
 	// ---------------------------------------------------------------
 

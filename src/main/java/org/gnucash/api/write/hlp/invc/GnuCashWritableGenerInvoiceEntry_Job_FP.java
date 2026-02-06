@@ -8,12 +8,7 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 public interface GnuCashWritableGenerInvoiceEntry_Job_FP {
 
-//    void setJobInvcPrice(String price) throws TaxTableNotFoundException,
-//	    UnknownInvoiceTypeException, IllegalTransactionSplitActionException;
-
-    void setJobInvcPrice(FixedPointNumber price) throws TaxTableNotFoundException,
+    void setJobInvcPrice(FixedPointNumber prc) throws TaxTableNotFoundException,
 	    UnknownInvoiceTypeException, IllegalTransactionSplitActionException;
 
-//    void setJobInvcPriceFormatted(String price) throws TaxTableNotFoundException, 
-//    	UnknownInvoiceTypeException, IllegalTransactionSplitActionException;
 }

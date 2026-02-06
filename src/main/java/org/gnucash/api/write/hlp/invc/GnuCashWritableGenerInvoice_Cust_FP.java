@@ -14,8 +14,8 @@ public interface GnuCashWritableGenerInvoice_Cust_FP {
      * create and add a new entry.<br/>
      * The entry will use the accounts of the SKR03.
      * @param acct 
-     * @param singleUnitPrice 
-     * @param quantity 
+     * @param sglUntPrc 
+     * @param qty 
      * @return 
      * 
      * @throws TaxTableNotFoundException
@@ -23,16 +23,16 @@ public interface GnuCashWritableGenerInvoice_Cust_FP {
      */
     GnuCashWritableCustomerInvoiceEntry createCustInvcEntry(
     		GnuCashAccount acct,
-    		FixedPointNumber singleUnitPrice, 
-    		FixedPointNumber quantity)
+    		FixedPointNumber sglUntPrc, 
+    		FixedPointNumber qty)
 	    throws TaxTableNotFoundException, IllegalTransactionSplitActionException;
 
     /**
      * create and add a new entry.<br/>
      * The entry will use the accounts of the SKR03.
      * @param acct 
-     * @param singleUnitPrice 
-     * @param quantity 
+     * @param sglUntPrc 
+     * @param qty 
      * @param taxTabName 
      * @return 
      * 
@@ -41,16 +41,16 @@ public interface GnuCashWritableGenerInvoice_Cust_FP {
      */
     GnuCashWritableCustomerInvoiceEntry createCustInvcEntry(
     		GnuCashAccount acct,
-    		FixedPointNumber singleUnitPrice, 
-    		FixedPointNumber quantity, 
+    		FixedPointNumber sglUntPrc, 
+    		FixedPointNumber qty, 
     		String taxTabName)
 	    throws TaxTableNotFoundException, IllegalTransactionSplitActionException;
 
     /**
      * create and add a new entry.<br/>
      * @param acct 
-     * @param singleUnitPrice 
-     * @param quantity 
+     * @param sglUntPrc 
+     * @param qty 
      * @param taxTab 
      *
      * @return an entry using the given Tax-Table
@@ -59,8 +59,8 @@ public interface GnuCashWritableGenerInvoice_Cust_FP {
      */
     GnuCashWritableCustomerInvoiceEntry createCustInvcEntry(
     		GnuCashAccount acct,
-    		FixedPointNumber singleUnitPrice,
-    		FixedPointNumber quantity,
+    		FixedPointNumber sglUntPrc,
+    		FixedPointNumber qty,
     		GCshTaxTable taxTab)
 	    throws TaxTableNotFoundException, IllegalTransactionSplitActionException,
 	    NumberFormatException;

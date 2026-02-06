@@ -7,16 +7,8 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 public interface GnuCashWritableGenerInvoiceEntry_Cust_FP {
 
-//    void setCustInvcPrice(String price)
-//	    throws TaxTableNotFoundException,
-//	    IllegalTransactionSplitActionException;
-
-    void setCustInvcPrice(FixedPointNumber price)
+    void setCustInvcPrice(FixedPointNumber prc)
 	    throws TaxTableNotFoundException,
 	    IllegalTransactionSplitActionException;
-
-//    void setCustInvcPriceFormatted(String price)
-//	    throws TaxTableNotFoundException,
-//	    IllegalTransactionSplitActionException;
 
 }

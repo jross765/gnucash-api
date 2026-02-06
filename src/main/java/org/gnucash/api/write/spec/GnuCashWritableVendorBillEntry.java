@@ -1,5 +1,6 @@
 package org.gnucash.api.write.spec;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.TaxTableNotFoundException;
 import org.gnucash.api.read.aux.GCshTaxTable;
 import org.gnucash.api.read.spec.GnuCashVendorBillEntry;
@@ -52,19 +53,10 @@ public interface GnuCashWritableVendorBillEntry extends GnuCashWritableGenerInvo
      * @throws IllegalTransactionSplitActionException
      * 
      * @see #getPrice()
-     * @see #setPrice(FixedPointNumber)
-     */
-    void setPrice(String price) throws TaxTableNotFoundException, IllegalTransactionSplitActionException;
-
-    /**
-     * 
-     * @param price
-     * @throws TaxTableNotFoundException
-     * @throws IllegalTransactionSplitActionException
-     * 
-     * @see #getPrice()
      * @see #setPrice(String)
      */
-    void setPrice(FixedPointNumber price) throws TaxTableNotFoundException, IllegalTransactionSplitActionException;
+    void setPrice(FixedPointNumber prc) throws TaxTableNotFoundException, IllegalTransactionSplitActionException;
+
+    void setPriceRat(BigFraction prc) throws TaxTableNotFoundException, IllegalTransactionSplitActionException;
 
 }

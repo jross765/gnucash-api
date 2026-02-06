@@ -7,7 +7,7 @@ import xyz.schnorxoborx.base.beanbase.IllegalTransactionSplitActionException;
 
 public interface GnuCashWritableGenerInvoiceEntry_Vend_BF {
 
-    void setVendBllPriceRat(BigFraction price)
+    void setVendBllPriceRat(BigFraction prc)
 	    throws TaxTableNotFoundException,
 	    IllegalTransactionSplitActionException;
 

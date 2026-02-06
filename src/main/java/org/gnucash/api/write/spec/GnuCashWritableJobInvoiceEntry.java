@@ -1,5 +1,6 @@
 package org.gnucash.api.write.spec;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.TaxTableNotFoundException;
 import org.gnucash.api.read.UnknownInvoiceTypeException;
 import org.gnucash.api.read.aux.GCshTaxTable;
@@ -50,19 +51,7 @@ public interface GnuCashWritableJobInvoiceEntry extends GnuCashWritableGenerInvo
 
     /**
      * 
-     * @param price
-     * @throws TaxTableNotFoundException
-     * @throws UnknownInvoiceTypeException
-     * @throws IllegalTransactionSplitActionException
-     * 
-     * @see #getPrice()
-     * @see #setPrice(String)
-     */
-    void setPrice(String price) throws TaxTableNotFoundException, UnknownInvoiceTypeException, IllegalTransactionSplitActionException;
-
-    /**
-     * 
-     * @param price
+     * @param prc
      * @throws TaxTableNotFoundException
      * @throws UnknownInvoiceTypeException
      * @throws IllegalTransactionSplitActionException
@@ -70,6 +59,8 @@ public interface GnuCashWritableJobInvoiceEntry extends GnuCashWritableGenerInvo
      * @see #getPrice()
      * @see #setPrice(FixedPointNumber)
      */
-    void setPrice(FixedPointNumber price) throws TaxTableNotFoundException, UnknownInvoiceTypeException, IllegalTransactionSplitActionException;
+    void setPrice(FixedPointNumber prc) throws TaxTableNotFoundException, UnknownInvoiceTypeException, IllegalTransactionSplitActionException;
+
+    void setPriceRat(BigFraction prc) throws TaxTableNotFoundException, UnknownInvoiceTypeException, IllegalTransactionSplitActionException;
 
 }

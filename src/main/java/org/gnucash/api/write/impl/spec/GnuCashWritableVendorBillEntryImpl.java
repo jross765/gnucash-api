@@ -56,18 +56,32 @@ public class GnuCashWritableVendorBillEntryImpl extends GnuCashWritableGenerInvo
 	 * fallback to the first tax table found assigned)
 	 *
 	 * @param bll      the vendor bill to add this split to
-	 * @param account  the expenses-account the money comes from
-	 * @param quantity see ${@link GnuCashGenerInvoiceEntry#getQuantity()}
-	 * @param price    see ${@link GnuCashGenerInvoiceEntry#getVendBllPrice()}}
+	 * @param acct  the expenses-account the money comes from
+	 * @param qty see ${@link GnuCashGenerInvoiceEntry#getQuantity()}
+	 * @param prc    see ${@link GnuCashGenerInvoiceEntry#getVendBllPrice()}}
 	 * @throws TaxTableNotFoundException
 	 */
 	public GnuCashWritableVendorBillEntryImpl(
 			final GnuCashWritableVendorBillImpl bll, 
-			final GnuCashAccount account,
-			final FixedPointNumber quantity, 
-			final FixedPointNumber price)
+			final GnuCashAccount acct,
+			final FixedPointNumber qty, 
+			final FixedPointNumber prc)
 			throws TaxTableNotFoundException {
-		super(bll, createVendBillEntry_int(bll, account, quantity, price));
+		super(bll, createVendBillEntry_int(bll, acct, qty, prc));
+
+		// Caution: Call addBillEntry one level above now
+		// (GnuCashWritableVendorBillImpl.createVendBillEntry)
+		// bll.addBillEntry(this);
+		this.myInvoice = bll;
+	}
+
+	public GnuCashWritableVendorBillEntryImpl(
+			final GnuCashWritableVendorBillImpl bll, 
+			final GnuCashAccount acct,
+			final BigFraction qty, 
+			final BigFraction prc)
+			throws TaxTableNotFoundException {
+		super(bll, createVendBillEntryRat_int(bll, acct, qty, prc));
 
 		// Caution: Call addBillEntry one level above now
 		// (GnuCashWritableVendorBillImpl.createVendBillEntry)
@@ -152,43 +166,16 @@ public class GnuCashWritableVendorBillEntryImpl extends GnuCashWritableGenerInvo
     // 	---------------------------------------------------------------
 	
 	@Override
-	public void setPrice(String price)
+	public void setPrice(final FixedPointNumber prc)
 			throws TaxTableNotFoundException {
-		setVendBllPrice(price);
+		setVendBllPrice(prc);
 	}
 
 	@Override
-	public void setPrice(FixedPointNumber price)
+	public void setPriceRat(final BigFraction prc)
 			throws TaxTableNotFoundException {
-		setVendBllPrice(price);
+		setVendBllPriceRat(prc);
 	}
-
-	/**
-	 * Do not use
-	 */
-    @Override
-    public void setVendBllPrice(final String n)
-	    throws TaxTableNotFoundException {
-		throw new WrongInvoiceTypeException();
-    }
-
-	/**
-	 * Do not use
-	 */
-    @Override
-    public void setEmplVchPrice(final String n)
-	    throws TaxTableNotFoundException {
-		throw new WrongInvoiceTypeException();
-    }
-
-	/**
-	 * Do not use
-	 */
-    @Override
-    public void setJobInvcPrice(final String n)
-	    throws TaxTableNotFoundException {
-		throw new WrongInvoiceTypeException();
-    }
 
 	// ---------------------------------------------------------------
 
