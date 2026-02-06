@@ -6,10 +6,14 @@ import org.gnucash.api.read.GnuCashGenerInvoiceEntry;
 import org.gnucash.api.read.TaxTableNotFoundException;
 import org.gnucash.api.write.hlp.GnuCashWritableObject;
 import org.gnucash.api.write.hlp.HasWritableUserDefinedAttributes;
-import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoiceEntry_Cust;
-import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoiceEntry_Empl;
-import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoiceEntry_Job;
-import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoiceEntry_Vend;
+import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoiceEntry_Cust_FP;
+import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoiceEntry_Cust_Rest;
+import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoiceEntry_Empl_FP;
+import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoiceEntry_Empl_Rest;
+import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoiceEntry_Job_FP;
+import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoiceEntry_Job_Rest;
+import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoiceEntry_Vend_FP;
+import org.gnucash.api.write.hlp.invc.GnuCashWritableGenerInvoiceEntry_Vend_Rest;
 
 import xyz.schnorxoborx.base.beanbase.IllegalTransactionSplitActionException;
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
@@ -20,10 +24,14 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  * @see GnuCashGenerInvoiceEntry
  */
 public interface GnuCashWritableGenerInvoiceEntry extends GnuCashGenerInvoiceEntry,
-                                                          GnuCashWritableGenerInvoiceEntry_Cust,
-                                                          GnuCashWritableGenerInvoiceEntry_Vend,
-                                                          GnuCashWritableGenerInvoiceEntry_Empl,
-                                                          GnuCashWritableGenerInvoiceEntry_Job,
+                                                          GnuCashWritableGenerInvoiceEntry_Cust_FP,
+                                                          GnuCashWritableGenerInvoiceEntry_Cust_Rest,
+                                                          GnuCashWritableGenerInvoiceEntry_Vend_FP,
+                                                          GnuCashWritableGenerInvoiceEntry_Vend_Rest,
+                                                          GnuCashWritableGenerInvoiceEntry_Empl_FP,
+                                                          GnuCashWritableGenerInvoiceEntry_Empl_Rest,
+                                                          GnuCashWritableGenerInvoiceEntry_Job_FP,
+                                                          GnuCashWritableGenerInvoiceEntry_Job_Rest,
                                                           GnuCashWritableObject,
                                                           HasWritableUserDefinedAttributes
 {

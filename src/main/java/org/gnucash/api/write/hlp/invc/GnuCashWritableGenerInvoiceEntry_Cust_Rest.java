@@ -4,23 +4,8 @@ import org.gnucash.api.read.TaxTableNotFoundException;
 import org.gnucash.api.read.aux.GCshTaxTable;
 
 import xyz.schnorxoborx.base.beanbase.IllegalTransactionSplitActionException;
-import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
-public interface GnuCashWritableGenerInvoiceEntry_Cust {
-
-    void setCustInvcPrice(String price)
-	    throws TaxTableNotFoundException,
-	    IllegalTransactionSplitActionException;
-
-    void setCustInvcPrice(FixedPointNumber price)
-	    throws TaxTableNotFoundException,
-	    IllegalTransactionSplitActionException;
-
-    void setCustInvcPriceFormatted(String price)
-	    throws TaxTableNotFoundException,
-	    IllegalTransactionSplitActionException;
-
-    // ---------------------------------------------------------------
+public interface GnuCashWritableGenerInvoiceEntry_Cust_Rest {
 
     /**
      * @param val

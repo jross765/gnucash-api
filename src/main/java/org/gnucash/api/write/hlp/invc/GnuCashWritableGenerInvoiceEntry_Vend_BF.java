@@ -1,0 +1,14 @@
+package org.gnucash.api.write.hlp.invc;
+
+import org.apache.commons.numbers.fraction.BigFraction;
+import org.gnucash.api.read.TaxTableNotFoundException;
+
+import xyz.schnorxoborx.base.beanbase.IllegalTransactionSplitActionException;
+
+public interface GnuCashWritableGenerInvoiceEntry_Vend_BF {
+
+    void setVendBllPriceRat(BigFraction price)
+	    throws TaxTableNotFoundException,
+	    IllegalTransactionSplitActionException;
+
+}
