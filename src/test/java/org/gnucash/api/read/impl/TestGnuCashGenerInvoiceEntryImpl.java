@@ -95,12 +95,30 @@ public class TestGnuCashGenerInvoiceEntryImpl {
 		assertEquals("Item 1", invcEntr.getDescription());
 
 		assertEquals(true, invcEntr.isVendBllTaxable());
+		
 		assertEquals(0.19, invcEntr.getVendBllApplicableTaxPercent().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(19,   invcEntr.getVendBllApplicableTaxPercentRat().getNumerator().intValue());
+		assertEquals(100,  invcEntr.getVendBllApplicableTaxPercentRat().getDenominator().intValue());
+		
 		assertEquals(12.50, invcEntr.getVendBllPrice().doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(3, invcEntr.getQuantity().intValue());
+		assertEquals(25,    invcEntr.getVendBllPriceRat().getNumerator().intValue());
+		assertEquals(2,     invcEntr.getVendBllPriceRat().getDenominator().intValue());
+		
+		assertEquals(3.0, invcEntr.getQuantity().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(3,   invcEntr.getQuantityRat().getNumerator().intValue());
+		assertEquals(1,   invcEntr.getQuantityRat().getDenominator().intValue());
+		
 		assertEquals(37.50, invcEntr.getVendBllSum().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(75,    invcEntr.getVendBllSumRat().getNumerator().intValue());
+		assertEquals(2,     invcEntr.getVendBllSumRat().getDenominator().intValue());
+		
 		assertEquals(37.50, invcEntr.getVendBllSumInclTaxes().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(75,    invcEntr.getVendBllSumInclTaxesRat().getNumerator().intValue());
+		assertEquals(2,     invcEntr.getVendBllSumInclTaxesRat().getDenominator().intValue());
+
 		assertEquals(31.51260, invcEntr.getVendBllSumExclTaxes().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(3750,     invcEntr.getVendBllSumExclTaxesRat().getNumerator().intValue());
+		assertEquals(119,      invcEntr.getVendBllSumExclTaxesRat().getDenominator().intValue());
 	}
 	
 
@@ -120,12 +138,30 @@ public class TestGnuCashGenerInvoiceEntryImpl {
 		// Following: sic, because there is n o tax table entry assigned
 		// (this is an error in real life, but we have done it on purpose here
 		// for the tests).
+		
 		assertEquals(0.00, invcEntr.getVendBllApplicableTaxPercent().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(0,    invcEntr.getVendBllApplicableTaxPercentRat().getNumerator().intValue());
+		assertEquals(1,    invcEntr.getVendBllApplicableTaxPercentRat().getDenominator().intValue());
+		
 		assertEquals(13.80, invcEntr.getVendBllPrice().doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(3, invcEntr.getQuantity().intValue());
+		assertEquals(69,    invcEntr.getVendBllPriceRat().getNumerator().intValue());
+		assertEquals(5,     invcEntr.getVendBllPriceRat().getDenominator().intValue());
+		
+		assertEquals(3.0, invcEntr.getQuantity().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(3,   invcEntr.getQuantityRat().getNumerator().intValue());
+		assertEquals(1,   invcEntr.getQuantityRat().getDenominator().intValue());
+		
 		assertEquals(41.40, invcEntr.getVendBllSum().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(207,   invcEntr.getVendBllSumRat().getNumerator().intValue());
+		assertEquals(5,     invcEntr.getVendBllSumRat().getDenominator().intValue());
+		
 		assertEquals(41.40, invcEntr.getVendBllSumInclTaxes().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(207,   invcEntr.getVendBllSumInclTaxesRat().getNumerator().intValue());
+		assertEquals(5,     invcEntr.getVendBllSumInclTaxesRat().getDenominator().intValue());
+		
 		assertEquals(41.40, invcEntr.getVendBllSumExclTaxes().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(207,   invcEntr.getVendBllSumExclTaxesRat().getNumerator().intValue());
+		assertEquals(5,     invcEntr.getVendBllSumExclTaxesRat().getDenominator().intValue());
 	}
 
 	@Test
@@ -141,13 +177,31 @@ public class TestGnuCashGenerInvoiceEntryImpl {
 		assertEquals("Posten 3", invcEntr.getDescription());
 
 		assertEquals(true, invcEntr.isCustInvcTaxable());
+		
 		assertEquals(0.19, invcEntr.getCustInvcApplicableTaxPercent().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(19,   invcEntr.getCustInvcApplicableTaxPercentRat().getNumerator().intValue());
+		assertEquals(100,  invcEntr.getCustInvcApplicableTaxPercentRat().getDenominator().intValue());
+		
 		assertEquals(120.00, invcEntr.getCustInvcPrice().doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(10, invcEntr.getQuantity().intValue());
+		assertEquals(120,    invcEntr.getCustInvcPriceRat().getNumerator().intValue());
+		assertEquals(1,      invcEntr.getCustInvcPriceRat().getDenominator().intValue());
+		
+		assertEquals(10.0, invcEntr.getQuantity().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(10,   invcEntr.getQuantityRat().getNumerator().intValue());
+		assertEquals(1,    invcEntr.getQuantityRat().getDenominator().intValue());
+		
 		// ::TODO: entry does not contain tax?
 		assertEquals(1200.00, invcEntr.getCustInvcSum().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(1200,    invcEntr.getCustInvcSumRat().getNumerator().intValue());
+		assertEquals(1,       invcEntr.getCustInvcSumRat().getDenominator().intValue());
+		
 		assertEquals(1428.00, invcEntr.getCustInvcSumInclTaxes().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(1428,    invcEntr.getCustInvcSumInclTaxesRat().getNumerator().intValue());
+		assertEquals(1,       invcEntr.getCustInvcSumInclTaxesRat().getDenominator().intValue());
+		
 		assertEquals(1200.00, invcEntr.getCustInvcSumExclTaxes().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(1200,    invcEntr.getCustInvcSumExclTaxesRat().getNumerator().intValue());
+		assertEquals(1,       invcEntr.getCustInvcSumExclTaxesRat().getDenominator().intValue());
 	}
 
 	@Test
@@ -163,13 +217,32 @@ public class TestGnuCashGenerInvoiceEntryImpl {
 		assertEquals("Item 1", invcEntr.getDescription());
 
 		assertEquals(true, invcEntr.isJobInvcTaxable());
+		
 		assertEquals(0.19, invcEntr.getJobInvcApplicableTaxPercent().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(19,   invcEntr.getJobInvcApplicableTaxPercentRat().getNumerator().intValue());
+		assertEquals(100,  invcEntr.getJobInvcApplicableTaxPercentRat().getDenominator().intValue());
+		
 		assertEquals(2450.00, invcEntr.getJobInvcPrice().doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(1, invcEntr.getQuantity().intValue());
+		assertEquals(2450,    invcEntr.getJobInvcPriceRat().getNumerator().intValue());
+		assertEquals(1,       invcEntr.getJobInvcPriceRat().getDenominator().intValue());
+		
+		assertEquals(1.0, invcEntr.getQuantity().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(1,   invcEntr.getQuantityRat().getNumerator().intValue());
+		assertEquals(1,   invcEntr.getQuantityRat().getDenominator().intValue());
+		
 		// ::TODO: entry does not contain tax?
 		assertEquals(2450.00, invcEntr.getJobInvcSum().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(2450,    invcEntr.getJobInvcSumRat().getNumerator().intValue());
+		assertEquals(1,       invcEntr.getJobInvcSumRat().getDenominator().intValue());
+		
 		assertEquals(2915.50, invcEntr.getJobInvcSumInclTaxes().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(5831,    invcEntr.getJobInvcSumInclTaxesRat().getNumerator().intValue());
+		assertEquals(2,       invcEntr.getJobInvcSumInclTaxesRat().getDenominator().intValue());
+		
 		assertEquals(2450.00, invcEntr.getJobInvcSumExclTaxes().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(2450,    invcEntr.getJobInvcSumExclTaxesRat().getNumerator().intValue());
+		assertEquals(1,       invcEntr.getJobInvcSumExclTaxesRat().getDenominator().intValue());
+		
 	}
 
 
@@ -186,12 +259,30 @@ public class TestGnuCashGenerInvoiceEntryImpl {
 		assertEquals("Übernachtung", invcEntr.getDescription());
 
 		assertEquals(true, invcEntr.isEmplVchTaxable());
+		
 		assertEquals(0.0, invcEntr.getEmplVchApplicableTaxPercent().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(0,   invcEntr.getEmplVchApplicableTaxPercentRat().getNumerator().intValue());
+		assertEquals(1,   invcEntr.getEmplVchApplicableTaxPercentRat().getDenominator().intValue());
+		
 		assertEquals(145.00, invcEntr.getEmplVchPrice().doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(1, invcEntr.getQuantity().intValue());
+		assertEquals(145,    invcEntr.getEmplVchPriceRat().getNumerator().intValue());
+		assertEquals(1,      invcEntr.getEmplVchPriceRat().getDenominator().intValue());
+		
+		assertEquals(1.0, invcEntr.getQuantity().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(1,   invcEntr.getQuantityRat().getNumerator().intValue());
+		assertEquals(1,   invcEntr.getQuantityRat().getDenominator().intValue());
+		
 		assertEquals(145.00, invcEntr.getEmplVchSum().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(145,    invcEntr.getEmplVchSumRat().getNumerator().intValue());
+		assertEquals(1,      invcEntr.getEmplVchSumRat().getDenominator().intValue());
+		
 		assertEquals(145.00, invcEntr.getEmplVchSumInclTaxes().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(145,    invcEntr.getEmplVchSumInclTaxesRat().getNumerator().intValue());
+		assertEquals(1,      invcEntr.getEmplVchSumInclTaxesRat().getDenominator().intValue());
+		
 		assertEquals(145.00, invcEntr.getEmplVchSumExclTaxes().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(145,    invcEntr.getEmplVchSumExclTaxesRat().getNumerator().intValue());
+		assertEquals(1,      invcEntr.getEmplVchSumExclTaxesRat().getDenominator().intValue());
 	}
 
 	@Test
