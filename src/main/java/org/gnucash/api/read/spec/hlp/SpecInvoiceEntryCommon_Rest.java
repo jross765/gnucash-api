@@ -26,6 +26,6 @@ public interface SpecInvoiceEntryCommon_Rest extends GnuCashGenerInvoiceEntry {
 
 	boolean isTaxable();
 
-	public GCshTaxTable getTaxTable() throws TaxTableNotFoundException;
+	GCshTaxTable getTaxTable() throws TaxTableNotFoundException;
 
 }

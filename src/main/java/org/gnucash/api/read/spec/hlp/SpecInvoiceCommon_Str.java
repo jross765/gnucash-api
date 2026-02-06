@@ -10,14 +10,14 @@ package org.gnucash.api.read.spec.hlp;
  */
 public interface SpecInvoiceCommon_Str {
 
-    public String getAmountUnpaidWithTaxesFormatted();
+    String getAmountUnpaidWithTaxesFormatted();
 
-    public String getAmountPaidWithTaxesFormatted();
+    String getAmountPaidWithTaxesFormatted();
 
-    public String getAmountPaidWithoutTaxesFormatted();
+    String getAmountPaidWithoutTaxesFormatted();
 
-    public String getAmountWithTaxesFormatted();
+    String getAmountWithTaxesFormatted();
 
-    public String getAmountWithoutTaxesFormatted();
+    String getAmountWithoutTaxesFormatted();
 
 }

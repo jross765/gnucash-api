@@ -10,8 +10,8 @@ package org.gnucash.api.read.spec.hlp;
  */
 public interface SpecInvoiceCommon_Rest {
 
-    public boolean isFullyPaid();
+    boolean isFullyPaid();
 
-    public boolean isNotFullyPaid();
+    boolean isNotFullyPaid();
 
 }

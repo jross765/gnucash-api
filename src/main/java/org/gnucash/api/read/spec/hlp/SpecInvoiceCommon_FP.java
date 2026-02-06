@@ -12,14 +12,14 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  */
 public interface SpecInvoiceCommon_FP {
 
-    public FixedPointNumber getAmountUnpaidWithTaxes();
+    FixedPointNumber getAmountUnpaidWithTaxes();
 
-    public FixedPointNumber getAmountPaidWithTaxes();
+    FixedPointNumber getAmountPaidWithTaxes();
 
-    public FixedPointNumber getAmountPaidWithoutTaxes();
+    FixedPointNumber getAmountPaidWithoutTaxes();
 
-    public FixedPointNumber getAmountWithTaxes();
+    FixedPointNumber getAmountWithTaxes();
     
-    public FixedPointNumber getAmountWithoutTaxes();
+    FixedPointNumber getAmountWithoutTaxes();
 
 }

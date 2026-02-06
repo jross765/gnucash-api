@@ -12,14 +12,14 @@ import org.apache.commons.numbers.fraction.BigFraction;
  */
 public interface SpecInvoiceCommon_BF {
 
-    public BigFraction getAmountUnpaidWithTaxesRat();
+    BigFraction getAmountUnpaidWithTaxesRat();
 
-    public BigFraction getAmountPaidWithTaxesRat();
+    BigFraction getAmountPaidWithTaxesRat();
 
-    public BigFraction getAmountPaidWithoutTaxesRat();
+    BigFraction getAmountPaidWithoutTaxesRat();
 
-    public BigFraction getAmountWithTaxesRat();
+    BigFraction getAmountWithTaxesRat();
     
-    public BigFraction getAmountWithoutTaxesRat();
+    BigFraction getAmountWithoutTaxesRat();
 
 }
