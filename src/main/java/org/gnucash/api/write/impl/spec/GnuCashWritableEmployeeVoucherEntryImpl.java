@@ -166,14 +166,12 @@ public class GnuCashWritableEmployeeVoucherEntryImpl extends GnuCashWritableGene
     // 	---------------------------------------------------------------
 	
 	@Override
-	public void setPrice(final FixedPointNumber prc)
-			throws TaxTableNotFoundException {
+	public void setPrice(final FixedPointNumber prc) throws Exception {
 		setEmplVchPrice(prc);
 	}
 
 	@Override
-	public void setPriceRat(final BigFraction prc)
-			throws TaxTableNotFoundException {
+	public void setPriceRat(final BigFraction prc) throws Exception {
 		setEmplVchPriceRat(prc);
 	}
 

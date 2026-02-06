@@ -166,14 +166,12 @@ public class GnuCashWritableVendorBillEntryImpl extends GnuCashWritableGenerInvo
     // 	---------------------------------------------------------------
 	
 	@Override
-	public void setPrice(final FixedPointNumber prc)
-			throws TaxTableNotFoundException {
+	public void setPrice(final FixedPointNumber prc) throws Exception {
 		setVendBllPrice(prc);
 	}
 
 	@Override
-	public void setPriceRat(final BigFraction prc)
-			throws TaxTableNotFoundException {
+	public void setPriceRat(final BigFraction prc) throws Exception {
 		setVendBllPriceRat(prc);
 	}
 

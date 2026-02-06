@@ -10,6 +10,9 @@ import org.gnucash.api.read.impl.aux.WrongOwnerTypeException;
 import org.gnucash.api.read.spec.GnuCashEmployeeVoucher;
 import org.gnucash.api.write.GnuCashWritableGenerInvoice;
 import org.gnucash.api.write.hlp.GnuCashWritableObject;
+import org.gnucash.api.write.spec.hlp.SpecWritableInvoiceCommon_BF;
+import org.gnucash.api.write.spec.hlp.SpecWritableInvoiceCommon_FP;
+import org.gnucash.api.write.spec.hlp.SpecWritableInvoiceCommon_Rest;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcEntrID;
 
 import xyz.schnorxoborx.base.beanbase.IllegalTransactionSplitActionException;
@@ -26,6 +29,9 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  */
 public interface GnuCashWritableEmployeeVoucher extends GnuCashWritableGenerInvoice,
 														GnuCashEmployeeVoucher,
+													    SpecWritableInvoiceCommon_FP,
+													    SpecWritableInvoiceCommon_BF,
+													    SpecWritableInvoiceCommon_Rest,
 														GnuCashWritableObject
 {
 

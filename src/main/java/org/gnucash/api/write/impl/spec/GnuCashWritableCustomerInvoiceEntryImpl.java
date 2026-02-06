@@ -166,14 +166,12 @@ public class GnuCashWritableCustomerInvoiceEntryImpl extends GnuCashWritableGene
     // 	---------------------------------------------------------------
 	
 	@Override
-	public void setPrice(final FixedPointNumber prc)
-			throws TaxTableNotFoundException {
+	public void setPrice(final FixedPointNumber prc) throws Exception {
 		setCustInvcPrice(prc);
 	}
 
 	@Override
-	public void setPriceRat(final BigFraction prc)
-			throws TaxTableNotFoundException {
+	public void setPriceRat(final BigFraction prc) throws Exception {
 		setCustInvcPriceRat(prc);
 	}
 

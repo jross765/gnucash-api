@@ -193,14 +193,12 @@ public class GnuCashWritableJobInvoiceEntryImpl extends GnuCashWritableGenerInvo
     // 	---------------------------------------------------------------
 	
 	@Override
-	public void setPrice(final FixedPointNumber prc) throws TaxTableNotFoundException,
-			UnknownInvoiceTypeException {
+	public void setPrice(final FixedPointNumber prc) throws Exception {
 		setJobInvcPrice(prc);
 	}
 
 	@Override
-	public void setPriceRat(final BigFraction prc) throws TaxTableNotFoundException,
-			UnknownInvoiceTypeException {
+	public void setPriceRat(final BigFraction prc) throws Exception {
 		setJobInvcPriceRat(prc);
 	}
 

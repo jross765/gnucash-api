@@ -1,15 +1,16 @@
 package org.gnucash.api.write.spec;
 
-import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.TaxTableNotFoundException;
 import org.gnucash.api.read.UnknownInvoiceTypeException;
 import org.gnucash.api.read.aux.GCshTaxTable;
 import org.gnucash.api.read.spec.GnuCashJobInvoiceEntry;
 import org.gnucash.api.write.GnuCashWritableGenerInvoiceEntry;
 import org.gnucash.api.write.hlp.GnuCashWritableObject;
+import org.gnucash.api.write.spec.hlp.SpecWritableInvoiceEntryCommon_BF;
+import org.gnucash.api.write.spec.hlp.SpecWritableInvoiceEntryCommon_FP;
+import org.gnucash.api.write.spec.hlp.SpecWritableInvoiceEntryCommon_Rest;
 
 import xyz.schnorxoborx.base.beanbase.IllegalTransactionSplitActionException;
-import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 /**
  * Invoice-Entry that can be modified.
@@ -22,6 +23,9 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  */
 public interface GnuCashWritableJobInvoiceEntry extends GnuCashWritableGenerInvoiceEntry,
 														GnuCashJobInvoiceEntry,
+														SpecWritableInvoiceEntryCommon_FP,
+														SpecWritableInvoiceEntryCommon_BF,
+														SpecWritableInvoiceEntryCommon_Rest,
                                                         GnuCashWritableObject 
 {
 
@@ -46,21 +50,5 @@ public interface GnuCashWritableJobInvoiceEntry extends GnuCashWritableGenerInvo
      * @see #getTaxTable()
      */
     void setTaxTable(GCshTaxTable taxTab) throws TaxTableNotFoundException, UnknownInvoiceTypeException, IllegalTransactionSplitActionException;
-
-    // ---------------------------------------------------------------
-
-    /**
-     * 
-     * @param prc
-     * @throws TaxTableNotFoundException
-     * @throws UnknownInvoiceTypeException
-     * @throws IllegalTransactionSplitActionException
-     * 
-     * @see #getPrice()
-     * @see #setPrice(FixedPointNumber)
-     */
-    void setPrice(FixedPointNumber prc) throws TaxTableNotFoundException, UnknownInvoiceTypeException, IllegalTransactionSplitActionException;
-
-    void setPriceRat(BigFraction prc) throws TaxTableNotFoundException, UnknownInvoiceTypeException, IllegalTransactionSplitActionException;
 
 }
