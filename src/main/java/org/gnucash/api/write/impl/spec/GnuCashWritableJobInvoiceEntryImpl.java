@@ -7,7 +7,6 @@ import org.gnucash.api.generated.GncGncEntry;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashGenerInvoiceEntry;
 import org.gnucash.api.read.TaxTableNotFoundException;
-import org.gnucash.api.read.UnknownInvoiceTypeException;
 import org.gnucash.api.read.aux.GCshOwner;
 import org.gnucash.api.read.aux.GCshTaxTable;
 import org.gnucash.api.read.impl.GnuCashGenerInvoiceEntryImpl;
@@ -123,14 +122,12 @@ public class GnuCashWritableJobInvoiceEntryImpl extends GnuCashWritableGenerInvo
 	// -----------------------------------------------------------
 
 	@Override
-	public void setTaxable(boolean val) throws TaxTableNotFoundException,
-			UnknownInvoiceTypeException {
+	public void setTaxable(boolean val) throws Exception {
 		setJobInvcTaxable(val);
 	}
 
 	@Override
-	public void setTaxTable(GCshTaxTable taxTab) throws TaxTableNotFoundException,
-			UnknownInvoiceTypeException {
+	public void setTaxTable(GCshTaxTable taxTab) throws Exception {
 		setJobInvcTaxTable(taxTab);
 	}
 

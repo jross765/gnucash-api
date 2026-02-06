@@ -100,14 +100,12 @@ public class GnuCashWritableCustomerInvoiceEntryImpl extends GnuCashWritableGene
 	// ---------------------------------------------------------------
 
 	@Override
-	public void setTaxable(boolean val)
-			throws TaxTableNotFoundException {
+	public void setTaxable(boolean val) throws Exception {
 		setCustInvcTaxable(val);
 	}
 
 	@Override
-	public void setTaxTable(GCshTaxTable taxTab)
-			throws TaxTableNotFoundException {
+	public void setTaxTable(GCshTaxTable taxTab) throws Exception {
 		setCustInvcTaxTable(taxTab);
 	}
 

@@ -100,14 +100,12 @@ public class GnuCashWritableVendorBillEntryImpl extends GnuCashWritableGenerInvo
 	// -----------------------------------------------------------
 
 	@Override
-	public void setTaxable(boolean val)
-			throws TaxTableNotFoundException {
+	public void setTaxable(boolean val) throws Exception {
 		setVendBllTaxable(val);
 	}
 
 	@Override
-	public void setTaxTable(GCshTaxTable taxTab)
-			throws TaxTableNotFoundException {
+	public void setTaxTable(GCshTaxTable taxTab) throws Exception {
 		setVendBllTaxTable(taxTab);
 	}
 
