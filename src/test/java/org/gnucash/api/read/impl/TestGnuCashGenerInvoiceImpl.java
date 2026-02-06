@@ -125,8 +125,12 @@ public class TestGnuCashGenerInvoiceImpl {
 		assertNotEquals(null, invc);
 
 		assertEquals(1327.60, invc.getCustInvcAmountWithoutTaxes().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(6638,    invc.getCustInvcAmountWithoutTaxesRat().getNumerator().intValue());
+		assertEquals(5,       invc.getCustInvcAmountWithoutTaxesRat().getDenominator().intValue());
 
 		assertEquals(1327.60, invc.getCustInvcAmountWithTaxes().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(6638,    invc.getCustInvcAmountWithTaxesRat().getNumerator().intValue());
+		assertEquals(5,       invc.getCustInvcAmountWithTaxesRat().getDenominator().intValue());
 	}
 
 	@Test
@@ -213,9 +217,14 @@ public class TestGnuCashGenerInvoiceImpl {
 		assertNotEquals(null, invc);
 
 		assertEquals(41.40, invc.getVendBllAmountWithoutTaxes().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(207,   invc.getVendBllAmountWithoutTaxesRat().getNumerator().intValue());
+		assertEquals(5,     invc.getVendBllAmountWithoutTaxesRat().getDenominator().intValue());
+		
 		// Note: due to (purposefully) incorrect booking, the gross amount
 		// of this bill is *not* 49.27 EUR, but 41.40 EUR (its net amount).
 		assertEquals(41.40, invc.getVendBllAmountWithTaxes().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(207,   invc.getVendBllAmountWithTaxesRat().getNumerator().intValue());
+		assertEquals(5,     invc.getVendBllAmountWithTaxesRat().getDenominator().intValue());
 	}
 
 	@Test
@@ -224,7 +233,12 @@ public class TestGnuCashGenerInvoiceImpl {
 		assertNotEquals(null, invc);
 
 		assertEquals(79.11, invc.getVendBllAmountWithoutTaxes().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(47072, invc.getVendBllAmountWithoutTaxesRat().getNumerator().intValue());
+		assertEquals(595,   invc.getVendBllAmountWithoutTaxesRat().getDenominator().intValue());
+
 		assertEquals(94.14, invc.getVendBllAmountWithTaxes().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(11768, invc.getVendBllAmountWithTaxesRat().getNumerator().intValue());
+		assertEquals(125,   invc.getVendBllAmountWithTaxesRat().getDenominator().intValue());
 	}
 
 	@Test
