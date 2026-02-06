@@ -2,6 +2,7 @@ package org.gnucash.api.write.impl.spec;
 
 import javax.security.auth.login.AccountNotFoundException;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.generated.GncGncEntry;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashGenerInvoiceEntry;
@@ -222,9 +223,16 @@ public class GnuCashWritableCustomerInvoiceEntryImpl extends GnuCashWritableGene
 		return getGnuCashFile().getAccountByID(getAccountID());
 	}
 
+	// ---------------------------------------------------------------
+	
 	@Override
 	public FixedPointNumber getPrice() {
 		return super.getCustInvcPrice();
+	}
+
+	@Override
+	public BigFraction getPriceRat() {
+		return super.getCustInvcPriceRat();
 	}
 
 	@Override
@@ -250,9 +258,16 @@ public class GnuCashWritableCustomerInvoiceEntryImpl extends GnuCashWritableGene
 	}
 
 	@Override
+	public BigFraction getApplicableTaxPercentRat() {
+		return super.getCustInvcApplicableTaxPercentRat();
+	}
+
+	@Override
 	public String getApplicableTaxPercentFormatted() {
 		return super.getCustInvcApplicableTaxPercentFormatted();
 	}
+	
+	// ----------------------------
 
 	@Override
 	public FixedPointNumber getSum() {
@@ -268,6 +283,25 @@ public class GnuCashWritableCustomerInvoiceEntryImpl extends GnuCashWritableGene
 	public FixedPointNumber getSumExclTaxes() {
 		return super.getCustInvcSumExclTaxes();
 	}
+
+	// ----------------------------
+
+	@Override
+	public BigFraction getSumRat() {
+		return super.getCustInvcSumRat();
+	}
+
+	@Override
+	public BigFraction getSumInclTaxesRat() {
+		return super.getCustInvcSumInclTaxesRat();
+	}
+
+	@Override
+	public BigFraction getSumExclTaxesRat() {
+		return super.getCustInvcSumExclTaxesRat();
+	}
+
+	// ----------------------------
 
 	@Override
 	public String getSumFormatted() {
