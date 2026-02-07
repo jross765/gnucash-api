@@ -253,7 +253,14 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
      * {@inheritDoc}
      */
     public FixedPointNumber getNegatedBalance() {
-    	return getBalance().multiply(new FixedPointNumber("-100/100"));
+    	return getBalance().copy().negate();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public BigFraction getNegatedBalanceRat() {
+    	return getBalanceRat().negate();
     }
 
     /**

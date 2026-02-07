@@ -212,6 +212,8 @@ public interface GnuCashTransaction extends Comparable<GnuCashTransaction>,
      */
     FixedPointNumber getNegatedBalance();
 
+    BigFraction      getNegatedBalanceRat();
+
     /**
      * The result is in the currency of the transaction.
      * @return 
