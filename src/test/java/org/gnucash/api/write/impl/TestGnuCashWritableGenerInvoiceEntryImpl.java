@@ -114,9 +114,19 @@ public class TestGnuCashWritableGenerInvoiceEntryImpl {
 		assertEquals("Item 1", invcEntr.getDescription());
 
 		assertEquals(true, invcEntr.isVendBllTaxable());
+		
 		assertEquals(0.19, invcEntr.getVendBllApplicableTaxPercent().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(19,   invcEntr.getVendBllApplicableTaxPercentRat().getNumerator().intValue());
+		assertEquals(100,  invcEntr.getVendBllApplicableTaxPercentRat().getDenominator().intValue());
+		
 		assertEquals(12.50, invcEntr.getVendBllPrice().doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(3, invcEntr.getQuantity().intValue());
+		assertEquals(25,    invcEntr.getVendBllPriceRat().getNumerator().intValue());
+		assertEquals(2,     invcEntr.getVendBllPriceRat().getDenominator().intValue());
+		
+		assertEquals(3.0, invcEntr.getQuantity().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(3,   invcEntr.getQuantityRat().getNumerator().intValue());
+		assertEquals(1,   invcEntr.getQuantityRat().getDenominator().intValue());
+		
 	}
 
 	@Test
@@ -132,12 +142,21 @@ public class TestGnuCashWritableGenerInvoiceEntryImpl {
 		assertEquals("Gefälligkeiten", invcEntr.getDescription());
 
 		assertEquals(true, invcEntr.isVendBllTaxable());
+		
 		// Following: sic, because there is n o tax table entry assigned
 		// (this is an error in real life, but we have done it on purpose here
 		// for the tests).
 		assertEquals(0.00, invcEntr.getVendBllApplicableTaxPercent().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(0,    invcEntr.getVendBllApplicableTaxPercentRat().getNumerator().intValue());
+		assertEquals(1,    invcEntr.getVendBllApplicableTaxPercentRat().getDenominator().intValue());
+		
 		assertEquals(13.80, invcEntr.getVendBllPrice().doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(3, invcEntr.getQuantity().intValue());
+		assertEquals(69,    invcEntr.getVendBllPriceRat().getNumerator().intValue());
+		assertEquals(5,     invcEntr.getVendBllPriceRat().getDenominator().intValue());
+		
+		assertEquals(3.0, invcEntr.getQuantity().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(3,   invcEntr.getQuantityRat().getNumerator().intValue());
+		assertEquals(1,   invcEntr.getQuantityRat().getDenominator().intValue());
 	}
 
 	@Test
@@ -153,9 +172,18 @@ public class TestGnuCashWritableGenerInvoiceEntryImpl {
 		assertEquals("Posten 3", invcEntr.getDescription());
 
 		assertEquals(true, invcEntr.isCustInvcTaxable());
+		
 		assertEquals(0.19, invcEntr.getCustInvcApplicableTaxPercent().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(19,   invcEntr.getCustInvcApplicableTaxPercentRat().getNumerator().intValue());
+		assertEquals(100,  invcEntr.getCustInvcApplicableTaxPercentRat().getDenominator().intValue());
+		
 		assertEquals(120.00, invcEntr.getCustInvcPrice().doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(10, invcEntr.getQuantity().intValue());
+		assertEquals(120,    invcEntr.getCustInvcPriceRat().getNumerator().intValue());
+		assertEquals(1,      invcEntr.getCustInvcPriceRat().getDenominator().intValue());
+		
+		assertEquals(10.0, invcEntr.getQuantity().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(10,   invcEntr.getQuantityRat().getNumerator().intValue());
+		assertEquals(1,    invcEntr.getQuantityRat().getDenominator().intValue());
 	}
 
 	// -----------------------------------------------------------------
