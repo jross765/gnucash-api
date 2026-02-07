@@ -1997,8 +1997,8 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			final GCshCurrID toCurrID,
 			final LocalDate date) {
 		GnuCashWritablePrice prc = new GnuCashWritablePriceImpl(this);
-	    prc.setFromCmdtyCurrQualifID(fromCmdtyCurrID);
-	    prc.setToCurrencyQualifID(toCurrID);
+	    prc.setFromCmdtyID(fromCmdtyCurrID);
+	    prc.setToCurrID(toCurrID);
 		prc.setDate(date);
 		((org.gnucash.api.write.impl.hlp.FilePriceManager) super.prcMgr)
 			.addPrice(prc);

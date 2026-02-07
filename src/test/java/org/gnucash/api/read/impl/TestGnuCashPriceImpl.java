@@ -139,13 +139,13 @@ public class TestGnuCashPriceImpl {
 		assertNotEquals(null, prc);
 
 		assertEquals(PRC_1_ID, prc.getID());
-		assertEquals(cmdtyID11.toString(), prc.getFromCmdtyCurrQualifID().toString());
-		assertEquals(cmdtyID11.toString(), prc.getFromCommodityQualifID().toString());
-		assertEquals(cmdtyID12.toString(), prc.getFromCommodityQualifID().toString());
-		assertEquals(cmdtyID11, prc.getFromCommodityQualifID());
-		assertNotEquals(cmdtyID12, prc.getFromCommodityQualifID()); // sic
+		assertEquals(cmdtyID11.toString(), prc.getFromCmdtyID().toString());
+		assertEquals(cmdtyID11.toString(), prc.getFromSecID().toString());
+		assertEquals(cmdtyID12.toString(), prc.getFromSecID().toString());
+		assertEquals(cmdtyID11, prc.getFromSecID());
+		assertNotEquals(cmdtyID12, prc.getFromSecID()); // sic
 		assertEquals("Mercedes-Benz Group AG", prc.getFromCommodity().getName());
-		assertEquals("CURRENCY:EUR", prc.getToCurrencyQualifID().toString());
+		assertEquals("CURRENCY:EUR", prc.getToCurrID().toString());
 		assertEquals("EUR", prc.getToCurrencyCode());
 		assertEquals(Type.TRANSACTION, prc.getType());
 		assertEquals(LocalDate.of(2023, 7, 1), prc.getDate());
@@ -154,7 +154,7 @@ public class TestGnuCashPriceImpl {
 		assertEquals(100,   prc.getValueRat().getDenominator().intValue());
 
 		try {
-			GCshCurrID dummy = prc.getFromCurrencyQualifID(); // illegal call in this context
+			GCshCurrID dummy = prc.getFromCurrID(); // illegal call in this context
 			assertEquals(1, 0);
 		} catch (Exception exc) {
 			assertEquals(0, 0);
@@ -181,13 +181,13 @@ public class TestGnuCashPriceImpl {
 		assertNotEquals(null, prc);
 
 		assertEquals(PRC_2_ID, prc.getID());
-		assertEquals(cmdtyID21.toString(), prc.getFromCmdtyCurrQualifID().toString());
-		assertEquals(cmdtyID21.toString(), prc.getFromCommodityQualifID().toString());
-		assertEquals(cmdtyID22.toString(), prc.getFromCommodityQualifID().toString());
-		assertEquals(cmdtyID21, prc.getFromCommodityQualifID());
-		assertNotEquals(cmdtyID22, prc.getFromCommodityQualifID()); // sic
+		assertEquals(cmdtyID21.toString(), prc.getFromCmdtyID().toString());
+		assertEquals(cmdtyID21.toString(), prc.getFromSecID().toString());
+		assertEquals(cmdtyID22.toString(), prc.getFromSecID().toString());
+		assertEquals(cmdtyID21, prc.getFromSecID());
+		assertNotEquals(cmdtyID22, prc.getFromSecID()); // sic
 		assertEquals("SAP SE", prc.getFromCommodity().getName());
-		assertEquals("CURRENCY:EUR", prc.getToCurrencyQualifID().toString());
+		assertEquals("CURRENCY:EUR", prc.getToCurrID().toString());
 		assertEquals("EUR", prc.getToCurrencyCode());
 		assertEquals(Type.UNKNOWN, prc.getType());
 		assertEquals(LocalDate.of(2023, 7, 20), prc.getDate());
@@ -196,7 +196,7 @@ public class TestGnuCashPriceImpl {
 		assertEquals(1,     prc.getValueRat().getDenominator().intValue());
 
 		try {
-			GCshCurrID dummy = prc.getFromCurrencyQualifID(); // illegal call in this context
+			GCshCurrID dummy = prc.getFromCurrID(); // illegal call in this context
 			assertEquals(1, 0);
 		} catch (Exception exc) {
 			assertEquals(0, 0);
@@ -223,13 +223,13 @@ public class TestGnuCashPriceImpl {
 		assertNotEquals(null, prc);
 
 		assertEquals(PRC_3_ID, prc.getID());
-		assertEquals(cmdtyID21.toString(), prc.getFromCmdtyCurrQualifID().toString());
-		assertEquals(cmdtyID21.toString(), prc.getFromCommodityQualifID().toString());
-		assertEquals(cmdtyID22.toString(), prc.getFromCommodityQualifID().toString());
-		assertEquals(cmdtyID21, prc.getFromCommodityQualifID());
-		assertNotEquals(cmdtyID22, prc.getFromCommodityQualifID()); // sic
+		assertEquals(cmdtyID21.toString(), prc.getFromCmdtyID().toString());
+		assertEquals(cmdtyID21.toString(), prc.getFromSecID().toString());
+		assertEquals(cmdtyID22.toString(), prc.getFromSecID().toString());
+		assertEquals(cmdtyID21, prc.getFromSecID());
+		assertNotEquals(cmdtyID22, prc.getFromSecID()); // sic
 		assertEquals("SAP SE", prc.getFromCommodity().getName());
-		assertEquals("CURRENCY:EUR", prc.getToCurrencyQualifID().toString());
+		assertEquals("CURRENCY:EUR", prc.getToCurrID().toString());
 		assertEquals("EUR", prc.getToCurrencyCode());
 		assertEquals(Type.TRANSACTION, prc.getType());
 		assertEquals(LocalDate.of(2023, 7, 18), prc.getDate());
@@ -238,7 +238,7 @@ public class TestGnuCashPriceImpl {
 		assertEquals(1,     prc.getValueRat().getDenominator().intValue());
 
 		try {
-			GCshCurrID dummy = prc.getFromCurrencyQualifID(); // illegal call in this context
+			GCshCurrID dummy = prc.getFromCurrID(); // illegal call in this context
 			assertEquals(1, 0);
 		} catch (Exception exc) {
 			assertEquals(0, 0);
@@ -265,10 +265,10 @@ public class TestGnuCashPriceImpl {
 		assertNotEquals(null, prc);
 
 		assertEquals(PRC_4_ID, prc.getID());
-		assertEquals(currID1.toString(), prc.getFromCmdtyCurrQualifID().toString());
-		assertEquals(currID1.toString(), prc.getFromCurrencyQualifID().toString());
+		assertEquals(currID1.toString(), prc.getFromCmdtyID().toString());
+		assertEquals(currID1.toString(), prc.getFromCurrID().toString());
 		assertEquals("USD", prc.getFromCurrencyCode());
-		assertEquals("CURRENCY:EUR", prc.getToCurrencyQualifID().toString());
+		assertEquals("CURRENCY:EUR", prc.getToCurrID().toString());
 		assertEquals("EUR", prc.getToCurrencyCode());
 		assertEquals(null, prc.getType());
 		assertEquals(LocalDate.of(2023, 10, 1), prc.getDate());
@@ -277,7 +277,7 @@ public class TestGnuCashPriceImpl {
 		assertEquals(93,  prc.getValueRat().getDenominator().intValue());
 
 		try {
-			GCshSecID dummy = prc.getFromCommodityQualifID(); // illegal call in this context
+			GCshSecID dummy = prc.getFromSecID(); // illegal call in this context
 			assertEquals(1, 0);
 		} catch (Exception exc) {
 			assertEquals(0, 0);

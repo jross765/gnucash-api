@@ -26,25 +26,25 @@ public interface GnuCashWritablePrice extends GnuCashPrice,
 	 * 
 	 * @param qualifID
 	 * 
-	 * @see #getFromCmdtyCurrQualifID()
+	 * @see #getFromCmdtyID()
 	 */
-    void setFromCmdtyCurrQualifID(GCshCmdtyID qualifID);
+    void setFromCmdtyID(GCshCmdtyID qualifID);
 
     /**
      * 
      * @param qualifID
      * 
-	 * @see #getFromCmdtyCurrQualifID()
+	 * @see #getFromCmdtyID()
      */
-    void setFromCommodityQualifID(GCshSecID qualifID);
+    void setFromSecfID(GCshSecID qualifID);
 
     /**
      * 
      * @param qualifID
      * 
-	 * @see #getFromCmdtyCurrQualifID()
+	 * @see #getFromCmdtyID()
      */
-    void setFromCurrencyQualifID(GCshCurrID qualifID);
+    void setFromCurrID(GCshCurrID qualifID);
 
     /**
      * 
@@ -76,23 +76,23 @@ public interface GnuCashWritablePrice extends GnuCashPrice,
      * 
      * @param qualifID
      * 
-     * @see #getToCurrencyQualifID()
+     * @see #getToCurrID()
      */
-    void setToCurrencyQualifID(GCshCmdtyID qualifID);
+    void setToCmdtyID(GCshCmdtyID qualifID);
 
     /**
      * 
      * @param qualifID
      * 
-     * @see #getToCurrencyQualifID()
+     * @see #getToCurrID()
      */
-    void setToCurrencyQualifID(GCshCurrID qualifID);
+    void setToCurrID(GCshCurrID qualifID);
 
     /**
      * 
      * @param code
      * 
-     * @see #getToCurrencyQualifID()
+     * @see #getToCurrID()
      */
     void setToCurrencyCode(String code);
 
@@ -100,7 +100,7 @@ public interface GnuCashWritablePrice extends GnuCashPrice,
      * 
      * @param curr
      * 
-     * @see #getToCurrencyQualifID()
+     * @see #getToCurrID()
      */
     void setToCurrency(GnuCashCommodity curr);
 

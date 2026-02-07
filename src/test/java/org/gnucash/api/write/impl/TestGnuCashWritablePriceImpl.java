@@ -155,13 +155,13 @@ public class TestGnuCashWritablePriceImpl {
 		assertNotEquals(null, prc);
 
 		assertEquals(PRC_1_ID, prc.getID());
-		assertEquals(cmdtyID11.toString(), prc.getFromCmdtyCurrQualifID().toString());
-		assertEquals(cmdtyID11.toString(), prc.getFromCommodityQualifID().toString());
-		assertEquals(cmdtyID12.toString(), prc.getFromCommodityQualifID().toString());
-		assertEquals(cmdtyID11, prc.getFromCommodityQualifID());
-		assertNotEquals(cmdtyID12, prc.getFromCommodityQualifID()); // sic
+		assertEquals(cmdtyID11.toString(), prc.getFromCmdtyID().toString());
+		assertEquals(cmdtyID11.toString(), prc.getFromSecID().toString());
+		assertEquals(cmdtyID12.toString(), prc.getFromSecID().toString());
+		assertEquals(cmdtyID11, prc.getFromSecID());
+		assertNotEquals(cmdtyID12, prc.getFromSecID()); // sic
 		assertEquals("Mercedes-Benz Group AG", prc.getFromCommodity().getName());
-		assertEquals("CURRENCY:EUR", prc.getToCurrencyQualifID().toString());
+		assertEquals("CURRENCY:EUR", prc.getToCurrID().toString());
 		assertEquals("EUR", prc.getToCurrencyCode());
 		assertEquals(Type.TRANSACTION, prc.getType());
 		assertEquals(LocalDate.of(2023, 7, 1), prc.getDate());
@@ -170,7 +170,7 @@ public class TestGnuCashWritablePriceImpl {
 		assertEquals(100,   prc.getValueRat().getDenominator().intValue());
 
 		try {
-			GCshCurrID dummy = prc.getFromCurrencyQualifID(); // illegal call in this context
+			GCshCurrID dummy = prc.getFromCurrID(); // illegal call in this context
 			assertEquals(1, 0);
 		} catch (Exception exc) {
 			assertEquals(0, 0);
@@ -197,13 +197,13 @@ public class TestGnuCashWritablePriceImpl {
 		assertNotEquals(null, prc);
 
 		assertEquals(PRC_2_ID, prc.getID());
-		assertEquals(cmdtyID21.toString(), prc.getFromCmdtyCurrQualifID().toString());
-		assertEquals(cmdtyID21.toString(), prc.getFromCommodityQualifID().toString());
-		assertEquals(cmdtyID22.toString(), prc.getFromCommodityQualifID().toString());
-		assertEquals(cmdtyID21, prc.getFromCommodityQualifID());
-		assertNotEquals(cmdtyID22, prc.getFromCommodityQualifID()); // sic
+		assertEquals(cmdtyID21.toString(), prc.getFromCmdtyID().toString());
+		assertEquals(cmdtyID21.toString(), prc.getFromSecID().toString());
+		assertEquals(cmdtyID22.toString(), prc.getFromSecID().toString());
+		assertEquals(cmdtyID21, prc.getFromSecID());
+		assertNotEquals(cmdtyID22, prc.getFromSecID()); // sic
 		assertEquals("SAP SE", prc.getFromCommodity().getName());
-		assertEquals("CURRENCY:EUR", prc.getToCurrencyQualifID().toString());
+		assertEquals("CURRENCY:EUR", prc.getToCurrID().toString());
 		assertEquals("EUR", prc.getToCurrencyCode());
 		assertEquals(Type.UNKNOWN, prc.getType());
 		assertEquals(LocalDate.of(2023, 7, 20), prc.getDate());
@@ -212,7 +212,7 @@ public class TestGnuCashWritablePriceImpl {
 		assertEquals(1,     prc.getValueRat().getDenominator().intValue());
 
 		try {
-			GCshCurrID dummy = prc.getFromCurrencyQualifID(); // illegal call in this context
+			GCshCurrID dummy = prc.getFromCurrID(); // illegal call in this context
 			assertEquals(1, 0);
 		} catch (Exception exc) {
 			assertEquals(0, 0);
@@ -239,13 +239,13 @@ public class TestGnuCashWritablePriceImpl {
 		assertNotEquals(null, prc);
 
 		assertEquals(PRC_3_ID, prc.getID());
-		assertEquals(cmdtyID21.toString(), prc.getFromCmdtyCurrQualifID().toString());
-		assertEquals(cmdtyID21.toString(), prc.getFromCommodityQualifID().toString());
-		assertEquals(cmdtyID22.toString(), prc.getFromCommodityQualifID().toString());
-		assertEquals(cmdtyID21, prc.getFromCommodityQualifID());
-		assertNotEquals(cmdtyID22, prc.getFromCommodityQualifID()); // sic
+		assertEquals(cmdtyID21.toString(), prc.getFromCmdtyID().toString());
+		assertEquals(cmdtyID21.toString(), prc.getFromSecID().toString());
+		assertEquals(cmdtyID22.toString(), prc.getFromSecID().toString());
+		assertEquals(cmdtyID21, prc.getFromSecID());
+		assertNotEquals(cmdtyID22, prc.getFromSecID()); // sic
 		assertEquals("SAP SE", prc.getFromCommodity().getName());
-		assertEquals("CURRENCY:EUR", prc.getToCurrencyQualifID().toString());
+		assertEquals("CURRENCY:EUR", prc.getToCurrID().toString());
 		assertEquals("EUR", prc.getToCurrencyCode());
 		assertEquals(Type.TRANSACTION, prc.getType());
 		assertEquals(LocalDate.of(2023, 7, 18), prc.getDate());
@@ -254,7 +254,7 @@ public class TestGnuCashWritablePriceImpl {
 		assertEquals(1,     prc.getValueRat().getDenominator().intValue());
 
 		try {
-			GCshCurrID dummy = prc.getFromCurrencyQualifID(); // illegal call in this context
+			GCshCurrID dummy = prc.getFromCurrID(); // illegal call in this context
 			assertEquals(1, 0);
 		} catch (Exception exc) {
 			assertEquals(0, 0);
@@ -281,10 +281,10 @@ public class TestGnuCashWritablePriceImpl {
 		assertNotEquals(null, prc);
 
 		assertEquals(PRC_4_ID, prc.getID());
-		assertEquals(currID2.toString(), prc.getFromCmdtyCurrQualifID().toString());
-		assertEquals(currID2.toString(), prc.getFromCurrencyQualifID().toString());
+		assertEquals(currID2.toString(), prc.getFromCmdtyID().toString());
+		assertEquals(currID2.toString(), prc.getFromCurrID().toString());
 		assertEquals("USD", prc.getFromCurrencyCode());
-		assertEquals("CURRENCY:EUR", prc.getToCurrencyQualifID().toString());
+		assertEquals("CURRENCY:EUR", prc.getToCurrID().toString());
 		assertEquals("EUR", prc.getToCurrencyCode());
 		assertEquals(null, prc.getType());
 		assertEquals(LocalDate.of(2023, 10, 1), prc.getDate());
@@ -293,7 +293,7 @@ public class TestGnuCashWritablePriceImpl {
 		assertEquals(93,  prc.getValueRat().getDenominator().intValue());
 
 		try {
-			GCshSecID dummy = prc.getFromCommodityQualifID(); // illegal call in this context
+			GCshSecID dummy = prc.getFromSecID(); // illegal call in this context
 			assertEquals(1, 0);
 		} catch (Exception exc) {
 			assertEquals(0, 0);
@@ -470,13 +470,13 @@ public class TestGnuCashWritablePriceImpl {
 		assertEquals(ConstTest.Stats.NOF_PRC, gcshInFileStats.getNofEntriesPrices(GCshFileStats.Type.CACHE));
 
 		assertEquals(PRC_1_ID, prc.getID()); // unchanged
-		assertEquals(cmdtyID11.toString(), prc.getFromCmdtyCurrQualifID().toString()); // unchanged
-		assertEquals(cmdtyID11.toString(), prc.getFromCommodityQualifID().toString()); // unchanged
-		assertEquals(cmdtyID12.toString(), prc.getFromCommodityQualifID().toString()); // unchanged
-		assertEquals(cmdtyID11, prc.getFromCommodityQualifID()); // unchanged
-		assertNotEquals(cmdtyID12, prc.getFromCommodityQualifID()); // unchanged, sic
+		assertEquals(cmdtyID11.toString(), prc.getFromCmdtyID().toString()); // unchanged
+		assertEquals(cmdtyID11.toString(), prc.getFromSecID().toString()); // unchanged
+		assertEquals(cmdtyID12.toString(), prc.getFromSecID().toString()); // unchanged
+		assertEquals(cmdtyID11, prc.getFromSecID()); // unchanged
+		assertNotEquals(cmdtyID12, prc.getFromSecID()); // unchanged, sic
 		assertEquals("Mercedes-Benz Group AG", prc.getFromCommodity().getName()); // unchanged
-		assertEquals("CURRENCY:EUR", prc.getToCurrencyQualifID().toString()); // unchanged
+		assertEquals("CURRENCY:EUR", prc.getToCurrID().toString()); // unchanged
 		assertEquals("EUR", prc.getToCurrencyCode()); // unchanged
 		assertEquals(Type.TRANSACTION, prc.getType()); // unchanged
 		assertEquals(LocalDate.of(2019, 1, 1), prc.getDate()); // changed
@@ -495,13 +495,13 @@ public class TestGnuCashWritablePriceImpl {
 		assertNotEquals(null, prc);
 
 		assertEquals(PRC_1_ID, prc.getID()); // unchanged
-		assertEquals(cmdtyID11.toString(), prc.getFromCmdtyCurrQualifID().toString()); // unchanged
-		assertEquals(cmdtyID11.toString(), prc.getFromCommodityQualifID().toString()); // unchanged
-		assertEquals(cmdtyID12.toString(), prc.getFromCommodityQualifID().toString()); // unchanged
-		assertEquals(cmdtyID11, prc.getFromCommodityQualifID()); // unchanged
-		assertNotEquals(cmdtyID12, prc.getFromCommodityQualifID()); // unchanged, sic
+		assertEquals(cmdtyID11.toString(), prc.getFromCmdtyID().toString()); // unchanged
+		assertEquals(cmdtyID11.toString(), prc.getFromSecID().toString()); // unchanged
+		assertEquals(cmdtyID12.toString(), prc.getFromSecID().toString()); // unchanged
+		assertEquals(cmdtyID11, prc.getFromSecID()); // unchanged
+		assertNotEquals(cmdtyID12, prc.getFromSecID()); // unchanged, sic
 		assertEquals("Mercedes-Benz Group AG", prc.getFromCommodity().getName()); // unchanged
-		assertEquals("CURRENCY:EUR", prc.getToCurrencyQualifID().toString()); // unchanged
+		assertEquals("CURRENCY:EUR", prc.getToCurrID().toString()); // unchanged
 		assertEquals("EUR", prc.getToCurrencyCode()); // unchanged
 		assertEquals(Type.TRANSACTION, prc.getType()); // unchanged
 		assertEquals(LocalDate.of(2019, 1, 1), prc.getDate()); // changed
@@ -516,13 +516,13 @@ public class TestGnuCashWritablePriceImpl {
 		assertEquals(ConstTest.Stats.NOF_PRC, gcshInFileStats.getNofEntriesPrices(GCshFileStats.Type.CACHE));
 
 		assertEquals(PRC_12_ID, prc.getID()); // unchanged
-		assertEquals(cmdtyID21.toString(), prc.getFromCmdtyCurrQualifID().toString()); // unchanged
-		assertEquals(cmdtyID21.toString(), prc.getFromCommodityQualifID().toString()); // unchanged
-		assertEquals(cmdtyID22.toString(), prc.getFromCommodityQualifID().toString()); // unchanged
-		assertEquals(cmdtyID21, prc.getFromCommodityQualifID()); // unchanged
-		assertNotEquals(cmdtyID22, prc.getFromCommodityQualifID()); // unchanged, sic
+		assertEquals(cmdtyID21.toString(), prc.getFromCmdtyID().toString()); // unchanged
+		assertEquals(cmdtyID21.toString(), prc.getFromSecID().toString()); // unchanged
+		assertEquals(cmdtyID22.toString(), prc.getFromSecID().toString()); // unchanged
+		assertEquals(cmdtyID21, prc.getFromSecID()); // unchanged
+		assertNotEquals(cmdtyID22, prc.getFromSecID()); // unchanged, sic
 		assertEquals("SAP SE", prc.getFromCommodity().getName()); // unchanged
-		assertEquals("CURRENCY:EUR", prc.getToCurrencyQualifID().toString()); // unchanged
+		assertEquals("CURRENCY:EUR", prc.getToCurrID().toString()); // unchanged
 		assertEquals("EUR", prc.getToCurrencyCode()); // unchanged
 		assertEquals(Type.LAST, prc.getType()); // unchanged
 		assertEquals(LocalDate.of(2022, 12, 12), prc.getDate()); // changed
@@ -541,13 +541,13 @@ public class TestGnuCashWritablePriceImpl {
 		assertNotEquals(null, prc);
 
 		assertEquals(PRC_12_ID, prc.getID()); // unchanged
-		assertEquals(cmdtyID21.toString(), prc.getFromCmdtyCurrQualifID().toString()); // unchanged
-		assertEquals(cmdtyID21.toString(), prc.getFromCommodityQualifID().toString()); // unchanged
-		assertEquals(cmdtyID22.toString(), prc.getFromCommodityQualifID().toString()); // unchanged
-		assertEquals(cmdtyID21, prc.getFromCommodityQualifID()); // unchanged
-		assertNotEquals(cmdtyID22, prc.getFromCommodityQualifID()); // unchanged, sic
+		assertEquals(cmdtyID21.toString(), prc.getFromCmdtyID().toString()); // unchanged
+		assertEquals(cmdtyID21.toString(), prc.getFromSecID().toString()); // unchanged
+		assertEquals(cmdtyID22.toString(), prc.getFromSecID().toString()); // unchanged
+		assertEquals(cmdtyID21, prc.getFromSecID()); // unchanged
+		assertNotEquals(cmdtyID22, prc.getFromSecID()); // unchanged, sic
 		assertEquals("SAP SE", prc.getFromCommodity().getName()); // unchanged
-		assertEquals("CURRENCY:EUR", prc.getToCurrencyQualifID().toString()); // unchanged
+		assertEquals("CURRENCY:EUR", prc.getToCurrID().toString()); // unchanged
 		assertEquals("EUR", prc.getToCurrencyCode()); // unchanged
 		assertEquals(Type.LAST, prc.getType()); // unchanged
 		assertEquals(LocalDate.of(2022, 12, 12), prc.getDate()); // changed
@@ -600,8 +600,8 @@ public class TestGnuCashWritablePriceImpl {
 
 		newPrcID = prc.getID();
 		assertEquals(LocalDate.of(1910, 5, 1), prc.getDate());
-		assertEquals(cmdtyID11.toString(), prc.getFromCmdtyCurrQualifID().toString());
-		assertEquals(currID1, prc.getToCurrencyQualifID());
+		assertEquals(cmdtyID11.toString(), prc.getFromCmdtyID().toString());
+		assertEquals(currID1, prc.getToCurrID());
 	}
 
 	private void test03_1_1_check_persisted(File outFile) throws Exception {
@@ -617,8 +617,8 @@ public class TestGnuCashWritablePriceImpl {
 
 		assertEquals(newPrcID, prc.getID());
 		assertEquals(LocalDate.of(1910, 5, 1), prc.getDate());
-		assertEquals(cmdtyID11.toString(), prc.getFromCmdtyCurrQualifID().toString());
-		assertEquals(currID1, prc.getToCurrencyQualifID());
+		assertEquals(cmdtyID11.toString(), prc.getFromCmdtyID().toString());
+		assertEquals(currID1, prc.getToCurrID());
 	}
 
 	// ------------------------------
@@ -685,8 +685,8 @@ public class TestGnuCashWritablePriceImpl {
 		// Exception: no splits any more
 		// Don't know what to do about this oddity right now,
 		// but it needs to be addressed at some point.
-		assertEquals(cmdtyID11.toString(), prc.getFromCmdtyCurrQualifID().toString());
-		assertEquals("CURRENCY:EUR", prc.getToCurrencyQualifID().toString());
+		assertEquals(cmdtyID11.toString(), prc.getFromCmdtyID().toString());
+		assertEquals("CURRENCY:EUR", prc.getToCurrID().toString());
 		assertEquals("Mercedes-Benz Group AG", prc.getFromCommodity().getName());
 		// etc.
 		

@@ -127,15 +127,15 @@ public class TestFilePriceManager {
 		mgr = gcshFile.getPriceManager();
 		
 		GnuCashPrice prc = mgr.getPriceByID(PRC_1_ID);
-		assertEquals("CURRENCY:USD", prc.getFromCmdtyCurrQualifID().toString());
-		assertEquals("CURRENCY:EUR", prc.getToCurrencyQualifID().toString());
+		assertEquals("CURRENCY:USD", prc.getFromCmdtyID().toString());
+		assertEquals("CURRENCY:EUR", prc.getToCurrID().toString());
 		assertEquals(1.07527, prc.getValue().doubleValue(), ConstTest.DIFF_TOLERANCE);
 		assertEquals(100,     prc.getValueRat().getNumerator().intValue());
 		assertEquals(93,      prc.getValueRat().getDenominator().intValue());
 		
 		prc = mgr.getPriceByID(PRC_2_ID);
-		assertEquals("EURONEXT:MBG", prc.getFromCmdtyCurrQualifID().toString());
-		assertEquals("CURRENCY:EUR", prc.getToCurrencyQualifID().toString());
+		assertEquals("EURONEXT:MBG", prc.getFromCmdtyID().toString());
+		assertEquals("CURRENCY:EUR", prc.getToCurrID().toString());
 		assertEquals(11.265, prc.getValue().doubleValue(), ConstTest.DIFF_TOLERANCE);
 		assertEquals(2253,   prc.getValueRat().getNumerator().intValue());
 		assertEquals(200,    prc.getValueRat().getDenominator().intValue());

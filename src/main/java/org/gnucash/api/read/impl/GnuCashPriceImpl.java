@@ -81,7 +81,7 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 	// ----------------------------
 
 	@Override
-	public GCshCmdtyID getFromCmdtyCurrQualifID() {
+	public GCshCmdtyID getFromCmdtyID() {
 		if ( jwsdpPeer.getPriceCommodity() == null )
 			return null;
 
@@ -95,32 +95,32 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 	}
 
 	@Override
-	public GCshSecID getFromCommodityQualifID() {
-		GCshCmdtyID cmdtyCurrID = getFromCmdtyCurrQualifID();
+	public GCshSecID getFromSecID() {
+		GCshCmdtyID cmdtyCurrID = getFromCmdtyID();
 		return new GCshSecID(cmdtyCurrID);
 	}
 
 	@Override
-	public GCshCurrID getFromCurrencyQualifID() {
-		GCshCmdtyID cmdtyCurrID = getFromCmdtyCurrQualifID();
+	public GCshCurrID getFromCurrID() {
+		GCshCmdtyID cmdtyCurrID = getFromCmdtyID();
 		return new GCshCurrID(cmdtyCurrID);
 	}
 
 	@Override
 	public GnuCashCommodity getFromCommodity() {
-		GCshSecID cmdtyID = getFromCommodityQualifID();
+		GCshSecID cmdtyID = getFromSecID();
 		GnuCashCommodity cmdty = getGnuCashFile().getCommodityByQualifID(cmdtyID);
 		return cmdty;
 	}
 
 	@Override
 	public String getFromCurrencyCode() {
-		return getFromCurrencyQualifID().getCurrency().getCurrencyCode();
+		return getFromCurrID().getCurrency().getCurrencyCode();
 	}
 
 	@Override
 	public GnuCashCommodity getFromCurrency() {
-		GCshCurrID currID = getFromCurrencyQualifID();
+		GCshCurrID currID = getFromCurrID();
 		GnuCashCommodity cmdty = getGnuCashFile().getCommodityByQualifID(currID);
 		return cmdty;
 	}
@@ -128,7 +128,7 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 	// ----------------------------
 
 	@Override
-	public GCshCurrID getToCurrencyQualifID() {
+	public GCshCurrID getToCurrID() {
 		if ( jwsdpPeer.getPriceCurrency() == null )
 			return null;
 
@@ -158,10 +158,10 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 
 	@Override
 	public GnuCashCommodity getToCurrency() {
-		if ( getToCurrencyQualifID() == null )
+		if ( getToCurrID() == null )
 			return null;
 
-		GnuCashCommodity cmdty = getGnuCashFile().getCommodityByQualifID(getToCurrencyQualifID());
+		GnuCashCommodity cmdty = getGnuCashFile().getCommodityByQualifID(getToCurrID());
 
 		return cmdty;
 	}
@@ -286,7 +286,7 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 
     @Override
 	public int compareTo(final GnuCashPrice otherPrc) {
-		int i = getFromCmdtyCurrQualifID().toString().compareTo(otherPrc.getFromCmdtyCurrQualifID().toString());
+		int i = getFromCmdtyID().toString().compareTo(otherPrc.getFromCmdtyID().toString());
 		if ( i != 0 ) {
 			return i;
 		}
@@ -313,13 +313,13 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 		result += "id=" + getID();
 
 		try {
-			result += ", cmdty-qualif-id='" + getFromCmdtyCurrQualifID() + "'";
+			result += ", cmdty-qualif-id='" + getFromCmdtyID() + "'";
 		} catch (InvalidCmdtyTypeException e) {
 			result += ", cmdty-qualif-id=" + "ERROR";
 		}
 
 		try {
-			result += ", curr-qualif-id='" + getToCurrencyQualifID() + "'";
+			result += ", curr-qualif-id='" + getToCurrID() + "'";
 		} catch (Exception e) {
 			result += ", curr-qualif-id=" + "ERROR";
 		}

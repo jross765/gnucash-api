@@ -111,11 +111,11 @@ public interface GnuCashPrice extends Comparable<GnuCashPrice>,
 
     // ----------------------------
 
-    GCshCmdtyID getFromCmdtyCurrQualifID();
+    GCshCmdtyID getFromCmdtyID();
 
-    GCshSecID getFromCommodityQualifID();
+    GCshSecID getFromSecID();
 
-    GCshCurrID getFromCurrencyQualifID();
+    GCshCurrID getFromCurrID();
 
     GnuCashCommodity getFromCommodity();
 
@@ -125,7 +125,7 @@ public interface GnuCashPrice extends Comparable<GnuCashPrice>,
     
     // ----------------------------
 
-    GCshCurrID getToCurrencyQualifID();
+    GCshCurrID getToCurrID();
 
     String getToCurrencyCode();
 

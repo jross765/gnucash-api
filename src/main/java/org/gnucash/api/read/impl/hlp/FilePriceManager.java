@@ -208,7 +208,7 @@ public class FilePriceManager {
 		List<GnuCashPrice> result = new ArrayList<GnuCashPrice>();
 
 		for ( GnuCashPrice prc : getPrices() ) {
-			if ( prc.getFromCmdtyCurrQualifID().toString().equals(cmdtyCurrID.toString()) ) {
+			if ( prc.getFromCmdtyID().toString().equals(cmdtyCurrID.toString()) ) {
 				result.add(prc);
 			}
 		}
