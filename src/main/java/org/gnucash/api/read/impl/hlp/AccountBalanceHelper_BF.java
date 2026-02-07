@@ -59,14 +59,14 @@ public class AccountBalanceHelper_BF
 		return balance;
 	}
 
-	public static BigFraction getBalance(final LocalDate date, final GCshCmdtyID cmdtyCurrID,
+	public static BigFraction getBalance(final LocalDate date, final GCshCmdtyID cmdtyID,
 									     final SimpleAccount acct) {
-		if ( cmdtyCurrID == null ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
+		if ( cmdtyID == null ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is null");
 		}
 
-		if ( ! cmdtyCurrID.isSet() ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
+		if ( ! cmdtyID.isSet() ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is not set");
 		}
 
 		BigFraction retval = getBalance(date, acct);
@@ -77,7 +77,7 @@ public class AccountBalanceHelper_BF
 		}
 
 		// is conversion needed?
-		if ( acct.getCmdtyCurrID().equals(cmdtyCurrID) ) {
+		if ( acct.getCmdtyID().equals(cmdtyID) ) {
 			return retval;
 		}
 	
@@ -88,17 +88,17 @@ public class AccountBalanceHelper_BF
 			return null;
 		}
 	
-		retval = priceTab.convertToBaseCurrencyRat(retval, cmdtyCurrID);
+		retval = priceTab.convertToBaseCurrencyRat(retval, cmdtyID);
 		if ( retval == null ) {
 			LOGGER.error("getBalance: Cannot transfer " + "from our currency '"
-					+ acct.getCmdtyCurrID().toString() + "' to the base-currency!");
+					+ acct.getCmdtyID().toString() + "' to the base-currency!");
 			return null;
 		}
 	
-		retval = priceTab.convertFromBaseCurrencyRat(retval, cmdtyCurrID);
+		retval = priceTab.convertFromBaseCurrencyRat(retval, cmdtyID);
 		if ( retval == null ) {
 			LOGGER.error("getBalance: Cannot transfer " + "from base-currenty to given currency '"
-					+ cmdtyCurrID.toString() + "'");
+					+ cmdtyID.toString() + "'");
 			return null;
 		}
 	
@@ -120,8 +120,8 @@ public class AccountBalanceHelper_BF
 		}
 
 		// is conversion needed?
-		if ( acct.getCmdtyCurrID().getType() == GCshCmdtyID.Type.CURRENCY ) {
-			if ( acct.getCmdtyCurrID().getCode().equals(curr.getCurrencyCode()) ) {
+		if ( acct.getCmdtyID().getType() == GCshCmdtyID.Type.CURRENCY ) {
+			if ( acct.getCmdtyID().getCode().equals(curr.getCurrencyCode()) ) {
 				return retval;
 			}
 		}
@@ -133,10 +133,10 @@ public class AccountBalanceHelper_BF
 			return null;
 		}
 
-		retval = priceTab.convertToBaseCurrencyRat(retval, acct.getCmdtyCurrID());
+		retval = priceTab.convertToBaseCurrencyRat(retval, acct.getCmdtyID());
 		if ( retval == null ) {
 			LOGGER.warn("getBalance: Cannot transfer " + "from our currency '"
-					+ acct.getCmdtyCurrID().toString() + "' to the base-currency");
+					+ acct.getCmdtyID().toString() + "' to the base-currency");
 			return null;
 		}
 
@@ -196,23 +196,23 @@ public class AccountBalanceHelper_BF
 
 	public static BigFraction getBalanceRecursive(final LocalDate date,
 												  final SimpleAccount acct) {
-		return getBalanceRecursive(date, acct.getCmdtyCurrID(), acct);
+		return getBalanceRecursive(date, acct.getCmdtyID(), acct);
 	}
 
-	public static BigFraction getBalanceRecursive(final LocalDate date, final GCshCmdtyID cmdtyCurrID,
+	public static BigFraction getBalanceRecursive(final LocalDate date, final GCshCmdtyID cmdtyID,
 												  final SimpleAccount acct) {
-		if ( cmdtyCurrID == null ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
+		if ( cmdtyID == null ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is null");
 		}
 
-		if ( ! cmdtyCurrID.isSet() ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
+		if ( ! cmdtyID.isSet() ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is not set");
 		}
 
-			if ( cmdtyCurrID.getType() == GCshCmdtyID.Type.CURRENCY )
-				return getBalanceRecursive(date, new GCshCurrID(cmdtyCurrID.getCode()).getCurrency(), acct);
+			if ( cmdtyID.getType() == GCshCmdtyID.Type.CURRENCY )
+				return getBalanceRecursive(date, new GCshCurrID(cmdtyID.getCode()).getCurrency(), acct);
 			else
-				return getBalance(date, cmdtyCurrID, acct); // CAUTION: This assumes that under a stock account,
+				return getBalance(date, cmdtyID, acct); // CAUTION: This assumes that under a stock account,
 													        // there are no children (which sounds sensible,
 													        // but there might be special cases)
 	}
@@ -285,11 +285,11 @@ public class AccountBalanceHelper_BF
 	
 	public static String formatBalance(SimpleAccount acct, BigFraction blnc, Locale lcl) {
 		NumberFormat nf = acct.getCurrencyFormat(lcl);
-    	if ( acct.getCmdtyCurrID().getType() == GCshCmdtyID.Type.CURRENCY ) {
-    		nf.setCurrency(Currency.getInstance(acct.getCmdtyCurrID().getCode()));
+    	if ( acct.getCmdtyID().getType() == GCshCmdtyID.Type.CURRENCY ) {
+    		nf.setCurrency(Currency.getInstance(acct.getCmdtyID().getCode()));
     		return nf.format(blnc.doubleValue());
     	} else {
-    		return nf.format(blnc.doubleValue()) + " " + acct.getCmdtyCurrID().getCode().toString();
+    		return nf.format(blnc.doubleValue()) + " " + acct.getCmdtyID().getCode().toString();
     	}
 	}
 

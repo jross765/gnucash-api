@@ -11,8 +11,8 @@ import org.gnucash.api.generated.Price.PriceCurrency;
 import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
-import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,15 +31,15 @@ public class PriceHelper_FP {
 	// ---------------------------------------------------------------
 
     public static FixedPointNumber getLatestPrice(
-			final GCshCmdtyID cmdtyCurrID,
+			final GCshCmdtyID cmdtyID,
 			final GnuCashFile gcshFile,
 			final GncPricedb priceDB) {
-		if ( cmdtyCurrID == null ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
+		if ( cmdtyID == null ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is null");
 		}
 		
-		if ( ! cmdtyCurrID.isSet() ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
+		if ( ! cmdtyID.isSet() ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is not set");
 		}
 
 		if ( gcshFile == null ) {
@@ -50,7 +50,7 @@ public class PriceHelper_FP {
 			throw new IllegalArgumentException("argument <priceDB> is null");
 		}
 
-		return getLatestPrice(cmdtyCurrID,
+		return getLatestPrice(cmdtyID,
 							  gcshFile, priceDB, 0);
 	}
 
@@ -77,16 +77,16 @@ public class PriceHelper_FP {
 	// ----------------------------
 
 	private static FixedPointNumber getLatestPrice(
-			final GCshCmdtyID cmdtyCurrID,
+			final GCshCmdtyID cmdtyID,
 			final GnuCashFile gcshFile,
 			final GncPricedb priceDB,
 			final int depth) {
-		if ( cmdtyCurrID == null ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
+		if ( cmdtyID == null ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is null");
 		}
 		
-		if ( ! cmdtyCurrID.isSet() ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
+		if ( ! cmdtyID.isSet() ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is not set");
 		}
 
 		if ( gcshFile == null ) {
@@ -113,10 +113,10 @@ public class PriceHelper_FP {
 				continue;
 			}
 
-			PriceCommodity fromCmdtyCurr = priceQuote.getPriceCommodity();
+			PriceCommodity fromCmdty = priceQuote.getPriceCommodity();
 			PriceCurrency toCurr = priceQuote.getPriceCurrency();
 
-			if ( fromCmdtyCurr == null ) {
+			if ( fromCmdty == null ) {
 				LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes without from-commodity/currency: '"
 						+ priceQuote.toString() + "'");
 				continue;
@@ -129,14 +129,14 @@ public class PriceHelper_FP {
 			}
 
 			try {
-				if ( fromCmdtyCurr.getCmdtySpace() == null ) {
+				if ( fromCmdty.getCmdtySpace() == null ) {
 					LOGGER.warn(
 							"getLatestPrice: GnuCash file contains price-quotes with from-commodity/currency without name space: id='"
 									+ priceQuote.getPriceId().getValue() + "'");
 					continue;
 				}
 
-				if ( fromCmdtyCurr.getCmdtyId() == null ) {
+				if ( fromCmdty.getCmdtyId() == null ) {
 					LOGGER.warn(
 							"getLatestPrice: GnuCash file contains price-quotes with from-commodity/currency without code: id='"
 									+ priceQuote.getPriceId().getValue() + "'");
@@ -175,8 +175,8 @@ public class PriceHelper_FP {
 				 * " with no type id='" + priceQuote.getPriceID().getValue() + "'"); continue; }
 				 */
 
-				if ( !(fromCmdtyCurr.getCmdtySpace().equals(cmdtyCurrID.getNameSpace())
-						&& fromCmdtyCurr.getCmdtyId().equals(cmdtyCurrID.getCode())) ) {
+				if ( !(fromCmdty.getCmdtySpace().equals(cmdtyID.getNameSpace())
+						&& fromCmdty.getCmdtyId().equals(cmdtyID.getCode())) ) {
 					continue;
 				}
 
@@ -219,15 +219,15 @@ public class PriceHelper_FP {
 				if ( latestDate == null || latestDate.before(date) ) {
 					latestDate = date;
 					latestQuote = new FixedPointNumber(priceQuote.getPriceValue());
-					LOGGER.debug("getLatestPrice: pCmdtyCurrID='" + cmdtyCurrID.toString() + "' converted " + latestQuote + " <= " + priceQuote.getPriceValue());
+					LOGGER.debug("getLatestPrice: pCmdtyID='" + cmdtyID.toString() + "' converted " + latestQuote + " <= " + priceQuote.getPriceValue());
 				}
 
 			} catch (Exception e) {
-				LOGGER.error("getLatestPrice: [ArithmeticException]: pCmdtyCurrID='" + cmdtyCurrID.toString() + "'! Ignoring a bad price-quote '" + priceQuote + "'", e);
+				LOGGER.error("getLatestPrice: [ArithmeticException]: pCmdtyID='" + cmdtyID.toString() + "'! Ignoring a bad price-quote '" + priceQuote + "'", e);
 			}
 		} // for priceQuote
 
-		LOGGER.debug("getLatestPrice: pCmdtyCurrID='" + cmdtyCurrID.toString() + "' = " + latestQuote + " from " + latestDate);
+		LOGGER.debug("getLatestPrice: pCmdtyID='" + cmdtyID.toString() + "' = " + latestQuote + " from " + latestDate);
 
 		if ( latestQuote == null ) {
 			return null;

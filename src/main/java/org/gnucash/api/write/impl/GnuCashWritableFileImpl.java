@@ -1973,7 +1973,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	
 	@Override
     public GnuCashWritablePrice getWritablePriceByCmdtyCurrIDDate(final GCshCmdtyID cmdtyCurrID, final LocalDate date) {
-		GnuCashPrice prc = prcMgr.getPriceByCmdtyCurrIDDate(cmdtyCurrID, date);
+		GnuCashPrice prc = prcMgr.getPriceByCmdtyIDDate(cmdtyCurrID, date);
 		return new GnuCashWritablePriceImpl((GnuCashPriceImpl) prc);
     }
 

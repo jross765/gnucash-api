@@ -322,12 +322,12 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
     }
 
     /**
-     * @param cmdtyCurrID the new commodity/currency name-space/code
+     * @param cmdtyID the new commodity/currency name-space/code
      * 
      */
-    public void setCmdtyCurrID(final GCshCmdtyID cmdtyCurrID) {
-    	this.getJwsdpPeer().getTrnCurrency().setCmdtySpace(cmdtyCurrID.getNameSpace());
-    	this.getJwsdpPeer().getTrnCurrency().setCmdtyId(cmdtyCurrID.getCode());
+    public void setCmdtyCurrID(final GCshCmdtyID cmdtyID) {
+    	this.getJwsdpPeer().getTrnCurrency().setCmdtySpace(cmdtyID.getNameSpace());
+    	this.getJwsdpPeer().getTrnCurrency().setCmdtyId(cmdtyID.getCode());
     	getWritableFile().setModified(true);
     }
 

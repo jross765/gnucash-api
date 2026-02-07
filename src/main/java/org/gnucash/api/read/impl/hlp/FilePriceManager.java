@@ -19,8 +19,8 @@ import org.gnucash.api.read.GnuCashPrice;
 import org.gnucash.api.read.impl.GnuCashFileImpl;
 import org.gnucash.api.read.impl.GnuCashPriceImpl;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
-import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.simple.GCshPrcID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,12 +111,12 @@ public class FilePriceManager {
 
 	// ---------------------------------------------------------------
 	
-	public GnuCashPrice getPriceByCmdtyIDDate(final GCshSecID cmdtyID, final LocalDate date) {
-		return getPriceByCmdtyCurrIDDate(cmdtyID, date);
+	public GnuCashPrice getPriceBySecIDDate(final GCshSecID secID, final LocalDate date) {
+		return getPriceByCmdtyIDDate(secID, date);
 	}
 	
 	public GnuCashPrice getPriceByCurrIDDate(final GCshCurrID currID, final LocalDate date) {
-		return getPriceByCmdtyCurrIDDate(currID, date);
+		return getPriceByCmdtyIDDate(currID, date);
 	}
 	
 	public GnuCashPrice getPriceByCurrDate(final Currency curr, final LocalDate date) {
@@ -125,23 +125,23 @@ public class FilePriceManager {
 		}
 		
 		GCshCurrID currID = new GCshCurrID(curr);
-		return getPriceByCmdtyCurrIDDate(currID, date);
+		return getPriceByCmdtyIDDate(currID, date);
 	}
 
-	public GnuCashPrice getPriceByCmdtyCurrIDDate(final GCshCmdtyID cmdtyCurrID, final LocalDate date) {
-		if ( cmdtyCurrID == null ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
+	public GnuCashPrice getPriceByCmdtyIDDate(final GCshCmdtyID cmdtyID, final LocalDate date) {
+		if ( cmdtyID == null ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is null");
 		}
 		
-		if ( ! cmdtyCurrID.isSet() ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
+		if ( ! cmdtyID.isSet() ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is not set");
 		}
 		
 		if ( date == null ) {
 			throw new IllegalArgumentException("argument <date> is null");
 		}
 		
-		for ( GnuCashPrice prc : getPricesByCmdtyCurrID(cmdtyCurrID) ) {
+		for ( GnuCashPrice prc : getPricesByCmdtyID(cmdtyID) ) {
 			if ( prc.getDate().equals(date) ) {
 				return prc;
 			}
@@ -163,19 +163,19 @@ public class FilePriceManager {
 		return Collections.unmodifiableList(temp);
 	}
 	
-	public List<GnuCashPrice> getPricesByCmdtyID(final GCshSecID cmdtyID) {
-		if ( cmdtyID == null ) {
-			throw new IllegalArgumentException("argument <cmdtyID> is null");
+	public List<GnuCashPrice> getPricesBySecID(final GCshSecID secID) {
+		if ( secID == null ) {
+			throw new IllegalArgumentException("argument <secID> is null");
 		}
 		
-		if ( ! cmdtyID.isSet() ) {
-			throw new IllegalArgumentException("argument <cmdtyID> is not set");
+		if ( ! secID.isSet() ) {
+			throw new IllegalArgumentException("argument <secID> is not set");
 		}
 		
-		return getPricesByCmdtyCurrID(cmdtyID);
+		return getPricesByCmdtyID(secID);
 	}
 	
-	public List<GnuCashPrice> getPricesByCmdtyCurrID(final GCshCurrID currID) {
+	public List<GnuCashPrice> getPricesByCurrID(final GCshCurrID currID) {
 		if ( currID == null ) {
 			throw new IllegalArgumentException("argument <currID> is null");
 		}
@@ -184,31 +184,31 @@ public class FilePriceManager {
 			throw new IllegalArgumentException("argument <currID> is not set");
 		}
 		
-		return getPricesByCmdtyCurrID(currID);
+		return getPricesByCurrID(currID);
 	}
 	
-	public List<GnuCashPrice> getPricesByCmdtyCurr(final Currency curr) {
+	public List<GnuCashPrice> getPricesByCurr(final Currency curr) {
 		if ( curr == null ) {
 			throw new IllegalArgumentException("argument <curr> is null");
 		}
 		
 		GCshCurrID currID = new GCshCurrID(curr);
-		return getPricesByCmdtyCurrID(currID);
+		return getPricesByCurrID(currID);
 	}
 	
-	public List<GnuCashPrice> getPricesByCmdtyCurrID(final GCshCmdtyID cmdtyCurrID) {
-		if ( cmdtyCurrID == null ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
+	public List<GnuCashPrice> getPricesByCmdtyID(final GCshCmdtyID cmdtyID) {
+		if ( cmdtyID == null ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is null");
 		}
 		
-		if ( ! cmdtyCurrID.isSet() ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
+		if ( ! cmdtyID.isSet() ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is not set");
 		}
 		
 		List<GnuCashPrice> result = new ArrayList<GnuCashPrice>();
 
 		for ( GnuCashPrice prc : getPrices() ) {
-			if ( prc.getFromCmdtyID().toString().equals(cmdtyCurrID.toString()) ) {
+			if ( prc.getFromCmdtyID().toString().equals(cmdtyID.toString()) ) {
 				result.add(prc);
 			}
 		}
@@ -219,8 +219,8 @@ public class FilePriceManager {
 
 	// ---------------------------------------------------------------
 
-	public FixedPointNumber getLatestPrice(final GCshCmdtyID cmdtyCurrID) {
-		return PriceHelper_FP.getLatestPrice(cmdtyCurrID, 
+	public FixedPointNumber getLatestPrice(final GCshCmdtyID cmdtyID) {
+		return PriceHelper_FP.getLatestPrice(cmdtyID, 
 											 gcshFile, priceDB);
 	}
 
@@ -231,15 +231,15 @@ public class FilePriceManager {
 
 	@Deprecated
 	public FixedPointNumber getLatestPrice(final String pCmdtySpace, final String pCmdtyID) {
-		GCshCmdtyID cmdtyCurrID = new GCshCmdtyID(pCmdtySpace, pCmdtyID);
-		return PriceHelper_FP.getLatestPrice(cmdtyCurrID, 
+		GCshCmdtyID cmdtyID = new GCshCmdtyID(pCmdtySpace, pCmdtyID);
+		return PriceHelper_FP.getLatestPrice(cmdtyID, 
 											 gcshFile, priceDB);
 	}
 
 	// ----------------------------
 	
-	public BigFraction getLatestPriceRat(final GCshCmdtyID cmdtyCurrID) {
-		return PriceHelper_BF.getLatestPrice(cmdtyCurrID,
+	public BigFraction getLatestPriceRat(final GCshCmdtyID cmdtyID) {
+		return PriceHelper_BF.getLatestPrice(cmdtyID,
 											 gcshFile, priceDB);
 	}
 
@@ -250,8 +250,8 @@ public class FilePriceManager {
 
 	@Deprecated
 	public BigFraction getLatestPriceRat(final String pCmdtySpace, final String pCmdtyID) {
-		GCshCmdtyID cmdtyCurrID = new GCshCmdtyID(pCmdtySpace, pCmdtyID);
-		return PriceHelper_BF.getLatestPrice(cmdtyCurrID,
+		GCshCmdtyID cmdtyID = new GCshCmdtyID(pCmdtySpace, pCmdtyID);
+		return PriceHelper_BF.getLatestPrice(cmdtyID,
 											 gcshFile, priceDB);
 	}
 

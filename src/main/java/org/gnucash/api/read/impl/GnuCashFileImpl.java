@@ -1155,7 +1155,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	// ---------------------------------------------------------------
 
 	public GnuCashPrice getPriceByCmdtyIDDate(final GCshSecID cmdtyID, final LocalDate date) {
-		return prcMgr.getPriceByCmdtyIDDate(cmdtyID, date);
+		return prcMgr.getPriceBySecIDDate(cmdtyID, date);
 	}
 	
 	public GnuCashPrice getPriceByCurrIDDate(final GCshCurrID currID, final LocalDate date) {
@@ -1167,7 +1167,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	}
 	
 	public GnuCashPrice getPriceByCmdtyCurrIDDate(final GCshCmdtyID cmdtyCurrID, final LocalDate date) {
-		return prcMgr.getPriceByCmdtyCurrIDDate(cmdtyCurrID, date);
+		return prcMgr.getPriceByCmdtyIDDate(cmdtyCurrID, date);
     }
 
 	// ---------------------------------------------------------------
@@ -1182,22 +1182,22 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 
 	@Override
 	public List<GnuCashPrice> getPricesByCmdtyID(final GCshSecID cmdtyID) {
-		return prcMgr.getPricesByCmdtyCurrID(cmdtyID);
+		return prcMgr.getPricesByCmdtyID(cmdtyID);
 	}
 
 	@Override
 	public List<GnuCashPrice> getPricesByCurrID(final GCshCurrID currID) {
-		return prcMgr.getPricesByCmdtyCurrID(currID);
+		return prcMgr.getPricesByCurrID(currID);
 	}
 
 	@Override
 	public List<GnuCashPrice> getPricesByCurr(final Currency curr) {
-		return prcMgr.getPricesByCmdtyCurr(curr);
+		return prcMgr.getPricesByCurr(curr);
 	}
 
 	@Override
 	public List<GnuCashPrice> getPricesByCmdtyCurrID(final GCshCmdtyID cmdtyCurrID) {
-		return prcMgr.getPricesByCmdtyCurrID(cmdtyCurrID);
+		return prcMgr.getPricesByCmdtyID(cmdtyCurrID);
 	}
 
 	//    public FixedPointNumber getLatestPrice(final String cmdtyCurrIDStr) {
