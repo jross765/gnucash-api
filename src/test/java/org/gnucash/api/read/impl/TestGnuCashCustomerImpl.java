@@ -80,7 +80,12 @@ public class TestGnuCashCustomerImpl {
 		assertEquals("Unfug und Quatsch GmbH", cust.getName());
 
 		assertEquals(0.0, cust.getDiscount().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(0,   cust.getDiscountRat().getNumerator().intValue());
+		assertEquals(1,   cust.getDiscountRat().getDenominator().intValue());
+
 		assertEquals(0.0, cust.getCredit().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(0,   cust.getCreditRat().getNumerator().intValue());
+		assertEquals(1,   cust.getCreditRat().getDenominator().intValue());
 
 		assertEquals(null, cust.getNotes());
 
@@ -102,7 +107,12 @@ public class TestGnuCashCustomerImpl {
 		assertEquals("Is That So Ltd.", cust.getName());
 
 		assertEquals(3.0, cust.getDiscount().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(3,   cust.getDiscountRat().getNumerator().intValue());
+		assertEquals(1,   cust.getDiscountRat().getDenominator().intValue());
+		
 		assertEquals(2000.0, cust.getCredit().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(2000,   cust.getCreditRat().getNumerator().intValue());
+		assertEquals(1,      cust.getCreditRat().getDenominator().intValue());
 
 		assertEquals("So you want to sell to us, right?", cust.getNotes());
 
@@ -120,7 +130,12 @@ public class TestGnuCashCustomerImpl {
 		assertEquals("N'importe Quoi S.A.", cust.getName());
 
 		assertEquals(0.0, cust.getDiscount().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(0,   cust.getDiscountRat().getNumerator().intValue());
+		assertEquals(1,   cust.getDiscountRat().getDenominator().intValue());
+		
 		assertEquals(0.0, cust.getCredit().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(0,   cust.getCreditRat().getNumerator().intValue());
+		assertEquals(1,   cust.getCreditRat().getDenominator().intValue());
 
 		assertEquals("Nous n'achetons rien!", cust.getNotes());
 

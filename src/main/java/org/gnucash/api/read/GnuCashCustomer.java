@@ -2,6 +2,7 @@ package org.gnucash.api.read;
 
 import java.util.List;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.aux.GCshAddress;
 import org.gnucash.api.read.aux.GCshBillTerms;
 import org.gnucash.api.read.aux.GCshTaxTable;
@@ -71,11 +72,15 @@ public interface GnuCashCustomer extends GnuCashObject,
      */
     FixedPointNumber getDiscount();
 
+    BigFraction      getDiscountRat();
+
     /**
      *
      * @return the customer-specific credit
      */
     FixedPointNumber getCredit();
+
+    BigFraction      getCreditRat();
 
     /**
      * @return user-defined notes about the customer (may be null)

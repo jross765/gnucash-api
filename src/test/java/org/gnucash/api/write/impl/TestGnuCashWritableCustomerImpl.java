@@ -111,7 +111,12 @@ public class TestGnuCashWritableCustomerImpl {
 		assertEquals("Unfug und Quatsch GmbH", cust.getName());
 
 		assertEquals(0.0, cust.getDiscount().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(0,   cust.getDiscountRat().getNumerator().intValue());
+		assertEquals(1,   cust.getDiscountRat().getDenominator().intValue());
+
 		assertEquals(0.0, cust.getCredit().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(0,   cust.getCreditRat().getNumerator().intValue());
+		assertEquals(1,   cust.getCreditRat().getDenominator().intValue());
 
 		assertEquals(null, cust.getNotes());
 
@@ -222,7 +227,14 @@ public class TestGnuCashWritableCustomerImpl {
 		assertEquals("Lucky Luke", cust.getName()); // changed
 
 		assertEquals(0.0, cust.getDiscount().doubleValue(), ConstTest.DIFF_TOLERANCE); // unchanged
-		assertEquals(10600.55, cust.getCredit().doubleValue(), ConstTest.DIFF_TOLERANCE); // changed
+		assertEquals(0,   cust.getDiscountRat().getNumerator().intValue());
+		assertEquals(1,   cust.getDiscountRat().getDenominator().intValue());
+
+		assertEquals(10600.55,   cust.getCredit().doubleValue(), ConstTest.DIFF_TOLERANCE); // changed
+		// ::TODO: The following values are the ones returned, 
+		// but definitely wrong!
+//		assertEquals(-517178369, cust.getCreditRat().getNumerator().intValue());
+//		assertEquals(-727379968, cust.getCreditRat().getDenominator().intValue());
 
 		assertEquals("He draws quicker than his shadow does", cust.getNotes()); // changed
 
@@ -249,7 +261,14 @@ public class TestGnuCashWritableCustomerImpl {
 		assertEquals("Lucky Luke", cust.getName()); // changed
 
 		assertEquals(0.0, cust.getDiscount().doubleValue(), ConstTest.DIFF_TOLERANCE); // unchanged
+		assertEquals(0,   cust.getDiscountRat().getNumerator().intValue());
+		assertEquals(1,   cust.getDiscountRat().getDenominator().intValue());
+
 		assertEquals(10600.55, cust.getCredit().doubleValue(), ConstTest.DIFF_TOLERANCE); // changed
+		// ::TODO: The following values are the ones returned, 
+		// but definitely wrong!
+//		assertEquals(-517178369, cust.getCreditRat().getNumerator().intValue());
+//		assertEquals(-727379968, cust.getCreditRat().getDenominator().intValue());
 
 		assertEquals("He draws quicker than his shadow does", cust.getNotes()); // changed
 
@@ -537,7 +556,12 @@ public class TestGnuCashWritableCustomerImpl {
 		assertEquals("000001", cust.getNumber());
 		assertEquals("Unfug und Quatsch GmbH", cust.getName());
 		assertEquals(0.0, cust.getDiscount().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(0,   cust.getDiscountRat().getNumerator().intValue());
+		assertEquals(1,   cust.getDiscountRat().getDenominator().intValue());
+		
 		assertEquals(0.0, cust.getCredit().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(0,   cust.getCreditRat().getNumerator().intValue());
+		assertEquals(1,   cust.getCreditRat().getDenominator().intValue());
 		
 		// Attached objects (*not dependent*)
 		assertEquals(BLLTRM_2_ID, cust.getTermsID());

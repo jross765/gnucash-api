@@ -137,12 +137,36 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      * {@inheritDoc}
      */
     @Override
+	public BigFraction getDiscountRat() {
+    	if ( jwsdpPeer.getCustDiscount() == null ) {
+			return null;
+		}
+	
+    	return BigFraction.parse(jwsdpPeer.getCustDiscount());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
 	public FixedPointNumber getCredit() {
 		if ( jwsdpPeer.getCustCredit() == null ) {
 			return null;
 		}
 
 		return new FixedPointNumber(jwsdpPeer.getCustCredit());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+	public BigFraction getCreditRat() {
+		if ( jwsdpPeer.getCustCredit() == null ) {
+			return null;
+		}
+
+		return BigFraction.parse(jwsdpPeer.getCustCredit());
     }
 
     /**
