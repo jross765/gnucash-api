@@ -325,7 +325,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
      * @param cmdtyID the new commodity/currency name-space/code
      * 
      */
-    public void setCmdtyCurrID(final GCshCmdtyID cmdtyID) {
+    public void setCmdtyID(final GCshCmdtyID cmdtyID) {
     	this.getJwsdpPeer().getTrnCurrency().setCmdtySpace(cmdtyID.getNameSpace());
     	this.getJwsdpPeer().getTrnCurrency().setCmdtyId(cmdtyID.getCode());
     	getWritableFile().setModified(true);

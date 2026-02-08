@@ -165,6 +165,9 @@ public interface GnuCashTransaction extends Comparable<GnuCashTransaction>,
 
     boolean isBalancedRat();
 
+    GCshCmdtyID getCmdtyID();
+
+    @Deprecated
     GCshCmdtyID getCmdtyCurrID();
 
     /**

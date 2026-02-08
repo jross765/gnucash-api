@@ -220,13 +220,13 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		if ( transaction == null ) {
 			return false;
 		}
-		GCshCmdtyID acctCmdtyCurrID = acct.getCmdtyCurrID();
-		if ( acctCmdtyCurrID == null ) {
+		GCshCmdtyID acctCmdtyID = acct.getCmdtyID();
+		if ( acctCmdtyID == null ) {
 			return false;
 		}
 
 		// Important: Don't forget to cast the IDs to their most basic type
-		return ((GCshCmdtyID) acctCmdtyCurrID).equals((GCshCmdtyID) transaction.getCmdtyCurrID());
+		return ((GCshCmdtyID) acctCmdtyID).equals((GCshCmdtyID) transaction.getCmdtyID());
     }
 
     /**

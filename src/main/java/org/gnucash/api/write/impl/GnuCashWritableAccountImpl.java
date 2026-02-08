@@ -533,13 +533,13 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 
 	// ----------------------------
 
-	private void setCmdtyCurrNameSpace(final String currNameSpace) {
-		if ( currNameSpace == null ) {
-			throw new IllegalArgumentException("argument <currNameSpace> is null");
+	private void setCmdtyNameSpace(final String cmdtyNameSpace) {
+		if ( cmdtyNameSpace == null ) {
+			throw new IllegalArgumentException("argument <cmdtyNameSpace> is null");
 		}
 
-		if ( currNameSpace.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <currNameSpace> is empty");
+		if ( cmdtyNameSpace.trim().length() == 0 ) {
+			throw new IllegalArgumentException("argument <cmdtyNameSpace> is empty");
 		}
 
 		if ( getGnuCashFile().getTopAccountIDs().contains(getID())
@@ -548,18 +548,18 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 			throw new UnsupportedOperationException("Setting name is forbidden for root and top-level accounts");
 		}
 
-		String oldCurrNameSpace = getCmdtyCurrID().getNameSpace();
-		if ( oldCurrNameSpace == currNameSpace ) {
+		String oldCmdtyNameSpace = getCmdtyID().getNameSpace();
+		if ( oldCmdtyNameSpace == cmdtyNameSpace ) {
 			return; // nothing has changed
 		}
 
-		this.getJwsdpPeer().getActCommodity().setCmdtySpace(currNameSpace);
+		this.getJwsdpPeer().getActCommodity().setCmdtySpace(cmdtyNameSpace);
 		setIsModified();
 
 		// <<insert code to react further to this change here
 		PropertyChangeSupport propertyChangeFirer = helper.getPropertyChangeSupport();
 		if ( propertyChangeFirer != null ) {
-			propertyChangeFirer.firePropertyChange("currencyNameSpace", oldCurrNameSpace, currNameSpace);
+			propertyChangeFirer.firePropertyChange("commodityNameSpace", oldCmdtyNameSpace, cmdtyNameSpace);
 		}
 	}
 
@@ -567,13 +567,13 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setCmdtyCurrID(final GCshCmdtyID cmdtyCurrID) {
-		if ( cmdtyCurrID == null ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
+	public void setCmdtyID(final GCshCmdtyID cmdtyID) {
+		if ( cmdtyID == null ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is null");
 		}
 
-		if ( ! cmdtyCurrID.isSet() ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
+		if ( ! cmdtyID.isSet() ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is not set");
 		}
 
 //    	if ( getGnuCashFile().getTopAccountIDs().contains(getID()) ||
@@ -582,11 +582,11 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 //			throw new UnsupportedOperationException("Setting name is forbidden for root and top-level accounts");
 //		}
 
-		setCmdtyCurrNameSpace(cmdtyCurrID.getNameSpace());
-		setCmdtyCurrCode(cmdtyCurrID.getCode());
+		setCmdtyNameSpace(cmdtyID.getNameSpace());
+		setCurrCode(cmdtyID.getCode());
 	}
 
-	private void setCmdtyCurrCode(final String currID) {
+	private void setCurrCode(final String currID) {
 		if ( currID == null ) {
 			throw new IllegalArgumentException("argument <currID> is null");
 		}
@@ -601,8 +601,8 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 			throw new UnsupportedOperationException("Setting name is forbidden for root and top-level accounts");
 		}
 
-		String oldCurrencyId = getCmdtyCurrID().getCode();
-		if ( oldCurrencyId == currID ) {
+		String oldCurrId = getCmdtyID().getCode();
+		if ( oldCurrId == currID ) {
 			return; // nothing has changed
 		}
 
@@ -612,7 +612,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 		// <<insert code to react further to this change here
 		PropertyChangeSupport propertyChangeFirer = helper.getPropertyChangeSupport();
 		if ( propertyChangeFirer != null ) {
-			propertyChangeFirer.firePropertyChange("currencyID", oldCurrencyId, currID);
+			propertyChangeFirer.firePropertyChange("currencyID", oldCurrId, currID);
 		}
 	}
 
@@ -1102,7 +1102,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 
 		buffer.append(", commodity/currency='");
 		try {
-			buffer.append(getCmdtyCurrID() + "'");
+			buffer.append(getCmdtyID() + "'");
 		} catch (InvalidCmdtyTypeException e) {
 			buffer.append("ERROR");
 		}

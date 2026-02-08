@@ -86,27 +86,27 @@ public interface GnuCashWritableAccount extends GnuCashAccount,
 	// ----------------------------
 
     /**
-     * @param cmdtyCurrID 
+     * @param cmdtyID 
      * @param id the new currency
      * 
-     * @see #getCmdtyCurrID()
+     * @see #getCmdtyID()
      */
-    void setCmdtyCurrID(GCshCmdtyID cmdtyCurrID);
+    void setCmdtyID(GCshCmdtyID cmdtyID);
 
     /**
-     * @param newparent the new account or null to make it a top-level-account
+     * @param newPrnt the new account or null to make it a top-level-account
      * 
      * @see #getParentAccount()
      */
-    void setParentAccount(GnuCashAccount newparent);
+    void setParentAccount(GnuCashAccount newPrnt);
 
     /**
      * If the accountId is invalid, make this a top-level-account.
-     * @param newParentID 
+     * @param newPrntID 
      *
      * @see #getParentAccountID()
      */
-    void setParentAccountID(GCshAcctID newParentID);
+    void setParentAccountID(GCshAcctID newPrntID);
     
     // ---------------------------------------------------------------
 

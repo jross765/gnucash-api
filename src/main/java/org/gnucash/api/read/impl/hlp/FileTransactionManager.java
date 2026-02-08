@@ -34,7 +34,7 @@ public class FileTransactionManager {
 
 	protected GnuCashFileImpl gcshFile;
 
-	protected Map<GCshTrxID, GnuCashTransaction>      trxMap;
+	protected Map<GCshTrxID, GnuCashTransaction>       trxMap;
 	protected Map<GCshSpltID, GnuCashTransactionSplit> trxSpltMap;
 
 	// ---------------------------------------------------------------
@@ -225,19 +225,19 @@ public class FileTransactionManager {
 		return result;
 	}
 
-	public List<GnuCashTransactionSplit> getTransactionSplitsByCmdtyCurrID(final GCshCmdtyID cmdtyCurrID) {
-		if ( cmdtyCurrID == null ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
+	public List<GnuCashTransactionSplit> getTransactionSplitsByCmdtyID(final GCshCmdtyID cmdtyID) {
+		if ( cmdtyID == null ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is null");
 		}
 		
-		if ( ! cmdtyCurrID.isSet() ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrID> is not set");
+		if ( ! cmdtyID.isSet() ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is not set");
 		}
 		
 		List<GnuCashTransactionSplit> result = new ArrayList<GnuCashTransactionSplit>();
 
 		for ( GnuCashTransactionSplit splt : trxSpltMap.values() ) {
-			if ( splt.getAccount().getCmdtyCurrID().toString().equals(cmdtyCurrID.toString()) ) {
+			if ( splt.getAccount().getCmdtyID().toString().equals(cmdtyID.toString()) ) {
 				GnuCashTransactionSplit newSplt = gcshFile.getTransactionSplitByID(splt.getID());
 				result.add(newSplt);
 			}

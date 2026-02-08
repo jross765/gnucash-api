@@ -26,12 +26,12 @@ public interface GnuCashWritableTransaction extends GnuCashTransaction,
 {
 
     /**
-     * @param cmdtyCurrID 
+     * @param cmdtyID 
      * @param id the new currency
 
-     * @see #getCmdtyCurrID()
+     * @see #getCmdtyID()
      */
-    void setCmdtyCurrID(GCshCmdtyID cmdtyCurrID);
+    void setCmdtyID(GCshCmdtyID cmdtyID);
 
     /**
      * The GnuCash file is the top-level class to contain everything.

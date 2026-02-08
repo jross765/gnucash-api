@@ -18,8 +18,8 @@ import org.gnucash.api.read.GnuCashPrice;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
-import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.complex.InvalidCmdtyTypeException;
 import org.gnucash.base.basetypes.simple.GCshPrcID;
 import org.slf4j.Logger;
@@ -96,14 +96,14 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 
 	@Override
 	public GCshSecID getFromSecID() {
-		GCshCmdtyID cmdtyCurrID = getFromCmdtyID();
-		return new GCshSecID(cmdtyCurrID);
+		GCshCmdtyID cmdtyID = getFromCmdtyID();
+		return new GCshSecID(cmdtyID);
 	}
 
 	@Override
 	public GCshCurrID getFromCurrID() {
-		GCshCmdtyID cmdtyCurrID = getFromCmdtyID();
-		return new GCshCurrID(cmdtyCurrID);
+		GCshCmdtyID cmdtyID = getFromCmdtyID();
+		return new GCshCurrID(cmdtyID);
 	}
 
 	@Override
@@ -177,11 +177,11 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 		}
 
 //	// the currency may have changed
-//	if ( ! getCurrencyQualifID().getType().equals(CmdtyCurrID.Type.CURRENCY) )
-//	    throw new InvalidCmdtyCurrTypeException();
+//	if ( ! getCurrencyQualifID().getType().equals(CmdtyID.Type.CURRENCY) )
+//	    throw new InvalidCmdtyTypeException();
 
-		Currency currency = Currency.getInstance(getToCurrencyCode());
-		currencyFormat.setCurrency(currency);
+		Currency curr = Currency.getInstance(getToCurrencyCode());
+		currencyFormat.setCurrency(curr);
 
 		return currencyFormat;
 	}

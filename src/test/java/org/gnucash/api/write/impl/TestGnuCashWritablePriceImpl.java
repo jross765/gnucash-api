@@ -312,13 +312,13 @@ public class TestGnuCashWritablePriceImpl {
 	@Test
 	public void test01_3_1() throws Exception {
 		GCshSecID_Exchange cmdty21ID = new GCshSecID_Exchange(GCshCmdtyNameSpace.Exchange.EURONEXT, CMDTY_2_ID);
-		GnuCashWritablePrice prc = gcshInFile.getWritablePriceByCmdtyCurrIDDate(cmdty21ID, LocalDate.of(2012, 3, 5));
+		GnuCashWritablePrice prc = gcshInFile.getWritablePriceBySecIDDate(cmdty21ID, LocalDate.of(2012, 3, 5));
 		assertNotEquals(null, prc);
 		assertEquals(PRC_12_ID, prc.getID());
 		
 		GCshSecID_SecIdType cmdty22ID = new GCshSecID_SecIdType(GCshCmdtyNameSpace.SecIdType.ISIN, CMDTY_2_ISIN);
 		try {
-			prc = gcshInFile.getWritablePriceByCmdtyCurrIDDate(cmdty22ID, LocalDate.of(2012, 3, 5));
+			prc = gcshInFile.getWritablePriceBySecIDDate(cmdty22ID, LocalDate.of(2012, 3, 5));
 			assertEquals(0, 1);
 		} catch ( NullPointerException exc ) {
 			assertEquals(0, 0);
@@ -328,15 +328,15 @@ public class TestGnuCashWritablePriceImpl {
 	@Test
 	public void test01_3_2() throws Exception {
 		GCshSecID_SecIdType cmdty4ID = new GCshSecID_SecIdType(GCshCmdtyNameSpace.SecIdType.ISIN, CMDTY_4_ISIN);
-		GnuCashWritablePrice prc = gcshInFile.getWritablePriceByCmdtyCurrIDDate(cmdty4ID, LocalDate.of(2023, 4, 1));
+		GnuCashWritablePrice prc = gcshInFile.getWritablePriceBySecIDDate(cmdty4ID, LocalDate.of(2023, 4, 1));
 		assertNotEquals(null, prc);
 		assertEquals(PRC_14_ID, prc.getID());
 		
-		prc = gcshInFile.getWritablePriceByCmdtyCurrIDDate(cmdty4ID, LocalDate.of(2023, 7, 1));
+		prc = gcshInFile.getWritablePriceBySecIDDate(cmdty4ID, LocalDate.of(2023, 7, 1));
 		assertNotEquals(null, prc);
 		assertEquals(PRC_15_ID, prc.getID());
 		
-		prc = gcshInFile.getWritablePriceByCmdtyCurrIDDate(cmdty4ID, LocalDate.of(2023, 10, 1));
+		prc = gcshInFile.getWritablePriceBySecIDDate(cmdty4ID, LocalDate.of(2023, 10, 1));
 		assertNotEquals(null, prc);
 		assertEquals(PRC_16_ID, prc.getID());
 	}
@@ -353,7 +353,7 @@ public class TestGnuCashWritablePriceImpl {
 		assertNotEquals(null, prc);
 		assertEquals(PRC_17_ID, prc.getID());
 		
-		prc = gcshInFile.getWritablePriceByCmdtyCurrIDDate(currID, LocalDate.of(2023, 12, 1));
+		prc = gcshInFile.getWritablePriceByCmdtyIDDate(currID, LocalDate.of(2023, 12, 1));
 		assertNotEquals(null, prc);
 		assertEquals(PRC_17_ID, prc.getID());
 	}
@@ -430,7 +430,7 @@ public class TestGnuCashWritablePriceImpl {
 		assertEquals(ConstTest.Stats.NOF_PRC, gcshInFileStats.getNofEntriesPrices(GCshFileStats.Type.CACHE));
 
 		GCshSecID_Exchange cmdty31ID = new GCshSecID_Exchange(GCshCmdtyNameSpace.Exchange.EURONEXT, CMDTY_2_ID);
-		GnuCashWritablePrice prc = gcshInFile.getWritablePriceByCmdtyCurrIDDate(cmdty31ID, LocalDate.of(2012, 3, 5));
+		GnuCashWritablePrice prc = gcshInFile.getWritablePriceBySecIDDate(cmdty31ID, LocalDate.of(2012, 3, 5));
 		assertNotEquals(null, prc);
 		
 		assertEquals(PRC_12_ID, prc.getID());

@@ -629,8 +629,8 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 		return trxMgr.getTransactionSplitsByAccountLotID(acctLotID);
 	}
 
-	public List<GnuCashTransactionSplit> getTransactionSplitsByCmdtyCurrID(final GCshCmdtyID cmdtyCurrID) {
-		return trxMgr.getTransactionSplitsByCmdtyCurrID(cmdtyCurrID);
+	public List<GnuCashTransactionSplit> getTransactionSplitsByCmdtyID(final GCshCmdtyID cmdtyID) {
+		return trxMgr.getTransactionSplitsByCmdtyID(cmdtyID);
 	}
 
 	// ---------------------------------------------------------------
@@ -1154,8 +1154,8 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	
 	// ---------------------------------------------------------------
 
-	public GnuCashPrice getPriceByCmdtyIDDate(final GCshSecID cmdtyID, final LocalDate date) {
-		return prcMgr.getPriceBySecIDDate(cmdtyID, date);
+	public GnuCashPrice getPriceBySecIDDate(final GCshSecID secID, final LocalDate date) {
+		return prcMgr.getPriceBySecIDDate(secID, date);
 	}
 	
 	public GnuCashPrice getPriceByCurrIDDate(final GCshCurrID currID, final LocalDate date) {
@@ -1166,8 +1166,8 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 		return prcMgr.getPriceByCurrDate(curr, date);
 	}
 	
-	public GnuCashPrice getPriceByCmdtyCurrIDDate(final GCshCmdtyID cmdtyCurrID, final LocalDate date) {
-		return prcMgr.getPriceByCmdtyIDDate(cmdtyCurrID, date);
+	public GnuCashPrice getPriceByCmdtyIDDate(final GCshCmdtyID cmdtyID, final LocalDate date) {
+		return prcMgr.getPriceByCmdtyIDDate(cmdtyID, date);
     }
 
 	// ---------------------------------------------------------------
@@ -1181,8 +1181,8 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	}
 
 	@Override
-	public List<GnuCashPrice> getPricesByCmdtyID(final GCshSecID cmdtyID) {
-		return prcMgr.getPricesByCmdtyID(cmdtyID);
+	public List<GnuCashPrice> getPricesBySecID(final GCshSecID secID) {
+		return prcMgr.getPricesByCmdtyID(secID);
 	}
 
 	@Override
@@ -1196,28 +1196,28 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	}
 
 	@Override
-	public List<GnuCashPrice> getPricesByCmdtyCurrID(final GCshCmdtyID cmdtyCurrID) {
-		return prcMgr.getPricesByCmdtyID(cmdtyCurrID);
+	public List<GnuCashPrice> getPricesByCmdtyID(final GCshCmdtyID cmdtyID) {
+		return prcMgr.getPricesByCmdtyID(cmdtyID);
 	}
 
-	//    public FixedPointNumber getLatestPrice(final String cmdtyCurrIDStr) {
-//      return prcMgr.getLatestPrice(cmdtyCurrIDStr);
+	//    public FixedPointNumber getLatestPrice(final String cmdtyIDStr) {
+//      return prcMgr.getLatestPrice(cmdtyIDStr);
 //    }
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public FixedPointNumber getLatestPrice(final GCshCmdtyID cmdtyCurrID) {
-		return prcMgr.getLatestPrice(cmdtyCurrID);
+	public FixedPointNumber getLatestPrice(final GCshCmdtyID cmdtyID) {
+		return prcMgr.getLatestPrice(cmdtyID);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public BigFraction getLatestPriceRat(final GCshCmdtyID cmdtyCurrID) {
-		return prcMgr.getLatestPriceRat(cmdtyCurrID);
+	public BigFraction getLatestPriceRat(final GCshCmdtyID cmdtyID) {
+		return prcMgr.getLatestPriceRat(cmdtyID);
 	}
 
 	/**
@@ -1385,26 +1385,26 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	
 	private void loadPriceDatabaseCore_woProgBar(final GncPricedb priceDB) {
 //		getCurrencyTable().clear();
-//		getCurrencyTable().setConversionFactor(GCshCmdtyCurrNameSpace.CURRENCY, 
+//		getCurrencyTable().setConversionFactor(GCshCmdtyNameSpace.CURRENCY, 
 //		                               getDefaultCurrencyID(), 
 //		                               new FixedPointNumber(1));
 
 		String baseCurrency = getDefaultCurrencyID();
 
 		for ( Price price : priceDB.getPrice() ) {
-			Price.PriceCommodity fromCmdtyCurr = price.getPriceCommodity();
+			Price.PriceCommodity fromCmdty = price.getPriceCommodity();
 //	    	Price.PriceCurrency  toCurr = price.getPriceCurrency();
-//	    	System.err.println("tt " + fromCmdtyCurr.getCmdtySpace() + ":" + fromCmdtyCurr.getCmdtyID() + 
+//	    	System.err.println("tt " + fromCmdty.getCmdtySpace() + ":" + fromCmdty.getCmdtyID() + 
 //	                       " --> " + toCurr.getCmdtySpace() + ":" + toCurr.getCmdtyID());
 
 			// Check if we already have a latest price for this commodity
 			// (= currency, fund, ...)
-			if ( getCurrencyTable().getConversionFactor(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId()) != null ) {
+			if ( getCurrencyTable().getConversionFactor(fromCmdty.getCmdtySpace(), fromCmdty.getCmdtyId()) != null ) {
 				continue;
 			}
 
-			if ( fromCmdtyCurr.getCmdtySpace().equals(GCshCmdtyNameSpace.CURRENCY)
-					&& fromCmdtyCurr.getCmdtyId().equals(baseCurrency) ) {
+			if ( fromCmdty.getCmdtySpace().equals(GCshCmdtyNameSpace.CURRENCY) && 
+				 fromCmdty.getCmdtyId().equals(baseCurrency) ) {
 				LOGGER.warn("loadPriceDatabaseCore: Ignoring price-quote for " + baseCurrency + " because "
 						+ baseCurrency + " is our base-currency.");
 				continue;
@@ -1413,28 +1413,28 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 			// get the latest price in the file and insert it into
 			// our currency table
 			FixedPointNumber factor = getLatestPrice(
-					new GCshCmdtyID(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId()));
+					new GCshCmdtyID(fromCmdty.getCmdtySpace(), fromCmdty.getCmdtyId()));
 
 			if ( factor != null ) {
-				getCurrencyTable().setConversionFactor(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId(),
+				getCurrencyTable().setConversionFactor(fromCmdty.getCmdtySpace(), fromCmdty.getCmdtyId(),
 						factor);
 			} else {
 				LOGGER.warn("loadPriceDatabaseCore: The GnuCash file defines a factor for a commodity '"
-						+ fromCmdtyCurr.getCmdtySpace() + ":" + fromCmdtyCurr.getCmdtyId()
+						+ fromCmdty.getCmdtySpace() + ":" + fromCmdty.getCmdtyId()
 						+ "' but has no commodity for it");
 			}
 			
 			// get the latest price in the file and insert it into
 			// our currency table
 			BigFraction factorRat = getLatestPriceRat(
-					new GCshCmdtyID(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId()));
+					new GCshCmdtyID(fromCmdty.getCmdtySpace(), fromCmdty.getCmdtyId()));
 
 			if ( factor != null ) {
-				getCurrencyTable().setConversionFactor(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId(),
+				getCurrencyTable().setConversionFactor(fromCmdty.getCmdtySpace(), fromCmdty.getCmdtyId(),
 						factor);
 			} else {
 				LOGGER.warn("loadPriceDatabaseCore: The GnuCash file defines a factor for a commodity '"
-						+ fromCmdtyCurr.getCmdtySpace() + ":" + fromCmdtyCurr.getCmdtyId()
+						+ fromCmdty.getCmdtySpace() + ":" + fromCmdty.getCmdtyId()
 						+ "' but has no commodity for it");
 			}
 		} // for price
@@ -1442,26 +1442,26 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	
 	private void loadPriceDatabaseCore_wProgBar(final GncPricedb priceDB) {
 //		getCurrencyTable().clear();
-//		getCurrencyTable().setConversionFactor(GCshCmdtyCurrNameSpace.CURRENCY, 
+//		getCurrencyTable().setConversionFactor(GCshCmdtyNameSpace.CURRENCY, 
 //		                               getDefaultCurrencyID(), 
 //		                               new FixedPointNumber(1));
 
 		String baseCurrency = getDefaultCurrencyID();
 
 		for ( Price jwsdpPrc : ProgressBar.wrap( priceDB.getPrice(), "Price DB") ) {
-			Price.PriceCommodity fromCmdtyCurr = jwsdpPrc.getPriceCommodity();
+			Price.PriceCommodity fromCmdty = jwsdpPrc.getPriceCommodity();
 //	    	Price.PriceCurrency  toCurr = price.getPriceCurrency();
-//	    	System.err.println("tt " + fromCmdtyCurr.getCmdtySpace() + ":" + fromCmdtyCurr.getCmdtyID() + 
+//	    	System.err.println("tt " + fromCmdty.getCmdtySpace() + ":" + fromCmdty.getCmdtyID() + 
 //	                       " --> " + toCurr.getCmdtySpace() + ":" + toCurr.getCmdtyID());
 
 			// Check if we already have a latest price for this commodity
 			// (= currency, fund, ...)
-			if ( getCurrencyTable().getConversionFactor(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId()) != null ) {
+			if ( getCurrencyTable().getConversionFactor(fromCmdty.getCmdtySpace(), fromCmdty.getCmdtyId()) != null ) {
 				continue;
 			}
 
-			if ( fromCmdtyCurr.getCmdtySpace().equals(GCshCmdtyNameSpace.CURRENCY)
-					&& fromCmdtyCurr.getCmdtyId().equals(baseCurrency) ) {
+			if ( fromCmdty.getCmdtySpace().equals(GCshCmdtyNameSpace.CURRENCY) && 
+				 fromCmdty.getCmdtyId().equals(baseCurrency) ) {
 				LOGGER.warn("loadPriceDatabaseCore: Ignoring price-quote for " + baseCurrency + " because "
 						+ baseCurrency + " is our base-currency.");
 				continue;
@@ -1469,15 +1469,15 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 
 			// get the latest price in the file and insert it into
 			// our currency table
-			FixedPointNumber factor = getLatestPrice(new GCshCmdtyID(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId()));
-			LOGGER.debug("loadPriceDatabaseCore: latest price for '" + fromCmdtyCurr.getCmdtySpace() + ":" + fromCmdtyCurr.getCmdtyId() + "': " + factor);
+			FixedPointNumber factor = getLatestPrice(new GCshCmdtyID(fromCmdty.getCmdtySpace(), fromCmdty.getCmdtyId()));
+			LOGGER.debug("loadPriceDatabaseCore: latest price for '" + fromCmdty.getCmdtySpace() + ":" + fromCmdty.getCmdtyId() + "': " + factor);
 
 			if ( factor != null ) {
-				getCurrencyTable().setConversionFactor(fromCmdtyCurr.getCmdtySpace(), fromCmdtyCurr.getCmdtyId(),
+				getCurrencyTable().setConversionFactor(fromCmdty.getCmdtySpace(), fromCmdty.getCmdtyId(),
 						factor);
 			} else {
 				LOGGER.warn("loadPriceDatabaseCore: The GnuCash file defines a factor for '"
-						+ fromCmdtyCurr.getCmdtySpace() + ":" + fromCmdtyCurr.getCmdtyId()
+						+ fromCmdty.getCmdtySpace() + ":" + fromCmdty.getCmdtyId()
 						+ "' but has no commodity for it");
 			}
 		} // for jwsdpPrc

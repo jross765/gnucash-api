@@ -145,14 +145,14 @@ public interface GnuCashWritableFile extends GnuCashFile,
 
     /**
      * @param type 
-     * @param cmdtyCurrID 
+     * @param cmdtyID 
      * @param parentID 
      * @param name 
      * @return a new account that is already added to this file as a top-level
      *         account
      */
     GnuCashWritableAccount createWritableAccount(GnuCashAccount.Type type,
-			  									 GCshCmdtyID cmdtyCurrID,
+			  									 GCshCmdtyID cmdtyID,
 			  									 GCshAcctID parentID,
 			  									 String name);
 
@@ -567,25 +567,25 @@ public interface GnuCashWritableFile extends GnuCashFile,
 
     GnuCashWritablePrice getWritablePriceByID(GCshPrcID prcID);
 
-    GnuCashWritablePrice getWritablePriceByCmdtyIDDate(GCshSecID cmdtyID, LocalDate date);
+    GnuCashWritablePrice getWritablePriceBySecIDDate(GCshSecID cmdtyID, LocalDate date);
 	
     GnuCashWritablePrice getWritablePriceByCurrIDDate(GCshCurrID currID, LocalDate date);
 	
     GnuCashWritablePrice getWritablePriceByCurrDate(Currency curr, LocalDate date);
 	
-    GnuCashWritablePrice getWritablePriceByCmdtyCurrIDDate(GCshCmdtyID cmdtyCurrID, LocalDate date);
+    GnuCashWritablePrice getWritablePriceByCmdtyIDDate(GCshCmdtyID cmdtyID, LocalDate date);
     
     Collection<GnuCashWritablePrice> getWritablePrices();
 
     // ----------------------------
 
     /**
-     * @param fromCmdtyCurrID 
+     * @param fromCmdtyID 
      * @param toCurrID 
      * @param date 
      * @return a new price object with no values that is already added to this file
      */
-    GnuCashWritablePrice createWritablePrice(GCshCmdtyID fromCmdtyCurrID, GCshCurrID toCurrID,
+    GnuCashWritablePrice createWritablePrice(GCshCmdtyID fromCmdtyID, GCshCurrID toCurrID,
 											 LocalDate date);
 
     /**

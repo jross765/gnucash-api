@@ -481,7 +481,7 @@ public class GnuCashAccountImpl extends SimpleAccount
 	
     	buffer.append(", commodity/currency='");
     	try {
-    		buffer.append(getCmdtyCurrID() + "'");
+    		buffer.append(getCmdtyID() + "'");
     	} catch (InvalidCmdtyTypeException e) {
     		buffer.append("ERROR");
     	}

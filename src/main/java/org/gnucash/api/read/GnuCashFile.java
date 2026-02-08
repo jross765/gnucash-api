@@ -270,11 +270,11 @@ public interface GnuCashFile extends GnuCashObject,
     List<GnuCashTransactionSplit> getTransactionSplitsByAccountLotID(GCshLotID acctLotID);
 
     /**
-     * @param cmdtyCurrID 
+     * @param cmdtyID 
      * @return list of all transaction splits (ro-objects)
      *   denominated in the given commodity/currency. 
      */
-    List<GnuCashTransactionSplit> getTransactionSplitsByCmdtyCurrID(GCshCmdtyID cmdtyCurrID);
+    List<GnuCashTransactionSplit> getTransactionSplitsByCmdtyID(GCshCmdtyID cmdtyID);
 
     // ---------------------------------------------------------------
 
@@ -951,13 +951,13 @@ public interface GnuCashFile extends GnuCashObject,
      */
     GnuCashPrice getPriceByID(GCshPrcID prcID);
 
-	GnuCashPrice getPriceByCmdtyIDDate(GCshSecID cmdtyID, LocalDate date);
+	GnuCashPrice getPriceBySecIDDate(GCshSecID secID, LocalDate date);
 	
 	GnuCashPrice getPriceByCurrIDDate(GCshCurrID currID, LocalDate date);
 	
 	GnuCashPrice getPriceByCurrDate(Currency curr, LocalDate date);
 	
-    GnuCashPrice getPriceByCmdtyCurrIDDate(GCshCmdtyID cmdtyCurrID, LocalDate date);
+    GnuCashPrice getPriceByCmdtyIDDate(GCshCmdtyID cmdtyID, LocalDate date);
 
     /**
      * @return all prices defined in the book
@@ -966,13 +966,13 @@ public interface GnuCashFile extends GnuCashObject,
     List<GnuCashPrice> getPrices();
 
     // sic: List, not Collection
-	List<GnuCashPrice> getPricesByCmdtyID(GCshSecID cmdtyID);
+	List<GnuCashPrice> getPricesBySecID(GCshSecID cmdtyID);
 	
 	List<GnuCashPrice> getPricesByCurrID(GCshCurrID currID);
 	
 	List<GnuCashPrice> getPricesByCurr(Currency curr);
 	
-	List<GnuCashPrice> getPricesByCmdtyCurrID(GCshCmdtyID cmdtyCurrID);
+	List<GnuCashPrice> getPricesByCmdtyID(GCshCmdtyID cmdtyID);
 	
     /**
      * @param cmdtyCurrID 

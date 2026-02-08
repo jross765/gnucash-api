@@ -246,11 +246,11 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
      */
     public String getValueFormatted(final Locale lcl) {
 		NumberFormat nf = getValueCurrencyFormat(lcl);
-		if ( getTransaction().getCmdtyCurrID().getType() == GCshCmdtyID.Type.CURRENCY ) {
-			nf.setCurrency(new GCshCurrID(getTransaction().getCmdtyCurrID()).getCurrency());
+		if ( getTransaction().getCmdtyID().getType() == GCshCmdtyID.Type.CURRENCY ) {
+			nf.setCurrency(new GCshCurrID(getTransaction().getCmdtyID()).getCurrency());
 			return nf.format(getValue().getBigDecimal());
 		} else {
-			return nf.format(getValue().getBigDecimal()) + " " + getTransaction().getCmdtyCurrID().toString();
+			return nf.format(getValue().getBigDecimal()) + " " + getTransaction().getCmdtyID().toString();
 		}
     }
 
@@ -281,11 +281,11 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
      */
     public String getQuantityFormatted(final Locale lcl) {
 		NumberFormat nf = getQuantityCurrencyFormat(lcl);
-		if ( getAccount().getCmdtyCurrID().getType() == GCshCmdtyID.Type.CURRENCY ) {
-			nf.setCurrency(new GCshCurrID(getAccount().getCmdtyCurrID()).getCurrency());
+		if ( getAccount().getCmdtyID().getType() == GCshCmdtyID.Type.CURRENCY ) {
+			nf.setCurrency(new GCshCurrID(getAccount().getCmdtyID()).getCurrency());
 			return nf.format(getQuantity().getBigDecimal());
 		} else {
-			return nf.format(getQuantity().getBigDecimal()) + " " + getAccount().getCmdtyCurrID().toString();
+			return nf.format(getQuantity().getBigDecimal()) + " " + getAccount().getCmdtyID().toString();
 		}
     }
 

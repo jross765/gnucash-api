@@ -271,7 +271,7 @@ public class TestGnuCashWritableTransactionImpl {
 
 		// trx.setType(GnuCashTransaction.Type.PAYMENT);
 		trx.setDescription("Chattanooga Choo-Choo");
-		trx.setCmdtyCurrID(new GCshCurrID("EUR"));
+		trx.setCmdtyID(new GCshCurrID("EUR"));
 		trx.setDateEntered(LocalDateTime.of(LocalDate.of(2023, 12, 11), LocalTime.of(10, 0)));
 		trx.setDatePosted(LocalDate.of(2023, 5, 20));
 
@@ -322,7 +322,7 @@ public class TestGnuCashWritableTransactionImpl {
 
 		// assertEquals(GnuCashTransaction.Type.PAYMENT, trx.getType());
 		assertEquals("Chattanooga Choo-Choo", trx.getDescription());
-		assertEquals(new GCshCurrID("EUR").toString(), trx.getCmdtyCurrID().toString());
+		assertEquals(new GCshCurrID("EUR").toString(), trx.getCmdtyID().toString());
 		assertEquals("2023-05-20T00:00+02:00[Europe/Berlin]", trx.getDatePosted().toString());
 		assertEquals("2023-05-20", trx.getDatePostedFormatted());
 		assertEquals("2023-12-11T10:00+01:00[Europe/Berlin]", trx.getDateEntered().toString());
@@ -370,7 +370,7 @@ public class TestGnuCashWritableTransactionImpl {
 
 		// assertEquals(GnuCashTransaction.Type.PAYMENT, trx.getType());
 		assertEquals("Chattanooga Choo-Choo", trx.getDescription());
-		assertEquals(new GCshCurrID("EUR").toString(), trx.getCmdtyCurrID().toString());
+		assertEquals(new GCshCurrID("EUR").toString(), trx.getCmdtyID().toString());
 		assertEquals("2023-05-20T00:00+02:00", trx.getDatePosted().toString());
 		assertEquals("2023-05-20", trx.getDatePostedFormatted());
 		assertEquals("2023-12-11T10:00+01:00", trx.getDateEntered().toString());

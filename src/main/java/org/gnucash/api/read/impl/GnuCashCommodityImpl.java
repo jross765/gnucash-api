@@ -123,8 +123,8 @@ public class GnuCashCommodityImpl extends GnuCashObjectImpl
 		List<GnuCashAccount> result = new ArrayList<GnuCashAccount>();
 		
 		for ( GnuCashAccount acct : getGnuCashFile().getAccountsByType(GnuCashAccount.Type.STOCK) ) {
-			GCshCmdtyID cmdtyCurrID = acct.getCmdtyCurrID();
-			if ( this.getQualifID().equals(cmdtyCurrID) ) {
+			GCshCmdtyID cmdtyID = acct.getCmdtyID();
+			if ( this.getQualifID().equals(cmdtyID) ) {
 				result.add(acct);
 			}
 		}
@@ -136,7 +136,7 @@ public class GnuCashCommodityImpl extends GnuCashObjectImpl
 
     @Override
     public List<GnuCashPrice> getQuotes() {
-    	return getGnuCashFile().getPricesByCmdtyCurrID(getQualifID());
+    	return getGnuCashFile().getPricesByCmdtyID(getQualifID());
     }
 
     @Override
@@ -153,7 +153,7 @@ public class GnuCashCommodityImpl extends GnuCashObjectImpl
 
     @Override
     public List<GnuCashTransactionSplit> getTransactionSplits() {
-    	return getGnuCashFile().getTransactionSplitsByCmdtyCurrID(getQualifID());
+    	return getGnuCashFile().getTransactionSplitsByCmdtyID(getQualifID());
     }
 
     // -----------------------------------------------------------------

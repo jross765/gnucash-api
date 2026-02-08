@@ -296,27 +296,27 @@ public class TestGnuCashPriceImpl {
 	@Test
 	public void test03_1() throws Exception {
 		GCshSecID_Exchange cmdty21ID = new GCshSecID_Exchange(GCshCmdtyNameSpace.Exchange.EURONEXT, CMDTY_2_ID);
-		prc = gcshFile.getPriceByCmdtyCurrIDDate(cmdty21ID, LocalDate.of(2012, 3, 5));
+		prc = gcshFile.getPriceByCmdtyIDDate(cmdty21ID, LocalDate.of(2012, 3, 5));
 		assertNotEquals(null, prc);
 		assertEquals(PRC_12_ID, prc.getID());
 		
 		GCshSecID_SecIdType cmdty22ID = new GCshSecID_SecIdType(GCshCmdtyNameSpace.SecIdType.ISIN, CMDTY_2_ISIN);
-		prc = gcshFile.getPriceByCmdtyCurrIDDate(cmdty22ID, LocalDate.of(2012, 3, 5));
+		prc = gcshFile.getPriceByCmdtyIDDate(cmdty22ID, LocalDate.of(2012, 3, 5));
 		assertEquals(null, prc); // sic, cannot be found by ISIN (in this particular case)
 	}
 	
 	@Test
 	public void test03_2() throws Exception {
 		GCshSecID_SecIdType cmdty4ID = new GCshSecID_SecIdType(GCshCmdtyNameSpace.SecIdType.ISIN, CMDTY_4_ISIN);
-		prc = gcshFile.getPriceByCmdtyCurrIDDate(cmdty4ID, LocalDate.of(2023, 4, 1));
+		prc = gcshFile.getPriceByCmdtyIDDate(cmdty4ID, LocalDate.of(2023, 4, 1));
 		assertNotEquals(null, prc);
 		assertEquals(PRC_14_ID, prc.getID());
 		
-		prc = gcshFile.getPriceByCmdtyCurrIDDate(cmdty4ID, LocalDate.of(2023, 7, 1));
+		prc = gcshFile.getPriceByCmdtyIDDate(cmdty4ID, LocalDate.of(2023, 7, 1));
 		assertNotEquals(null, prc);
 		assertEquals(PRC_15_ID, prc.getID());
 		
-		prc = gcshFile.getPriceByCmdtyCurrIDDate(cmdty4ID, LocalDate.of(2023, 10, 1));
+		prc = gcshFile.getPriceByCmdtyIDDate(cmdty4ID, LocalDate.of(2023, 10, 1));
 		assertNotEquals(null, prc);
 		assertEquals(PRC_16_ID, prc.getID());
 	}
@@ -333,7 +333,7 @@ public class TestGnuCashPriceImpl {
 		assertNotEquals(null, prc);
 		assertEquals(PRC_17_ID, prc.getID());
 		
-		prc = gcshFile.getPriceByCmdtyCurrIDDate(currID, LocalDate.of(2023, 12, 1));
+		prc = gcshFile.getPriceByCmdtyIDDate(currID, LocalDate.of(2023, 12, 1));
 		assertNotEquals(null, prc);
 		assertEquals(PRC_17_ID, prc.getID());
 	}

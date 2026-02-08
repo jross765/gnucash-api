@@ -116,8 +116,8 @@ import org.gnucash.api.write.spec.GnuCashWritableVendorBillEntry;
 import org.gnucash.api.write.spec.GnuCashWritableVendorJob;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
-import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshCustID;
 import org.gnucash.base.basetypes.simple.GCshEmplID;
@@ -742,7 +742,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 
 	@Override
 	public GnuCashWritableAccount createWritableAccount(GnuCashAccount.Type type,
-														GCshCmdtyID cmdtyCurrID,
+														GCshCmdtyID cmdtyID,
 														GCshAcctID parentID,
 														String name) {
 		GnuCashWritableAccount acct = new GnuCashWritableAccountImpl(this);
@@ -750,7 +750,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			.addAccount(acct);
 		
 		acct.setType(type);
-		acct.setCmdtyCurrID(cmdtyCurrID);
+		acct.setCmdtyID(cmdtyID);
 		acct.setParentAccountID(parentID);
 		acct.setName(name);
 		
@@ -1956,13 +1956,13 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	}
 
 	@Override
-	public GnuCashWritablePrice getWritablePriceByCmdtyIDDate(final GCshSecID cmdtyID, final LocalDate date) {
-		return getWritablePriceByCmdtyCurrIDDate(cmdtyID, date);
+	public GnuCashWritablePrice getWritablePriceBySecIDDate(final GCshSecID secID, final LocalDate date) {
+		return getWritablePriceByCmdtyIDDate(secID, date);
 	}
 	
 	@Override
 	public GnuCashWritablePrice getWritablePriceByCurrIDDate(final GCshCurrID currID, final LocalDate date) {
-		return getWritablePriceByCmdtyCurrIDDate(currID, date);
+		return getWritablePriceByCmdtyIDDate(currID, date);
 	}
 	
 	@Override
@@ -1972,8 +1972,8 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	}
 	
 	@Override
-    public GnuCashWritablePrice getWritablePriceByCmdtyCurrIDDate(final GCshCmdtyID cmdtyCurrID, final LocalDate date) {
-		GnuCashPrice prc = prcMgr.getPriceByCmdtyIDDate(cmdtyCurrID, date);
+    public GnuCashWritablePrice getWritablePriceByCmdtyIDDate(final GCshCmdtyID cmdtyID, final LocalDate date) {
+		GnuCashPrice prc = prcMgr.getPriceByCmdtyIDDate(cmdtyID, date);
 		return new GnuCashWritablePriceImpl((GnuCashPriceImpl) prc);
     }
 
@@ -1993,11 +1993,11 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 
 	@Override
 	public GnuCashWritablePrice createWritablePrice(
-			final GCshCmdtyID fromCmdtyCurrID,
+			final GCshCmdtyID fromCmdtyID,
 			final GCshCurrID toCurrID,
 			final LocalDate date) {
 		GnuCashWritablePrice prc = new GnuCashWritablePriceImpl(this);
-	    prc.setFromCmdtyID(fromCmdtyCurrID);
+	    prc.setFromCmdtyID(fromCmdtyID);
 	    prc.setToCurrID(toCurrID);
 		prc.setDate(date);
 		((org.gnucash.api.write.impl.hlp.FilePriceManager) super.prcMgr)

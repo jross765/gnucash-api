@@ -166,18 +166,28 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     /**
      * {@inheritDoc}
      */
-    public GCshCmdtyID getCmdtyCurrID() {
+    @Override
+    public GCshCmdtyID getCmdtyID() {
     	GCshCmdtyID result = new GCshCmdtyID(jwsdpPeer.getTrnCurrency().getCmdtySpace(), 
     												 jwsdpPeer.getTrnCurrency().getCmdtyId());
     	return result;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Deprecated
+    public GCshCmdtyID getCmdtyCurrID() {
+    	return getCmdtyID();
+    }
+
 	public Currency getCurrency() {
-		if ( getCmdtyCurrID().getType() != GCshCmdtyID.Type.CURRENCY ) {
+		if ( getCmdtyID().getType() != GCshCmdtyID.Type.CURRENCY ) {
 			throw new IllegalStateException("Transaction commodity/currency is not of type " + GCshCmdtyID.Type.CURRENCY);
 		}
 
-		String gcshCurrID = getCmdtyCurrID().getCode();
+		String gcshCurrID = getCmdtyID().getCode();
 		return Currency.getInstance(gcshCurrID);
 	}
 
@@ -192,7 +202,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 	
 	protected NumberFormat getCurrencyFormat(Locale lcl) {
 		// The currency may have changed
-		if ( getCmdtyCurrID().getType() == GCshCmdtyID.Type.CURRENCY ) {
+		if ( getCmdtyID().getType() == GCshCmdtyID.Type.CURRENCY ) {
 			currencyFormat = NumberFormat.getCurrencyInstance(lcl);
 			Currency curr = getCurrency();
 			currencyFormat.setCurrency(curr);
@@ -240,8 +250,8 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
      */
     public String getBalanceFormatted(final Locale lcl) {
 		NumberFormat cf = NumberFormat.getInstance(lcl);
-		if ( getCmdtyCurrID().getType() == GCshCmdtyID.Type.CURRENCY ) {
-			cf.setCurrency(new GCshCurrID(getCmdtyCurrID()).getCurrency());
+		if ( getCmdtyID().getType() == GCshCmdtyID.Type.CURRENCY ) {
+			cf.setCurrency(new GCshCurrID(getCmdtyID()).getCurrency());
 		} else {
 			cf.setCurrency(null);
 		}
@@ -275,8 +285,8 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
      */
     public String getNegatedBalanceFormatted(final Locale lcl) {
 		NumberFormat nf = NumberFormat.getInstance(lcl);
-		if ( getCmdtyCurrID().getType() == GCshCmdtyID.Type.CURRENCY ) {
-			nf.setCurrency(new GCshCurrID(getCmdtyCurrID()).getCurrency());
+		if ( getCmdtyID().getType() == GCshCmdtyID.Type.CURRENCY ) {
+			nf.setCurrency(new GCshCurrID(getCmdtyID()).getCurrency());
 		} else {
 			nf.setCurrency(null);
 		}

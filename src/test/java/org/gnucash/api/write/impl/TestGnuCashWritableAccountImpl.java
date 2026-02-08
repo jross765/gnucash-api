@@ -101,7 +101,7 @@ public class TestGnuCashWritableAccountImpl {
 		assertEquals("Giro RaiBa", acct.getName());
 		assertEquals("Root Account:Aktiva:Sichteinlagen:KK:Giro RaiBa", acct.getQualifiedName());
 		assertEquals("Girokonto 1", acct.getDescription());
-		assertEquals("CURRENCY:EUR", acct.getCmdtyCurrID().toString());
+		assertEquals("CURRENCY:EUR", acct.getCmdtyID().toString());
 
 		assertEquals("fdffaa52f5b04754901dfb1cf9221494", acct.getParentAccountID().toString());
 
@@ -140,7 +140,7 @@ public class TestGnuCashWritableAccountImpl {
 		assertEquals("Depot RaiBa", acct.getName());
 		assertEquals("Root Account:Aktiva:Depots:Depot RaiBa", acct.getQualifiedName());
 		assertEquals("Aktiendepot 1", acct.getDescription());
-		assertEquals("CURRENCY:EUR", acct.getCmdtyCurrID().toString());
+		assertEquals("CURRENCY:EUR", acct.getCmdtyID().toString());
 
 		assertEquals("7ee6fe4de6db46fd957f3513c9c6f983", acct.getParentAccountID().toString());
 		
@@ -186,7 +186,7 @@ public class TestGnuCashWritableAccountImpl {
 
 		acct.setName("Giro Bossa Nova");
 		acct.setDescription("Buffda Duffda Deuf");
-		acct.setCmdtyCurrID(new GCshCurrID("CAD"));
+		acct.setCmdtyID(new GCshCurrID("CAD"));
 
 		// ::TODO not possible yet
 		// trx.getSplitByID("7abf90fe15124254ac3eb7ec33f798e7").remove()
@@ -228,7 +228,7 @@ public class TestGnuCashWritableAccountImpl {
 		assertEquals("Giro Bossa Nova", acct.getName());
 		assertEquals("Root Account:Aktiva:Sichteinlagen:KK:Giro Bossa Nova", acct.getQualifiedName());
 		assertEquals("Buffda Duffda Deuf", acct.getDescription());
-		assertEquals("CURRENCY:CAD", acct.getCmdtyCurrID().toString());
+		assertEquals("CURRENCY:CAD", acct.getCmdtyID().toString());
 
 		assertEquals("fdffaa52f5b04754901dfb1cf9221494", acct.getParentAccountID().toString());
 
@@ -263,7 +263,7 @@ public class TestGnuCashWritableAccountImpl {
 		assertEquals("Giro Bossa Nova", acct.getName());
 		assertEquals("Root Account:Aktiva:Sichteinlagen:KK:Giro Bossa Nova", acct.getQualifiedName());
 		assertEquals("Buffda Duffda Deuf", acct.getDescription());
-		assertEquals("CURRENCY:CAD", acct.getCmdtyCurrID().toString());
+		assertEquals("CURRENCY:CAD", acct.getCmdtyID().toString());
 
 		assertEquals("fdffaa52f5b04754901dfb1cf9221494", acct.getParentAccountID().toString());
 
@@ -346,7 +346,7 @@ public class TestGnuCashWritableAccountImpl {
 		assertEquals("Giro Rhumba", acct.getName());
 		assertEquals("Root Account:Aktiva:Sichteinlagen:KK:Giro Rhumba", acct.getQualifiedName());
 		assertEquals("Cha-cha-cha", acct.getDescription());
-		assertEquals("CURRENCY:JPY", acct.getCmdtyCurrID().toString());
+		assertEquals("CURRENCY:JPY", acct.getCmdtyID().toString());
 
 		assertEquals("fdffaa52f5b04754901dfb1cf9221494", acct.getParentAccountID().toString());
 
@@ -374,7 +374,7 @@ public class TestGnuCashWritableAccountImpl {
 		assertEquals("Giro Rhumba", acct.getName());
 		assertEquals("Root Account:Aktiva:Sichteinlagen:KK:Giro Rhumba", acct.getQualifiedName());
 		assertEquals("Cha-cha-cha", acct.getDescription());
-		assertEquals("CURRENCY:JPY", acct.getCmdtyCurrID().toString());
+		assertEquals("CURRENCY:JPY", acct.getCmdtyID().toString());
 
 		assertEquals("fdffaa52f5b04754901dfb1cf9221494", acct.getParentAccountID().toString());
 
