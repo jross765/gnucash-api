@@ -1,4 +1,4 @@
-package org.gnucash.api.read.impl.hlp;
+package org.gnucash.api.read.impl.hlp.prc;
 
 import java.text.DateFormat;
 import java.util.Currency;
@@ -9,6 +9,7 @@ import org.gnucash.api.generated.Price;
 import org.gnucash.api.generated.Price.PriceCommodity;
 import org.gnucash.api.generated.Price.PriceCurrency;
 import org.gnucash.api.read.GnuCashFile;
+import org.gnucash.api.read.impl.hlp.fil.FilePriceManager;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
 import org.gnucash.base.basetypes.complex.GCshCurrID;

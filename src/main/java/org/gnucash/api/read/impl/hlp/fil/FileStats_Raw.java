@@ -1,4 +1,4 @@
-package org.gnucash.api.read.impl.hlp;
+package org.gnucash.api.read.impl.hlp.fil;
 
 import org.gnucash.api.generated.GncAccount;
 import org.gnucash.api.generated.GncCommodity;

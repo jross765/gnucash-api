@@ -8,7 +8,7 @@ import org.gnucash.api.write.impl.aux.GCshWritableBillTermsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FileBillTermsManager extends org.gnucash.api.read.impl.hlp.FileBillTermsManager {
+public class FileBillTermsManager extends org.gnucash.api.read.impl.hlp.fil.FileBillTermsManager {
 
 	protected static final Logger LOGGER = LoggerFactory.getLogger(FileBillTermsManager.class);
 

@@ -3,10 +3,10 @@ package org.gnucash.api.read.impl.aux;
 import java.io.IOException;
 
 import org.gnucash.api.read.impl.GnuCashFileImpl;
-import org.gnucash.api.read.impl.hlp.FileStats;
-import org.gnucash.api.read.impl.hlp.FileStats_Cache;
-import org.gnucash.api.read.impl.hlp.FileStats_Counters;
-import org.gnucash.api.read.impl.hlp.FileStats_Raw;
+import org.gnucash.api.read.impl.hlp.fil.FileStats;
+import org.gnucash.api.read.impl.hlp.fil.FileStats_Cache;
+import org.gnucash.api.read.impl.hlp.fil.FileStats_Counters;
+import org.gnucash.api.read.impl.hlp.fil.FileStats_Raw;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

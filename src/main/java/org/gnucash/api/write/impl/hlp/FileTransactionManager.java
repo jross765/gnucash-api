@@ -15,7 +15,7 @@ import org.gnucash.base.basetypes.simple.GCshTrxID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FileTransactionManager extends org.gnucash.api.read.impl.hlp.FileTransactionManager {
+public class FileTransactionManager extends org.gnucash.api.read.impl.hlp.fil.FileTransactionManager {
 
 	protected static final Logger LOGGER = LoggerFactory.getLogger(FileTransactionManager.class);
 

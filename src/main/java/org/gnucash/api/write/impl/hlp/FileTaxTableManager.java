@@ -8,7 +8,7 @@ import org.gnucash.api.write.impl.aux.GCshWritableTaxTableImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FileTaxTableManager extends org.gnucash.api.read.impl.hlp.FileTaxTableManager {
+public class FileTaxTableManager extends org.gnucash.api.read.impl.hlp.fil.FileTaxTableManager {
 
 	protected static final Logger LOGGER = LoggerFactory.getLogger(FileTaxTableManager.class);
 

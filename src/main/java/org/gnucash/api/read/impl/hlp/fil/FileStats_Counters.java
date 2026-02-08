@@ -1,4 +1,4 @@
-package org.gnucash.api.read.impl.hlp;
+package org.gnucash.api.read.impl.hlp.fil;
 
 import org.gnucash.api.read.impl.GnuCashFileImpl;
 import org.slf4j.Logger;

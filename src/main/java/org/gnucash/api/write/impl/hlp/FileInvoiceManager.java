@@ -22,7 +22,7 @@ import org.gnucash.api.write.spec.GnuCashWritableVendorBill;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FileInvoiceManager extends org.gnucash.api.read.impl.hlp.FileInvoiceManager {
+public class FileInvoiceManager extends org.gnucash.api.read.impl.hlp.fil.FileInvoiceManager {
 
 	protected static final Logger LOGGER = LoggerFactory.getLogger(FileInvoiceManager.class);
 

@@ -8,7 +8,7 @@ import org.gnucash.api.write.impl.GnuCashWritableVendorImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FileVendorManager extends org.gnucash.api.read.impl.hlp.FileVendorManager {
+public class FileVendorManager extends org.gnucash.api.read.impl.hlp.fil.FileVendorManager {
 
 	protected static final Logger LOGGER = LoggerFactory.getLogger(FileVendorManager.class);
 

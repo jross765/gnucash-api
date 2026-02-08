@@ -1,4 +1,4 @@
-package org.gnucash.api.read.impl.hlp;
+package org.gnucash.api.read.impl.hlp.fil;
 
 // File statistics methods
 // (primarily, but not exclusively, for test purposes)

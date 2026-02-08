@@ -557,7 +557,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		// ==> Some entity managers have to be instantiated twice: 
 		// First time in r/o variant, second time in r/w variant. 
 		// ::TODO: Check whether we can do that more elegantly / efficiently. 
-		invcMgr = new org.gnucash.api.read.impl.hlp.FileInvoiceManager(this);
+		invcMgr = new org.gnucash.api.read.impl.hlp.fil.FileInvoiceManager(this);
 
 		// ---
 

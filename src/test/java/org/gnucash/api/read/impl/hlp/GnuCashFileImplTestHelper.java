@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.gnucash.api.read.impl.GnuCashFileImpl;
+import org.gnucash.api.read.impl.hlp.fil.FileCommodityManager;
+import org.gnucash.api.read.impl.hlp.fil.FilePriceManager;
 
 public class GnuCashFileImplTestHelper extends GnuCashFileImpl
 {

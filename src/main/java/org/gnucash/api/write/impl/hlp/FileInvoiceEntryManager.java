@@ -8,7 +8,7 @@ import org.gnucash.api.write.impl.GnuCashWritableGenerInvoiceEntryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FileInvoiceEntryManager extends org.gnucash.api.read.impl.hlp.FileInvoiceEntryManager {
+public class FileInvoiceEntryManager extends org.gnucash.api.read.impl.hlp.fil.FileInvoiceEntryManager {
 
 	protected static final Logger LOGGER = LoggerFactory.getLogger(FileInvoiceEntryManager.class);
 

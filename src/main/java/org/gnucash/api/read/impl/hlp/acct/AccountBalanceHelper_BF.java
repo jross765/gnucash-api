@@ -1,4 +1,4 @@
-package org.gnucash.api.read.impl.hlp;
+package org.gnucash.api.read.impl.hlp.acct;
 
 import java.text.NumberFormat;
 import java.time.LocalDate;
@@ -9,6 +9,7 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.currency.ComplexPriceTable;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashTransactionSplit;
@@ -17,28 +18,25 @@ import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import xyz.schnorxoborx.base.numbers.FixedPointNumber;
-
-public class AccountBalanceHelper_FP
+public class AccountBalanceHelper_BF
 {
-	private static final Logger LOGGER = LoggerFactory.getLogger(AccountBalanceHelper_FP.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AccountBalanceHelper_BF.class);
 
 	// ---------------------------------------------------------------
 
-	public static FixedPointNumber getBalance(final SimpleAccount acct) {
+	public static BigFraction getBalance(final SimpleAccount acct) {
 		return getBalance(LocalDate.now(), acct);
 	}
 
-
-	public static FixedPointNumber getBalance(final LocalDate date,
-											  final SimpleAccount acct) {
+	public static BigFraction getBalance(final LocalDate date,
+										 final SimpleAccount acct) {
 		return getBalance(date, (List<GnuCashTransactionSplit>) null, acct);
 	}
 
 	// The currency will be the one of this account.
-	public static FixedPointNumber getBalance(final LocalDate date, List<GnuCashTransactionSplit> after,
-											  final SimpleAccount acct) {
-		FixedPointNumber balance = FixedPointNumber.ZERO.copy();
+	public static BigFraction getBalance(final LocalDate date, List<GnuCashTransactionSplit> after,
+										 final SimpleAccount acct) {
+		BigFraction balance = BigFraction.ZERO;
 	
 		for ( GnuCashTransactionSplit splt : acct.getTransactionSplits() ) {
 			if ( date != null && 
@@ -54,15 +52,15 @@ public class AccountBalanceHelper_FP
 			// the currency of the quantity is the one of the account
 			// CAUTION: No special logic for action type GnuCashTransactionSplit.Action.SPLIT,
 			// as opposed to sister project.
-			// CAUTION: FixedPointNumber is mutable
-			balance.add(splt.getQuantity());
+			// CAUTION: BigFraction is immutable
+			balance = balance.add(splt.getQuantityRat());
 		}
 	
 		return balance;
 	}
 
-	public static FixedPointNumber getBalance(final LocalDate date, final GCshCmdtyID cmdtyID,
-											  final SimpleAccount acct) {
+	public static BigFraction getBalance(final LocalDate date, final GCshCmdtyID cmdtyID,
+									     final SimpleAccount acct) {
 		if ( cmdtyID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyID> is null");
 		}
@@ -71,7 +69,7 @@ public class AccountBalanceHelper_FP
 			throw new IllegalArgumentException("argument <cmdtyID> is not set");
 		}
 
-		FixedPointNumber retval = getBalance(date, acct);
+		BigFraction retval = getBalance(date, acct);
 
 		if ( retval == null ) {
 			LOGGER.error("getBalance: Could not create balance");
@@ -84,19 +82,20 @@ public class AccountBalanceHelper_FP
 		}
 	
 		ComplexPriceTable priceTab = acct.getGnuCashFile().getCurrencyTable();
+	
 		if ( priceTab == null ) {
 			LOGGER.error("getBalance: Cannot transfer to given currency because we have no currency-table");
 			return null;
 		}
 	
-		retval = priceTab.convertToBaseCurrency(retval, cmdtyID);
+		retval = priceTab.convertToBaseCurrencyRat(retval, cmdtyID);
 		if ( retval == null ) {
 			LOGGER.error("getBalance: Cannot transfer " + "from our currency '"
 					+ acct.getCmdtyID().toString() + "' to the base-currency!");
 			return null;
 		}
 	
-		retval = priceTab.convertFromBaseCurrency(retval, cmdtyID);
+		retval = priceTab.convertFromBaseCurrencyRat(retval, cmdtyID);
 		if ( retval == null ) {
 			LOGGER.error("getBalance: Cannot transfer " + "from base-currenty to given currency '"
 					+ cmdtyID.toString() + "'");
@@ -106,9 +105,9 @@ public class AccountBalanceHelper_FP
 		return retval;
 	}
 
-	public static FixedPointNumber getBalance(final LocalDate date, final Currency curr,
-											  final SimpleAccount acct) {
-		FixedPointNumber retval = getBalance(date, acct);
+	public static BigFraction getBalance(final LocalDate date, final Currency curr,
+										 final SimpleAccount acct) {
+		BigFraction retval = getBalance(date, acct);
 
 		if ( retval == null ) {
 			LOGGER.warn("getBalance: Could not create balance");
@@ -116,7 +115,7 @@ public class AccountBalanceHelper_FP
 		}
 
 		if ( curr == null ||
-			 retval.equals(FixedPointNumber.ZERO.copy()) ) {
+			 retval.equals(BigFraction.ZERO) ) {
 			return retval;
 		}
 
@@ -134,14 +133,14 @@ public class AccountBalanceHelper_FP
 			return null;
 		}
 
-		retval = priceTab.convertToBaseCurrency(retval, acct.getCmdtyID());
+		retval = priceTab.convertToBaseCurrencyRat(retval, acct.getCmdtyID());
 		if ( retval == null ) {
 			LOGGER.warn("getBalance: Cannot transfer " + "from our currency '"
 					+ acct.getCmdtyID().toString() + "' to the base-currency");
 			return null;
 		}
 
-		retval = priceTab.convertFromBaseCurrency(retval, new GCshCurrID(curr));
+		retval = priceTab.convertFromBaseCurrencyRat(retval, new GCshCurrID(curr));
 		if ( retval == null ) {
 			LOGGER.warn("getBalance: Cannot transfer " + "from base-currenty to given currency '"
 					+ curr + "'");
@@ -151,16 +150,16 @@ public class AccountBalanceHelper_FP
 		return retval;
 	}
 
-	public static FixedPointNumber getBalance(final GnuCashTransactionSplit lastSpltIncl,
-											  final SimpleAccount acct) {
-		FixedPointNumber balance = FixedPointNumber.ZERO.copy();
+	public static BigFraction getBalance(final GnuCashTransactionSplit lastSpltIncl,
+										 final SimpleAccount acct) {
+		BigFraction balance = BigFraction.ZERO;
 	
 		for ( GnuCashTransactionSplit splt : acct.getTransactionSplits() ) {
 			try {
 				// CAUTION: No special logic for action type GnuCashTransactionSplit.Action.SPLIT,
 				// as opposed to sister project.
-				// CAUTION: FixedPointNumber is mutable
-				balance.add(splt.getQuantity());
+				// CAUTION: BigFraction is immutable
+				balance = balance.add(splt.getQuantityRat());
 	
 				if ( splt == lastSpltIncl ) {
 					break;
@@ -186,22 +185,22 @@ public class AccountBalanceHelper_FP
 											 final SimpleAccount acct) {
 		NumberFormat cf = NumberFormat.getCurrencyInstance(lcl);
 		cf.setCurrency(acct.getCurrency());
-		return cf.format(getBalance(acct).getBigDecimal());
+		return cf.format(getBalance(acct).bigDecimalValue());
 	}
 
 	// ---------------------------------------------------------------
 
-	public static FixedPointNumber getBalanceRecursive(final SimpleAccount acct) {
+	public static BigFraction getBalanceRecursive(final SimpleAccount acct) {
 		return getBalanceRecursive(LocalDate.now(), acct);
 	}
 
-	public static FixedPointNumber getBalanceRecursive(final LocalDate date,
-													   final SimpleAccount acct) {
+	public static BigFraction getBalanceRecursive(final LocalDate date,
+												  final SimpleAccount acct) {
 		return getBalanceRecursive(date, acct.getCmdtyID(), acct);
 	}
 
-	public static FixedPointNumber getBalanceRecursive(final LocalDate date, final GCshCmdtyID cmdtyID,
-													   final SimpleAccount acct) {
+	public static BigFraction getBalanceRecursive(final LocalDate date, final GCshCmdtyID cmdtyID,
+												  final SimpleAccount acct) {
 		if ( cmdtyID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyID> is null");
 		}
@@ -218,18 +217,18 @@ public class AccountBalanceHelper_FP
 													        // but there might be special cases)
 	}
 
-	public static FixedPointNumber getBalanceRecursive(final LocalDate date, final Currency curr,
-													   final SimpleAccount acct) {
-		FixedPointNumber retval = getBalance(date, curr, acct);
+	public static BigFraction getBalanceRecursive(final LocalDate date, final Currency curr,
+												  final SimpleAccount acct) {
+		BigFraction retval = getBalance(date, curr, acct);
 
 		if ( retval == null ) {
-			retval = FixedPointNumber.ZERO.copy();
+			retval = BigFraction.ZERO;
 		}
 
 		for ( GnuCashAccount child : acct.getChildren() ) {
 			try {
-				// CAUTION: FixedPointNumber is mutable
-				retval.add(child.getBalanceRecursive(date, curr));
+				// CAUTION: BigFraction is immutable
+				retval = retval.add( child.getBalanceRecursiveRat(date, curr) );
 			} catch ( Exception exc ) {
 				// Yes, it does happen sometimes!
 				LOGGER.error("getBalanceRecursive: Error adding balance for child account " + child.getID());
@@ -240,18 +239,18 @@ public class AccountBalanceHelper_FP
 		return retval;
 	}
 
-	public static FixedPointNumber getBalanceRecursive(final GnuCashTransactionSplit lastSpltIncl,
-			  										   final SimpleAccount acct) {
-		FixedPointNumber retval = getBalance(lastSpltIncl, acct);
+	public static BigFraction getBalanceRecursive(final GnuCashTransactionSplit lastSpltIncl,
+												  final SimpleAccount acct) {
+		BigFraction retval = getBalance(lastSpltIncl, acct);
 
 		if ( retval == null ) {
-			retval = FixedPointNumber.ZERO.copy();
+			retval = BigFraction.ZERO;
 		}
 
 		for ( GnuCashAccount child : acct.getChildren() ) {
 			try {
-				// CAUTION: FixedPointNumber is mutable
-				retval.add(child.getBalanceRecursive(lastSpltIncl));
+				// CAUTION: BigFraction is immutable
+				retval = retval.add( child.getBalanceRecursiveRat(lastSpltIncl) );
 			} catch ( Exception exc ) {
 				// Yes, it does happen sometimes!
 				LOGGER.error("getBalanceRecursive: Error adding balance for child account " + child.getID());
@@ -273,24 +272,24 @@ public class AccountBalanceHelper_FP
 													  final SimpleAccount acct) {
 		NumberFormat cf = NumberFormat.getCurrencyInstance(lcl);
 		cf.setCurrency(acct.getCurrency());
-		return cf.format(getBalanceRecursive(acct).getBigDecimal());
+		return cf.format(getBalanceRecursive(acct).bigDecimalValue());
 	}
 	
 	// ---------------------------------------------------------------
 	// Helpers -- balance pre-computed
 	
-	public static String formatBalance(SimpleAccount acct, FixedPointNumber blnc) {
+	public static String formatBalance(SimpleAccount acct, BigFraction blnc) {
 		Locale lcl = Locale.getDefault();
 		return formatBalance(acct, blnc, lcl);
 	}
 	
-	public static String formatBalance(SimpleAccount acct, FixedPointNumber blnc, Locale lcl) {
+	public static String formatBalance(SimpleAccount acct, BigFraction blnc, Locale lcl) {
 		NumberFormat nf = acct.getCurrencyFormat(lcl);
     	if ( acct.getCmdtyID().getType() == GCshCmdtyID.Type.CURRENCY ) {
     		nf.setCurrency(Currency.getInstance(acct.getCmdtyID().getCode()));
-    		return nf.format(blnc.getBigDecimal());
+    		return nf.format(blnc.doubleValue());
     	} else {
-    		return nf.format(blnc.getBigDecimal()) + " " + acct.getCmdtyID().getCode().toString();
+    		return nf.format(blnc.doubleValue()) + " " + acct.getCmdtyID().getCode().toString();
     	}
 	}
 

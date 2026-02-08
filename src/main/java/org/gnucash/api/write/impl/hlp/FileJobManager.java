@@ -14,7 +14,7 @@ import org.gnucash.api.write.spec.GnuCashWritableVendorJob;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FileJobManager extends org.gnucash.api.read.impl.hlp.FileJobManager {
+public class FileJobManager extends org.gnucash.api.read.impl.hlp.fil.FileJobManager {
 
 	protected static final Logger LOGGER = LoggerFactory.getLogger(FileJobManager.class);
 

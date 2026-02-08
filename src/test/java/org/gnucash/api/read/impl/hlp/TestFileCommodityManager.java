@@ -8,6 +8,7 @@ import java.util.Collection;
 
 import org.gnucash.api.ConstTest;
 import org.gnucash.api.read.GnuCashCommodity;
+import org.gnucash.api.read.impl.hlp.fil.FileCommodityManager;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.junit.Before;
 import org.junit.Test;

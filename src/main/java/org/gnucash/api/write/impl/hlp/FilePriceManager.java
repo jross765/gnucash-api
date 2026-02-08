@@ -9,7 +9,7 @@ import org.gnucash.base.basetypes.simple.GCshPrcID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FilePriceManager extends org.gnucash.api.read.impl.hlp.FilePriceManager {
+public class FilePriceManager extends org.gnucash.api.read.impl.hlp.fil.FilePriceManager {
 
 	protected static final Logger LOGGER = LoggerFactory.getLogger(FilePriceManager.class);
 

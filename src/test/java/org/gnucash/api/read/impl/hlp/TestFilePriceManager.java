@@ -9,6 +9,7 @@ import java.util.Currency;
 
 import org.gnucash.api.ConstTest;
 import org.gnucash.api.read.GnuCashPrice;
+import org.gnucash.api.read.impl.hlp.fil.FilePriceManager;
 import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
 import org.gnucash.base.basetypes.complex.GCshSecID_Exchange;
 import org.gnucash.base.basetypes.complex.GCshCurrID;

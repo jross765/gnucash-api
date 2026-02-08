@@ -1,4 +1,4 @@
-package org.gnucash.api.read.impl.hlp;
+package org.gnucash.api.read.impl.hlp.fil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -18,6 +18,8 @@ import org.gnucash.api.generated.Price;
 import org.gnucash.api.read.GnuCashPrice;
 import org.gnucash.api.read.impl.GnuCashFileImpl;
 import org.gnucash.api.read.impl.GnuCashPriceImpl;
+import org.gnucash.api.read.impl.hlp.prc.PriceHelper_BF;
+import org.gnucash.api.read.impl.hlp.prc.PriceHelper_FP;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.complex.GCshSecID;
@@ -35,7 +37,7 @@ public class FilePriceManager {
     
     public static final DateFormat PRICE_QUOTE_DATE_FORMAT = new SimpleDateFormat(Const.STANDARD_DATE_FORMAT);
 
-    static final int RECURS_DEPTH_MAX = 5; // ::MAGIC
+    public static final int RECURS_DEPTH_MAX = 5; // ::MAGIC
 
     // ---------------------------------------------------------------
     
