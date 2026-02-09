@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotEquals;
 import java.io.File;
 import java.io.InputStream;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.ConstTest;
 import org.gnucash.api.read.GnuCashTransaction;
 import org.gnucash.api.read.GnuCashTransactionSplit;
@@ -109,13 +110,15 @@ public class TestGnuCashWritableTransactionSplitImpl {
 		assertEquals(null, splt.getAction());
 		
 		assertEquals(-2253.00, splt.getValue().doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(-2253, splt.getValueRat().getNumerator().longValue());
-		assertEquals(1, splt.getValueRat().getDenominator().longValue());
+		assertEquals(-2253,    splt.getValueRat().getNumerator().intValue());
+		assertEquals(1,        splt.getValueRat().getDenominator().intValue());
+		
 		assertEquals("-2.253,00 €", splt.getValueFormatted()); // ::TODO: locale-specific!
 		
 		assertEquals(-2253.00, splt.getQuantity().doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(-2253, splt.getQuantityRat().getNumerator().longValue());
-		assertEquals(1, splt.getQuantityRat().getDenominator().longValue());
+		assertEquals(-2253,    splt.getQuantityRat().getNumerator().intValue());
+		assertEquals(1,        splt.getQuantityRat().getDenominator().intValue());
+		
 		assertEquals("-2.253,00 €", splt.getQuantityFormatted()); // ::TODO: locale-specific!
 		
 		assertEquals("", splt.getDescription());
@@ -134,13 +137,15 @@ public class TestGnuCashWritableTransactionSplitImpl {
 		assertEquals(GnuCashTransactionSplit.Action.BUY, splt.getAction());
 		
 		assertEquals(1875.00, splt.getValue().doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(1875, splt.getValueRat().getNumerator().longValue());
-		assertEquals(1, splt.getValueRat().getDenominator().longValue());
+		assertEquals(1875,    splt.getValueRat().getNumerator().intValue());
+		assertEquals(1,       splt.getValueRat().getDenominator().intValue());
+		
 		assertEquals("1.875,00 €", splt.getValueFormatted()); // ::TODO: locale-specific!
 		
 		assertEquals(15.00, splt.getQuantity().doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals(15, splt.getQuantityRat().getNumerator().longValue());
-		assertEquals(1, splt.getQuantityRat().getDenominator().longValue());
+		assertEquals(15,    splt.getQuantityRat().getNumerator().intValue());
+		assertEquals(1,     splt.getQuantityRat().getDenominator().intValue());
+		
 		assertEquals("15 EURONEXT:SAP", splt.getQuantityFormatted());
 		
 		assertEquals("", splt.getDescription());
@@ -190,6 +195,10 @@ public class TestGnuCashWritableTransactionSplitImpl {
 		// output file, then re-read from it, and whether is is what
 		// we expect it is.
 
+		// Change value again: other variant, diff. value
+		splt.setValue(BigFraction.of(-12355, 100));
+		splt.setQuantity(BigFraction.of(-678911, 10000));
+
 		File outFile = folder.newFile(ConstTest.GCSH_FILENAME_OUT);
 		// System.err.println("Outfile for TestGnuCashWritableCustomerImpl.test01_1: '"
 		// + outFile.getPath() + "'");
@@ -211,8 +220,15 @@ public class TestGnuCashWritableTransactionSplitImpl {
 		assertEquals(ACCT_2_ID, splt.getAccountID()); // changed
 		assertEquals(null, splt.getActionStr()); // unchanged
 		assertEquals(null, splt.getAction()); // unchanged
+		
 		assertEquals(-123.45, splt.getValue().doubleValue(), ConstTest.DIFF_TOLERANCE); // changed
+		assertEquals(-2469,   splt.getValueRat().getNumerator().intValue()); // changed
+		assertEquals(20,      splt.getValueRat().getDenominator().intValue()); // changed
+		
 		assertEquals(-67.8901, splt.getQuantity().doubleValue(), ConstTest.DIFF_TOLERANCE); // changed
+		assertEquals(-678901,  splt.getQuantityRat().getNumerator().intValue()); // changed
+		assertEquals(10000,    splt.getQuantityRat().getDenominator().intValue()); // changed
+
 		assertEquals("Alle meine Entchen", splt.getDescription()); // changed
 		assertEquals(null, splt.getLotID()); // unchanged
 		assertEquals(null, splt.getUserDefinedAttributeKeys()); // unchanged
@@ -233,8 +249,18 @@ public class TestGnuCashWritableTransactionSplitImpl {
 		assertEquals(ACCT_2_ID, splt.getAccountID()); // changed
 		assertEquals(null, splt.getActionStr()); // unchanged
 		assertEquals(null, splt.getAction()); // unchanged
-		assertEquals(-123.45, splt.getValue().doubleValue(), ConstTest.DIFF_TOLERANCE); // changed
-		assertEquals(-67.8901, splt.getQuantity().doubleValue(), ConstTest.DIFF_TOLERANCE); // changed
+		
+		// Caution: value differs from that in test02_1_check_memory() on purpose
+		// Cf. change before saving in test02_1().
+		assertEquals(-123.55, splt.getValue().doubleValue(), ConstTest.DIFF_TOLERANCE); // changed
+		assertEquals(-2471,   splt.getValueRat().getNumerator().intValue()); // changed
+		assertEquals(20,      splt.getValueRat().getDenominator().intValue()); // changed
+		
+		// Caution: changed values, cf. above.
+		assertEquals(-67.8911, splt.getQuantity().doubleValue(), ConstTest.DIFF_TOLERANCE); // changed
+		assertEquals(-678911,  splt.getQuantityRat().getNumerator().intValue()); // changed
+		assertEquals(10000,    splt.getQuantityRat().getDenominator().intValue()); // changed
+		
 		assertEquals("Alle meine Entchen", splt.getDescription()); // changed
 		assertEquals(null, splt.getLotID()); // unchanged
 		assertEquals(null, splt.getUserDefinedAttributeKeys()); // unchanged

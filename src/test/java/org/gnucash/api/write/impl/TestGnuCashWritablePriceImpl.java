@@ -12,6 +12,7 @@ import java.util.Comparator;
 import java.util.Currency;
 import java.util.List;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.ConstTest;
 import org.gnucash.api.read.GnuCashCommodity;
 import org.gnucash.api.read.GnuCashPrice;
@@ -21,10 +22,10 @@ import org.gnucash.api.read.impl.TestGnuCashPriceImpl;
 import org.gnucash.api.read.impl.aux.GCshFileStats;
 import org.gnucash.api.write.GnuCashWritablePrice;
 import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
+import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.complex.GCshSecID_Exchange;
 import org.gnucash.base.basetypes.complex.GCshSecID_SecIdType;
-import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.simple.GCshPrcID;
 import org.junit.Before;
 import org.junit.Rule;
@@ -165,6 +166,7 @@ public class TestGnuCashWritablePriceImpl {
 		assertEquals("EUR", prc.getToCurrencyCode());
 		assertEquals(Type.TRANSACTION, prc.getType());
 		assertEquals(LocalDate.of(2023, 7, 1), prc.getDate());
+		
 		assertEquals(22.53, prc.getValue().doubleValue(), ConstTest.DIFF_TOLERANCE);
 		assertEquals(2253,  prc.getValueRat().getNumerator().intValue());
 		assertEquals(100,   prc.getValueRat().getDenominator().intValue());
@@ -207,6 +209,7 @@ public class TestGnuCashWritablePriceImpl {
 		assertEquals("EUR", prc.getToCurrencyCode());
 		assertEquals(Type.UNKNOWN, prc.getType());
 		assertEquals(LocalDate.of(2023, 7, 20), prc.getDate());
+		
 		assertEquals(145.0, prc.getValue().doubleValue(), ConstTest.DIFF_TOLERANCE);
 		assertEquals(145,   prc.getValueRat().getNumerator().intValue());
 		assertEquals(1,     prc.getValueRat().getDenominator().intValue());
@@ -249,6 +252,7 @@ public class TestGnuCashWritablePriceImpl {
 		assertEquals("EUR", prc.getToCurrencyCode());
 		assertEquals(Type.TRANSACTION, prc.getType());
 		assertEquals(LocalDate.of(2023, 7, 18), prc.getDate());
+		
 		assertEquals(125.0, prc.getValue().doubleValue(), ConstTest.DIFF_TOLERANCE);
 		assertEquals(125,   prc.getValueRat().getNumerator().intValue());
 		assertEquals(1,     prc.getValueRat().getDenominator().intValue());
@@ -288,6 +292,7 @@ public class TestGnuCashWritablePriceImpl {
 		assertEquals("EUR", prc.getToCurrencyCode());
 		assertEquals(null, prc.getType());
 		assertEquals(LocalDate.of(2023, 10, 1), prc.getDate());
+		
 		assertEquals(new FixedPointNumber("100/93").doubleValue(), prc.getValue().doubleValue(), ConstTest.DIFF_TOLERANCE);
 		assertEquals(100, prc.getValueRat().getNumerator().intValue());
 		assertEquals(93,  prc.getValueRat().getDenominator().intValue());
@@ -393,7 +398,7 @@ public class TestGnuCashWritablePriceImpl {
 		// Modify the object
 
 		prc.setDate(LocalDate.of(2019, 1, 1));
-		prc.setValue(new FixedPointNumber(21.20));
+		prc.setValue(new FixedPointNumber("21.20"));
 
 		// ----------------------------
 		// Check whether the object can has actually be modified
@@ -406,6 +411,9 @@ public class TestGnuCashWritablePriceImpl {
 		// output file, then re-read from it, and whether is is what
 		// we expect it is.
 
+		// Change value; other variant, diff. value
+		prc.setValue(BigFraction.of(2130, 100));
+		
 		File outFile = folder.newFile(ConstTest.GCSH_FILENAME_OUT);
 		// System.err.println("Outfile for TestGnuCashWritableCustomerImpl.test01_1: '"
 		// + outFile.getPath() + "'");
@@ -439,7 +447,7 @@ public class TestGnuCashWritablePriceImpl {
 		// Modify the object
 
 		prc.setDate(LocalDate.of(2022, 12, 12));
-		prc.setValue(new FixedPointNumber(2122.22));
+		prc.setValue(new FixedPointNumber("2122.22"));
 
 		// ----------------------------
 		// Check whether the object can has actually be modified
@@ -452,6 +460,9 @@ public class TestGnuCashWritablePriceImpl {
 		// output file, then re-read from it, and whether is is what
 		// we expect it is.
 
+		// Change value; other variant, diff. value
+		prc.setValue(BigFraction.of(212232, 100));
+		
 		File outFile = folder.newFile(ConstTest.GCSH_FILENAME_OUT);
 		// System.err.println("Outfile for TestGnuCashWritableCustomerImpl.test01_1: '"
 		// + outFile.getPath() + "'");
@@ -480,7 +491,10 @@ public class TestGnuCashWritablePriceImpl {
 		assertEquals("EUR", prc.getToCurrencyCode()); // unchanged
 		assertEquals(Type.TRANSACTION, prc.getType()); // unchanged
 		assertEquals(LocalDate.of(2019, 1, 1), prc.getDate()); // changed
+		
 		assertEquals(21.20, prc.getValue().doubleValue(), ConstTest.DIFF_TOLERANCE); // changed
+		assertEquals(106,   prc.getValueRat().getNumerator().intValue());
+		assertEquals(5,     prc.getValueRat().getDenominator().intValue());
 	}
 
 	private void test02_1_check_persisted(File outFile) throws Exception {
@@ -505,7 +519,12 @@ public class TestGnuCashWritablePriceImpl {
 		assertEquals("EUR", prc.getToCurrencyCode()); // unchanged
 		assertEquals(Type.TRANSACTION, prc.getType()); // unchanged
 		assertEquals(LocalDate.of(2019, 1, 1), prc.getDate()); // changed
-		assertEquals(21.20, prc.getValue().doubleValue(), ConstTest.DIFF_TOLERANCE); // changed
+		
+		// Caution: value differs from that in test02_1_check_memory() on purpose
+		// Cf. change before saving in test02_1().
+		assertEquals(21.30, prc.getValue().doubleValue(), ConstTest.DIFF_TOLERANCE); // changed
+		assertEquals(213,   prc.getValueRat().getNumerator().intValue());
+		assertEquals(10,    prc.getValueRat().getDenominator().intValue());
 	}
 	
 	// ----------------------------
@@ -526,7 +545,12 @@ public class TestGnuCashWritablePriceImpl {
 		assertEquals("EUR", prc.getToCurrencyCode()); // unchanged
 		assertEquals(Type.LAST, prc.getType()); // unchanged
 		assertEquals(LocalDate.of(2022, 12, 12), prc.getDate()); // changed
+		
+		// Caution: value differs from that in test03_1_check_memory() on purpose
+		// Cf. change before saving in test02_3().
 		assertEquals(2122.22, prc.getValue().doubleValue(), ConstTest.DIFF_TOLERANCE); // changed
+		assertEquals(106111,  prc.getValueRat().getNumerator().intValue());
+		assertEquals(50,      prc.getValueRat().getDenominator().intValue());
 	}
 
 	private void test02_3_check_persisted(File outFile) throws Exception {
@@ -551,7 +575,12 @@ public class TestGnuCashWritablePriceImpl {
 		assertEquals("EUR", prc.getToCurrencyCode()); // unchanged
 		assertEquals(Type.LAST, prc.getType()); // unchanged
 		assertEquals(LocalDate.of(2022, 12, 12), prc.getDate()); // changed
-		assertEquals(2122.22, prc.getValue().doubleValue(), ConstTest.DIFF_TOLERANCE); // changed
+		
+		// Caution: value differs from that in test02_3_check_memory() on purpose
+		// Cf. change before saving in test02_3().
+		assertEquals(2122.32, prc.getValue().doubleValue(), ConstTest.DIFF_TOLERANCE); // changed
+		assertEquals(53058,   prc.getValueRat().getNumerator().intValue());
+		assertEquals(25,      prc.getValueRat().getDenominator().intValue());
 	}
 
 	// -----------------------------------------------------------------
