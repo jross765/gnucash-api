@@ -828,6 +828,9 @@ public interface GnuCashFile extends GnuCashObject,
      * @param id the unique ID of the currency/security/commodity to look for
      * @return the currency/security/commodity or null if it's not found
      */
+    GnuCashCommodity getCommodityByID(GCshCmdtyID cmdtyCurrID);
+
+    @Deprecated
     GnuCashCommodity getCommodityByQualifID(GCshCmdtyID cmdtyCurrID);
 
     /**
@@ -835,6 +838,9 @@ public interface GnuCashFile extends GnuCashObject,
      * @param code
      * @return
      */
+    GnuCashCommodity getCommodityByNamSpcCode(String nameSpace, String code);
+
+    @Deprecated
     GnuCashCommodity getCommodityByQualifID(String nameSpace, String code);
 
     /**
@@ -842,6 +848,9 @@ public interface GnuCashFile extends GnuCashObject,
      * @param code
      * @return
      */
+    GnuCashCommodity getCommodityByNamSpcCode(GCshCmdtyNameSpace.Exchange exchange, String code);
+
+    @Deprecated
     GnuCashCommodity getCommodityByQualifID(GCshCmdtyNameSpace.Exchange exchange, String code);
 
     /**
@@ -849,6 +858,9 @@ public interface GnuCashFile extends GnuCashObject,
      * @param code
      * @return
      */
+    GnuCashCommodity getCommodityByNamSpcCode(GCshCmdtyNameSpace.MIC mic, String code);
+
+    @Deprecated
     GnuCashCommodity getCommodityByQualifID(GCshCmdtyNameSpace.MIC mic, String code);
 
     /**
@@ -856,13 +868,17 @@ public interface GnuCashFile extends GnuCashObject,
      * @param code
      * @return
      */
+    GnuCashCommodity getCommodityByNamSpcCode(GCshCmdtyNameSpace.SecIdType secIdType, String code);
+
+    @Deprecated
     GnuCashCommodity getCommodityByQualifID(GCshCmdtyNameSpace.SecIdType secIdType, String code);
 
     /**
-     * @param qualifID the unique ID of the currency/security/commodity to look for
+     * @param cmdtyIDStr the unique ID of the currency/security/commodity to look for
      * @return the currency/security/commodity or null if it's not found
      */
-    GnuCashCommodity getCommodityByQualifID(String qualifID);
+    @Deprecated
+    GnuCashCommodity getCommodityByQualifID(String cmdtyIDStr);
 
     /**
      * @param xCode the unique X-code of the currency/security/commodity to look for
@@ -876,7 +892,7 @@ public interface GnuCashFile extends GnuCashObject,
      * not have the right name.
      * @param expr search expression
      * @return null if not found
-     * @see #getCommodityByQualifID(GCshCmdtyID)
+     * @see #getCommodityByID(GCshCmdtyID)
      */
     List<GnuCashCommodity> getCommoditiesByName(String expr);
 

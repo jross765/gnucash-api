@@ -104,19 +104,19 @@ public class FileCommodityManager {
 
 	// ---------------------------------------------------------------
 
-	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyID qualifID) {
-		if ( qualifID == null ) {
-			throw new IllegalArgumentException("argument <qualifID> is null");
+	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyID cmdtyID) {
+		if ( cmdtyID == null ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is null");
 		}
 		
-		if ( ! qualifID.isSet() ) {
-			throw new IllegalArgumentException("argument <qualifID> is not set");
+		if ( ! cmdtyID.isSet() ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is not set");
 		}
 		
-		return getCommodityByQualifID(qualifID.toString());
+		return getCommodityByQualifIDStr(cmdtyID.toString());
 	}
 
-	public GnuCashCommodity getCommodityByQualifID(final String nameSpace, final String id) {
+	public GnuCashCommodity getCommodityByNamSpcCode(final String nameSpace, final String code) {
 		if ( nameSpace == null ) {
 			throw new IllegalArgumentException("argument <nameSpace> is null");
 		}
@@ -125,81 +125,81 @@ public class FileCommodityManager {
 			throw new IllegalArgumentException("argument <nameSpace> is empty");
 		}
 
-		if ( id == null ) {
-			throw new IllegalArgumentException("argument <id> is null");
+		if ( code == null ) {
+			throw new IllegalArgumentException("argument <code> is null");
 		}
 
-		if ( id.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <id> is empty");
+		if ( code.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <code> is empty");
 		}
 
-		return getCommodityByQualifID(nameSpace + GCshCmdtyID.SEPARATOR + id);
+		return getCommodityByQualifIDStr(nameSpace + GCshCmdtyID.SEPARATOR + code);
 	}
 
-	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyNameSpace.Exchange exch, String id) {
+	public GnuCashCommodity getCommodityByNamSpcCode(final GCshCmdtyNameSpace.Exchange exch, String code) {
 		if ( exch == GCshCmdtyNameSpace.Exchange.UNSET ) {
 			throw new IllegalArgumentException("argument <exch> is not set");
 		}
 		
-		if ( id == null ) {
-			throw new IllegalArgumentException("argument <id> is null");
+		if ( code == null ) {
+			throw new IllegalArgumentException("argument <code> is null");
 		}
 
-		if ( id.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <id> is empty");
+		if ( code.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <code> is empty");
 		}
 
-		return getCommodityByQualifID(exch.toString() + GCshCmdtyID.SEPARATOR + id);
+		return getCommodityByQualifIDStr(exch.toString() + GCshCmdtyID.SEPARATOR + code);
 	}
 
-	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyNameSpace.MIC mic, String id) {
+	public GnuCashCommodity getCommodityByNamSpcCode(final GCshCmdtyNameSpace.MIC mic, String code) {
 		if ( mic == GCshCmdtyNameSpace.MIC.UNSET ) {
 			throw new IllegalArgumentException("argument <mic> is not set");
 		}
 		
-		if ( id == null ) {
-			throw new IllegalArgumentException("argument <id> is null");
+		if ( code == null ) {
+			throw new IllegalArgumentException("argument <code> is null");
 		}
 
-		if ( id.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <id> is empty");
+		if ( code.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <code> is empty");
 		}
 
-		return getCommodityByQualifID(mic.toString() + GCshCmdtyID.SEPARATOR + id);
+		return getCommodityByQualifIDStr(mic.toString() + GCshCmdtyID.SEPARATOR + code);
 	}
 
-	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyNameSpace.SecIdType secIdType, String id) {
+	public GnuCashCommodity getCommodityByNamSpcCode(final GCshCmdtyNameSpace.SecIdType secIdType, String code) {
 		if ( secIdType == GCshCmdtyNameSpace.SecIdType.UNSET ) {
 			throw new IllegalArgumentException("argument <secIdType> is not set");
 		}
 		
-		if ( id == null ) {
-			throw new IllegalArgumentException("argument <id> is null");
+		if ( code == null ) {
+			throw new IllegalArgumentException("argument <code> is null");
 		}
 
-		if ( id.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <id> is empty");
+		if ( code.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <code> is empty");
 		}
 
-		return getCommodityByQualifID(secIdType.toString() + GCshCmdtyID.SEPARATOR + id);
+		return getCommodityByQualifIDStr(secIdType.toString() + GCshCmdtyID.SEPARATOR + code);
 	}
 
-	public GnuCashCommodity getCommodityByQualifID(final String qualifID) {
-		if ( qualifID == null ) {
-			throw new IllegalArgumentException("argument <qualifID> is null");
+	public GnuCashCommodity getCommodityByQualifIDStr(final String cmdtyIDStr) {
+		if ( cmdtyIDStr == null ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
 		}
 
-		if ( qualifID.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <qualifID> is null");
+		if ( cmdtyIDStr.trim().equals("") ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
 		}
 
 		if ( cmdtyMap == null ) {
 			throw new IllegalStateException("no root-element loaded");
 		}
 
-		GnuCashCommodity retval = cmdtyMap.get(qualifID.trim());
+		GnuCashCommodity retval = cmdtyMap.get(cmdtyIDStr.trim());
 		if ( retval == null ) {
-			LOGGER.warn("getCommodityByQualifID: No Commodity with qualified id '" + qualifID + "'. We know "
+			LOGGER.warn("getCommodityByQualifID: No Commodity with qualified id '" + cmdtyIDStr + "'. We know "
 					+ cmdtyMap.size() + " commodities.");
 		}
 

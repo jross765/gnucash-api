@@ -806,7 +806,7 @@ public class TestHasWritableUserDefinedAttributesImpl {
 	private void test_02_cmdty_01_check_persisted(File outFile) throws Exception {
 		gcshOutFile = new GnuCashFileImpl(outFile);
 
-		GnuCashCommodity cmdty = gcshOutFile.getCommodityByQualifID(CMDTY_1_ID);
+		GnuCashCommodity cmdty = gcshOutFile.getCommodityByID(CMDTY_1_ID);
 		assertNotEquals(null, cmdty);
 
 		assertEquals(CMDTY_1_ID.toString(), cmdty.getQualifID().toString()); // unchanged
@@ -866,7 +866,7 @@ public class TestHasWritableUserDefinedAttributesImpl {
 	private void test_02_cmdty_02_check_persisted(File outFile) throws Exception {
 		gcshOutFile = new GnuCashFileImpl(outFile);
 
-		GnuCashCommodity cmdty = gcshOutFile.getCommodityByQualifID(CMDTY_2_ID);
+		GnuCashCommodity cmdty = gcshOutFile.getCommodityByID(CMDTY_2_ID);
 		assertNotEquals(null, cmdty);
 
 		assertEquals(CMDTY_2_ID.toString(), cmdty.getQualifID().toString()); // unchanged

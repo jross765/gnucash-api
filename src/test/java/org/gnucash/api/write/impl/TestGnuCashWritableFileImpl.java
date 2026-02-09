@@ -380,8 +380,8 @@ public class TestGnuCashWritableFileImpl {
 	public void test05_4() throws Exception {
 		// Analogous to test05_1, but with commodities
 		GCshSecID_SecIdType cmdtyCurrID3 = new GCshSecID_SecIdType(GCshCmdtyNameSpace.SecIdType.ISIN, CMDTY_4_ISIN);
-		GnuCashCommodity cmdty11 = gcshInFile.getCommodityByQualifID(cmdtyCurrID3);
-		GnuCashCommodity cmdty12 = gcshROFile.getCommodityByQualifID(cmdtyCurrID3);
+		GnuCashCommodity cmdty11 = gcshInFile.getCommodityByID(cmdtyCurrID3);
+		GnuCashCommodity cmdty12 = gcshROFile.getCommodityByID(cmdtyCurrID3);
 		assertNotEquals(null, cmdty11);
 		assertNotEquals(null, cmdty12);
 		

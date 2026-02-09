@@ -257,7 +257,7 @@ public class TestHasUserDefinedAttributesImpl {
 	// No slots
 	@Test
 	public void test_cmdty_01() throws Exception {
-		GnuCashCommodity cmdty = gcshFile.getCommodityByQualifID(CMDTY_1_ID);
+		GnuCashCommodity cmdty = gcshFile.getCommodityByID(CMDTY_1_ID);
 		assertNotEquals(null, cmdty);
 
 		assertEquals(null, cmdty.getUserDefinedAttributeKeys());
@@ -266,7 +266,7 @@ public class TestHasUserDefinedAttributesImpl {
 	// One slot
 	@Test
 	public void test_cmdty_02() throws Exception {
-		GnuCashCommodity cmdty = gcshFile.getCommodityByQualifID(CMDTY_2_ID);
+		GnuCashCommodity cmdty = gcshFile.getCommodityByID(CMDTY_2_ID);
 		assertNotEquals(null, cmdty);
 
 		assertNotEquals(null, cmdty.getUserDefinedAttributeKeys());

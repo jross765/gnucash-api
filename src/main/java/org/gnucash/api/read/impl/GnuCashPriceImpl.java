@@ -109,7 +109,7 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 	@Override
 	public GnuCashCommodity getFromCommodity() {
 		GCshSecID cmdtyID = getFromSecID();
-		GnuCashCommodity cmdty = getGnuCashFile().getCommodityByQualifID(cmdtyID);
+		GnuCashCommodity cmdty = getGnuCashFile().getCommodityByID(cmdtyID);
 		return cmdty;
 	}
 
@@ -121,7 +121,7 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 	@Override
 	public GnuCashCommodity getFromCurrency() {
 		GCshCurrID currID = getFromCurrID();
-		GnuCashCommodity cmdty = getGnuCashFile().getCommodityByQualifID(currID);
+		GnuCashCommodity cmdty = getGnuCashFile().getCommodityByID(currID);
 		return cmdty;
 	}
 
@@ -161,7 +161,7 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 		if ( getToCurrID() == null )
 			return null;
 
-		GnuCashCommodity cmdty = getGnuCashFile().getCommodityByQualifID(getToCurrID());
+		GnuCashCommodity cmdty = getGnuCashFile().getCommodityByID(getToCurrID());
 
 		return cmdty;
 	}

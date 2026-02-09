@@ -102,7 +102,7 @@ public class TestGnuCashCommodityImpl {
 
 	@Test
 	public void test01_1() throws Exception {
-		cmdty = gcshFile.getCommodityByQualifID(CMDTY_1_EXCH, CMDTY_1_ID);
+		cmdty = gcshFile.getCommodityByNamSpcCode(CMDTY_1_EXCH, CMDTY_1_ID);
 		assertNotEquals(null, cmdty);
 
 		assertEquals(cmdtyCurrID1.toString(), cmdty.getQualifID().toString());
@@ -116,6 +116,19 @@ public class TestGnuCashCommodityImpl {
 
 	@Test
 	public void test01_2() throws Exception {
+		cmdty = gcshFile.getCommodityByID(cmdtyCurrID1);
+		assertNotEquals(null, cmdty);
+
+		assertEquals(cmdtyCurrID1.toString(), cmdty.getQualifID().toString());
+		// *Not* equal because of class
+		assertNotEquals(cmdtyCurrID1, cmdty.getQualifID());
+		// ::TODO: Convert to CommodityID_Exchange, then it should be equal
+		//    assertEquals(cmdtyCurrID1, cmdty.getQualifID()); // not trivial!
+		assertEquals(CMDTY_1_ISIN, cmdty.getXCode());
+		assertEquals("Mercedes-Benz Group AG", cmdty.getName());
+		
+		// ---
+
 		cmdty = gcshFile.getCommodityByQualifID(cmdtyCurrID1.toString());
 		assertNotEquals(null, cmdty);
 
@@ -181,7 +194,7 @@ public class TestGnuCashCommodityImpl {
 
 	@Test
 	public void test02_1() throws Exception {
-		cmdty = gcshFile.getCommodityByQualifID(CMDTY_3_SECIDTYPE.toString(), CMDTY_3_ID);
+		cmdty = gcshFile.getCommodityByNamSpcCode(CMDTY_3_SECIDTYPE.toString(), CMDTY_3_ID);
 		assertNotEquals(null, cmdty);
 
 		assertEquals(cmdtyCurrID3.toString(), cmdty.getQualifID().toString());
@@ -195,6 +208,19 @@ public class TestGnuCashCommodityImpl {
 
 	@Test
 	public void test02_2() throws Exception {
+		cmdty = gcshFile.getCommodityByID(cmdtyCurrID3);
+		assertNotEquals(null, cmdty);
+
+		assertEquals(cmdtyCurrID3.toString(), cmdty.getQualifID().toString());
+		// *Not* equal because of class
+		assertNotEquals(cmdtyCurrID3, cmdty.getQualifID());
+		// ::TODO: Convert to CommodityID_Exchange, then it should be equal
+		//    assertEquals(cmdtyCurrID1, cmdty.getQualifID()); // not trivial!
+		assertEquals(CMDTY_3_ISIN, cmdty.getXCode());
+		assertEquals("AstraZeneca Plc", cmdty.getName());
+		
+		// ---
+		
 		cmdty = gcshFile.getCommodityByQualifID(cmdtyCurrID3.toString());
 		assertNotEquals(null, cmdty);
 

@@ -1692,33 +1692,33 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 //	   	 throw new IllegalArgumentException("commodity ID is not set");
 //		}
 
-		GnuCashCommodity cmdty = super.getCommodityByQualifID(cmdtyID);
+		GnuCashCommodity cmdty = super.getCommodityByID(cmdtyID);
 		return new GnuCashWritableCommodityImpl((GnuCashCommodityImpl) cmdty);
 	}
 
 	@Override
 	public GnuCashWritableCommodity getWritableCommodityByQualifID(final String nameSpace, final String id) {
-		GnuCashCommodity cmdty = super.getCommodityByQualifID(nameSpace, id);
+		GnuCashCommodity cmdty = super.getCommodityByNamSpcCode(nameSpace, id);
 		return new GnuCashWritableCommodityImpl((GnuCashCommodityImpl) cmdty);
 	}
 
 	@Override
 	public GnuCashWritableCommodity getWritableCommodityByQualifID(final GCshCmdtyNameSpace.Exchange exchange,
 			String id) {
-		GnuCashCommodity cmdty = super.getCommodityByQualifID(exchange, id);
+		GnuCashCommodity cmdty = super.getCommodityByNamSpcCode(exchange, id);
 		return new GnuCashWritableCommodityImpl((GnuCashCommodityImpl) cmdty);
 	}
 
 	@Override
 	public GnuCashWritableCommodity getWritableCommodityByQualifID(final GCshCmdtyNameSpace.MIC mic, String id) {
-		GnuCashCommodity cmdty = super.getCommodityByQualifID(mic, id);
+		GnuCashCommodity cmdty = super.getCommodityByNamSpcCode(mic, id);
 		return new GnuCashWritableCommodityImpl((GnuCashCommodityImpl) cmdty);
 	}
 
 	@Override
 	public GnuCashWritableCommodity getWritableCommodityByQualifID(final GCshCmdtyNameSpace.SecIdType secIdType,
 			String id) {
-		GnuCashCommodity cmdty = super.getCommodityByQualifID(secIdType, id);
+		GnuCashCommodity cmdty = super.getCommodityByNamSpcCode(secIdType, id);
 		return new GnuCashWritableCommodityImpl((GnuCashCommodityImpl) cmdty);
 	}
 

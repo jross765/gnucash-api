@@ -234,7 +234,7 @@ public class TestGnuCashWritableCommodityImpl {
 		assertEquals(ConstTest.Stats.NOF_CMDTY_ALL - 1 + 1, gcshOutFileStats.getNofEntriesCommodities(GCshFileStats.Type.COUNTER)); // dto.
 		assertEquals(ConstTest.Stats.NOF_CMDTY_ALL     + 1, gcshOutFileStats.getNofEntriesCommodities(GCshFileStats.Type.CACHE));
 
-		GnuCashCommodity cmdty = gcshOutFile.getCommodityByQualifID(newID);
+		GnuCashCommodity cmdty = gcshOutFile.getCommodityByID(newID);
 		assertNotEquals(null, cmdty);
 
 		assertEquals(newID.toString(), cmdty.getQualifID().toString());
@@ -538,7 +538,7 @@ public class TestGnuCashWritableCommodityImpl {
 		// Same for a non non-writable instance. 
 		// However, due to design asymmetry, no exception is thrown here,
 		// but the method just returns null.
-		GnuCashCommodity cmdtyNow2 = gcshInFile.getCommodityByQualifID(CMDTY_4_SECIDTYPE, CMDTY_4_ID);
+		GnuCashCommodity cmdtyNow2 = gcshInFile.getCommodityByNamSpcCode(CMDTY_4_SECIDTYPE, CMDTY_4_ID);
 		assertEquals(null, cmdtyNow2);
 
 		// Attached objects (*not dependent*)
@@ -560,7 +560,7 @@ public class TestGnuCashWritableCommodityImpl {
 
 		// The transaction does not exist any more, just as you would expect.
 		// However, no exception is thrown, as opposed to test04_1_check_memory()
-		GnuCashCommodity cmdty = gcshOutFile.getCommodityByQualifID(CMDTY_4_SECIDTYPE, CMDTY_4_ID);
+		GnuCashCommodity cmdty = gcshOutFile.getCommodityByNamSpcCode(CMDTY_4_SECIDTYPE, CMDTY_4_ID);
 		assertEquals(null, cmdty); // sic
 	}
 
