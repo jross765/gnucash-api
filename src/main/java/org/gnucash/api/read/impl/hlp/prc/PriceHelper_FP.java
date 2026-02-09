@@ -118,7 +118,7 @@ public class PriceHelper_FP {
 			PriceCurrency toCurr = priceQuote.getPriceCurrency();
 
 			if ( fromCmdty == null ) {
-				LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes without from-commodity/currency: '"
+				LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes without from-security/currency: '"
 						+ priceQuote.toString() + "'");
 				continue;
 			}
@@ -132,14 +132,14 @@ public class PriceHelper_FP {
 			try {
 				if ( fromCmdty.getCmdtySpace() == null ) {
 					LOGGER.warn(
-							"getLatestPrice: GnuCash file contains price-quotes with from-commodity/currency without name space: id='"
+							"getLatestPrice: GnuCash file contains price-quotes with from-security/currency without name space: id='"
 									+ priceQuote.getPriceId().getValue() + "'");
 					continue;
 				}
 
 				if ( fromCmdty.getCmdtyId() == null ) {
 					LOGGER.warn(
-							"getLatestPrice: GnuCash file contains price-quotes with from-commodity/currency without code: id='"
+							"getLatestPrice: GnuCash file contains price-quotes with from-security/currency without code: id='"
 									+ priceQuote.getPriceId().getValue() + "'");
 					continue;
 				}
@@ -224,7 +224,7 @@ public class PriceHelper_FP {
 				}
 
 			} catch (Exception e) {
-				LOGGER.error("getLatestPrice: [ArithmeticException]: pCmdtyID='" + cmdtyID.toString() + "'! Ignoring a bad price-quote '" + priceQuote + "'", e);
+				LOGGER.error("getLatestPrice: pCmdtyID='" + cmdtyID.toString() + "'! Ignoring a bad price-quote '" + priceQuote + "'", e);
 			}
 		} // for priceQuote
 

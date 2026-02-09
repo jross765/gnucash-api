@@ -11,8 +11,8 @@ import java.util.Map;
 import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
-import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -283,7 +283,7 @@ public class ComplexPriceTable implements Serializable {
 
 		SimplePriceTable table = getTabByType(cmdtyCurrID.getType());
 		if ( table == null ) {
-        	LOGGER.error("getConversionFactor: Cannot get simple conversion table for commodity/currency ID " + cmdtyCurrID);
+        	LOGGER.error("getConversionFactor: Cannot get simple conversion table for security/currency ID " + cmdtyCurrID);
 			return null;
 		}
 
@@ -346,7 +346,7 @@ public class ComplexPriceTable implements Serializable {
 
 		SimplePriceTable table = getTabByType(cmdtyCurrID.getType());
 		if ( table == null ) {
-        	LOGGER.error("getConversionFactorRat: Cannot get simple conversion table for commodity/currency ID " + cmdtyCurrID);
+        	LOGGER.error("getConversionFactorRat: Cannot get simple conversion table for security/currency ID " + cmdtyCurrID);
 			return null;
 		}
 
@@ -459,7 +459,7 @@ public class ComplexPriceTable implements Serializable {
 
 		SimplePriceTable table = getTabByType(GCshCmdtyID.Type.SECURITY);
 		if ( table == null ) {
-        	LOGGER.error("setConversionFactor: Cannot get simple conversion table for commodity/currency ID " + cmdtyID);
+        	LOGGER.error("setConversionFactor: Cannot get simple conversion table for security/currency ID " + cmdtyID);
 			return;
 		}
 
@@ -654,7 +654,7 @@ public class ComplexPriceTable implements Serializable {
 	/**
 	 * @param pValue 
 	 * @param cmdtyCurrID 
-	 * @return the price of the given commodity/currency in base currencies
+	 * @return the price of the given security/currency in base currencies
 	 * @see SimplePriceTable#convertFromBaseCurrency(FixedPointNumber,
 	 *      java.lang.String)
 	 */

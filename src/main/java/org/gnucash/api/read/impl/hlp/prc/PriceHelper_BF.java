@@ -118,7 +118,7 @@ public class PriceHelper_BF {
 			PriceCurrency toCurr = priceQuote.getPriceCurrency();
 
 			if ( fromCmdty == null ) {
-				LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes without from-commodity/currency: '"
+				LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes without from-security/currency: '"
 						+ priceQuote.toString() + "'");
 				continue;
 			}
@@ -132,14 +132,14 @@ public class PriceHelper_BF {
 			try {
 				if ( fromCmdty.getCmdtySpace() == null ) {
 					LOGGER.warn(
-							"getLatestPrice: GnuCash file contains price-quotes with from-commodity/currency without name space: id='"
+							"getLatestPrice: GnuCash file contains price-quotes with from-security/currency without name space: id='"
 									+ priceQuote.getPriceId().getValue() + "'");
 					continue;
 				}
 
 				if ( fromCmdty.getCmdtyId() == null ) {
 					LOGGER.warn(
-							"getLatestPrice: GnuCash file contains price-quotes with from-commodity/currency without code: id='"
+							"getLatestPrice: GnuCash file contains price-quotes with from-security/currency without code: id='"
 									+ priceQuote.getPriceId().getValue() + "'");
 					continue;
 				}
@@ -220,30 +220,15 @@ public class PriceHelper_BF {
 				if ( latestDate == null || latestDate.before(date) ) {
 					latestDate = date;
 					latestQuote = BigFraction.parse(priceQuote.getPriceValue());
-					LOGGER.debug("getLatestPrice: getLatestPrice(pCmdtyID='" + cmdtyID.toString()
-							+ "') converted " + latestQuote + " <= " + priceQuote.getPriceValue());
+					LOGGER.debug("getLatestPrice: pCmdtyID='" + cmdtyID.toString() + "' converted " + latestQuote + " <= " + priceQuote.getPriceValue());
 				}
 
-			} catch (NumberFormatException e) {
-				LOGGER.error("getLatestPrice: [NumberFormatException] Problem in " + PriceHelper_BF.class.getName()
-						+ ".getLatestPrice(pCmdtyID='" + cmdtyID.toString() + "')! Ignoring a bad price-quote '"
-						+ priceQuote + "'", e);
-			} catch (ParseException e) {
-				LOGGER.error("getLatestPrice: [ParseException] Problem in " + PriceHelper_BF.class.getName() + " "
-						+ cmdtyID.toString() + "')! Ignoring a bad price-quote '" + priceQuote + "'", e);
-			} catch (NullPointerException e) {
-				LOGGER.error("getLatestPrice: [NullPointerException] Problem in " + PriceHelper_BF.class.getName()
-						+ ".getLatestPrice(pCmdtyID='" + cmdtyID.toString() + "')! Ignoring a bad price-quote '"
-						+ priceQuote + "'", e);
-			} catch (ArithmeticException e) {
-				LOGGER.error("getLatestPrice: [ArithmeticException] Problem in " + PriceHelper_BF.class.getName()
-						+ ".getLatestPrice(pCmdtyID='" + cmdtyID.toString() + "')! Ignoring a bad price-quote '"
-						+ priceQuote + "'", e);
+			} catch (Exception e) {
+				LOGGER.error("getLatestPrice: pCmdtyID='" + cmdtyID.toString() + "'! Ignoring a bad price-quote '" + priceQuote + "'", e);
 			}
 		} // for priceQuote
 
-		LOGGER.debug("getLatestPrice: " + PriceHelper_BF.class.getName() + ".getLatestPrice(pCmdtyID='"
-				+ cmdtyID.toString() + "')= " + latestQuote + " from " + latestDate);
+		LOGGER.debug("getLatestPrice: pCmdtyID='" + cmdtyID.toString() + "')= " + latestQuote + " from " + latestDate);
 
 		if ( latestQuote == null ) {
 			return null;

@@ -322,7 +322,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
     }
 
     /**
-     * @param cmdtyID the new commodity/currency name-space/code
+     * @param cmdtyID the new commodity ID
      * 
      */
     public void setCmdtyID(final GCshCmdtyID cmdtyID) {

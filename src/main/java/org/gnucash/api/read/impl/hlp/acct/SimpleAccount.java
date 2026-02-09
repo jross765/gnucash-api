@@ -418,7 +418,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	 */
 	public Currency getCurrency() {
 		if ( getCmdtyID().getType() != GCshCmdtyID.Type.CURRENCY ) {
-			throw new IllegalStateException("Account commodity/currency is not of type " + GCshCmdtyID.Type.CURRENCY);
+			throw new IllegalStateException("Account security/currency is not of type " + GCshCmdtyID.Type.CURRENCY);
 		}
 
 		String gcshCurrID = getCmdtyID().getCode();

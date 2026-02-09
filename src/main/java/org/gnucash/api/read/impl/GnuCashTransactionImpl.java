@@ -184,7 +184,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 
 	public Currency getCurrency() {
 		if ( getCmdtyID().getType() != GCshCmdtyID.Type.CURRENCY ) {
-			throw new IllegalStateException("Transaction commodity/currency is not of type " + GCshCmdtyID.Type.CURRENCY);
+			throw new IllegalStateException("Transaction security/currency is not of type " + GCshCmdtyID.Type.CURRENCY);
 		}
 
 		String gcshCurrID = getCmdtyID().getCode();

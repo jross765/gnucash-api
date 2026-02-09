@@ -272,7 +272,7 @@ public interface GnuCashFile extends GnuCashObject,
     /**
      * @param cmdtyID 
      * @return list of all transaction splits (ro-objects)
-     *   denominated in the given commodity/currency. 
+     *   denominated in the given commodity. 
      */
     List<GnuCashTransactionSplit> getTransactionSplitsByCmdtyID(GCshCmdtyID cmdtyID);
 
