@@ -13,6 +13,6 @@ import org.gnucash.api.read.GnuCashGenerInvoiceEntry;
  */
 public interface SpecWritableInvoiceEntryCommon_BF extends GnuCashGenerInvoiceEntry {
 	
-	void setPriceRat(BigFraction prc) throws Exception;
+	void setPrice(BigFraction prc) throws Exception;
 
 }

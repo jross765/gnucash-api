@@ -169,7 +169,7 @@ public class GnuCashWritableEmployeeVoucherEntryImpl extends GnuCashWritableGene
 	}
 
 	@Override
-	public void setPriceRat(final BigFraction prc) throws Exception {
+	public void setPrice(final BigFraction prc) throws Exception {
 		setEmplVchPriceRat(prc);
 	}
 
