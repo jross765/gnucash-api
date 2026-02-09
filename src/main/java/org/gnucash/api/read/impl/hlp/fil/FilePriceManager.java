@@ -232,8 +232,8 @@ public class FilePriceManager {
 	}
 
 	@Deprecated
-	public FixedPointNumber getLatestPrice(final String pCmdtySpace, final String pCmdtyID) {
-		GCshCmdtyID cmdtyID = new GCshCmdtyID(pCmdtySpace, pCmdtyID);
+	public FixedPointNumber getLatestPrice(final String nameSpace, final String code) {
+		GCshCmdtyID cmdtyID = new GCshCmdtyID(nameSpace, code);
 		return PriceHelper_FP.getLatestPrice(cmdtyID, 
 											 gcshFile, priceDB);
 	}
@@ -251,8 +251,8 @@ public class FilePriceManager {
 	}
 
 	@Deprecated
-	public BigFraction getLatestPriceRat(final String pCmdtySpace, final String pCmdtyID) {
-		GCshCmdtyID cmdtyID = new GCshCmdtyID(pCmdtySpace, pCmdtyID);
+	public BigFraction getLatestPriceRat(final String nameSpace, final String code) {
+		GCshCmdtyID cmdtyID = new GCshCmdtyID(nameSpace, code);
 		return PriceHelper_BF.getLatestPrice(cmdtyID,
 											 gcshFile, priceDB);
 	}

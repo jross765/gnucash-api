@@ -1256,8 +1256,8 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	 */
 	@Override
 	@Deprecated
-	public FixedPointNumber getLatestPrice(final String pCmdtySpace, final String pCmdtyId) {
-		return prcMgr.getLatestPrice(pCmdtySpace, pCmdtyId);
+	public FixedPointNumber getLatestPrice(final String nameSpace, final String code) {
+		return prcMgr.getLatestPrice(nameSpace, code);
 	}
 
 	/**
@@ -1265,8 +1265,8 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	 */
 	@Override
 	@Deprecated
-	public BigFraction getLatestPriceRat(final String pCmdtySpace, final String pCmdtyId) {
-		return prcMgr.getLatestPriceRat(pCmdtySpace, pCmdtyId);
+	public BigFraction getLatestPriceRat(final String nameSpace, final String code) {
+		return prcMgr.getLatestPriceRat(nameSpace, code);
 	}
 
 	// ---------------------------------------------------------------

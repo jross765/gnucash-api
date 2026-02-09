@@ -991,20 +991,20 @@ public interface GnuCashFile extends GnuCashObject,
 	List<GnuCashPrice> getPricesByCmdtyID(GCshCmdtyID cmdtyID);
 	
     /**
-     * @param cmdtyCurrID 
+     * @param cmdtyID 
      * @param pCmdtySpace the name space for pCmdtyId
      * @param pCmdtyId    the currency-name
      * @return the latest price-quote in the GnuCash file in EURO
      */
-    FixedPointNumber getLatestPrice(GCshCmdtyID cmdtyCurrID);
+    FixedPointNumber getLatestPrice(GCshCmdtyID cmdtyID);
 
-    BigFraction      getLatestPriceRat(GCshCmdtyID cmdtyCurrID);
+    BigFraction      getLatestPriceRat(GCshCmdtyID cmdtyID);
 
     @Deprecated
-    FixedPointNumber getLatestPrice(String pCmdtySpace, String pCmdtyId);
+    FixedPointNumber getLatestPrice(String nameSpace, String code);
     
     @Deprecated
-    BigFraction      getLatestPriceRat(String pCmdtySpace, String pCmdtyId);
+    BigFraction      getLatestPriceRat(String nameSpace, String code);
     
     // ---------------------------------------------------------------
     
