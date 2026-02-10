@@ -27,7 +27,7 @@ public class TestFilePriceManager {
 
 	private GnuCashWritableFileImplTestHelper gcshInFile = null;
 
-	private org.gnucash.api.write.impl.hlp.FilePriceManager mgr = null;
+	private org.gnucash.api.write.impl.hlp.fil.FilePriceManager mgr = null;
 
 	// -----------------------------------------------------------------
 

@@ -89,11 +89,11 @@ import org.gnucash.api.write.aux.GCshWritableBillTerms;
 import org.gnucash.api.write.aux.GCshWritableTaxTable;
 import org.gnucash.api.write.impl.aux.GCshWritableBillTermsImpl;
 import org.gnucash.api.write.impl.aux.GCshWritableTaxTableImpl;
-import org.gnucash.api.write.impl.hlp.BookElementsSorter;
-import org.gnucash.api.write.impl.hlp.FilePriceManager;
 import org.gnucash.api.write.impl.hlp.HasWritableUserDefinedAttributesImpl;
-import org.gnucash.api.write.impl.hlp.NamespaceAdderWriter;
-import org.gnucash.api.write.impl.hlp.WritingContentHandler;
+import org.gnucash.api.write.impl.hlp.fil.BookElementsSorter;
+import org.gnucash.api.write.impl.hlp.fil.FilePriceManager;
+import org.gnucash.api.write.impl.hlp.fil.NamespaceAdderWriter;
+import org.gnucash.api.write.impl.hlp.fil.WritingContentHandler;
 import org.gnucash.api.write.impl.spec.GnuCashWritableCustomerInvoiceEntryImpl;
 import org.gnucash.api.write.impl.spec.GnuCashWritableCustomerInvoiceImpl;
 import org.gnucash.api.write.impl.spec.GnuCashWritableCustomerJobImpl;
@@ -547,7 +547,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		// Prices
 		// Caution: the price manager has to be instantiated
 		// *before* loading the price database
-		prcMgr  = new org.gnucash.api.write.impl.hlp.FilePriceManager(this);
+		prcMgr  = new org.gnucash.api.write.impl.hlp.fil.FilePriceManager(this);
 		loadPriceDatabase(rootElt, withProgBar);
 		
 		// ---
@@ -571,21 +571,21 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		
 		// Init helper entity managers / fill maps
     	// CAUTION: The order matters
-		trxMgr      = new org.gnucash.api.write.impl.hlp.FileTransactionManager(this, withProgBar);
-		acctMgr     = new org.gnucash.api.write.impl.hlp.FileAccountManager(this);
+		trxMgr      = new org.gnucash.api.write.impl.hlp.fil.FileTransactionManager(this, withProgBar);
+		acctMgr     = new org.gnucash.api.write.impl.hlp.fil.FileAccountManager(this);
 		
-		invcMgr     = new org.gnucash.api.write.impl.hlp.FileInvoiceManager(this);
-		invcEntrMgr = new org.gnucash.api.write.impl.hlp.FileInvoiceEntryManager(this);
+		invcMgr     = new org.gnucash.api.write.impl.hlp.fil.FileInvoiceManager(this);
+		invcEntrMgr = new org.gnucash.api.write.impl.hlp.fil.FileInvoiceEntryManager(this);
 
-		custMgr     = new org.gnucash.api.write.impl.hlp.FileCustomerManager(this);
-		vendMgr     = new org.gnucash.api.write.impl.hlp.FileVendorManager(this);
-		emplMgr     = new org.gnucash.api.write.impl.hlp.FileEmployeeManager(this);
-		jobMgr      = new org.gnucash.api.write.impl.hlp.FileJobManager(this);
+		custMgr     = new org.gnucash.api.write.impl.hlp.fil.FileCustomerManager(this);
+		vendMgr     = new org.gnucash.api.write.impl.hlp.fil.FileVendorManager(this);
+		emplMgr     = new org.gnucash.api.write.impl.hlp.fil.FileEmployeeManager(this);
+		jobMgr      = new org.gnucash.api.write.impl.hlp.fil.FileJobManager(this);
 		
-		cmdtyMgr    = new org.gnucash.api.write.impl.hlp.FileCommodityManager(this);
+		cmdtyMgr    = new org.gnucash.api.write.impl.hlp.fil.FileCommodityManager(this);
 
-		taxTabMgr   = new org.gnucash.api.write.impl.hlp.FileTaxTableManager(this);
-		bllTrmMgr   = new org.gnucash.api.write.impl.hlp.FileBillTermsManager(this);
+		taxTabMgr   = new org.gnucash.api.write.impl.hlp.fil.FileTaxTableManager(this);
+		bllTrmMgr   = new org.gnucash.api.write.impl.hlp.fil.FileBillTermsManager(this);
 		
 		// ---
 
@@ -746,7 +746,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 														GCshAcctID parentID,
 														String name) {
 		GnuCashWritableAccount acct = new GnuCashWritableAccountImpl(this);
-		((org.gnucash.api.write.impl.hlp.FileAccountManager) super.acctMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileAccountManager) super.acctMgr)
 			.addAccount(acct);
 		
 		acct.setType(type);
@@ -787,7 +787,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		}
 
 		// 1) Remove avatar in account manager
-		((org.gnucash.api.write.impl.hlp.FileAccountManager) super.acctMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileAccountManager) super.acctMgr)
 			.removeAccount(acct);
 		
 		// 2) remove account
@@ -850,7 +850,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	protected void addTransaction(final GnuCashTransactionImpl trx) {
 		getRootElement().getGncBook().getBookElements().add(trx.getJwsdpPeer());
 		setModified(true);
-		((org.gnucash.api.write.impl.hlp.FileTransactionManager) super.trxMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileTransactionManager) super.trxMgr)
 			.addTransaction(trx);
 	}
 
@@ -869,7 +869,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 
 		getRootElement().getGncBook().getBookElements().remove(((GnuCashWritableTransactionImpl) trx).getJwsdpPeer());
 		setModified(true);
-		((org.gnucash.api.write.impl.hlp.FileTransactionManager) super.trxMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileTransactionManager) super.trxMgr)
 			.removeTransaction(trx);		
 	}
 
@@ -881,7 +881,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	// @Override
 	public void removeTransactionSplit(final GnuCashWritableTransactionSplit splt) {
 		// 1) remove avatar in transaction manager
-		((org.gnucash.api.write.impl.hlp.FileTransactionManager) super.trxMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileTransactionManager) super.trxMgr)
 			.removeTransactionSplit(splt, false);
 		
 		// 2) remove transaction split
@@ -896,7 +896,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		// Does not work like that, as splits are embedded in transactions:
 		// getRootElement().getGncBook().getBookElements().remove(((GnuCashWritableTransactionSplitImpl) splt).getJwsdpPeer());
 		// Instead:
-		((org.gnucash.api.write.impl.hlp.FileTransactionManager) trxMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileTransactionManager) trxMgr)
 			.removeTransactionSplit_raw(splt.getTransactionID(), splt.getID());
 		
 		// 3) remove transaction, if no splits left
@@ -1033,7 +1033,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 													   (GnuCashAccountImpl) receivableAcct, 
 													   openedDate, postDate, dueDate);
 
-		((org.gnucash.api.write.impl.hlp.FileInvoiceManager) super.invcMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileInvoiceManager) super.invcMgr)
 			.addGenerInvoice(retval);
 		
 		return retval;
@@ -1070,7 +1070,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 												  (GnuCashAccountImpl) expensesAcct, (GnuCashAccountImpl) payableAcct, 
 												  openedDate, postDate, dueDate);
 
-		((org.gnucash.api.write.impl.hlp.FileInvoiceManager) super.invcMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileInvoiceManager) super.invcMgr)
 			.addGenerInvoice(retval);
 		
 		return retval;
@@ -1107,7 +1107,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 													   (GnuCashAccountImpl) expensesAcct, (GnuCashAccountImpl) payableAcct, 
 													   openedDate, postDate, dueDate);
 
-		((org.gnucash.api.write.impl.hlp.FileInvoiceManager) super.invcMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileInvoiceManager) super.invcMgr)
 			.addGenerInvoice(retval);
 		
 		return retval;
@@ -1141,7 +1141,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		GnuCashWritableJobInvoice retval = new GnuCashWritableJobInvoiceImpl(this, number, job,
 				(GnuCashAccountImpl) incExpAcct, (GnuCashAccountImpl) recvblPayblAcct, openedDate, postDate, dueDate);
 
-		((org.gnucash.api.write.impl.hlp.FileInvoiceManager) super.invcMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileInvoiceManager) super.invcMgr)
 			.addGenerInvoice(retval);
 		
 		return retval;
@@ -1175,7 +1175,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			((GnuCashWritableTransaction) postTransaction).remove();
 		}
 		
-		((org.gnucash.api.write.impl.hlp.FileInvoiceManager) super.invcMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileInvoiceManager) super.invcMgr)
 			.removeGenerInvoice(invc);
 		getRootElement().getGncBook().getBookElements().remove(((GnuCashWritableGenerInvoiceImpl) invc).getJwsdpPeer());
 		// this.decrementCountDataFor("gnc:GncInvoice");
@@ -1257,7 +1257,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 															acct,
 															quant, prc);
 
-		((org.gnucash.api.write.impl.hlp.FileInvoiceEntryManager) super.invcEntrMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileInvoiceEntryManager) super.invcEntrMgr)
 			.addGenerInvcEntry(retval);
 		
 		return retval;
@@ -1282,7 +1282,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 													   acct,
 													   quant, prc);
 
-		((org.gnucash.api.write.impl.hlp.FileInvoiceEntryManager) super.invcEntrMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileInvoiceEntryManager) super.invcEntrMgr)
 			.addGenerInvcEntry(retval);
 		
 		return retval;
@@ -1307,7 +1307,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 															acct,
 															quant, prc);
 
-		((org.gnucash.api.write.impl.hlp.FileInvoiceEntryManager) super.invcEntrMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileInvoiceEntryManager) super.invcEntrMgr)
 			.addGenerInvcEntry(retval);
 		
 		return retval;
@@ -1332,7 +1332,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 													   acct,
 													   quant, prc);
 
-		((org.gnucash.api.write.impl.hlp.FileInvoiceEntryManager) super.invcEntrMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileInvoiceEntryManager) super.invcEntrMgr)
 			.addGenerInvcEntry(retval);
 		
 		return retval;
@@ -1351,7 +1351,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		
 		GCshGenerInvcEntrID entrID = entr.getID();
 
-		((org.gnucash.api.write.impl.hlp.FileInvoiceEntryManager) super.invcEntrMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileInvoiceEntryManager) super.invcEntrMgr)
 			.removeGenerInvcEntry(entr);
 		getRootElement().getGncBook().getBookElements().remove(((GnuCashWritableGenerInvoiceEntryImpl) entr).getJwsdpPeer());
 		// this.decrementCountDataFor("gnc:GncEntry");
@@ -1420,7 +1420,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	public GnuCashWritableCustomer createWritableCustomer(final String name) {
 		GnuCashWritableCustomerImpl cust = new GnuCashWritableCustomerImpl(this);
 		cust.setName(name);
-		((org.gnucash.api.write.impl.hlp.FileCustomerManager) super.custMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileCustomerManager) super.custMgr)
 			.addCustomer(cust);
 		return cust;
 	}
@@ -1430,7 +1430,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	 */
 	@Override
 	public void removeCustomer(final GnuCashWritableCustomer cust) {
-		((org.gnucash.api.write.impl.hlp.FileCustomerManager) super.custMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileCustomerManager) super.custMgr)
 			.removeCustomer(cust);
 		getRootElement().getGncBook().getBookElements().remove(((GnuCashWritableCustomerImpl) cust).getJwsdpPeer());
 		setModified(true);
@@ -1476,7 +1476,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	public GnuCashWritableVendor createWritableVendor(final String name) {
 		GnuCashWritableVendorImpl vend = new GnuCashWritableVendorImpl(this);
 		vend.setName(name);
-		((org.gnucash.api.write.impl.hlp.FileVendorManager) super.vendMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileVendorManager) super.vendMgr)
 			.addVendor(vend);
 		
 		return vend;
@@ -1487,7 +1487,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	 */
 	@Override
 	public void removeVendor(final GnuCashWritableVendor vend) {
-		((org.gnucash.api.write.impl.hlp.FileVendorManager) super.vendMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileVendorManager) super.vendMgr)
 			.removeVendor(vend);
 		getRootElement().getGncBook().getBookElements().remove(((GnuCashWritableVendorImpl) vend).getJwsdpPeer());
 		setModified(true);
@@ -1533,7 +1533,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	public GnuCashWritableEmployee createWritableEmployee(final String userName) {
 		GnuCashWritableEmployeeImpl empl = new GnuCashWritableEmployeeImpl(this);
 		empl.setUserName(userName);
-		((org.gnucash.api.write.impl.hlp.FileEmployeeManager) super.emplMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileEmployeeManager) super.emplMgr)
 			.addEmployee(empl);
 		
 		return empl;
@@ -1544,7 +1544,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	 */
 	@Override
 	public void removeEmployee(final GnuCashWritableEmployee empl) {
-		((org.gnucash.api.write.impl.hlp.FileEmployeeManager) super.emplMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileEmployeeManager) super.emplMgr)
 			.removeEmployee(empl);
 		getRootElement().getGncBook().getBookElements().remove(((GnuCashWritableEmployeeImpl) empl).getJwsdpPeer());
 		setModified(true);
@@ -1626,7 +1626,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		}
 
 		GnuCashWritableCustomerJobImpl job = new GnuCashWritableCustomerJobImpl(this, cust, number, name);
-		((org.gnucash.api.write.impl.hlp.FileJobManager) super.jobMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileJobManager) super.jobMgr)
 			.addGenerJob(job);
 		
 		return job;
@@ -1642,7 +1642,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		}
 
 		GnuCashWritableVendorJobImpl job = new GnuCashWritableVendorJobImpl(this, vend, number, name);
-		((org.gnucash.api.write.impl.hlp.FileJobManager) super.jobMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileJobManager) super.jobMgr)
 			.addGenerJob(job);
 		
 		return job;
@@ -1664,7 +1664,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalStateException("Job cannot be deleted; there are still customer invoices/vendor bills attached to it");
 		}
 
-		((org.gnucash.api.write.impl.hlp.FileJobManager) super.jobMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileJobManager) super.jobMgr)
 			.removeGenerJob(job);
 		getRootElement().getGncBook().getBookElements().remove(job.getJwsdpPeer());
 		setModified(true);
@@ -1788,7 +1788,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		cmdty.setQualifID(cmdtyID);
 		cmdty.setXCode(code);
 		cmdty.setName(name);
-		((org.gnucash.api.write.impl.hlp.FileCommodityManager) super.cmdtyMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileCommodityManager) super.cmdtyMgr)
 			.addCommodity(cmdty);
 		
 		return cmdty;
@@ -1803,7 +1803,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		cmdty.setQualifID(currID);
 		cmdty.setXCode(code);
 		cmdty.setName(name);
-		((org.gnucash.api.write.impl.hlp.FileCommodityManager) super.cmdtyMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileCommodityManager) super.cmdtyMgr)
 			.addCommodity(cmdty);
 		
 		return cmdty;
@@ -1831,7 +1831,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new ObjectCascadeException();
 		}
 
-		((org.gnucash.api.write.impl.hlp.FileCommodityManager) super.cmdtyMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FileCommodityManager) super.cmdtyMgr)
 			.removeCommodity(cmdty);
 
 		getRootElement().getGncBook().getBookElements().remove(((GnuCashWritableCommodityImpl) cmdty).getJwsdpPeer());
@@ -2000,7 +2000,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	    prc.setFromCmdtyID(fromCmdtyID);
 	    prc.setToCurrID(toCurrID);
 		prc.setDate(date);
-		((org.gnucash.api.write.impl.hlp.FilePriceManager) super.prcMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FilePriceManager) super.prcMgr)
 			.addPrice(prc);
 		
 		return prc;
@@ -2008,13 +2008,13 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 
 	@Override
 	public void removePrice(final GnuCashWritablePrice prc) {
-		((org.gnucash.api.write.impl.hlp.FilePriceManager) super.prcMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FilePriceManager) super.prcMgr)
 			.removePrice(prc);
 
 		// Does not work like that, as prices are one level deeper, in price DB:
 		// getRootElement().getGncBook().getBookElements().remove(((GnuCashWritablePriceImpl) prc).getJwsdpPeer());
 		// Instead:
-		((org.gnucash.api.write.impl.hlp.FilePriceManager) super.prcMgr)
+		((org.gnucash.api.write.impl.hlp.fil.FilePriceManager) super.prcMgr)
 			.removePrice_raw(prc.getID());
 		
 		setModified(true);
@@ -2106,13 +2106,13 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 
 	public List<GnuCashWritableCustomerInvoice> getPaidWritableInvoicesForCustomer_direct(
 			final GnuCashCustomer cust) throws  TaxTableNotFoundException {
-		return ((org.gnucash.api.write.impl.hlp.FileInvoiceManager) invcMgr)
+		return ((org.gnucash.api.write.impl.hlp.fil.FileInvoiceManager) invcMgr)
 				.getPaidWritableInvoicesForCustomer_direct(cust);
 	}
 
 	public List<GnuCashWritableCustomerInvoice> getUnpaidWritableInvoicesForCustomer_direct(
 			final GnuCashCustomer cust) throws TaxTableNotFoundException {
-		return ((org.gnucash.api.write.impl.hlp.FileInvoiceManager) invcMgr)
+		return ((org.gnucash.api.write.impl.hlp.fil.FileInvoiceManager) invcMgr)
 				.getUnpaidWritableInvoicesForCustomer_direct(cust);
 	}
 
@@ -2120,12 +2120,12 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 
 	public List<GnuCashWritableVendorBill> getPaidWritableBillsForVendor_direct(final GnuCashVendor vend)
 			throws TaxTableNotFoundException {
-		return ((org.gnucash.api.write.impl.hlp.FileInvoiceManager) invcMgr).getPaidWritableBillsForVendor_direct(vend);
+		return ((org.gnucash.api.write.impl.hlp.fil.FileInvoiceManager) invcMgr).getPaidWritableBillsForVendor_direct(vend);
 	}
 
 	public List<GnuCashWritableVendorBill> getUnpaidWritableBillsForVendor_direct(final GnuCashVendor vend)
 			throws TaxTableNotFoundException {
-		return ((org.gnucash.api.write.impl.hlp.FileInvoiceManager) invcMgr)
+		return ((org.gnucash.api.write.impl.hlp.fil.FileInvoiceManager) invcMgr)
 				.getUnpaidWritableBillsForVendor_direct(vend);
 	}
 
@@ -2133,24 +2133,24 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 
 	public List<GnuCashWritableEmployeeVoucher> getPaidWritableVouchersForEmployee(final GnuCashEmployee empl)
 			throws TaxTableNotFoundException {
-		return ((org.gnucash.api.write.impl.hlp.FileInvoiceManager) invcMgr).getPaidWritableVouchersForEmployee(empl);
+		return ((org.gnucash.api.write.impl.hlp.fil.FileInvoiceManager) invcMgr).getPaidWritableVouchersForEmployee(empl);
 	}
 
 	public List<GnuCashWritableEmployeeVoucher> getUnpaidWritableVouchersForEmployee(final GnuCashEmployee empl)
 			throws TaxTableNotFoundException {
-		return ((org.gnucash.api.write.impl.hlp.FileInvoiceManager) invcMgr).getUnpaidWritableVouchersForEmployee(empl);
+		return ((org.gnucash.api.write.impl.hlp.fil.FileInvoiceManager) invcMgr).getUnpaidWritableVouchersForEmployee(empl);
 	}
 
 	// ----------------------------
 
 	public List<GnuCashWritableJobInvoice> getPaidWritableInvoicesForJob(final GnuCashGenerJob job)
 			throws TaxTableNotFoundException {
-		return ((org.gnucash.api.write.impl.hlp.FileInvoiceManager) invcMgr).getPaidWritableInvoicesForJob(job);
+		return ((org.gnucash.api.write.impl.hlp.fil.FileInvoiceManager) invcMgr).getPaidWritableInvoicesForJob(job);
 	}
 
 	public List<GnuCashWritableJobInvoice> getUnpaidWritableInvoicesForJob(final GnuCashGenerJob job)
 			throws TaxTableNotFoundException {
-		return ((org.gnucash.api.write.impl.hlp.FileInvoiceManager) invcMgr).getUnpaidWritableInvoicesForJob(job);
+		return ((org.gnucash.api.write.impl.hlp.fil.FileInvoiceManager) invcMgr).getUnpaidWritableInvoicesForJob(job);
 	}
 
 	// ---------------------------------------------------------------

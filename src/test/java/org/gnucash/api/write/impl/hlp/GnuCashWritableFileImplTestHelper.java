@@ -21,12 +21,12 @@ public class GnuCashWritableFileImplTestHelper extends GnuCashWritableFileImpl
 	// ---------------------------------------------------------------
 	// For test purposes only
 
-	public org.gnucash.api.write.impl.hlp.FileCommodityManager getCommodityManager() {
-		return (org.gnucash.api.write.impl.hlp.FileCommodityManager) cmdtyMgr;
+	public org.gnucash.api.write.impl.hlp.fil.FileCommodityManager getCommodityManager() {
+		return (org.gnucash.api.write.impl.hlp.fil.FileCommodityManager) cmdtyMgr;
 	}
 
-	public org.gnucash.api.write.impl.hlp.FilePriceManager getPriceManager() {
-		return (org.gnucash.api.write.impl.hlp.FilePriceManager) prcMgr;
+	public org.gnucash.api.write.impl.hlp.fil.FilePriceManager getPriceManager() {
+		return (org.gnucash.api.write.impl.hlp.fil.FilePriceManager) prcMgr;
 	}
 
 }

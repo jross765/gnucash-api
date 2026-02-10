@@ -20,7 +20,7 @@ public class TestFileCommodityManager {
 
 	private GnuCashWritableFileImplTestHelper gcshInFile = null;
 
-	private org.gnucash.api.write.impl.hlp.FileCommodityManager mgr = null;
+	private org.gnucash.api.write.impl.hlp.fil.FileCommodityManager mgr = null;
 
 	// -----------------------------------------------------------------
 

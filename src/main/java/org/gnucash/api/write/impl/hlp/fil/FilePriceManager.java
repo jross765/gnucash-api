@@ -1,4 +1,4 @@
-package org.gnucash.api.write.impl.hlp;
+package org.gnucash.api.write.impl.hlp.fil;
 
 import org.gnucash.api.generated.Price;
 import org.gnucash.api.read.GnuCashPrice;
