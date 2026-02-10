@@ -148,7 +148,7 @@ public class SimpleCurrencyExchRateTable implements SimplePriceTable,
 
     /**
      * @param value               the value to convert
-     * @param iso4217CurrencyCode the currency to convert to
+     * @param currID the currency to convert to
      * @return false if the conversion is not possible
      */
     public FixedPointNumber convertFromBaseCurrency(final FixedPointNumber value, final GCshCurrID currID) {
@@ -231,7 +231,7 @@ public class SimpleCurrencyExchRateTable implements SimplePriceTable,
 
     /**
      * @param value               the value to convert
-     * @param iso4217CurrencyCode it's currency
+     * @param currID it's currency
      * @return false if the conversion is not possible
      */
     public FixedPointNumber convertToBaseCurrency(final FixedPointNumber value, final GCshCurrID currID) {
