@@ -118,54 +118,43 @@ public class PriceHelper_BF {
 			PriceCurrency toCurr = priceQuote.getPriceCurrency();
 
 			if ( fromCmdty == null ) {
-				LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes without from-security/currency: '"
-						+ priceQuote.toString() + "'");
+				LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes without from-security/currency: '" + priceQuote.toString() + "'");
 				continue;
 			}
 
 			if ( toCurr == null ) {
-				LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes without to-currency: '"
-						+ priceQuote.toString() + "'");
+				LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes without to-currency: '" + priceQuote.toString() + "'");
 				continue;
 			}
 
 			try {
 				if ( fromCmdty.getCmdtySpace() == null ) {
-					LOGGER.warn(
-							"getLatestPrice: GnuCash file contains price-quotes with from-security/currency without name space: id='"
-									+ priceQuote.getPriceId().getValue() + "'");
+					LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes with from-security/currency without name space: id='" + priceQuote.getPriceId().getValue() + "'");
 					continue;
 				}
 
 				if ( fromCmdty.getCmdtyId() == null ) {
-					LOGGER.warn(
-							"getLatestPrice: GnuCash file contains price-quotes with from-security/currency without code: id='"
-									+ priceQuote.getPriceId().getValue() + "'");
+					LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes with from-security/currency without code: id='" + priceQuote.getPriceId().getValue() + "'");
 					continue;
 				}
 
 				if ( toCurr.getCmdtySpace() == null ) {
-					LOGGER.warn(
-							"getLatestPrice: GnuCash file contains price-quotes with to-currency without name space: id='"
-									+ priceQuote.getPriceId().getValue() + "'");
+					LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes with to-currency without name space: id='" + priceQuote.getPriceId().getValue() + "'");
 					continue;
 				}
 
 				if ( toCurr.getCmdtyId() == null ) {
-					LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes with to-currency without code: id='"
-							+ priceQuote.getPriceId().getValue() + "'");
+					LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes with to-currency without code: id='" + priceQuote.getPriceId().getValue() + "'");
 					continue;
 				}
 
 				if ( priceQuote.getPriceTime() == null ) {
-					LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes without timestamp id='"
-							+ priceQuote.getPriceId().getValue() + "'");
+					LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes without timestamp id='" + priceQuote.getPriceId().getValue() + "'");
 					continue;
 				}
 
 				if ( priceQuote.getPriceValue() == null ) {
-					LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes without value id='"
-							+ priceQuote.getPriceId().getValue() + "'");
+					LOGGER.warn("getLatestPrice: GnuCash file contains price-quotes without value id='" + priceQuote.getPriceId().getValue() + "'");
 					continue;
 				}
 
@@ -176,8 +165,8 @@ public class PriceHelper_BF {
 				 * " with no type id='" + priceQuote.getPriceID().getValue() + "'"); continue; }
 				 */
 
-				if ( !(fromCmdty.getCmdtySpace().equals(cmdtyID.getNameSpace())
-						&& fromCmdty.getCmdtyId().equals(cmdtyID.getCode())) ) {
+				if ( ! ( fromCmdty.getCmdtySpace().equals( cmdtyID.getNameSpace() ) &&
+						 fromCmdty.getCmdtyId().equals( cmdtyID.getCode() ) ) ) {
 					continue;
 				}
 
@@ -193,8 +182,7 @@ public class PriceHelper_BF {
 				if ( !toCurr.getCmdtySpace().equals(GCshCmdtyNameSpace.CURRENCY) ) {
 					// is commodity
 					if ( depth > maxRecursionDepth ) {
-						LOGGER.warn("getLatestPrice: Ignoring price-quote that is not in an ISO4217-currency"
-								+ " but in '" + toCurr.getCmdtySpace() + ":" + toCurr.getCmdtyId() + "'");
+						LOGGER.warn("getLatestPrice: Ignoring price-quote that is not an ISO4217 currency: '" + toCurr.toString() + "'");
 						continue;
 					}
 					factor = getLatestPrice(new GCshSecID(toCurr.getCmdtySpace(), toCurr.getCmdtyId()), 
@@ -202,10 +190,10 @@ public class PriceHelper_BF {
 											depth + 1);
 				} else {
 					// is currency
-					if ( !toCurr.getCmdtyId().equals(gcshFile.getDefaultCurrencyID()) ) {
+					if ( ! toCurr.getCmdtyId().equals( gcshFile.getDefaultCurrencyID() ) ) {
 						if ( depth > maxRecursionDepth ) {
-							LOGGER.warn("Ignoring price-quote that is not in " + gcshFile.getDefaultCurrencyID()
-									+ " but in '" + toCurr.getCmdtySpace() + ":" + toCurr.getCmdtyId() + "'");
+							LOGGER.warn("Ignoring price-quote that is not in default currency " + gcshFile.getDefaultCurrencyID() +
+									" but in '" + toCurr.toString() + "'");
 							continue;
 						}
 						factor = getLatestPrice(new GCshCurrID(toCurr.getCmdtyId()), 
@@ -228,7 +216,7 @@ public class PriceHelper_BF {
 			}
 		} // for priceQuote
 
-		LOGGER.debug("getLatestPrice: pCmdtyID='" + cmdtyID.toString() + "')= " + latestQuote + " from " + latestDate);
+		LOGGER.debug("getLatestPrice: pCmdtyID='" + cmdtyID.toString() + "' = " + latestQuote + " from " + latestDate);
 
 		if ( latestQuote == null ) {
 			return null;
