@@ -373,7 +373,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		}
 	}
 
-	/**
+	/*
 	 * Keep the count-data up to date. The count-data is re-calculated on the fly
 	 * before writing but we like to keep our internal model up-to-date just to be
 	 * defensive. <gnc:count-data cd:type="commodity">2</gnc:count-data>
@@ -393,7 +393,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		incrementCountDataForCore(type, 1);
 	}
 
-	/**
+	/*
 	 * Keep the count-data up to date. The count-data is re-calculated on the fly
 	 * before writing but we like to keep our internal model up-to-date just to be
 	 * defensive.
