@@ -1,4 +1,4 @@
-package org.gnucash.api.read.impl.hlp;
+package org.gnucash.api.read.impl.hlp.fil;
 
 import java.io.IOException;
 import java.io.Reader;
