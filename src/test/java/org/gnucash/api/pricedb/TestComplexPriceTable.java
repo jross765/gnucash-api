@@ -1,4 +1,4 @@
-package org.gnucash.api.currency;
+package org.gnucash.api.pricedb;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.ConstTest;
+import org.gnucash.api.pricedb.ComplexPriceTable;
 import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.impl.GnuCashFileImpl;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;

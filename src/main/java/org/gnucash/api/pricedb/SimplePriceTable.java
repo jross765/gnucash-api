@@ -1,4 +1,4 @@
-package org.gnucash.api.currency;
+package org.gnucash.api.pricedb;
 
 import java.util.List;
 

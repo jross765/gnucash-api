@@ -9,7 +9,7 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
-import org.gnucash.api.currency.ComplexPriceTable;
+import org.gnucash.api.pricedb.ComplexPriceTable;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashTransactionSplit;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;

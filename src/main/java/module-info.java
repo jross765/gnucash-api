@@ -22,7 +22,7 @@ module gnucash.api {
 	
 	// ----------------------------
 	
-	exports org.gnucash.api.currency;
+	exports org.gnucash.api.pricedb;
 	
 	exports org.gnucash.api.read;
 	exports org.gnucash.api.read.aux;

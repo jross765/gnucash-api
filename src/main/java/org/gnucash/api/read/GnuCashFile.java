@@ -8,7 +8,7 @@ import java.util.Currency;
 import java.util.List;
 
 import org.apache.commons.numbers.fraction.BigFraction;
-import org.gnucash.api.currency.ComplexPriceTable;
+import org.gnucash.api.pricedb.ComplexPriceTable;
 import org.gnucash.api.read.GnuCashAccount.Type;
 import org.gnucash.api.read.aux.GCshBillTerms;
 import org.gnucash.api.read.aux.GCshOwner;

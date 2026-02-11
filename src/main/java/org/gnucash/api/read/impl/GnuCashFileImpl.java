@@ -19,7 +19,6 @@ import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.Const;
-import org.gnucash.api.currency.ComplexPriceTable;
 import org.gnucash.api.generated.GncAccount;
 import org.gnucash.api.generated.GncBudget;
 import org.gnucash.api.generated.GncCommodity;
@@ -39,6 +38,7 @@ import org.gnucash.api.generated.GncTransaction;
 import org.gnucash.api.generated.GncV2;
 import org.gnucash.api.generated.ObjectFactory;
 import org.gnucash.api.generated.Price;
+import org.gnucash.api.pricedb.ComplexPriceTable;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashAccount.Type;
 import org.gnucash.api.read.GnuCashCommodity;
