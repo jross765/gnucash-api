@@ -311,7 +311,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 	
 		if ( isCurrencyMatching() ) {
 			String oldValue = getJwsdpPeer().getSplitQuantity();
-			getJwsdpPeer().setSplitQuantity(val.toGnuCashString());
+			getJwsdpPeer().setSplitValue(val.toGnuCashString());
 			if ( old == null || !old.equals(val.toGnuCashString()) ) {
 				if ( helper.getPropertyChangeSupport() != null ) {
 					helper.getPropertyChangeSupport().firePropertyChange("value", new FixedPointNumber(oldValue), val);
