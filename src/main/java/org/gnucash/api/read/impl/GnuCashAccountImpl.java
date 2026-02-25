@@ -389,16 +389,16 @@ public class GnuCashAccountImpl extends SimpleAccount
 			return false;
 		}
     	
-    	for ( Slot slt : jwsdpPeer.getActSlots().getSlot() ) {
-    		if ( slt.getSlotKey().equals(Const.SLOT_KEY_ACCT_HIDDEN) ) {
-    			String sltVal = slt.getSlotValue().getContent().toString();
-    			if ( sltVal.equals("true")) { // ::MAGIC
-    				return true;
-    			}
-    		}
+    	String hiddenFlag = getUserDefinedAttribute(Const.SLOT_KEY_ACCT_HIDDEN); 
+    	if ( hiddenFlag != null ) {
+			if ( hiddenFlag.equals("true")) { // ::MAGIC
+				return true;
+			} else {
+				return false;
+			}
+    	} else {
+        	return false;
     	}
-    	
-    	return false;
     }
 
     /**
