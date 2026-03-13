@@ -11,6 +11,7 @@ import java.util.Locale;
 
 import org.gnucash.api.pricedb.ComplexPriceTable;
 import org.gnucash.api.read.GnuCashAccount;
+import org.gnucash.api.read.GnuCashCommodity;
 import org.gnucash.api.read.GnuCashTransactionSplit;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
@@ -184,9 +185,26 @@ public class AccountBalanceHelper_FP
 
 	public static String getBalanceFormatted(final Locale lcl,
 											 final SimpleAccount acct) {
-		NumberFormat cf = NumberFormat.getCurrencyInstance(lcl);
-		cf.setCurrency(acct.getCurrency());
-		return cf.format(getBalance(acct).getBigDecimal());
+		GCshCmdtyID cmdtyID = acct.getCmdtyID();
+		if ( cmdtyID.getType() == GCshCmdtyID.Type.CURRENCY ) {
+			NumberFormat nf = NumberFormat.getCurrencyInstance(lcl);
+			nf.setCurrency(acct.getCurrency());
+			return nf.format(getBalance(acct).getBigDecimal());
+		} else if ( cmdtyID.getType() == GCshCmdtyID.Type.SECURITY ) {
+			GnuCashCommodity cmdty = acct.getGnuCashFile().getCommodityByID(cmdtyID);
+			String secSymb = "(sec-symbol)";
+			if ( cmdty.getSymbol() != null ) {
+				secSymb = cmdty.getSymbol();
+			} else if ( cmdty.getXCode() != null ) {
+				secSymb = cmdty.getXCode();
+			} else {
+				secSymb = cmdty.toString();
+			}
+			NumberFormat nf = NumberFormat.getNumberInstance(lcl);
+			return ( nf.format(getBalance(acct).getBigDecimal()) + " " + secSymb );
+		}
+		
+		return "ERROR";
 	}
 
 	// ---------------------------------------------------------------
@@ -271,9 +289,26 @@ public class AccountBalanceHelper_FP
 
 	public static String getBalanceRecursiveFormatted(final Locale lcl,
 													  final SimpleAccount acct) {
-		NumberFormat cf = NumberFormat.getCurrencyInstance(lcl);
-		cf.setCurrency(acct.getCurrency());
-		return cf.format(getBalanceRecursive(acct).getBigDecimal());
+		GCshCmdtyID cmdtyID = acct.getCmdtyID();
+		if ( cmdtyID.getType() == GCshCmdtyID.Type.CURRENCY ) {
+			NumberFormat cf = NumberFormat.getCurrencyInstance(lcl);
+			cf.setCurrency(acct.getCurrency());
+			return cf.format(getBalanceRecursive(acct).getBigDecimal());
+		} else if ( cmdtyID.getType() == GCshCmdtyID.Type.SECURITY ) {
+			GnuCashCommodity cmdty = acct.getGnuCashFile().getCommodityByID(cmdtyID);
+			String secSymb = "(sec-symbol)";
+			if ( cmdty.getSymbol() != null ) {
+				secSymb = cmdty.getSymbol();
+			} else if ( cmdty.getXCode() != null ) {
+				secSymb = cmdty.getXCode();
+			} else {
+				secSymb = cmdty.toString();
+			}
+			NumberFormat nf = NumberFormat.getNumberInstance(lcl);
+			return ( nf.format(getBalance(acct).getBigDecimal()) + " " + secSymb );
+		}
+		
+		return "ERROR";
 	}
 	
 	// ---------------------------------------------------------------
