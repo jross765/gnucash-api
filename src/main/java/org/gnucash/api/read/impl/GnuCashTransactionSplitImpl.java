@@ -373,7 +373,7 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 			}
 
 			if ( otherSplt != this ) {
-				LOGGER.error("compareTo: Duplicate transaction-split-id!! " + otherSplt.getID() + "["
+				LOGGER.error("compareTo: Duplicate transaction-split-id! " + otherSplt.getID() + "["
 						+ otherSplt.getClass().getName() + "] and " + getID() + "[" + getClass().getName() + "]\n"
 						+ "split0=" + otherSplt.toString() + "\n" + "split1=" + toString());
 				IllegalStateException exc = new IllegalStateException("DEBUG");

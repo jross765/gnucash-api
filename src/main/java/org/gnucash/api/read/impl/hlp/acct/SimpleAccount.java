@@ -232,13 +232,13 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	// ---
 
 	@Override
-	public FixedPointNumber getBalance(final GnuCashTransactionSplit lastIncludesSplit) {
-		return AccountBalanceHelper_FP.getBalance(lastIncludesSplit, this);
+	public FixedPointNumber getBalance(final GnuCashTransactionSplit lastSpltIncl) {
+		return AccountBalanceHelper_FP.getBalance(lastSpltIncl, this);
 	}
 
 	@Override
-	public BigFraction getBalanceRat(final GnuCashTransactionSplit lastIncludesSplit) {
-		return AccountBalanceHelper_BF.getBalance(lastIncludesSplit, this);
+	public BigFraction getBalanceRat(final GnuCashTransactionSplit lastSpltIncl) {
+		return AccountBalanceHelper_BF.getBalance(lastSpltIncl, this);
 	}
 
 	// ----------------------------
@@ -316,13 +316,13 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	// ---
 
 	@Override
-	public FixedPointNumber getBalanceRecursive(final GnuCashTransactionSplit lastIncludesSplit) {
-		return AccountBalanceHelper_FP.getBalanceRecursive(lastIncludesSplit, this);
+	public FixedPointNumber getBalanceRecursive(final GnuCashTransactionSplit lastSpltIncl) {
+		return AccountBalanceHelper_FP.getBalanceRecursive(lastSpltIncl, this);
 	}
 
 	@Override
-	public BigFraction getBalanceRecursiveRat(final GnuCashTransactionSplit lastIncludesSplit) {
-		return AccountBalanceHelper_BF.getBalanceRecursive(lastIncludesSplit, this);
+	public BigFraction getBalanceRecursiveRat(final GnuCashTransactionSplit lastSpltIncl) {
+		return AccountBalanceHelper_BF.getBalanceRecursive(lastSpltIncl, this);
 	}
 
 	// ----------------------------

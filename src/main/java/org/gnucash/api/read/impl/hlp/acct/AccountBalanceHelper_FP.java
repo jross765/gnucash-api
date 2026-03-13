@@ -162,7 +162,7 @@ public class AccountBalanceHelper_FP
 				// CAUTION: FixedPointNumber is mutable
 				balance.add(splt.getQuantity());
 	
-				if ( splt == lastSpltIncl ) {
+				if ( splt.getID().equals( lastSpltIncl.getID() ) ) {
 					break;
 				}
 			} catch ( Exception exc ) {
@@ -251,7 +251,7 @@ public class AccountBalanceHelper_FP
 		for ( GnuCashAccount child : acct.getChildren() ) {
 			try {
 				// CAUTION: FixedPointNumber is mutable
-				retval.add(child.getBalanceRecursive(lastSpltIncl));
+				retval.add( child.getBalanceRecursive(lastSpltIncl) );
 			} catch ( Exception exc ) {
 				// Yes, it does happen sometimes!
 				LOGGER.error("getBalanceRecursive: Error adding balance for child account " + child.getID());

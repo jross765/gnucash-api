@@ -234,8 +234,7 @@ public class GnuCashAccountImpl extends SimpleAccount
      */
     @Override
     public List<GnuCashTransactionSplit> getTransactionSplits() {
-
-    	if (mySplitsNeedSorting) {
+    	if ( mySplitsNeedSorting ) {
     		Collections.sort(mySplits);
     		mySplitsNeedSorting = false;
     	}

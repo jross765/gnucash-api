@@ -161,7 +161,7 @@ public class AccountBalanceHelper_BF
 				// CAUTION: BigFraction is immutable
 				balance = balance.add(splt.getQuantityRat());
 	
-				if ( splt == lastSpltIncl ) {
+				if ( splt.getID().equals( lastSpltIncl.getID() ) ) {
 					break;
 				}
 			} catch ( Exception exc ) {
