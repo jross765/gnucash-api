@@ -1054,36 +1054,36 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	}
 
 	@Override
-	public GnuCashCommodity getCommodityByNamSpcCode(final GCshCmdtyNameSpace.Exchange exchange, String code) {
-		return cmdtyMgr.getCommodityByNamSpcCode(exchange, code);
+	public GnuCashCommodity getCommodityByNamSpcCode(final GCshCmdtyNameSpace.Exchange exchange, String tkr) {
+		return cmdtyMgr.getCommodityByNamSpcCode(exchange, tkr);
 	}
 
 	@Override
 	@Deprecated
-	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyNameSpace.Exchange exchange, String code) {
-		return cmdtyMgr.getCommodityByNamSpcCode(exchange, code);
+	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyNameSpace.Exchange exchange, String tkr) {
+		return cmdtyMgr.getCommodityByNamSpcCode(exchange, tkr);
 	}
 
 	@Override
-	public GnuCashCommodity getCommodityByNamSpcCode(final GCshCmdtyNameSpace.MIC mic, String code) {
-		return cmdtyMgr.getCommodityByNamSpcCode(mic, code);
-	}
-
-	@Override
-	@Deprecated
-	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyNameSpace.MIC mic, String code) {
-		return cmdtyMgr.getCommodityByNamSpcCode(mic, code);
-	}
-
-	@Override
-	public GnuCashCommodity getCommodityByNamSpcCode(final GCshCmdtyNameSpace.SecIdType secIdType, String code) {
-		return cmdtyMgr.getCommodityByNamSpcCode(secIdType, code);
+	public GnuCashCommodity getCommodityByNamSpcCode(final GCshCmdtyNameSpace.MIC mic, String micID) {
+		return cmdtyMgr.getCommodityByNamSpcCode(mic, micID);
 	}
 
 	@Override
 	@Deprecated
-	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyNameSpace.SecIdType secIdType, String code) {
-		return cmdtyMgr.getCommodityByNamSpcCode(secIdType, code);
+	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyNameSpace.MIC mic, String micID) {
+		return cmdtyMgr.getCommodityByNamSpcCode(mic, micID);
+	}
+
+	@Override
+	public GnuCashCommodity getCommodityByNamSpcCode(final GCshCmdtyNameSpace.SecIdType secIdType, String secID) {
+		return cmdtyMgr.getCommodityByNamSpcCode(secIdType, secID);
+	}
+
+	@Override
+	@Deprecated
+	public GnuCashCommodity getCommodityByQualifID(final GCshCmdtyNameSpace.SecIdType secIdType, String secID) {
+		return cmdtyMgr.getCommodityByNamSpcCode(secIdType, secID);
 	}
 
 	@Override

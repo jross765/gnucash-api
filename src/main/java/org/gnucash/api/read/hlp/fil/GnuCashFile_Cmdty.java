@@ -33,33 +33,33 @@ public interface GnuCashFile_Cmdty {
 
     /**
      * @param exchange
-     * @param code
+     * @param tkr
      * @return
      */
-    GnuCashCommodity getCommodityByNamSpcCode(GCshCmdtyNameSpace.Exchange exchange, String code);
+    GnuCashCommodity getCommodityByNamSpcCode(GCshCmdtyNameSpace.Exchange exchange, String tkr);
 
     @Deprecated
-    GnuCashCommodity getCommodityByQualifID(GCshCmdtyNameSpace.Exchange exchange, String code);
+    GnuCashCommodity getCommodityByQualifID(GCshCmdtyNameSpace.Exchange exchange, String tkr);
 
     /**
      * @param mic
-     * @param code
+     * @param micID 
      * @return
      */
-    GnuCashCommodity getCommodityByNamSpcCode(GCshCmdtyNameSpace.MIC mic, String code);
+    GnuCashCommodity getCommodityByNamSpcCode(GCshCmdtyNameSpace.MIC mic, String micID);
 
     @Deprecated
-    GnuCashCommodity getCommodityByQualifID(GCshCmdtyNameSpace.MIC mic, String code);
+    GnuCashCommodity getCommodityByQualifID(GCshCmdtyNameSpace.MIC mic, String micID);
 
     /**
      * @param secIdType
-     * @param code
+     * @param secID 
      * @return
      */
-    GnuCashCommodity getCommodityByNamSpcCode(GCshCmdtyNameSpace.SecIdType secIdType, String code);
+    GnuCashCommodity getCommodityByNamSpcCode(GCshCmdtyNameSpace.SecIdType secIdType, String secID);
 
     @Deprecated
-    GnuCashCommodity getCommodityByQualifID(GCshCmdtyNameSpace.SecIdType secIdType, String code);
+    GnuCashCommodity getCommodityByQualifID(GCshCmdtyNameSpace.SecIdType secIdType, String secID);
 
     /**
      * @param cmdtyIDStr the unique ID of the currency/security/commodity to look for
