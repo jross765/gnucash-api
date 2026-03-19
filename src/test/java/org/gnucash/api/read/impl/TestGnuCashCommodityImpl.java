@@ -21,25 +21,25 @@ import junit.framework.JUnit4TestAdapter;
 public class TestGnuCashCommodityImpl {
 	// Mercedes-Benz Group AG
 	public static final GCshCmdtyNameSpace.Exchange CMDTY_1_EXCH = GCshCmdtyNameSpace.Exchange.EURONEXT;
-	public static final String CMDTY_1_ID = "MBG";
+	public static final String CMDTY_1_CODE = "MBG";
 	public static final String CMDTY_1_ISIN = "DE0007100000";
 
 	// SAP SE
 	public static final GCshCmdtyNameSpace.Exchange CMDTY_2_EXCH = GCshCmdtyNameSpace.Exchange.EURONEXT;
-	public static final String CMDTY_2_ID = "SAP";
+	public static final String CMDTY_2_CODE = "SAP";
 	public static final String CMDTY_2_ISIN = "DE0007164600";
 
 	// AstraZeneca Plc
 	// Note that in the SecIDType variants, the ISIN/CUSIP/SEDOL/WKN/whatever
 	// is stored twice in the object, redundantly
 	public static final GCshCmdtyNameSpace.SecIdType CMDTY_3_SECIDTYPE = GCshCmdtyNameSpace.SecIdType.ISIN;
-	public static final String CMDTY_3_ID = "GB0009895292";
-	public static final String CMDTY_3_ISIN = CMDTY_3_ID;
+	public static final String CMDTY_3_CODE = "GB0009895292";
+	public static final String CMDTY_3_ISIN = CMDTY_3_CODE;
 
 	// Coca Cola
 	public static final GCshCmdtyNameSpace.SecIdType CMDTY_4_SECIDTYPE = GCshCmdtyNameSpace.SecIdType.ISIN;
-	public static final String CMDTY_4_ID = "US1912161007";
-	public static final String CMDTY_4_ISIN = CMDTY_4_ID;
+	public static final String CMDTY_4_CODE = "US1912161007";
+	public static final String CMDTY_4_ISIN = CMDTY_4_CODE;
 
 	// -----------------------------------------------------------------
 
@@ -83,9 +83,9 @@ public class TestGnuCashCommodityImpl {
 
 		// ---
 
-		cmdtyCurrID1 = new GCshSecID_Exchange(CMDTY_1_EXCH, CMDTY_1_ID);
-		cmdtyCurrID2 = new GCshSecID_Exchange(CMDTY_2_EXCH, CMDTY_2_ID);
-		cmdtyCurrID3 = new GCshSecID_SecIdType(CMDTY_3_SECIDTYPE, CMDTY_3_ID);
+		cmdtyCurrID1 = new GCshSecID_Exchange(CMDTY_1_EXCH, CMDTY_1_CODE);
+		cmdtyCurrID2 = new GCshSecID_Exchange(CMDTY_2_EXCH, CMDTY_2_CODE);
+		cmdtyCurrID3 = new GCshSecID_SecIdType(CMDTY_3_SECIDTYPE, CMDTY_3_CODE);
 	}
 
 	// -----------------------------------------------------------------
@@ -93,16 +93,16 @@ public class TestGnuCashCommodityImpl {
 	@Test
 	public void test00() throws Exception {
 		// Cf. TestCmdtyCurrID -- let's just double-check
-		assertEquals(CMDTY_1_EXCH.toString() + GCshCmdtyID.SEPARATOR + CMDTY_1_ID, cmdtyCurrID1.toString());
-		assertEquals(CMDTY_2_EXCH.toString() + GCshCmdtyID.SEPARATOR + CMDTY_2_ID, cmdtyCurrID2.toString());
-		assertEquals(CMDTY_3_SECIDTYPE.toString() + GCshCmdtyID.SEPARATOR + CMDTY_3_ID, cmdtyCurrID3.toString());
+		assertEquals(CMDTY_1_EXCH.toString() + GCshCmdtyID.SEPARATOR + CMDTY_1_CODE, cmdtyCurrID1.toString());
+		assertEquals(CMDTY_2_EXCH.toString() + GCshCmdtyID.SEPARATOR + CMDTY_2_CODE, cmdtyCurrID2.toString());
+		assertEquals(CMDTY_3_SECIDTYPE.toString() + GCshCmdtyID.SEPARATOR + CMDTY_3_CODE, cmdtyCurrID3.toString());
 	}
 
 	// ------------------------------
 
 	@Test
 	public void test01_1() throws Exception {
-		cmdty = gcshFile.getCommodityByNamSpcCode(CMDTY_1_EXCH, CMDTY_1_ID);
+		cmdty = gcshFile.getCommodityByNamSpcCode(CMDTY_1_EXCH, CMDTY_1_CODE);
 		assertNotEquals(null, cmdty);
 
 		assertEquals(cmdtyCurrID1.toString(), cmdty.getQualifID().toString());
@@ -194,7 +194,7 @@ public class TestGnuCashCommodityImpl {
 
 	@Test
 	public void test02_1() throws Exception {
-		cmdty = gcshFile.getCommodityByNamSpcCode(CMDTY_3_SECIDTYPE.toString(), CMDTY_3_ID);
+		cmdty = gcshFile.getCommodityByNamSpcCode(CMDTY_3_SECIDTYPE.toString(), CMDTY_3_CODE);
 		assertNotEquals(null, cmdty);
 
 		assertEquals(cmdtyCurrID3.toString(), cmdty.getQualifID().toString());

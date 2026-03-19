@@ -50,7 +50,7 @@ public class TestGnuCashPriceImpl {
 	public static final GCshPrcID PRC_19_ID = new GCshPrcID("7c6ab10fde9943ccbfb1623d58a9448a"); // USD/EUR
 	public static final GCshPrcID PRC_20_ID = new GCshPrcID("037c268b47fb46d385360b1c9788a459"); // USD/EUR
 	
-	public static final String CMDTY_2_ID = TestGnuCashCommodityImpl.CMDTY_2_ID;
+	public static final String CMDTY_2_ID = TestGnuCashCommodityImpl.CMDTY_2_CODE;
 	public static final String CMDTY_2_ISIN = TestGnuCashCommodityImpl.CMDTY_2_ISIN;
 
 	public static final String CMDTY_4_ISIN = "DE000BASF111";

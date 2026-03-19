@@ -75,16 +75,16 @@ public interface GnuCashWritableFile extends GnuCashFile,
 	
 	// ---------------------------------------------------------------
 
+    /**
+     * @return true if this file has been modified.
+     */
+    boolean isModified();
+
 	/**
      * @param pB true if this file has been modified.
      * @see {@link #isModified()}
      */
     void setModified(boolean pB);
-
-    /**
-     * @return true if this file has been modified.
-     */
-    boolean isModified();
 
     /**
      * Write the data to the given file. That file becomes the new file returned by
@@ -100,8 +100,9 @@ public interface GnuCashWritableFile extends GnuCashFile,
     /**
      * The value is guaranteed not to be bigger then the maximum of the current
      * system-time and the modification-time in the file at the time of the last
-     * (full) read or sucessfull write.<br/ It is thus suitable to detect if the
-     * file has been modified outside of this library
+     * (full) read or successfull write.
+	 * <br> 
+	 * It is thus suitable to detect if the file has been modified outside of this library.
      * 
      * @return the time in ms (compatible with File.lastModified) of the last
      *         write-operation

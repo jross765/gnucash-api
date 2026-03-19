@@ -36,19 +36,19 @@ import junit.framework.JUnit4TestAdapter;
 
 public class TestGnuCashWritableCommodityImpl {
 	public static final GCshCmdtyNameSpace.Exchange CMDTY_1_EXCH = TestGnuCashCommodityImpl.CMDTY_1_EXCH;
-	public static final String CMDTY_1_ID = TestGnuCashCommodityImpl.CMDTY_1_ID;
+	public static final String CMDTY_1_CODE = TestGnuCashCommodityImpl.CMDTY_1_CODE;
 	public static final String CMDTY_1_ISIN = TestGnuCashCommodityImpl.CMDTY_1_ISIN;
 
 	public static final GCshCmdtyNameSpace.Exchange CMDTY_2_EXCH = TestGnuCashCommodityImpl.CMDTY_2_EXCH;
-	public static final String CMDTY_2_ID = TestGnuCashCommodityImpl.CMDTY_2_ID;
+	public static final String CMDTY_2_CODE = TestGnuCashCommodityImpl.CMDTY_2_CODE;
 	public static final String CMDTY_2_ISIN = TestGnuCashCommodityImpl.CMDTY_2_ISIN;
 
 	public static final GCshCmdtyNameSpace.SecIdType CMDTY_3_SECIDTYPE = GCshCmdtyNameSpace.SecIdType.ISIN;
-	public static final String CMDTY_3_ID = TestGnuCashCommodityImpl.CMDTY_3_ID;
+	public static final String CMDTY_3_CODE = TestGnuCashCommodityImpl.CMDTY_3_CODE;
 	public static final String CMDTY_3_ISIN = TestGnuCashCommodityImpl.CMDTY_3_ISIN;
 
 	public static final GCshCmdtyNameSpace.SecIdType CMDTY_4_SECIDTYPE = GCshCmdtyNameSpace.SecIdType.ISIN;
-	public static final String CMDTY_4_ID = TestGnuCashCommodityImpl.CMDTY_4_ID;
+	public static final String CMDTY_4_CODE = TestGnuCashCommodityImpl.CMDTY_4_CODE;
 	public static final String CMDTY_4_ISIN = TestGnuCashCommodityImpl.CMDTY_4_ISIN;
 
 	// ---------------------------------------------------------------
@@ -103,7 +103,7 @@ public class TestGnuCashWritableCommodityImpl {
 
 		// ---
 
-		cmdtyCurrID1 = new GCshSecID_Exchange(CMDTY_1_EXCH, CMDTY_1_ID);
+		cmdtyCurrID1 = new GCshSecID_Exchange(CMDTY_1_EXCH, CMDTY_1_CODE);
 		//    cmdtyCurrID2 = new GCshCmdtyID_Exchange(CMDTY_2_EXCH, CMDTY_2_ID);
 		//    cmdtyCurrID3 = new GCshCmdtyID_SecIdType(CMDTY_3_SECIDTYPE, CMDTY_3_ID);
 	}
@@ -121,7 +121,7 @@ public class TestGnuCashWritableCommodityImpl {
 
 	@Test
 	public void test01_1() throws Exception {
-		GnuCashWritableCommodity cmdty = gcshInFile.getWritableCommodityByQualifID(CMDTY_1_EXCH, CMDTY_1_ID);
+		GnuCashWritableCommodity cmdty = gcshInFile.getWritableCommodityByQualifID(CMDTY_1_EXCH, CMDTY_1_CODE);
 		assertNotEquals(null, cmdty);
 
 		assertEquals(cmdtyCurrID1.toString(), cmdty.getQualifID().toString());
@@ -451,9 +451,9 @@ public class TestGnuCashWritableCommodityImpl {
 		assertEquals(ConstTest.Stats.NOF_CMDTY_ALL - 1, gcshInFileStats.getNofEntriesCommodities(GCshFileStats.Type.COUNTER)); // sic, because not persisted yet
 		assertEquals(ConstTest.Stats.NOF_CMDTY_ALL    , gcshInFileStats.getNofEntriesCommodities(GCshFileStats.Type.CACHE));
 
-		GnuCashWritableCommodity cmdty = gcshInFile.getWritableCommodityByQualifID(CMDTY_1_EXCH, CMDTY_1_ID);
+		GnuCashWritableCommodity cmdty = gcshInFile.getWritableCommodityByQualifID(CMDTY_1_EXCH, CMDTY_1_CODE);
 		assertNotEquals(null, cmdty);
-		assertEquals(CMDTY_1_EXCH + ":"+ CMDTY_1_ID, cmdty.getQualifID().toString());
+		assertEquals(CMDTY_1_EXCH + ":"+ CMDTY_1_CODE, cmdty.getQualifID().toString());
 
 		// Objects attached
 		assertNotEquals(0, cmdty.getQuotes().size()); // there are quotes (prices)
@@ -478,9 +478,9 @@ public class TestGnuCashWritableCommodityImpl {
 		assertEquals(ConstTest.Stats.NOF_CMDTY_ALL - 1, gcshInFileStats.getNofEntriesCommodities(GCshFileStats.Type.COUNTER)); // sic, because not persisted yet
 		assertEquals(ConstTest.Stats.NOF_CMDTY_ALL    , gcshInFileStats.getNofEntriesCommodities(GCshFileStats.Type.CACHE));
 
-		GnuCashWritableCommodity cmdty = gcshInFile.getWritableCommodityByQualifID(CMDTY_4_SECIDTYPE, CMDTY_4_ID);
+		GnuCashWritableCommodity cmdty = gcshInFile.getWritableCommodityByQualifID(CMDTY_4_SECIDTYPE, CMDTY_4_CODE);
 		assertNotEquals(null, cmdty);
-		assertEquals(CMDTY_4_SECIDTYPE + ":"+ CMDTY_4_ID, cmdty.getQualifID().toString());
+		assertEquals(CMDTY_4_SECIDTYPE + ":"+ CMDTY_4_CODE, cmdty.getQualifID().toString());
 
 		// Objects attached
 		assertEquals(0, cmdty.getQuotes().size()); // no quotes (prices)
@@ -524,13 +524,13 @@ public class TestGnuCashWritableCommodityImpl {
 		// Exception: no splits any more
 		// Don't know what to do about this oddity right now,
 		// but it needs to be addressed at some point.
-		assertEquals(CMDTY_4_SECIDTYPE + ":"+ CMDTY_4_ID, cmdty.getQualifID().toString());
+		assertEquals(CMDTY_4_SECIDTYPE + ":"+ CMDTY_4_CODE, cmdty.getQualifID().toString());
 		assertEquals("The Coca-Cola Co.", cmdty.getName());
 		
 		// However, the commodity cannot newly be instantiated any more,
 		// just as you would expect.
 		try {
-			GnuCashWritableCommodity cmdtyNow1 = gcshInFile.getWritableCommodityByQualifID(CMDTY_4_SECIDTYPE, CMDTY_4_ID);
+			GnuCashWritableCommodity cmdtyNow1 = gcshInFile.getWritableCommodityByQualifID(CMDTY_4_SECIDTYPE, CMDTY_4_CODE);
 			assertEquals(1, 0);
 		} catch ( Exception exc ) {
 			assertEquals(0, 0);
@@ -538,7 +538,7 @@ public class TestGnuCashWritableCommodityImpl {
 		// Same for a non non-writable instance. 
 		// However, due to design asymmetry, no exception is thrown here,
 		// but the method just returns null.
-		GnuCashCommodity cmdtyNow2 = gcshInFile.getCommodityByNamSpcCode(CMDTY_4_SECIDTYPE, CMDTY_4_ID);
+		GnuCashCommodity cmdtyNow2 = gcshInFile.getCommodityByNamSpcCode(CMDTY_4_SECIDTYPE, CMDTY_4_CODE);
 		assertEquals(null, cmdtyNow2);
 
 		// Attached objects (*not dependent*)
@@ -560,7 +560,7 @@ public class TestGnuCashWritableCommodityImpl {
 
 		// The transaction does not exist any more, just as you would expect.
 		// However, no exception is thrown, as opposed to test04_1_check_memory()
-		GnuCashCommodity cmdty = gcshOutFile.getCommodityByNamSpcCode(CMDTY_4_SECIDTYPE, CMDTY_4_ID);
+		GnuCashCommodity cmdty = gcshOutFile.getCommodityByNamSpcCode(CMDTY_4_SECIDTYPE, CMDTY_4_CODE);
 		assertEquals(null, cmdty); // sic
 	}
 
