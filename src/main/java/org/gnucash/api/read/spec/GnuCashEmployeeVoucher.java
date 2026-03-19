@@ -4,10 +4,10 @@ import java.util.Collection;
 
 import org.gnucash.api.read.GnuCashEmployee;
 import org.gnucash.api.read.GnuCashGenerInvoice;
-import org.gnucash.api.read.spec.hlp.SpecInvoiceCommon_BF;
-import org.gnucash.api.read.spec.hlp.SpecInvoiceCommon_FP;
-import org.gnucash.api.read.spec.hlp.SpecInvoiceCommon_Rest;
-import org.gnucash.api.read.spec.hlp.SpecInvoiceCommon_Str;
+import org.gnucash.api.read.spec.hlp.invc.SpecInvoiceCommon_BF;
+import org.gnucash.api.read.spec.hlp.invc.SpecInvoiceCommon_FP;
+import org.gnucash.api.read.spec.hlp.invc.SpecInvoiceCommon_Rest;
+import org.gnucash.api.read.spec.hlp.invc.SpecInvoiceCommon_Str;
 import org.gnucash.base.basetypes.simple.GCshEmplID;
 import org.gnucash.base.basetypes.simple.spec.GCshEmplVchEntrID;
 

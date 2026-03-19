@@ -1,10 +1,10 @@
 package org.gnucash.api.read.spec;
 
 import org.gnucash.api.read.GnuCashGenerInvoiceEntry;
-import org.gnucash.api.read.spec.hlp.SpecInvoiceEntryCommon_BF;
-import org.gnucash.api.read.spec.hlp.SpecInvoiceEntryCommon_FP;
-import org.gnucash.api.read.spec.hlp.SpecInvoiceEntryCommon_Rest;
-import org.gnucash.api.read.spec.hlp.SpecInvoiceEntryCommon_Str;
+import org.gnucash.api.read.spec.hlp.invc.SpecInvoiceEntryCommon_BF;
+import org.gnucash.api.read.spec.hlp.invc.SpecInvoiceEntryCommon_FP;
+import org.gnucash.api.read.spec.hlp.invc.SpecInvoiceEntryCommon_Rest;
+import org.gnucash.api.read.spec.hlp.invc.SpecInvoiceEntryCommon_Str;
 import org.gnucash.base.basetypes.simple.spec.GCshJobInvcID;
 
 /**

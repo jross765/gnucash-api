@@ -1,4 +1,4 @@
-package org.gnucash.api.read.spec.hlp;
+package org.gnucash.api.read.spec.hlp.invc;
 
 import javax.security.auth.login.AccountNotFoundException;
 

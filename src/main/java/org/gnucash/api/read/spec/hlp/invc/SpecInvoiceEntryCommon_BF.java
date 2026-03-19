@@ -1,8 +1,7 @@
-package org.gnucash.api.read.spec.hlp;
+package org.gnucash.api.read.spec.hlp.invc;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.GnuCashGenerInvoiceEntry;
-
-import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 /*
  * Methods common to all specialized variants of invoices (and only those).
@@ -12,20 +11,20 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  * @see GnuCashVendorBillEntry
  * @see GnuCashJobInvoiceEntry
  */
-public interface SpecInvoiceEntryCommon_FP extends GnuCashGenerInvoiceEntry {
+public interface SpecInvoiceEntryCommon_BF extends GnuCashGenerInvoiceEntry {
 	
-	FixedPointNumber getPrice();
+	BigFraction getPriceRat();
 
 	// ----------------------------
 
-	FixedPointNumber getApplicableTaxPercent();
+	BigFraction getApplicableTaxPercentRat();
 
 	// ---------------------------------------------------------------
 
-	FixedPointNumber getSum();
+	BigFraction getSumRat();
 
-	FixedPointNumber getSumInclTaxes();
+	BigFraction getSumInclTaxesRat();
 
-	FixedPointNumber getSumExclTaxes();
+	BigFraction getSumExclTaxesRat();
 
 }
