@@ -149,7 +149,7 @@ public class GnuCashWritableEmployeeImpl extends GnuCashEmployeeImpl
 
 		{
 			GncGncEmployee.EmployeeCurrency currency = factory.createGncGncEmployeeEmployeeCurrency();
-			currency.setCmdtyId(file.getDefaultCurrencyID());
+			currency.setCmdtyId(file.getDefaultCurrencyIDStr());
 			currency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
 			jwsdpEmpl.setEmployeeCurrency(currency);
 		}

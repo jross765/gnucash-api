@@ -131,7 +131,7 @@ public class GnuCashWritableVendorImpl extends GnuCashVendorImpl
 
 		{
 			GncGncVendor.VendorCurrency currency = factory.createGncGncVendorVendorCurrency();
-			currency.setCmdtyId(file.getDefaultCurrencyID());
+			currency.setCmdtyId(file.getDefaultCurrencyIDStr());
 			currency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
 			jwsdpVend.setVendorCurrency(currency);
 		}

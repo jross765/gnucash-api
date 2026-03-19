@@ -335,16 +335,12 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	}
 
 	/**
-	 * Use a heuristic to determine the defaultcurrency-id. If we cannot find one,
-	 * we default to EUR.<br/>
-	 * Comodity-stace is fixed as "CURRENCY" .
-	 *
-	 * @return the default-currencyID to use.
+	 * {@inheritDoc}
 	 */
-	public String getDefaultCurrencyID() {
+	public GCshCurrID getDefaultCurrencyID() {
 		GncV2 root = getRootElement();
 		if ( root == null ) {
-			return Const.DEFAULT_CURRENCY;
+			return new GCshCurrID( Const.DEFAULT_CURRENCY );
 		}
 
 		for ( Object bookElement : getRootElement().getGncBook().getBookElements() ) {
@@ -355,13 +351,21 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 			GncAccount jwsdpAccount = (GncAccount) bookElement;
 			if ( jwsdpAccount.getActCommodity() != null ) {
 				if ( jwsdpAccount.getActCommodity().getCmdtySpace().equals(GCshCmdtyNameSpace.CURRENCY) ) {
-					return jwsdpAccount.getActCommodity().getCmdtyId();
+					return new GCshCurrID( jwsdpAccount.getActCommodity().getCmdtyId() );
 				}
 			}
 		}
 
 		// not found
-		return Const.DEFAULT_CURRENCY;
+		return new GCshCurrID( Const.DEFAULT_CURRENCY );
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Deprecated
+	public String getDefaultCurrencyIDStr() {
+		return getDefaultCurrencyID().getCode();
 	}
 
 	// ---------------------------------------------------------------
@@ -1420,7 +1424,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 //		                               getDefaultCurrencyID(), 
 //		                               new FixedPointNumber(1));
 
-		String baseCurrency = getDefaultCurrencyID();
+		String baseCurrency = getDefaultCurrencyIDStr();
 
 		for ( Price price : priceDB.getPrice() ) {
 			Price.PriceCommodity fromCmdty = price.getPriceCommodity();
@@ -1477,7 +1481,7 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 //		                               getDefaultCurrencyID(), 
 //		                               new FixedPointNumber(1));
 
-		String baseCurrency = getDefaultCurrencyID();
+		String baseCurrency = getDefaultCurrencyIDStr();
 
 		for ( Price jwsdpPrc : ProgressBar.wrap( priceDB.getPrice(), "Price DB") ) {
 			Price.PriceCommodity fromCmdty = jwsdpPrc.getPriceCommodity();

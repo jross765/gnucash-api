@@ -11,6 +11,10 @@ import org.gnucash.base.basetypes.simple.aux.GCshLotID;
 
 public interface GnuCashFile_TrxSplt {
 
+    // ::TODO
+    
+	// ---------------------------------------------------------------
+
     /**
      * @param spltID the unique ID of the transaction split to look for
      * @return the transaction split or null if it's not found

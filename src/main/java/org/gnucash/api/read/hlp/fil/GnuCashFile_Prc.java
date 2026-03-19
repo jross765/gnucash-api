@@ -14,6 +14,10 @@ import org.gnucash.base.basetypes.simple.GCshPrcID;
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 public interface GnuCashFile_Prc {
+	
+	// ::EMPTY
+
+	// ---------------------------------------------------------------
 
     /**
      * @param prcID id of a price
@@ -21,14 +25,22 @@ public interface GnuCashFile_Prc {
      */
     GnuCashPrice getPriceByID(GCshPrcID prcID);
 
+	// ---
+	
 	GnuCashPrice getPriceBySecIDDate(GCshSecID secID, LocalDate date);
+	
+	// ---
 	
 	GnuCashPrice getPriceByCurrIDDate(GCshCurrID currID, LocalDate date);
 	
 	GnuCashPrice getPriceByCurrDate(Currency curr, LocalDate date);
 	
+	// ---
+	
     GnuCashPrice getPriceByCmdtyIDDate(GCshCmdtyID cmdtyID, LocalDate date);
 
+    // ---------------------------------------------------------------
+    
     /**
      * @return all prices defined in the book
      * @link GCshPrice
@@ -38,9 +50,13 @@ public interface GnuCashFile_Prc {
     // sic: List, not Collection
 	List<GnuCashPrice> getPricesBySecID(GCshSecID cmdtyID);
 	
+	// ---
+	
 	List<GnuCashPrice> getPricesByCurrID(GCshCurrID currID);
 	
 	List<GnuCashPrice> getPricesByCurr(Currency curr);
+	
+	// ---
 	
 	List<GnuCashPrice> getPricesByCmdtyID(GCshCmdtyID cmdtyID);
 	

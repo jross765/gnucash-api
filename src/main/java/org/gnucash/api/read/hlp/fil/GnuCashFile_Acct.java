@@ -26,42 +26,45 @@ public interface GnuCashFile_Acct {
 
     /**
      * warning: this function has to traverse all accounts. If it much faster to try
-     * getAccountByID first and only call this method if the returned account does
+     * getAccountByID() first and call this method only if the returned account does
      * not have the right name.
-     * @param expr 
+     * 
+     * @param expr search expression
      *
-     * @param name the UNQUaLIFIED name to look for
+     * @param name the <strong>unqualified</strong> name to look for
      * @return null if not found
      * @see #getAccountByID(GCshAcctID)
-     */
+ 	 * @see #getAccountsByParentID(GCshAcctID)
+	 * @see #getAccountsByName(String, boolean, boolean)
+    */
     List<GnuCashAccount> getAccountsByName(String expr);
 
     /**
-     * @param expr
-     * @param qualif
-     * @param relaxed
-     * @return Read-only account object specified by the given parameters
+	 * @param expr search expression
+	 * @param qualif Whether to search for qualified names of unqualified ones
+	 * @param relaxed Whether to ignore upper/lower-case letters or not (true: case-insensitive)
+	 * @return the qualified or unqualified name to look for, depending on parameter qualif.
      */
     List<GnuCashAccount> getAccountsByName(String expr, boolean qualif, boolean relaxed);
 
     /**
-     * @param expr
-     * @param qualif
-     * @return Read-only account object specified by the given parameters 
-     * @throws NoEntryFoundException
-     * @throws TooManyEntriesFoundException
+	 * @param expr search expression
+	 * @param qualif
+	 * @return read-only account object whose name uniquely matches the expression
+	 * @throws NoEntryFoundException
+	 * @throws TooManyEntriesFoundException
      */
     GnuCashAccount getAccountByNameUniq(String expr, boolean qualif) throws NoEntryFoundException, TooManyEntriesFoundException;
 
     /**
      * warning: this function has to traverse all accounts. If it much faster to try
-     * getAccountByID first and only call this method if the returned account does
+     * getAccountByID() first and call this method only if the returned account does
      * not have the right name.
      *
      * @param name the regular expression of the name to look for
      * @return null if not found
-     * @throws TooManyEntriesFoundException 
      * @throws NoEntryFoundException 
+     * @throws TooManyEntriesFoundException 
      * @see #getAccountByID(GCshAcctID)
      * @see #getAccountsByName(String)
      */
@@ -71,11 +74,11 @@ public interface GnuCashFile_Acct {
      * First try to fetch the account by id, then fall back to traversing all
      * accounts to get if by it's name.
      *
-     * @param acctID   the id to look for
-     * @param name the name to look for if nothing is found for the id
+     * @param acctID   the ID to look for
+     * @param name the name to look for if nothing is found for the ID
      * @return null if not found
-     * @throws TooManyEntriesFoundException 
      * @throws NoEntryFoundException 
+     * @throws TooManyEntriesFoundException 
      * @see #getAccountByID(GCshAcctID)
      * @see #getAccountsByName(String)
      */
@@ -97,17 +100,14 @@ public interface GnuCashFile_Acct {
     GnuCashAccount getAccountByIDorNameEx(GCshAcctID acctID, String name) throws NoEntryFoundException, TooManyEntriesFoundException;
 
     /**
-     * @param type
-     * @param acctName
-     * @param qualif
-     * @param relaxed
+	 * @param type
      * @return list of read-only account objects of the given type
      */
     List<GnuCashAccount> getAccountsByType(Type type);
     
     /**
      * @param type
-     * @param acctName
+     * @param acctName account name
      * @param qualif
      * @param relaxed
      * @return list of read-only account objects of the given type and
@@ -115,6 +115,7 @@ public interface GnuCashFile_Acct {
      */
     List<GnuCashAccount> getAccountsByTypeAndName(Type type, String acctName, 
 		                                          boolean qualif, boolean relaxed);
+
     /**
      * @return all accounts
      */

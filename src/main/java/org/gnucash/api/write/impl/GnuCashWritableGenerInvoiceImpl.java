@@ -890,7 +890,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 		// currency
 		{
 			GncGncInvoice.InvoiceCurrency currency = fact.createGncGncInvoiceInvoiceCurrency();
-			currency.setCmdtyId(file.getDefaultCurrencyID());
+			currency.setCmdtyId(file.getDefaultCurrencyIDStr());
 			currency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
 			jwsdpInvc.setInvoiceCurrency(currency);
 		}
@@ -983,7 +983,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 		// currency
 		{
 			GncGncInvoice.InvoiceCurrency currency = fact.createGncGncInvoiceInvoiceCurrency();
-			currency.setCmdtyId(file.getDefaultCurrencyID());
+			currency.setCmdtyId(file.getDefaultCurrencyIDStr());
 			currency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
 			jwsdpInvc.setInvoiceCurrency(currency);
 		}
@@ -1073,7 +1073,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 		// currency
 		{
 			GncGncInvoice.InvoiceCurrency currency = fact.createGncGncInvoiceInvoiceCurrency();
-			currency.setCmdtyId(file.getDefaultCurrencyID());
+			currency.setCmdtyId(file.getDefaultCurrencyIDStr());
 			currency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
 			jwsdpInvc.setInvoiceCurrency(currency);
 		}
@@ -1166,7 +1166,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 		// currency
 		{
 			GncGncInvoice.InvoiceCurrency currency = fact.createGncGncInvoiceInvoiceCurrency();
-			currency.setCmdtyId(file.getDefaultCurrencyID());
+			currency.setCmdtyId(file.getDefaultCurrencyIDStr());
 			currency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
 			jwsdpInvc.setInvoiceCurrency(currency);
 		}

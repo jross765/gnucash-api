@@ -184,7 +184,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 
 		{
 			GncAccount.ActCommodity currency = factory.createGncAccountActCommodity();
-			currency.setCmdtyId(file.getDefaultCurrencyID());
+			currency.setCmdtyId(file.getDefaultCurrencyIDStr());
 			currency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
 			jwsdpAcct.setActCommodity(currency);
 		}

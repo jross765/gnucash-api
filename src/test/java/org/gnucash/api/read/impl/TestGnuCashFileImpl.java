@@ -1,13 +1,9 @@
 package org.gnucash.api.read.impl;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
-import java.io.File;
 import java.io.InputStream;
-import java.io.PrintStream;
 
-import org.apache.commons.io.FileUtils;
 import org.gnucash.api.ConstTest;
 import org.gnucash.api.read.impl.aux.GCshFileStats;
 import org.junit.Before;
@@ -186,7 +182,8 @@ public class TestGnuCashFileImpl {
 
 	@Test
 	public void test20() {
-		assertEquals("EUR", gcshFile.getDefaultCurrencyID());
+		assertEquals("CURRENCY:EUR", gcshFile.getDefaultCurrencyID().toString());
+		assertEquals("EUR", gcshFile.getDefaultCurrencyIDStr());
 	}
 
 	@Test

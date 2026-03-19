@@ -21,6 +21,8 @@ public interface GnuCashFile_Cmdty {
     @Deprecated
     GnuCashCommodity getCommodityByQualifID(GCshCmdtyID cmdtyCurrID);
 
+    // ------------------------------
+
     /**
      * @param nameSpace
      * @param code
@@ -50,7 +52,7 @@ public interface GnuCashFile_Cmdty {
 
     @Deprecated
     GnuCashCommodity getCommodityByQualifID(GCshCmdtyNameSpace.MIC mic, String micID);
-
+    
     /**
      * @param secIdType
      * @param secID 
@@ -68,11 +70,15 @@ public interface GnuCashFile_Cmdty {
     @Deprecated
     GnuCashCommodity getCommodityByQualifID(String cmdtyIDStr);
 
+    // --- CODE ---------------------------
+
     /**
      * @param xCode the unique X-code of the currency/security/commodity to look for
      * @return the currency/security/commodity or null if it's not found
      */
     GnuCashCommodity getCommodityByXCode(String xCode);
+
+    // --- NAME ---------------------------
 
     /**
      * warning: this function has to traverse all currencies/securities/commodities. If it much faster to try

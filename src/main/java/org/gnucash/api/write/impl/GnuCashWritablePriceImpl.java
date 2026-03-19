@@ -19,8 +19,8 @@ import org.gnucash.api.write.GnuCashWritablePrice;
 import org.gnucash.api.write.impl.hlp.GnuCashWritableObjectImpl;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
-import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.complex.InvalidCmdtyTypeException;
 import org.gnucash.base.basetypes.simple.GCshID;
 import org.gnucash.base.basetypes.simple.GCshPrcID;
@@ -119,7 +119,7 @@ public class GnuCashWritablePriceImpl extends GnuCashPriceImpl
         {
             Price.PriceCurrency curr = factory.createPricePriceCurrency();
             curr.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
-            curr.setCmdtyId(file.getDefaultCurrencyID());
+            curr.setCmdtyId(file.getDefaultCurrencyIDStr());
             prc.setPriceCurrency(curr);
         }
         

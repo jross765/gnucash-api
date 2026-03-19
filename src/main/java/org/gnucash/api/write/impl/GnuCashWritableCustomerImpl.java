@@ -152,7 +152,7 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
 
 		{
 			GncGncCustomer.CustCurrency currency = factory.createGncGncCustomerCustCurrency();
-			currency.setCmdtyId(file.getDefaultCurrencyID());
+			currency.setCmdtyId(file.getDefaultCurrencyIDStr());
 			currency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
 			jwsdpCust.setCustCurrency(currency);
 		}

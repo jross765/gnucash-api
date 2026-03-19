@@ -1913,7 +1913,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 
 		Price.PriceCurrency baseCurrency = getObjectFactory().createPricePriceCurrency();
 		baseCurrency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
-		baseCurrency.setCmdtyId(getDefaultCurrencyID());
+		baseCurrency.setCmdtyId(getDefaultCurrencyIDStr());
 
 		Price newQuote = getObjectFactory().createPrice();
 		newQuote.setPriceSource("JGnuCashLib");

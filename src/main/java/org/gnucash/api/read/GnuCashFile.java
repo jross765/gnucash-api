@@ -19,6 +19,7 @@ import org.gnucash.api.read.hlp.fil.GnuCashFile_TaxTab;
 import org.gnucash.api.read.hlp.fil.GnuCashFile_Trx;
 import org.gnucash.api.read.hlp.fil.GnuCashFile_TrxSplt;
 import org.gnucash.api.read.hlp.fil.GnuCashFile_Vend;
+import org.gnucash.base.basetypes.complex.GCshCurrID;
 
 /**
  * Interface of a top-level class that gives access to a GnuCash file
@@ -58,13 +59,17 @@ public interface GnuCashFile extends GnuCashObject,
     ComplexPriceTable getCurrencyTable();
 
     /**
-     * Use a heuristic to determine the defaultcurrency-id. If we cannot find one,
-     * we default to EUR.<br/>
-     * Comodity-stace is fixed as "CURRENCY" .
+     * Use a heuristic to determine the default currency ID. If we cannot find one,
+	 * the method returns the default currency from Const..
+     * <br/>
+     * Comodity-name-space is fixed as "CURRENCY".
      * 
-     * @return the default-currencyID to use.
+     * @return the default-currency's ID to use.
      */
-    String getDefaultCurrencyID();
+    GCshCurrID getDefaultCurrencyID();
+
+    @Deprecated
+    String getDefaultCurrencyIDStr();
 
     // ---------------------------------------------------------------
     
