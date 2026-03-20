@@ -26,11 +26,6 @@ public interface GnuCashFile_TrxSplt {
     GnuCashTransactionSplit getTransactionSplitByAcctIDAndTrxID(GCshAcctID acctID, GCshTrxID trxID);
 
     /**
-     * @return list of all transaction splits (ro-objects)
-     */
-    List<GnuCashTransactionSplit> getTransactionSplits();
-
-    /**
      * @param acctLotID 
      * @return list of all transaction splits (ro-objects)
      *   referencing the given account lot ID (not account ID!).
@@ -43,5 +38,10 @@ public interface GnuCashFile_TrxSplt {
      *   denominated in the given commodity. 
      */
     List<GnuCashTransactionSplit> getTransactionSplitsByCmdtyID(GCshCmdtyID cmdtyID);
+
+    /**
+     * @return list of all transaction splits (ro-objects)
+     */
+    List<GnuCashTransactionSplit> getTransactionSplits();
 
 }
