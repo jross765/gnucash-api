@@ -12,6 +12,7 @@ import org.gnucash.base.basetypes.complex.GCshSecID;
 
 import xyz.schnorxoborx.base.beanbase.NoEntryFoundException;
 import xyz.schnorxoborx.base.beanbase.TooManyEntriesFoundException;
+import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 public interface GnuCashWritableFile_Cmdty {
 
@@ -57,6 +58,23 @@ public interface GnuCashWritableFile_Cmdty {
     GnuCashWritableCommodity createWritableCommodity(GCshSecID cmdtyID, String code, String name);
 
     GnuCashWritableCommodity createWritableCommodity(GCshCurrID currID, String code, String name);
+
+    // ---------------------------------------------------------------
+
+    /**
+     * Add a new currency.<br/>
+     * If the currency already exists, add a new price-quote for it.
+     * 
+     * @param pCmdtySpace        the name space (e.g. "GOODS" or "CURRENCY")
+     * @param pCmdtyId           the currency-name
+     * @param conversionFactor   the conversion-factor from the base-currency (EUR).
+     * @param pCmdtyNameFraction number of decimal-places after the comma
+     * @param pCmdtyName         common name of the new currency
+     */
+    // ::TODO: either change ID (currency doesn't need name space supplied)
+    // or change name to addCommodity and add addCurrency() to module "Spec. Ent."
+    void addCurrency(String pCmdtySpace, String pCmdtyId, FixedPointNumber conversionFactor,
+	    int pCmdtyNameFraction, String pCmdtyName);
 
     /**
      * @param cmdty the commodity to remove

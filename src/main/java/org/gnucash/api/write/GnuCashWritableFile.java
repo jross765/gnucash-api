@@ -21,8 +21,6 @@ import org.gnucash.api.write.hlp.fil.GnuCashWritableFile_Trx;
 import org.gnucash.api.write.hlp.fil.GnuCashWritableFile_TrxSplt;
 import org.gnucash.api.write.hlp.fil.GnuCashWritableFile_Vend;
 
-import xyz.schnorxoborx.base.numbers.FixedPointNumber;
-
 /**
  * Extension of GnuCashFile that allows writing.
  * 
@@ -94,20 +92,5 @@ public interface GnuCashWritableFile extends GnuCashFile,
      */
     @SuppressWarnings("exports")
     GncV2 getRootElement();
-
-    // ---------------------------------------------------------------
-
-    /**
-     * Add a new currency.<br/>
-     * If the currency already exists, add a new price-quote for it.
-     * 
-     * @param pCmdtySpace        the name space (e.g. "GOODS" or "CURRENCY")
-     * @param pCmdtyId           the currency-name
-     * @param conversionFactor   the conversion-factor from the base-currency (EUR).
-     * @param pCmdtyNameFraction number of decimal-places after the comma
-     * @param pCmdtyName         common name of the new currency
-     */
-    void addCurrency(String pCmdtySpace, String pCmdtyId, FixedPointNumber conversionFactor,
-	    int pCmdtyNameFraction, String pCmdtyName);
 
 }
