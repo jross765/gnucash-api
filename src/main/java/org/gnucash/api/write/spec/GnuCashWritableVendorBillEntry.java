@@ -3,9 +3,9 @@ package org.gnucash.api.write.spec;
 import org.gnucash.api.read.spec.GnuCashVendorBillEntry;
 import org.gnucash.api.write.GnuCashWritableGenerInvoiceEntry;
 import org.gnucash.api.write.hlp.GnuCashWritableObject;
-import org.gnucash.api.write.spec.hlp.SpecWritableInvoiceEntryCommon_BF;
-import org.gnucash.api.write.spec.hlp.SpecWritableInvoiceEntryCommon_FP;
-import org.gnucash.api.write.spec.hlp.SpecWritableInvoiceEntryCommon_Rest;
+import org.gnucash.api.write.spec.hlp.invc.SpecWritableInvoiceEntryCommon_BF;
+import org.gnucash.api.write.spec.hlp.invc.SpecWritableInvoiceEntryCommon_FP;
+import org.gnucash.api.write.spec.hlp.invc.SpecWritableInvoiceEntryCommon_Rest;
 
 /**
  * Vendor bill entry  that can be modified.

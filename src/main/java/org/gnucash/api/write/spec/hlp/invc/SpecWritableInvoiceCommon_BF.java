@@ -1,4 +1,4 @@
-package org.gnucash.api.write.spec.hlp;
+package org.gnucash.api.write.spec.hlp.invc;
 
 /*
  * Methods common to all specialized variants of invoices (and only those).

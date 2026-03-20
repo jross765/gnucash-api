@@ -13,9 +13,9 @@ import org.gnucash.api.read.spec.GnuCashJobInvoice;
 import org.gnucash.api.read.spec.GnuCashVendorJob;
 import org.gnucash.api.write.GnuCashWritableGenerInvoice;
 import org.gnucash.api.write.hlp.GnuCashWritableObject;
-import org.gnucash.api.write.spec.hlp.SpecWritableInvoiceCommon_BF;
-import org.gnucash.api.write.spec.hlp.SpecWritableInvoiceCommon_FP;
-import org.gnucash.api.write.spec.hlp.SpecWritableInvoiceCommon_Rest;
+import org.gnucash.api.write.spec.hlp.invc.SpecWritableInvoiceCommon_BF;
+import org.gnucash.api.write.spec.hlp.invc.SpecWritableInvoiceCommon_FP;
+import org.gnucash.api.write.spec.hlp.invc.SpecWritableInvoiceCommon_Rest;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcEntrID;
 
 import xyz.schnorxoborx.base.beanbase.IllegalTransactionSplitActionException;

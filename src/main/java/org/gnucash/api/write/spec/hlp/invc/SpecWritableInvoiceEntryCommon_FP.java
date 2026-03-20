@@ -1,4 +1,4 @@
-package org.gnucash.api.write.spec.hlp;
+package org.gnucash.api.write.spec.hlp.invc;
 
 import org.gnucash.api.read.GnuCashGenerInvoiceEntry;
 
