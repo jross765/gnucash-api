@@ -13,6 +13,7 @@ import org.gnucash.api.write.hlp.fil.GnuCashWritableFile_Cmdty;
 import org.gnucash.api.write.hlp.fil.GnuCashWritableFile_Cust;
 import org.gnucash.api.write.hlp.fil.GnuCashWritableFile_Empl;
 import org.gnucash.api.write.hlp.fil.GnuCashWritableFile_Invc;
+import org.gnucash.api.write.hlp.fil.GnuCashWritableFile_InvcEntr;
 import org.gnucash.api.write.hlp.fil.GnuCashWritableFile_Job;
 import org.gnucash.api.write.hlp.fil.GnuCashWritableFile_Prc;
 import org.gnucash.api.write.hlp.fil.GnuCashWritableFile_TaxTab;
@@ -33,6 +34,7 @@ public interface GnuCashWritableFile extends GnuCashFile,
                                              GnuCashWritableFile_Trx,
                                              GnuCashWritableFile_TrxSplt,
                                              GnuCashWritableFile_Invc,
+                                             GnuCashWritableFile_InvcEntr,
                                              GnuCashWritableFile_Cust,
                                              GnuCashWritableFile_Vend,
                                              GnuCashWritableFile_Empl,

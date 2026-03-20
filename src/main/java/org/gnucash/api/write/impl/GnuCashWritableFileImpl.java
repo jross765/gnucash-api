@@ -1289,7 +1289,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	}
 
 	@Override
-	public GnuCashWritableEmployeeVoucherEntry createWritableEmployeeVoucher(
+	public GnuCashWritableEmployeeVoucherEntry createWritableEmployeeVoucherEntry(
 			final GnuCashWritableEmployeeVoucherImpl vch,
 			final GnuCashAccount acct, 
 			final FixedPointNumber quant, 
@@ -1314,7 +1314,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	}
 
 	@Override
-	public GnuCashWritableJobInvoiceEntry createWritableJobInvoice(
+	public GnuCashWritableJobInvoiceEntry createWritableJobInvoiceEntry(
 			final GnuCashWritableJobInvoiceImpl invc, 
 			final GnuCashAccount acct,
 			final FixedPointNumber quant, 
