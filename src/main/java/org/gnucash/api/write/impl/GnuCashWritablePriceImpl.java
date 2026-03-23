@@ -59,7 +59,7 @@ public class GnuCashWritablePriceImpl extends GnuCashPriceImpl
     	super(createPrice_int(file, new GCshPrcID( GCshID.getNew()) ), file);
     }
 
-    public GnuCashWritablePriceImpl(GnuCashPriceImpl prc) {
+    public GnuCashWritablePriceImpl(final GnuCashPriceImpl prc) {
     	super(prc.getJwsdpPeer(), prc.getGnuCashFile());
     }
 
@@ -213,6 +213,9 @@ public class GnuCashWritablePriceImpl extends GnuCashPriceImpl
 
     @Override
     public void setDate(LocalDate date) {
+		if ( date == null )
+			throw new IllegalArgumentException("argument <date> is null");
+
 		LocalDate oldDate = getDate();
 		this.dateTime = ZonedDateTime.of(date, LocalTime.MIN, ZoneId.systemDefault());
 		String datePostedStr = this.dateTime.format(DATE_FORMAT);
@@ -227,6 +230,9 @@ public class GnuCashWritablePriceImpl extends GnuCashPriceImpl
 
     @Override
     public void setDateTime(LocalDateTime dateTime) {
+		if ( dateTime == null )
+			throw new IllegalArgumentException("argument <dateTime> is null");
+
 		LocalDate oldDate = getDate();
 		this.dateTime = ZonedDateTime.of(dateTime, ZoneId.systemDefault());
 		String datePostedStr = this.dateTime.format(DATE_FORMAT);
@@ -239,6 +245,9 @@ public class GnuCashWritablePriceImpl extends GnuCashPriceImpl
 		}
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSource(Source src) {
     	setSourceStr(src.getCode());
@@ -289,15 +298,15 @@ public class GnuCashWritablePriceImpl extends GnuCashPriceImpl
 		result += "id=" + getID();
 
 		try {
-			result += ", cmdty-qualif-id='" + getFromCmdtyID() + "'";
+			result += ", from-sec-curr-qualif-id='" + getFromCmdtyID() + "'";
 		} catch (InvalidCmdtyTypeException e) {
-			result += ", cmdty-qualif-id=" + "ERROR";
+			result += ", from-sec-curr-qualif-id=" + "ERROR";
 		}
 
 		try {
-			result += ", curr-qualif-id='" + getToCurrID() + "'";
+			result += ", to-curr-qualif-id='" + getToCurrID() + "'";
 		} catch (Exception e) {
-			result += ", curr-qualif-id=" + "ERROR";
+			result += ", to-curr-qualif-id=" + "ERROR";
 		}
 
 		result += ", date=" + getDate();
@@ -315,5 +324,5 @@ public class GnuCashWritablePriceImpl extends GnuCashPriceImpl
 
 		return result;
     }
-    
+
 }

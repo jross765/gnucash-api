@@ -313,15 +313,15 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 		result += "id=" + getID();
 
 		try {
-			result += ", cmdty-qualif-id='" + getFromCmdtyID() + "'";
+			result += ", from-sec-curr-qualif-id='" + getFromCmdtyID() + "'";
 		} catch (InvalidCmdtyTypeException e) {
-			result += ", cmdty-qualif-id=" + "ERROR";
+			result += ", from-sec-curr-qualif-id=" + "ERROR";
 		}
 
 		try {
-			result += ", curr-qualif-id='" + getToCurrID() + "'";
+			result += ", to-curr-qualif-id='" + getToCurrID() + "'";
 		} catch (Exception e) {
-			result += ", curr-qualif-id=" + "ERROR";
+			result += ", to-curr-qualif-id=" + "ERROR";
 		}
 
 		result += ", date=" + getDate();
