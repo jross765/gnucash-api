@@ -1,14 +1,17 @@
 package org.gnucash.api.read.impl.hlp.prc;
 
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.Date;
+import java.util.Locale;
 
 import org.gnucash.api.generated.GncPricedb;
 import org.gnucash.api.generated.Price;
 import org.gnucash.api.generated.Price.PriceCommodity;
 import org.gnucash.api.generated.Price.PriceCurrency;
 import org.gnucash.api.read.GnuCashFile;
+import org.gnucash.api.read.impl.GnuCashPriceImpl;
 import org.gnucash.api.read.impl.hlp.fil.FilePriceManager;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
@@ -226,6 +229,20 @@ public class PriceHelper_FP {
 		}
 
 		return factor.multiply(latestQuote);
+	}
+
+	// ---------------------------------------------------------------
+	// Helpers -- balance pre-computed
+	
+	public static String formatValue(GnuCashPriceImpl prc, FixedPointNumber val) {
+		Locale lcl = Locale.getDefault();
+		return formatValue(prc, val, lcl);
+	}
+	
+	public static String formatValue(GnuCashPriceImpl prc, FixedPointNumber val, Locale lcl) {
+		NumberFormat nf = prc.getToCurrencyFormat(lcl);
+		nf.setCurrency(Currency.getInstance(prc.getToCurrID().getCode()));
+		return nf.format(val.getBigDecimal());
 	}
 
 }

@@ -2,6 +2,7 @@ package org.gnucash.api.read;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Currency;
 
 import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.hlp.GnuCashObject;
@@ -127,9 +128,9 @@ public interface GnuCashPrice extends Comparable<GnuCashPrice>,
 
     GCshCurrID getToCurrID();
 
-    String getToCurrencyCode();
+    Currency   getToCurrency();
 
-    GnuCashCommodity getToCurrency();
+    String     getToCurrencyCode();
 
     // ----------------------------
 

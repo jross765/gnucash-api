@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Currency;
+import java.util.Locale;
 
 import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.Const;
@@ -141,6 +142,26 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 		return result;
 	}
 
+//	@Override
+//	public GnuCashCommodity getToCurrency() {
+//		if ( getToCurrID() == null )
+//			return null;
+//
+//		GnuCashCommodity cmdty = getGnuCashFile().getCommodityByID(getToCurrID());
+//
+//		return cmdty;
+//	}
+
+	@Override
+	public Currency getToCurrency() {
+		if ( getToCurrID().getType() != GCshCmdtyID.Type.CURRENCY ) {
+			throw new IllegalStateException("Price security/currency is not of type " + GCshCmdtyID.Type.CURRENCY);
+		}
+
+		String gcshCurrID = getToCurrID().getCode();
+		return Currency.getInstance(gcshCurrID);
+	}
+
 	@Override
 	public String getToCurrencyCode() {
 		if ( jwsdpPeer.getPriceCurrency() == null )
@@ -154,16 +175,6 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 			throw new InvalidCmdtyTypeException();
 
 		return curr.getCmdtyId();
-	}
-
-	@Override
-	public GnuCashCommodity getToCurrency() {
-		if ( getToCurrID() == null )
-			return null;
-
-		GnuCashCommodity cmdty = getGnuCashFile().getCommodityByID(getToCurrID());
-
-		return cmdty;
 	}
 
 	// ----------------------------
@@ -279,7 +290,14 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 
 	@Override
 	public String getValueFormatted() {
-		return getCurrencyFormat().format(getValue());
+		Locale lcl = Locale.getDefault();
+		return getValueFormatted(lcl);
+	}
+
+	public String getValueFormatted(final Locale lcl) {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(lcl);
+		nf.setCurrency(getToCurrency());
+		return nf.format(getValue().getBigDecimal());
 	}
 
     // -----------------------------------------------------------------
@@ -302,6 +320,20 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 		}
 		
 		return ("" + hashCode()).compareTo("" + otherPrc.hashCode());
+	}
+	
+    // -----------------------------------------------------------------
+
+	public NumberFormat getToCurrencyFormat() {
+		return getToCurrencyFormat(Locale.getDefault());
+	}
+	
+	public NumberFormat getToCurrencyFormat(Locale lcl) {
+		currencyFormat = NumberFormat.getCurrencyInstance(lcl);
+		Currency curr = getToCurrency();
+		currencyFormat.setCurrency(curr);
+
+		return currencyFormat;
 	}
 	
     // -----------------------------------------------------------------
