@@ -192,7 +192,7 @@ public class PriceHelper_FP {
 											depth + 1);
 				} else {
 					// is currency
-					if ( ! toCurr.getCmdtyId().equals( gcshFile.getDefaultCurrencyID() ) ) {
+					if ( ! toCurr.getCmdtyId().equals( gcshFile.getDefaultCurrencyID().getCode() ) ) {
 						if ( depth > maxRecursionDepth ) {
 							LOGGER.warn("Ignoring price-quote that is not in default currency " + gcshFile.getDefaultCurrencyID() +
 									" but in '" + toCurr.toString() + "'");
