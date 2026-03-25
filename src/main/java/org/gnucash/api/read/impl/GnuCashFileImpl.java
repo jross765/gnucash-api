@@ -115,7 +115,9 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  * 
  * @see GnuCashFile
  */
-public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
+public class GnuCashFileImpl implements GnuCashFile,
+										GnuCashPubIDManager 
+{
 	
 	protected static final Logger LOGGER = LoggerFactory.getLogger(GnuCashFileImpl.class);
 
@@ -338,26 +340,17 @@ public class GnuCashFileImpl implements GnuCashFile, GnuCashPubIDManager {
 	 * {@inheritDoc}
 	 */
 	public GCshCurrID getDefaultCurrencyID() {
-		GncV2 root = getRootElement();
-		if ( root == null ) {
+//		GncV2 root = getRootElement();
+//		if ( root == null ) {
+//			return new GCshCurrID( Const.DEFAULT_CURRENCY );
+//		}
+
+		try {
+			GCshCmdtyID cmdtyID = getRootAccount().getCmdtyID();
+			return new GCshCurrID( cmdtyID.getCode() );
+		} catch ( Exception exc ) {
 			return new GCshCurrID( Const.DEFAULT_CURRENCY );
 		}
-
-		for ( Object bookElement : getRootElement().getGncBook().getBookElements() ) {
-			if ( !(bookElement instanceof GncAccount) ) {
-				continue;
-			}
-
-			GncAccount jwsdpAccount = (GncAccount) bookElement;
-			if ( jwsdpAccount.getActCommodity() != null ) {
-				if ( jwsdpAccount.getActCommodity().getCmdtySpace().equals(GCshCmdtyNameSpace.CURRENCY) ) {
-					return new GCshCurrID( jwsdpAccount.getActCommodity().getCmdtyId() );
-				}
-			}
-		}
-
-		// not found
-		return new GCshCurrID( Const.DEFAULT_CURRENCY );
 	}
 	
 	/**
