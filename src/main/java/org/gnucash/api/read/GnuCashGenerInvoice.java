@@ -29,6 +29,7 @@ import org.gnucash.api.read.spec.GnuCashCustomerInvoice;
 import org.gnucash.api.read.spec.GnuCashEmployeeVoucher;
 import org.gnucash.api.read.spec.GnuCashJobInvoice;
 import org.gnucash.api.read.spec.GnuCashVendorBill;
+import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcEntrID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcID;
@@ -136,11 +137,13 @@ public interface GnuCashGenerInvoice extends Comparable<GnuCashGenerInvoice>,
      */
     String getDescription();
 
+    GCshCurrID getCurrID();
+
     // ----------------------------
 
     @SuppressWarnings("exports")
     GncGncInvoice getJwsdpPeer();
-
+    
     // ---------------------------------------------------------------
 
     /**

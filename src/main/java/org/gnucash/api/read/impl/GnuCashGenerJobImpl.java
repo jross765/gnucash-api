@@ -1,6 +1,5 @@
 package org.gnucash.api.read.impl;
 
-import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -11,6 +10,7 @@ import org.gnucash.api.generated.GncGncJob.JobOwner;
 import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.GnuCashGenerJob;
 import org.gnucash.api.read.aux.GCshOwner;
+import org.gnucash.api.read.impl.hlp.AmountFormatter_FP;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.api.read.impl.hlp.own.GenerJob_IncOutst_BF;
 import org.gnucash.api.read.impl.hlp.own.GenerJob_IncOutst_FP;
@@ -34,14 +34,6 @@ public class GnuCashGenerJobImpl extends GnuCashObjectImpl
 	 * the JWSDP-object we are facading.
 	 */
 	protected final GncGncJob jwsdpPeer;
-
-	/**
-	 * The currencyFormat to use for default-formating.<br/>
-	 * Please access only using {@link #getCurrencyFormat()}.
-	 *
-	 * @see #getCurrencyFormat()
-	 */
-	private NumberFormat currencyFormat = null;
 
 	// ---------------------------------------------------------------
 
@@ -116,17 +108,6 @@ public class GnuCashGenerJobImpl extends GnuCashObjectImpl
 		return jwsdpPeer.getJobName();
 	}
 
-	/**
-	 * @return the currency-format to use if no locale is given.
-	 */
-	protected NumberFormat getCurrencyFormat() {
-		if ( currencyFormat == null ) {
-			currencyFormat = NumberFormat.getCurrencyInstance();
-		}
-
-		return currencyFormat;
-	}
-
 	// ---------------------------------------------------------------
 
 	/**
@@ -181,14 +162,16 @@ public class GnuCashGenerJobImpl extends GnuCashObjectImpl
 	 * {@inheritDoc}
 	 */
 	public String getIncomeGeneratedFormatted() {
-		return getCurrencyFormat().format(getIncomeGenerated());
+		return getIncomeGeneratedFormatted(Locale.getDefault());
+		
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public String getIncomeGeneratedFormatted(Locale lcl) {
-		return NumberFormat.getCurrencyInstance(lcl).format(getIncomeGenerated());
+	public String getIncomeGeneratedFormatted(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getIncomeGenerated(), getGnuCashFile().getDefaultCurrencyID(), lcl );
 	}
 	
 	// ----------------------------
@@ -213,14 +196,15 @@ public class GnuCashGenerJobImpl extends GnuCashObjectImpl
 	 * {@inheritDoc}
 	 */
 	public String getOutstandingValueFormatted() {
-		return getCurrencyFormat().format(getOutstandingValue());
+		return getOutstandingValueFormatted(Locale.getDefault());
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public String getOutstandingValueFormatted(Locale lcl) {
-		return NumberFormat.getCurrencyInstance(lcl).format(getOutstandingValue());
+	public String getOutstandingValueFormatted(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getOutstandingValue(), getGnuCashFile().getDefaultCurrencyID(), lcl );
 	}
 
 	// -----------------------------------------------------------------

@@ -146,7 +146,7 @@ public class TestGnuCashWritableTransactionSplitImpl {
 		assertEquals(15,    splt.getQuantityRat().getNumerator().intValue());
 		assertEquals(1,     splt.getQuantityRat().getDenominator().intValue());
 		
-		assertEquals("15 EURONEXT:SAP", splt.getQuantityFormatted());
+		assertEquals("15 DE0007164600", splt.getQuantityFormatted());
 		
 		assertEquals("", splt.getDescription());
 		assertEquals(ACCTLOT_1_ID, splt.getLotID());

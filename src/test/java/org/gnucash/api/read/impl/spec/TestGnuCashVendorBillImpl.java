@@ -119,7 +119,7 @@ public class TestGnuCashVendorBillImpl {
 		assertEquals(1, bllSpec.getGenerEntries().size());
 		assertEquals(1, bllSpec.getEntries().size());
 
-		TreeSet entrList = new TreeSet(); // sort elements of HashSet
+		TreeSet<GnuCashVendorBillEntry> entrList = new TreeSet<GnuCashVendorBillEntry>(); // sort elements of HashSet
 		entrList.addAll(bllSpec.getEntries());
 		assertEquals("0041b8d397f04ae4a2e9e3c7f991c4ec",
 				((GnuCashVendorBillEntry) entrList.toArray()[0]).getID().toString());
@@ -139,7 +139,7 @@ public class TestGnuCashVendorBillImpl {
 		assertEquals(2, bllSpec.getGenerEntries().size());
 		assertEquals(2, bllSpec.getEntries().size());
 
-		TreeSet entrList = new TreeSet(); // sort elements of HashSet
+		TreeSet<GnuCashVendorBillEntry> entrList = new TreeSet<GnuCashVendorBillEntry>(); // sort elements of HashSet
 		entrList.addAll(bllSpec.getEntries());
 		assertEquals("513589a11391496cbb8d025fc1e87eaa",
 				((GnuCashVendorBillEntry) entrList.toArray()[1]).getID().toString());

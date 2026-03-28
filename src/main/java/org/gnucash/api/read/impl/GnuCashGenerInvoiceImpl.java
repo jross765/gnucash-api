@@ -1,12 +1,12 @@
 package org.gnucash.api.read.impl;
 
 import java.text.DateFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.Const;
@@ -21,6 +21,7 @@ import org.gnucash.api.read.GnuCashTransaction;
 import org.gnucash.api.read.GnuCashTransactionSplit;
 import org.gnucash.api.read.aux.GCshOwner;
 import org.gnucash.api.read.impl.aux.GCshTaxedSumImpl;
+import org.gnucash.api.read.impl.hlp.AmountFormatter_FP;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
 import org.gnucash.api.read.impl.hlp.invc.GenerInvc_CustInvc_BF;
@@ -34,6 +35,8 @@ import org.gnucash.api.read.impl.hlp.invc.GenerInvc_VendBll_FP;
 import org.gnucash.api.read.impl.spec.GnuCashJobInvoiceImpl;
 import org.gnucash.api.read.spec.GnuCashJobInvoice;
 import org.gnucash.api.read.spec.WrongInvoiceTypeException;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
+import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcEntrID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcID;
@@ -102,14 +105,6 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * @see #getDatePostedFormatted()
 	 */
 	private DateFormat dateFormat = null;
-
-	/**
-	 * The currencyFormat to use for default-formating.<br/>
-	 * Please access only using {@link #getCurrencyFormat()}.
-	 * 
-	 * @see #getCurrencyFormat()
-	 */
-	private NumberFormat currencyFormat = null;
 
 	// -----------------------------------------------------------------
 
@@ -555,7 +550,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 	
 	private String getCustInvcAmountUnpaidWithTaxesFormatted_int() {
-		return this.getCurrencyFormat().format(this.getCustInvcAmountUnpaidWithTaxes_int());
+    	return getCustInvcAmountUnpaidWithTaxesFormatted_int(Locale.getDefault());
+	}
+
+	private String getCustInvcAmountUnpaidWithTaxesFormatted_int(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getCustInvcAmountUnpaidWithTaxes_int(), getCurrID(), lcl );
 	}
 
 	/**
@@ -567,7 +567,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 	
 	private String getCustInvcAmountPaidWithTaxesFormatted_int() {
-		return this.getCurrencyFormat().format(this.getCustInvcAmountPaidWithTaxes_int());
+    	return getCustInvcAmountPaidWithTaxesFormatted_int(Locale.getDefault());
+	}
+
+	private String getCustInvcAmountPaidWithTaxesFormatted_int(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getCustInvcAmountPaidWithTaxes_int(), getCurrID(), lcl );
 	}
 
 	/**
@@ -579,7 +584,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 	
 	private String getCustInvcAmountPaidWithoutTaxesFormatted_int() {
-		return this.getCurrencyFormat().format(this.getCustInvcAmountPaidWithoutTaxes_int());
+    	return getCustInvcAmountPaidWithoutTaxesFormatted_int(Locale.getDefault());
+	}
+
+	private String getCustInvcAmountPaidWithoutTaxesFormatted_int(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getCustInvcAmountPaidWithoutTaxes_int(), getCurrID(), lcl );
 	}
 
 	/**
@@ -591,7 +601,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 	
 	private String getCustInvcAmountWithTaxesFormatted_int() {
-		return this.getCurrencyFormat().format(this.getCustInvcAmountWithTaxes_int());
+    	return getCustInvcAmountWithTaxesFormatted_int(Locale.getDefault());
+	}
+
+	private String getCustInvcAmountWithTaxesFormatted_int(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getCustInvcAmountWithTaxes_int(), getCurrID(), lcl );
 	}
 
 	/**
@@ -603,7 +618,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 	
 	private String getCustInvcAmountWithoutTaxesFormatted_int() {
-		return this.getCurrencyFormat().format(this.getCustInvcAmountWithoutTaxes_int());
+    	return getCustInvcAmountWithoutTaxesFormatted_int(Locale.getDefault());
+	}
+
+	private String getCustInvcAmountWithoutTaxesFormatted_int(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getCustInvcAmountWithoutTaxes_int(), getCurrID(), lcl );
 	}
 
 	// -----------------------------------------------------------------
@@ -735,7 +755,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 	
 	private String getVendBllAmountUnpaidWithTaxesFormatted_int() {
-		return this.getCurrencyFormat().format(this.getVendBllAmountUnpaidWithTaxes_int());
+    	return getVendBllAmountUnpaidWithTaxesFormatted_int(Locale.getDefault());
+	}
+
+	private String getVendBllAmountUnpaidWithTaxesFormatted_int(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getVendBllAmountUnpaidWithTaxes_int(), getCurrID(), lcl );
 	}
 
 	/**
@@ -747,7 +772,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 	
 	private String getVendBllAmountPaidWithTaxesFormatted_int() {
-		return this.getCurrencyFormat().format(this.getVendBllAmountPaidWithTaxes_int());
+    	return getVendBllAmountPaidWithTaxesFormatted_int(Locale.getDefault());
+	}
+
+	private String getVendBllAmountPaidWithTaxesFormatted_int(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getVendBllAmountPaidWithTaxes_int(), getCurrID(), lcl );
 	}
 
 	/**
@@ -759,7 +789,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 	
 	private String getVendBllAmountPaidWithoutTaxesFormatted_int() {
-		return this.getCurrencyFormat().format(this.getVendBllAmountPaidWithoutTaxes_int());
+    	return getVendBllAmountPaidWithoutTaxesFormatted_int(Locale.getDefault());
+	}
+
+	private String getVendBllAmountPaidWithoutTaxesFormatted_int(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getVendBllAmountPaidWithoutTaxes_int(), getCurrID(), lcl );
 	}
 
 	/**
@@ -771,7 +806,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 	
 	private String getVendBllAmountWithTaxesFormatted_int() {
-		return this.getCurrencyFormat().format(this.getVendBllAmountWithTaxes_int());
+    	return getVendBllAmountWithTaxesFormatted_int(Locale.getDefault());
+	}
+
+	private String getVendBllAmountWithTaxesFormatted_int(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getVendBllAmountWithTaxes_int(), getCurrID(), lcl );
 	}
 
 	/**
@@ -783,7 +823,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 	
 	private String getVendBllAmountWithoutTaxesFormatted_int() {
-		return this.getCurrencyFormat().format(this.getVendBllAmountWithoutTaxes_int());
+    	return getVendBllAmountWithoutTaxesFormatted_int(Locale.getDefault());
+	}
+
+	private String getVendBllAmountWithoutTaxesFormatted_int(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getVendBllAmountWithoutTaxes_int(), getCurrID(), lcl );
 	}
 
 	// -----------------------------------------------------------------
@@ -871,7 +916,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 */
 	@Override
 	public String getEmplVchAmountUnpaidWithTaxesFormatted() {
-		return this.getCurrencyFormat().format(this.getEmplVchAmountUnpaidWithTaxes());
+    	return getEmplVchAmountUnpaidWithTaxesFormatted(Locale.getDefault());
+	}
+
+	public String getEmplVchAmountUnpaidWithTaxesFormatted(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getEmplVchAmountUnpaidWithTaxes(), getCurrID(), lcl );
 	}
 
 	/**
@@ -879,7 +929,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 */
 	@Override
 	public String getEmplVchAmountPaidWithTaxesFormatted() {
-		return this.getCurrencyFormat().format(this.getEmplVchAmountPaidWithTaxes());
+    	return getEmplVchAmountPaidWithTaxesFormatted(Locale.getDefault());
+	}
+
+	public String getEmplVchAmountPaidWithTaxesFormatted(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getEmplVchAmountPaidWithTaxes(), getCurrID(), lcl );
 	}
 
 	/**
@@ -887,7 +942,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 */
 	@Override
 	public String getEmplVchAmountPaidWithoutTaxesFormatted() {
-		return this.getCurrencyFormat().format(this.getEmplVchAmountPaidWithoutTaxes());
+    	return getEmplVchAmountPaidWithoutTaxesFormatted(Locale.getDefault());
+	}
+
+	public String getEmplVchAmountPaidWithoutTaxesFormatted(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getEmplVchAmountPaidWithoutTaxes(), getCurrID(), lcl );
 	}
 
 	/**
@@ -895,7 +955,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 */
 	@Override
 	public String getEmplVchAmountWithTaxesFormatted() {
-		return this.getCurrencyFormat().format(this.getEmplVchAmountWithTaxes());
+    	return getEmplVchAmountWithTaxesFormatted(Locale.getDefault());
+	}
+
+	public String getEmplVchAmountWithTaxesFormatted(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getEmplVchAmountWithTaxes(), getCurrID(), lcl );
 	}
 
 	/**
@@ -903,7 +968,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 */
 	@Override
 	public String getEmplVchAmountWithoutTaxesFormatted() {
-		return this.getCurrencyFormat().format(this.getEmplVchAmountWithoutTaxes());
+    	return getEmplVchAmountWithoutTaxesFormatted(Locale.getDefault());
+	}
+
+	public String getEmplVchAmountWithoutTaxesFormatted(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getEmplVchAmountWithoutTaxes(), getCurrID(), lcl );
 	}
 
 	// ---------------------------------------------------------------
@@ -999,7 +1069,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 */
 	@Override
 	public String getJobInvcAmountUnpaidWithTaxesFormatted() {
-		return this.getCurrencyFormat().format(this.getJobInvcAmountUnpaidWithTaxes());
+    	return getJobInvcAmountUnpaidWithTaxesFormatted(Locale.getDefault());
+	}
+
+	public String getJobInvcAmountUnpaidWithTaxesFormatted(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getJobInvcAmountUnpaidWithTaxes(), getCurrID(), lcl );
 	}
 
 	/**
@@ -1007,7 +1082,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 */
 	@Override
 	public String getJobInvcAmountPaidWithTaxesFormatted() {
-		return this.getCurrencyFormat().format(this.getJobInvcAmountPaidWithTaxes());
+    	return getJobInvcAmountPaidWithTaxesFormatted(Locale.getDefault());
+	}
+
+	public String getJobInvcAmountPaidWithTaxesFormatted(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getJobInvcAmountPaidWithTaxes(), getCurrID(), lcl );
 	}
 
 	/**
@@ -1015,7 +1095,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 */
 	@Override
 	public String getJobInvcAmountPaidWithoutTaxesFormatted() {
-		return this.getCurrencyFormat().format(this.getJobInvcAmountPaidWithoutTaxes());
+    	return getJobInvcAmountPaidWithoutTaxesFormatted(Locale.getDefault());
+	}
+
+	public String getJobInvcAmountPaidWithoutTaxesFormatted(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getJobInvcAmountPaidWithoutTaxes(), getCurrID(), lcl );
 	}
 
 	/**
@@ -1025,7 +1110,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 */
 	@Override
 	public String getJobInvcAmountWithTaxesFormatted() {
-		return this.getCurrencyFormat().format(this.getJobInvcAmountWithTaxes());
+    	return getJobInvcAmountWithTaxesFormatted(Locale.getDefault());
+	}
+
+	public String getJobInvcAmountWithTaxesFormatted(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getJobInvcAmountWithTaxes(), getCurrID(), lcl );
 	}
 
 	/**
@@ -1033,7 +1123,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 */
 	@Override
 	public String getJobInvcAmountWithoutTaxesFormatted() {
-		return this.getCurrencyFormat().format(this.getJobInvcAmountWithoutTaxes());
+    	return getJobInvcAmountWithoutTaxesFormatted(Locale.getDefault());
+	}
+
+	public String getJobInvcAmountWithoutTaxesFormatted(final Locale lcl) {
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getJobInvcAmountWithoutTaxes(), getCurrID(), lcl );
 	}
 
 	// -----------------------------------------------------------------
@@ -1203,6 +1298,19 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 */
 	public String getDescription() {
 		return getJwsdpPeer().getInvoiceNotes();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public GCshCurrID getCurrID() {
+		if ( getJwsdpPeer().getInvoiceCurrency() == null )
+			return null;
+		
+		if ( ! getJwsdpPeer().getInvoiceCurrency().getCmdtySpace().equals( GCshCmdtyNameSpace.CURRENCY ) )
+			throw new IllegalStateException("Invoice currency has invalid name space: " + getID() + "/" + getJwsdpPeer().getInvoiceCurrency().getCmdtySpace());
+		
+		return new GCshCurrID( getJwsdpPeer().getInvoiceCurrency().getCmdtyId() );
 	}
 
 	// ----------------------------
@@ -1455,18 +1563,6 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	}
 
 	// ---------------------------------------------------------------
-
-	/**
-	 *
-	 * @return the currency-format to use if no locale is given.
-	 */
-	protected NumberFormat getCurrencyFormat() {
-		if ( currencyFormat == null ) {
-			currencyFormat = NumberFormat.getCurrencyInstance();
-		}
-
-		return currencyFormat;
-	}
 
 	@SuppressWarnings("exports")
 	@Override

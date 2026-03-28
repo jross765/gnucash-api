@@ -1,6 +1,5 @@
 package org.gnucash.api.read.impl.hlp.acct;
 
-import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -11,8 +10,8 @@ import java.util.Locale;
 
 import org.gnucash.api.pricedb.ComplexPriceTable;
 import org.gnucash.api.read.GnuCashAccount;
-import org.gnucash.api.read.GnuCashCommodity;
 import org.gnucash.api.read.GnuCashTransactionSplit;
+import org.gnucash.api.read.impl.hlp.AmountFormatter_FP;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.slf4j.Logger;
@@ -185,26 +184,7 @@ public class AccountBalanceHelper_FP
 
 	public static String getBalanceFormatted(final Locale lcl,
 											 final SimpleAccount acct) {
-		GCshCmdtyID cmdtyID = acct.getCmdtyID();
-		if ( cmdtyID.getType() == GCshCmdtyID.Type.CURRENCY ) {
-			NumberFormat nf = NumberFormat.getCurrencyInstance(lcl);
-			nf.setCurrency(acct.getCurrency());
-			return nf.format(getBalance(acct).getBigDecimal());
-		} else if ( cmdtyID.getType() == GCshCmdtyID.Type.SECURITY ) {
-			GnuCashCommodity cmdty = acct.getGnuCashFile().getCommodityByID(cmdtyID);
-			String secSymb = "(sec-symbol)";
-			if ( cmdty.getSymbol() != null ) {
-				secSymb = cmdty.getSymbol();
-			} else if ( cmdty.getXCode() != null ) {
-				secSymb = cmdty.getXCode();
-			} else {
-				secSymb = cmdty.toString();
-			}
-			NumberFormat nf = NumberFormat.getNumberInstance(lcl);
-			return ( nf.format(getBalance(acct).getBigDecimal()) + " " + secSymb );
-		}
-		
-		return "ERROR";
+		return formatBalance( acct, getBalance(acct), lcl );
 	}
 
 	// ---------------------------------------------------------------
@@ -289,44 +269,40 @@ public class AccountBalanceHelper_FP
 
 	public static String getBalanceRecursiveFormatted(final Locale lcl,
 													  final SimpleAccount acct) {
-		GCshCmdtyID cmdtyID = acct.getCmdtyID();
-		if ( cmdtyID.getType() == GCshCmdtyID.Type.CURRENCY ) {
-			NumberFormat cf = NumberFormat.getCurrencyInstance(lcl);
-			cf.setCurrency(acct.getCurrency());
-			return cf.format(getBalanceRecursive(acct).getBigDecimal());
-		} else if ( cmdtyID.getType() == GCshCmdtyID.Type.SECURITY ) {
-			GnuCashCommodity cmdty = acct.getGnuCashFile().getCommodityByID(cmdtyID);
-			String secSymb = "(sec-symbol)";
-			if ( cmdty.getSymbol() != null ) {
-				secSymb = cmdty.getSymbol();
-			} else if ( cmdty.getXCode() != null ) {
-				secSymb = cmdty.getXCode();
-			} else {
-				secSymb = cmdty.toString();
-			}
-			NumberFormat nf = NumberFormat.getNumberInstance(lcl);
-			return ( nf.format(getBalance(acct).getBigDecimal()) + " " + secSymb );
-		}
-		
-		return "ERROR";
+		return formatBalance( acct, getBalanceRecursive(acct), lcl );
 	}
 	
 	// ---------------------------------------------------------------
 	// Helpers -- balance pre-computed
 	
 	public static String formatBalance(SimpleAccount acct, FixedPointNumber blnc) {
+		if ( acct == null ) {
+			throw new IllegalArgumentException("argument <acct> is null");
+		}
+		
+		if ( blnc == null ) {
+			throw new IllegalArgumentException("argument <blnc> is null");
+		}
+		
 		Locale lcl = Locale.getDefault();
 		return formatBalance(acct, blnc, lcl);
 	}
 	
 	public static String formatBalance(SimpleAccount acct, FixedPointNumber blnc, Locale lcl) {
-		NumberFormat nf = acct.getCurrencyFormat(lcl);
-    	if ( acct.getCmdtyID().getType() == GCshCmdtyID.Type.CURRENCY ) {
-    		nf.setCurrency(Currency.getInstance(acct.getCmdtyID().getCode()));
-    		return nf.format(blnc.getBigDecimal());
-    	} else {
-    		return nf.format(blnc.getBigDecimal()) + " " + acct.getCmdtyID().getCode().toString();
-    	}
+		if ( acct == null ) {
+			throw new IllegalArgumentException("argument <acct> is null");
+		}
+		
+		if ( blnc == null ) {
+			throw new IllegalArgumentException("argument <blnc> is null");
+		}
+		
+		if ( lcl == null ) {
+			throw new IllegalArgumentException("argument <lcl> is null");
+		}
+		
+		return AmountFormatter_FP.formatAmount( acct.getGnuCashFile(),
+												blnc, acct.getCmdtyID(), lcl );
 	}
 
 }

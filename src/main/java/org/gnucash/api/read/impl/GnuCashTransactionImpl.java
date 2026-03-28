@@ -19,10 +19,10 @@ import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.GnuCashGenerInvoice;
 import org.gnucash.api.read.GnuCashTransaction;
 import org.gnucash.api.read.GnuCashTransactionSplit;
+import org.gnucash.api.read.impl.hlp.AmountFormatter_FP;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
-import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
 import org.gnucash.base.basetypes.simple.GCshTrxID;
@@ -191,28 +191,6 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 		return Currency.getInstance(gcshCurrID);
 	}
 
-    /**
-	 * The Currency-Format to use if no locale is given.
-	 *
-	 * @return default currency-format with the transaction's currency set
-	 */
-	protected NumberFormat getCurrencyFormat() {
-		return getCurrencyFormat(Locale.getDefault());
-	}
-	
-	protected NumberFormat getCurrencyFormat(Locale lcl) {
-		// The currency may have changed
-		if ( getCmdtyID().getType() == GCshCmdtyID.Type.CURRENCY ) {
-			currencyFormat = NumberFormat.getCurrencyInstance(lcl);
-			Currency curr = getCurrency();
-			currencyFormat.setCurrency(curr);
-		} else {
-			currencyFormat = NumberFormat.getNumberInstance(lcl);
-		}
-	
-		return currencyFormat;
-	}
-
 	/**
      * {@inheritDoc}
      */
@@ -242,21 +220,15 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
      * {@inheritDoc}
      */
     public String getBalanceFormatted() {
-    	return getCurrencyFormat().format(getBalance());
+    	return getBalanceFormatted(Locale.getDefault());
     }
 
     /**
      * {@inheritDoc}
      */
     public String getBalanceFormatted(final Locale lcl) {
-		NumberFormat cf = NumberFormat.getInstance(lcl);
-		if ( getCmdtyID().getType() == GCshCmdtyID.Type.CURRENCY ) {
-			cf.setCurrency(new GCshCurrID(getCmdtyID()).getCurrency());
-		} else {
-			cf.setCurrency(null);
-		}
-
-		return cf.format(getBalance());
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getBalance(), getCmdtyID(), lcl );
     }
 
     /**
@@ -277,21 +249,15 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
      * {@inheritDoc}
      */
     public String getNegatedBalanceFormatted() {
-    	return getCurrencyFormat().format(getNegatedBalance());
+    	return getNegatedBalanceFormatted(Locale.getDefault());
     }
 
     /**
      * {@inheritDoc}
      */
     public String getNegatedBalanceFormatted(final Locale lcl) {
-		NumberFormat nf = NumberFormat.getInstance(lcl);
-		if ( getCmdtyID().getType() == GCshCmdtyID.Type.CURRENCY ) {
-			nf.setCurrency(new GCshCurrID(getCmdtyID()).getCurrency());
-		} else {
-			nf.setCurrency(null);
-		}
-
-		return nf.format(getNegatedBalance());
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getNegatedBalance(), getCmdtyID(), lcl );
     }
 
     /**

@@ -1,7 +1,5 @@
 package org.gnucash.api.write.impl;
 
-import java.text.ParseException;
-
 import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.Const;
 import org.gnucash.api.generated.GncTransaction;
@@ -15,7 +13,6 @@ import org.gnucash.api.write.GnuCashWritableTransactionSplit;
 import org.gnucash.api.write.impl.hlp.GnuCashWritableObjectImpl;
 import org.gnucash.api.write.impl.hlp.HasWritableUserDefinedAttributesImpl;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
-import org.gnucash.base.basetypes.complex.InvalidCmdtyIDException;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshID;
 import org.gnucash.base.basetypes.simple.GCshIDNotSetException;
@@ -269,33 +266,6 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		setQuantity(temp);
 	}
 	
-    /**
-	 * @see GnuCashWritableTransactionSplit#setQuantity(FixedPointNumber)
-	 */
-    @Override
-	public void setQuantity(final String quantStr) {
-		if ( quantStr == null ) {
-			throw new IllegalArgumentException("argument <quantStr> is null");
-		}
-		
-		if ( quantStr.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <quantStr> is empty");
-		}
-	
-		try {
-			this.setQuantity(new FixedPointNumber(quantStr.toLowerCase().replaceAll("&euro;", "").replaceAll("&pound;", "")));
-		} catch (NumberFormatException e) {
-			try {
-				Number parsed = this.getQuantityCurrencyFormat().parse(quantStr);
-				this.setQuantity(new FixedPointNumber(parsed.toString()));
-			} catch (NumberFormatException e1) {
-				throw e;
-			} catch (ParseException e1) {
-				throw e;
-			}
-		}
-	}
-
 	/**
 	 * @see GnuCashWritableTransactionSplit#setValue(FixedPointNumber)
 	 */
@@ -337,35 +307,6 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		setValue(temp);
 	}
 	
-	/**
-     * @see GnuCashWritableTransactionSplit#setValue(FixedPointNumber)
-     */
-	@Override
-    public void setValue(final String valStr) {
-		if ( valStr == null ) {
-			throw new IllegalArgumentException("argument <valStr> is null");
-		}
-		
-		if ( valStr.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <valStr> is empty");
-		}
-
-		try {
-			this.setValue(new FixedPointNumber(valStr.toLowerCase().replaceAll("&euro;", "").replaceAll("&pound;", "")));
-		} catch (NumberFormatException e) {
-			try {
-				Number parsed = this.getValueCurrencyFormat().parse(valStr);
-				this.setValue(new FixedPointNumber(parsed.toString()));
-			} catch (NumberFormatException e1) {
-				throw e;
-			} catch (ParseException e1) {
-				throw e;
-			} catch (InvalidCmdtyIDException e1) {
-				throw e;
-			}
-		}
-    }
-
     /**
      * Set the description-text.
      *

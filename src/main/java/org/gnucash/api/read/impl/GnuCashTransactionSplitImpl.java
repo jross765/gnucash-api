@@ -1,6 +1,5 @@
 package org.gnucash.api.read.impl;
 
-import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -11,10 +10,9 @@ import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashGenerInvoice;
 import org.gnucash.api.read.GnuCashTransaction;
 import org.gnucash.api.read.GnuCashTransactionSplit;
+import org.gnucash.api.read.impl.hlp.AmountFormatter_FP;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
-import org.gnucash.base.basetypes.complex.GCshCmdtyID;
-import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
 import org.gnucash.base.basetypes.simple.GCshTrxID;
@@ -213,28 +211,6 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
     }
 
     /**
-     * @return The currencyFormat for the quantity to use when no locale is given.
-     */
-    protected NumberFormat getQuantityCurrencyFormat() {
-    	return getQuantityCurrencyFormat(Locale.getDefault());
-    }
-
-    protected NumberFormat getQuantityCurrencyFormat(Locale lcl) {
-    	return ((GnuCashAccountImpl) getAccount()).getCurrencyFormat(lcl);
-    }
-
-    /**
-     * @return the currency-format of the transaction
-     */
-    public NumberFormat getValueCurrencyFormat() {
-    	return getValueCurrencyFormat(Locale.getDefault());
-    }
-
-    public NumberFormat getValueCurrencyFormat(Locale lcl) {
-    	return ((GnuCashTransactionImpl) getTransaction()).getCurrencyFormat(lcl);
-    }
-
-    /**
      * @see GnuCashTransactionSplit#getValueFormatted()
      */
     public String getValueFormatted() {
@@ -245,13 +221,8 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
      * @see GnuCashTransactionSplit#getValueFormatted(java.util.Locale)
      */
     public String getValueFormatted(final Locale lcl) {
-		NumberFormat nf = getValueCurrencyFormat(lcl);
-		if ( getTransaction().getCmdtyID().getType() == GCshCmdtyID.Type.CURRENCY ) {
-			nf.setCurrency(new GCshCurrID(getTransaction().getCmdtyID()).getCurrency());
-			return nf.format(getValue().getBigDecimal());
-		} else {
-			return nf.format(getValue().getBigDecimal()) + " " + getTransaction().getCmdtyID().toString();
-		}
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getValue(), getTransaction().getCmdtyID(), lcl );
     }
 
     /**
@@ -280,13 +251,8 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
      * @return the formatted number
      */
     public String getQuantityFormatted(final Locale lcl) {
-		NumberFormat nf = getQuantityCurrencyFormat(lcl);
-		if ( getAccount().getCmdtyID().getType() == GCshCmdtyID.Type.CURRENCY ) {
-			nf.setCurrency(new GCshCurrID(getAccount().getCmdtyID()).getCurrency());
-			return nf.format(getQuantity().getBigDecimal());
-		} else {
-			return nf.format(getQuantity().getBigDecimal()) + " " + getAccount().getCmdtyID().toString();
-		}
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getQuantity(), getAccount().getCmdtyID(), lcl );
     }
 
     /**

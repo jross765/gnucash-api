@@ -112,7 +112,7 @@ public class TestGnuCashTransactionSplitImpl {
 		assertEquals(15.00, splt.getQuantity().doubleValue(), ConstTest.DIFF_TOLERANCE);
 		assertEquals(15, splt.getQuantityRat().getNumerator().longValue());
 		assertEquals(1, splt.getQuantityRat().getDenominator().longValue());
-		assertEquals("15 EURONEXT:SAP", splt.getQuantityFormatted());
+		assertEquals("15 DE0007164600", splt.getQuantityFormatted());
 		
 		assertEquals("", splt.getDescription());
 		assertEquals(ACCTLOT_1_ID, splt.getLotID());

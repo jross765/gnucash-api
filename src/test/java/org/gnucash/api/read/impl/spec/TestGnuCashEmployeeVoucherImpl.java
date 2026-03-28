@@ -97,7 +97,7 @@ public class TestGnuCashEmployeeVoucherImpl {
 		assertEquals(2, vchSpec.getGenerEntries().size());
 		assertEquals(2, vchSpec.getEntries().size());
 
-		TreeSet entrList = new TreeSet(); // sort elements of HashSet
+		TreeSet<GnuCashEmployeeVoucherEntry> entrList = new TreeSet<GnuCashEmployeeVoucherEntry>(); // sort elements of HashSet
 		entrList.addAll(vchSpec.getEntries());
 		assertEquals("b6e2313e32d44bb4a8a701c1063e03a7",
 				((GnuCashEmployeeVoucherEntry) entrList.toArray()[0]).getID().toString());

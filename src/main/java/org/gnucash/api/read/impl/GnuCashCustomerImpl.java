@@ -1,6 +1,5 @@
 package org.gnucash.api.read.impl;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -15,6 +14,7 @@ import org.gnucash.api.read.aux.GCshAddress;
 import org.gnucash.api.read.aux.GCshBillTerms;
 import org.gnucash.api.read.aux.GCshTaxTable;
 import org.gnucash.api.read.impl.aux.GCshAddressImpl;
+import org.gnucash.api.read.impl.hlp.AmountFormatter_FP;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
 import org.gnucash.api.read.impl.hlp.own.Customer_IncOutst_BF;
@@ -43,14 +43,6 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      * the JWSDP-object we are facading.
      */
     protected final GncGncCustomer jwsdpPeer;
-
-    /**
-     * The currencyFormat to use for default-formating.<br/>
-     * Please access only using {@link #getCurrencyFormat()}.
-     *
-     * @see #getCurrencyFormat()
-     */
-    private NumberFormat currencyFormat = null;
 
     // ---------------------------------------------------------------
 
@@ -175,19 +167,6 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
     @Override
 	public String getNotes() {
     	return jwsdpPeer.getCustNotes();
-    }
-
-    // ---------------------------------------------------------------
-
-    /**
-     * @return the currency-format to use if no locale is given.
-     */
-    protected NumberFormat getCurrencyFormat() {
-    	if (currencyFormat == null) {
-    		currencyFormat = NumberFormat.getCurrencyInstance();
-    	}
-
-    	return currencyFormat;
     }
 
     // ---------------------------------------------------------------
@@ -332,7 +311,7 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      */
     @Override
 	public String getIncomeGeneratedFormatted(GnuCashGenerInvoice.ReadVariant readVar) {
-    	return getCurrencyFormat().format(getIncomeGenerated(readVar));
+    	return getIncomeGeneratedFormatted(readVar, Locale.getDefault());
     }
 
     /**
@@ -341,7 +320,8 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      */
     @Override
 	public String getIncomeGeneratedFormatted(GnuCashGenerInvoice.ReadVariant readVar, final Locale lcl) {
-    	return NumberFormat.getCurrencyInstance(lcl).format(getIncomeGenerated(readVar));
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getIncomeGenerated(readVar), getGnuCashFile().getDefaultCurrencyID(), lcl );
     }
 
     // -------------------------------------
@@ -419,7 +399,7 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      */
     @Override
 	public String getOutstandingValueFormatted(GnuCashGenerInvoice.ReadVariant readVar) {
-    	return getCurrencyFormat().format(getOutstandingValue(readVar));
+    	return getOutstandingValueFormatted(readVar, Locale.getDefault());
     }
 
     /**
@@ -427,7 +407,8 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      */
     @Override
 	public String getOutstandingValueFormatted(GnuCashGenerInvoice.ReadVariant readVar, final Locale lcl) {
-    	return NumberFormat.getCurrencyInstance(lcl).format(getOutstandingValue(readVar));
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getOutstandingValue(readVar), getGnuCashFile().getDefaultCurrencyID(), lcl );
     }
 
     // -----------------------------------------------------------------

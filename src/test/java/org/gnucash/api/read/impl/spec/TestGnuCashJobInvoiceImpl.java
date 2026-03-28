@@ -96,7 +96,7 @@ public class TestGnuCashJobInvoiceImpl {
 		assertEquals(3, invcSpec.getGenerEntries().size());
 		assertEquals(3, invcSpec.getEntries().size());
 
-		TreeSet entrList = new TreeSet(); // sort elements of HashSet
+		TreeSet<GnuCashJobInvoiceEntry> entrList = new TreeSet<GnuCashJobInvoiceEntry>(); // sort elements of HashSet
 		entrList.addAll(invcSpec.getEntries());
 		assertEquals("fa483972d10a4ce0abf2a7e1319706e7",
 				((GnuCashJobInvoiceEntry) entrList.toArray()[0]).getID().toString());

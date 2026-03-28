@@ -1,6 +1,5 @@
 package org.gnucash.api.read.impl;
 
-import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -16,6 +15,7 @@ import org.gnucash.api.generated.Price.PriceCurrency;
 import org.gnucash.api.read.GnuCashCommodity;
 import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.GnuCashPrice;
+import org.gnucash.api.read.impl.hlp.AmountFormatter_FP;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
@@ -44,7 +44,6 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 	protected final Price jwsdpPeer;
 
 	protected ZonedDateTime dateTime;
-	protected NumberFormat currencyFormat = null;
 
 	// -----------------------------------------------------------
 
@@ -179,24 +178,6 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 
 	// ----------------------------
 
-	/**
-	 * @return The currency-format to use for formating.
-	 */
-	private NumberFormat getCurrencyFormat() {
-		if ( currencyFormat == null ) {
-			currencyFormat = NumberFormat.getCurrencyInstance();
-		}
-
-//	// the currency may have changed
-//	if ( ! getCurrencyQualifID().getType().equals(CmdtyID.Type.CURRENCY) )
-//	    throw new InvalidCmdtyTypeException();
-
-		Currency curr = Currency.getInstance(getToCurrencyCode());
-		currencyFormat.setCurrency(curr);
-
-		return currencyFormat;
-	}
-
 	@Override
 	public LocalDate getDate() {
 		if ( jwsdpPeer.getPriceTime() == null )
@@ -290,14 +271,12 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 
 	@Override
 	public String getValueFormatted() {
-		Locale lcl = Locale.getDefault();
-		return getValueFormatted(lcl);
+		return getValueFormatted(Locale.getDefault());
 	}
 
 	public String getValueFormatted(final Locale lcl) {
-		NumberFormat nf = NumberFormat.getCurrencyInstance(lcl);
-		nf.setCurrency(getToCurrency());
-		return nf.format(getValue().getBigDecimal());
+    	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
+    											getValue(), getToCurrID(), lcl );
 	}
 
     // -----------------------------------------------------------------
@@ -320,20 +299,6 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 		}
 		
 		return ("" + hashCode()).compareTo("" + otherPrc.hashCode());
-	}
-	
-    // -----------------------------------------------------------------
-
-	public NumberFormat getToCurrencyFormat() {
-		return getToCurrencyFormat(Locale.getDefault());
-	}
-	
-	public NumberFormat getToCurrencyFormat(Locale lcl) {
-		currencyFormat = NumberFormat.getCurrencyInstance(lcl);
-		Currency curr = getToCurrency();
-		currencyFormat.setCurrency(curr);
-
-		return currencyFormat;
 	}
 	
     // -----------------------------------------------------------------

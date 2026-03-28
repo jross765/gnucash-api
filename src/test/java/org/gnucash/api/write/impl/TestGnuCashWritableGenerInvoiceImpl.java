@@ -113,7 +113,7 @@ public class TestGnuCashWritableGenerInvoiceImpl {
 
 		assertEquals(2, invc.getGenerEntries().size());
 
-		TreeSet entrList = new TreeSet(); // sort elements of HashSet
+		TreeSet<GnuCashGenerInvoiceEntry> entrList = new TreeSet<GnuCashGenerInvoiceEntry>(); // sort elements of HashSet
 		entrList.addAll(invc.getGenerEntries());
 		assertEquals("92e54c04b66f4682a9afb48e27dfe397",
 				((GnuCashGenerInvoiceEntry) entrList.toArray()[0]).getID().toString());
@@ -190,7 +190,7 @@ public class TestGnuCashWritableGenerInvoiceImpl {
 
 		assertEquals(1, invc.getGenerEntries().size());
 
-		TreeSet entrList = new TreeSet(); // sort elements of HashSet
+		TreeSet<GnuCashGenerInvoiceEntry> entrList = new TreeSet<GnuCashGenerInvoiceEntry>(); // sort elements of HashSet
 		entrList.addAll(invc.getGenerEntries());
 		assertEquals("0041b8d397f04ae4a2e9e3c7f991c4ec",
 				((GnuCashGenerInvoiceEntry) entrList.toArray()[0]).getID().toString());
@@ -203,7 +203,7 @@ public class TestGnuCashWritableGenerInvoiceImpl {
 
 		assertEquals(2, invc.getGenerEntries().size());
 
-		TreeSet entrList = new TreeSet(); // sort elements of HashSet
+		TreeSet<GnuCashGenerInvoiceEntry> entrList = new TreeSet<GnuCashGenerInvoiceEntry>(); // sort elements of HashSet
 		entrList.addAll(invc.getGenerEntries());
 		assertEquals("513589a11391496cbb8d025fc1e87eaa",
 				((GnuCashGenerInvoiceEntry) entrList.toArray()[1]).getID().toString());

@@ -88,7 +88,6 @@ public interface GnuCashWritableTransactionSplit extends GnuCashTransactionSplit
 	 * 
 	 * @see #getQuantity()
 	 * @see #setQuantity(BigFraction)
-	 * @see #setQuantity(String)
 	 */
 	void setQuantity(FixedPointNumber n);
 
@@ -99,20 +98,8 @@ public interface GnuCashWritableTransactionSplit extends GnuCashTransactionSplit
 	 * 
 	 * @see #getQuantity()
 	 * @see #setQuantity(FixedPointNumber)
-	 * @see #setQuantity(String)
 	 */
 	void setQuantity(BigFraction n);
-
-	/**
-	 * If the currencies of transaction and account match, this also does
-	 * ${@link #setQuantity(FixedPointNumber)}.
-	 * @param n the new quantity (in the currency of the account)
-	 * 
-	 * @see #getQuantity()
-	 * @see #setQuantity(BigFraction)
-	 * @see #setQuantity(FixedPointNumber)
-	 */
-	void setQuantity(String n);
 
 	/**
 	 * If the currencies of transaction and account match, this also does
@@ -126,17 +113,6 @@ public interface GnuCashWritableTransactionSplit extends GnuCashTransactionSplit
 	void setValue(FixedPointNumber n);
 
 	void setValue(BigFraction n);
-
-	/**
-	 * If the currencies of transaction and account match, this also does
-	 * ${@link #setValue(FixedPointNumber)}.
-	 * 
-	 * @param n the new value (in the currency of the transaction)
-	 * 
-	 * @see #getValue()
-	 * @see #setValue(FixedPointNumber)
-	 */
-	void setValue(String n);
 
 	/**
 	 * Set the description-text.
