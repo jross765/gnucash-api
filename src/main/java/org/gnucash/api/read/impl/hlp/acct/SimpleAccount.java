@@ -1,6 +1,5 @@
 package org.gnucash.api.read.impl.hlp.acct;
 
-import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.chrono.ChronoZonedDateTime;
 import java.util.ArrayList;
@@ -35,10 +34,6 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 {
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(SimpleAccount.class);
-
-	// ---------------------------------------------------------------
-
-	private static NumberFormat currencyFormat = null;
 
 	// ---------------------------------------------------------------
 
@@ -425,23 +420,6 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 		return Currency.getInstance(gcshCurrID);
 	}
 
-	public NumberFormat getCurrencyFormat() {
-		return getCurrencyFormat(Locale.getDefault());
-	}
-	
-	public NumberFormat getCurrencyFormat(Locale lcl) {
-		// The currency may have changed
-		if ( getCmdtyID().getType() == GCshCmdtyID.Type.CURRENCY ) {
-			currencyFormat = NumberFormat.getCurrencyInstance(lcl);
-			Currency curr = getCurrency();
-			currencyFormat.setCurrency(curr);
-		} else {
-			currencyFormat = NumberFormat.getNumberInstance(lcl);
-		}
-
-		return currencyFormat;
-	}
-	
 	// ---------------------------------------------------------------
 
 	@Override

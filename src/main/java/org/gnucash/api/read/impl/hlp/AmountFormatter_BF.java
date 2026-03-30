@@ -53,7 +53,7 @@ public class AmountFormatter_BF
 		
 		NumberFormat nf = getCmdtyFormat(cmdtyID, lcl);
     	if ( cmdtyID.getType() == GCshCmdtyID.Type.CURRENCY ) {
-			return nf.format(amt);
+			return nf.format(amt.bigDecimalValue());
     	} else if ( cmdtyID.getType() == GCshCmdtyID.Type.SECURITY ) {
 			GnuCashCommodity cmdty = gcshFile.getCommodityByID(cmdtyID);
 			String secSymb = "(sec-symbol)";
@@ -84,7 +84,7 @@ public class AmountFormatter_BF
 			fmt = NumberFormat.getCurrencyInstance(lcl);
 			Currency curr = Currency.getInstance( cmdtyID.getCode() );
 			fmt.setCurrency(curr);
-		} else {
+		} else if ( cmdtyID.getType() == GCshCmdtyID.Type.SECURITY ) {
 			fmt = NumberFormat.getNumberInstance(lcl);
 		}
 

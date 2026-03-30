@@ -284,8 +284,7 @@ public class AccountBalanceHelper_FP
 			throw new IllegalArgumentException("argument <blnc> is null");
 		}
 		
-		Locale lcl = Locale.getDefault();
-		return formatBalance(acct, blnc, lcl);
+		return formatBalance(acct, blnc, Locale.getDefault());
 	}
 	
 	public static String formatBalance(SimpleAccount acct, FixedPointNumber blnc, Locale lcl) {
