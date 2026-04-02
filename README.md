@@ -337,7 +337,7 @@ It should go without saying, but the following items are of course subject to ch
   Cf. test classes `TestGnucashWritableCustomerInvoiceImpl`, `TestGnucashWritableVendorBillImpl` and  `TestGnucashWritableJobInvoiceImpl`.
 
 * GnuCash (the original software) "tricks" you with security symbols:
-  When you enter the same string into the "symbol" field and into the "ticker" field,
+  When you enter the same string into the "symbol" field and into the "ticker" field (technically "code"),
   then GnuCash will *not* save that symbol redundantly in a separate field, as you would 
   expect and saves nothing for the symbol in the XML file (not even an indicative flag). 
 
