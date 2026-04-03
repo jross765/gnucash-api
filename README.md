@@ -326,7 +326,9 @@ It should go without saying, but the following items are of course subject to ch
 
 * As mentioned in the parent repo's README: As of now, the lib only works well when your GnuCash files are generated on a handful of system locales.
 
-* Generating new objects currently only works (reliably) when at least one object of the same type (a customer, say) is already in the file.
+* *Edge case*: The "virgin" test file (the practically empty one) cannot be parsed -- in the current stage of development, the lib still assumes a handful of entities being already there, such as the Price DB.
+
+* *Edge case*: Generating new objects currently only works (reliably) when at least one object of the same type (a customer, say) is already in the file.
 
 * When generating invoices, you cannot/should not call the method `post()` immediately after composing the object. 
   It will seemingly work (not throw an exception), but the amount of the post-transaction will be wrong (thus, the 
