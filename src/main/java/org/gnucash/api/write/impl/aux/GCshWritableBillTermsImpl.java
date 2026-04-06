@@ -160,7 +160,7 @@ public class GCshWritableBillTermsImpl extends GCshBillTermsImpl
 			throw new IllegalArgumentException("argument <prntID> is null");
 		}
 
-		if ( !prntID.isSet() ) {
+		if ( ! prntID.isSet() ) {
 			throw new IllegalArgumentException("argument <prntID> is not set");
 		}
 

@@ -98,7 +98,7 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
 			throw new IllegalArgumentException("argument <newID> is null");
 		}
 
-		if ( !newID.isSet() ) {
+		if ( ! newID.isSet() ) {
 			throw new IllegalArgumentException("argument <newID> is null");
 		}
 

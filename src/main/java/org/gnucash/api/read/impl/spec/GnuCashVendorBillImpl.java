@@ -95,7 +95,7 @@ public class GnuCashVendorBillImpl extends GnuCashGenerInvoiceImpl
 	}
 
 	public GnuCashVendor getVendor_direct() {
-		if ( !getJwsdpPeer().getInvoiceOwner().getOwnerType().equals(GnuCashGenerInvoice.TYPE_VENDOR.getCode()) )
+		if ( ! getJwsdpPeer().getInvoiceOwner().getOwnerType().equals(GnuCashGenerInvoice.TYPE_VENDOR.getCode()) )
 			throw new WrongInvoiceTypeException();
 
 		GCshVendID ownerID = new GCshVendID(getJwsdpPeer().getInvoiceOwner().getOwnerId().getValue());

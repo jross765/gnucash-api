@@ -304,7 +304,7 @@ public class GnuCashWritableEmployeeVoucherImpl extends GnuCashWritableGenerInvo
 	 * @see #isModifiable()
 	 */
 	protected void attemptChange() {
-		if ( !isModifiable() ) {
+		if ( ! isModifiable() ) {
 			throw new IllegalStateException(
 					"this employee voucher is NOT modifiable because there are already payment for it made");
 		}

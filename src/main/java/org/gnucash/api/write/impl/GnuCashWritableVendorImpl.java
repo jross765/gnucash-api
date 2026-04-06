@@ -93,7 +93,7 @@ public class GnuCashWritableVendorImpl extends GnuCashVendorImpl
     protected static GncGncVendor createVendor_int(
     		final GnuCashWritableFileImpl file, 
     		final GCshVendID vendID) {
-		if ( !vendID.isSet() ) {
+		if ( ! vendID.isSet() ) {
 			throw new IllegalArgumentException("argument <vendID> is null");
 		}
 

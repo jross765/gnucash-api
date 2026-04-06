@@ -107,7 +107,7 @@ public abstract class GnuCashWritableGenerJobImpl extends GnuCashGenerJobImpl
 			throw new IllegalArgumentException("argument <kjobID> is null");
 		}
 
-		if ( !jobID.isSet() ) {
+		if ( ! jobID.isSet() ) {
 			throw new IllegalArgumentException("argument <kjobID> is not set");
 		}
 
@@ -172,7 +172,7 @@ public abstract class GnuCashWritableGenerJobImpl extends GnuCashGenerJobImpl
 			throw new IllegalArgumentException("argument <jobID> is null");
 		}
 
-		if ( !jobID.isSet() ) {
+		if ( ! jobID.isSet() ) {
 			throw new IllegalArgumentException("argument <jobID> is not set");
 		}
 
@@ -234,7 +234,7 @@ public abstract class GnuCashWritableGenerJobImpl extends GnuCashGenerJobImpl
      * @see #isModifiable()
      */
     protected void attemptChange() {
-		if ( !isModifiable() ) {
+		if ( ! isModifiable() ) {
 			throw new IllegalStateException(
 					"this invoice is NOT modifiable because there already have been made payments for it");
 		}
@@ -315,7 +315,7 @@ public abstract class GnuCashWritableGenerJobImpl extends GnuCashGenerJobImpl
 
 		GnuCashGenerJob otherJob = getWritableGnuCashFile().getWritableGenerJobByNumber(jobNum);
 		if ( otherJob != null ) {
-			if ( !otherJob.getID().equals(getID()) ) {
+			if ( ! otherJob.getID().equals(getID()) ) {
 				throw new IllegalArgumentException("another job (id='" + otherJob.getID()
 						+ "' already exists with given job number '" + jobNum + "')");
 			}

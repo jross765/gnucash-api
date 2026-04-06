@@ -175,7 +175,7 @@ public class PriceHelper_FP {
 				/*
 				 * if (priceQuote.getPriceCommodity().getCmdtySpace().equals("FUND") &&
 				 * (priceQuote.getPriceType() == null ||
-				 * !priceQuote.getPriceType().equals("last") )) {
+				 * ! priceQuote.getPriceType().equals("last") )) {
 				 * LOGGER.warn("getLatestPrice: ignoring FUND-price-quote of unknown type '" +
 				 * priceQuote.getPriceType() + "' expecting 'last' "); continue; }
 				 */

@@ -181,7 +181,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 			 getType() != TYPE_JOB )
 			throw new WrongInvoiceTypeException();
 
-		return !isNotCustInvcFullyPaid();
+		return ! isNotCustInvcFullyPaid();
 	}
 
 	/**
@@ -217,7 +217,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 			 getType() != TYPE_JOB )
 			throw new WrongInvoiceTypeException();
 
-		return !isNotVendBllFullyPaid();
+		return ! isNotVendBllFullyPaid();
 	}
 
 	/**
@@ -248,7 +248,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 		if ( getType() != TYPE_EMPLOYEE )
 			throw new WrongInvoiceTypeException();
 
-		return !isNotEmplVchFullyPaid();
+		return ! isNotEmplVchFullyPaid();
 	}
 
 	/**
@@ -274,7 +274,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 		if ( getType() != TYPE_JOB )
 			throw new WrongInvoiceTypeException();
 
-		return !isNotJobInvcFullyPaid();
+		return ! isNotJobInvcFullyPaid();
 	}
 
 	/**
@@ -1350,7 +1350,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * {@inheritDoc}
 	 */
 	public void addGenerEntry(final GnuCashGenerInvoiceEntry entry) {
-		if ( !entries.contains(entry) ) {
+		if ( ! entries.contains(entry) ) {
 			entries.add(new GnuCashGenerInvoiceEntryImpl(entry));
 		}
 	}

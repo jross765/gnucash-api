@@ -303,7 +303,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 		}
 
 		for ( Slot slot : (List<Slot>) slots.getSlot() ) {
-			if ( !slot.getSlotKey().equals(Const.SLOT_KEY_INVC_TYPE) ) {
+			if ( ! slot.getSlotKey().equals(Const.SLOT_KEY_INVC_TYPE) ) {
 				continue;
 			}
 
@@ -316,11 +316,11 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 			subSlotVal.setType(Const.XML_DATA_TYPE_STRING);
 			subSlotVal.getContent().add(slotVal.getContent().get(0));
 			subSlot.setSlotValue(subSlotVal);
-			if ( !subSlot.getSlotKey().equals("invoice-guid") ) {
+			if ( ! subSlot.getSlotKey().equals("invoice-guid") ) {
 				continue;
 			}
 
-			if ( !subSlot.getSlotValue().getType().equals(Const.XML_DATA_TYPE_GUID) ) {
+			if ( ! subSlot.getSlotValue().getType().equals(Const.XML_DATA_TYPE_GUID) ) {
 				continue;
 			}
 
@@ -344,12 +344,12 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
      * @param impl the split to add to mySplits
      */
     protected void addSplit(final GnuCashTransactionSplitImpl impl) {
-		if ( !jwsdpPeer.getTrnSplits().getTrnSplit().contains(impl.getJwsdpPeer()) ) {
+		if ( ! jwsdpPeer.getTrnSplits().getTrnSplit().contains(impl.getJwsdpPeer()) ) {
 			jwsdpPeer.getTrnSplits().getTrnSplit().add(impl.getJwsdpPeer());
 		}
 
 		List<GnuCashTransactionSplit> splits = getSplits();
-		if ( !splits.contains(impl) ) {
+		if ( ! splits.contains(impl) ) {
 			splits.add(impl);
 		}
     }

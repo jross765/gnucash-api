@@ -259,9 +259,9 @@ public class TestGnuCashVendorBillImpl {
 		assertEquals(true, bllSpec.isVendBllFullyPaid());
 		assertEquals(true, bllSpec.isFullyPaid());
 
-		assertEquals(!invcGen.isVendBllFullyPaid(), invcGen.isNotVendBllFullyPaid());
-		assertEquals(!bllSpec.isVendBllFullyPaid(), bllSpec.isNotVendBllFullyPaid());
-		assertEquals(!bllSpec.isFullyPaid(), bllSpec.isNotFullyPaid());
+		assertEquals(! invcGen.isVendBllFullyPaid(), invcGen.isNotVendBllFullyPaid());
+		assertEquals(! bllSpec.isVendBllFullyPaid(), bllSpec.isNotVendBllFullyPaid());
+		assertEquals(! bllSpec.isFullyPaid(),        bllSpec.isNotFullyPaid());
 	}
 
 	@Test

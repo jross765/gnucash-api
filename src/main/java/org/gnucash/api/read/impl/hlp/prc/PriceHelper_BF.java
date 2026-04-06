@@ -175,13 +175,13 @@ public class PriceHelper_BF {
 				/*
 				 * if (priceQuote.getPriceCommodity().getCmdtySpace().equals("FUND") &&
 				 * (priceQuote.getPriceType() == null ||
-				 * !priceQuote.getPriceType().equals("last") )) {
+				 * ! priceQuote.getPriceType().equals("last") )) {
 				 * LOGGER.warn("getLatestPrice: ignoring FUND-price-quote of unknown type '" +
 				 * priceQuote.getPriceType() + "' expecting 'last' "); continue; }
 				 */
 
 				// BEGIN core
-				if ( !toCurr.getCmdtySpace().equals(GCshCmdtyNameSpace.CURRENCY) ) {
+				if ( ! toCurr.getCmdtySpace().equals(GCshCmdtyNameSpace.CURRENCY) ) {
 					// is commodity
 					if ( depth > maxRecursionDepth ) {
 						LOGGER.warn("getLatestPrice: Ignoring price-quote that is not an ISO4217 currency: '" + toCurr.toString() + "'");

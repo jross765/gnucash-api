@@ -97,7 +97,7 @@ public class GnuCashCustomerInvoiceImpl extends GnuCashGenerInvoiceImpl
 	}
 
 	public GnuCashCustomer getCustomer_direct() {
-		if ( !getJwsdpPeer().getInvoiceOwner().getOwnerType().equals(GnuCashGenerInvoice.TYPE_CUSTOMER.getCode()) )
+		if ( ! getJwsdpPeer().getInvoiceOwner().getOwnerType().equals(GnuCashGenerInvoice.TYPE_CUSTOMER.getCode()) )
 			throw new WrongInvoiceTypeException();
 
 		GCshCustID ownerID = new GCshCustID(getJwsdpPeer().getInvoiceOwner().getOwnerId().getValue());

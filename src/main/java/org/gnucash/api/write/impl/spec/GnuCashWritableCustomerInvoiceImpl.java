@@ -300,7 +300,7 @@ public class GnuCashWritableCustomerInvoiceImpl extends GnuCashWritableGenerInvo
 	 * @see #isModifiable()
 	 */
 	protected void attemptChange() {
-		if ( !isModifiable() ) {
+		if ( ! isModifiable() ) {
 			throw new IllegalStateException(
 					"this customer invoice is NOT modifiable because there are already payment for it made");
 		}

@@ -92,7 +92,7 @@ public class GnuCashEmployeeVoucherImpl extends GnuCashGenerInvoiceImpl
 
 	@Override
 	public GnuCashEmployee getEmployee() {
-		if ( !getJwsdpPeer().getInvoiceOwner().getOwnerType().equals(GnuCashGenerInvoice.TYPE_EMPLOYEE.getCode()) )
+		if ( ! getJwsdpPeer().getInvoiceOwner().getOwnerType().equals(GnuCashGenerInvoice.TYPE_EMPLOYEE.getCode()) )
 			throw new WrongInvoiceTypeException();
 
 		GCshEmplID ownerID = new GCshEmplID(getJwsdpPeer().getInvoiceOwner().getOwnerId().getValue());

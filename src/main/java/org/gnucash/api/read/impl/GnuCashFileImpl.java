@@ -237,7 +237,7 @@ public class GnuCashFileImpl implements GnuCashFile,
 			throw new IllegalArgumentException("argument <pFile> is null");
 		}
 
-		if ( !pFile.exists() ) {
+		if ( ! pFile.exists() ) {
 			throw new IllegalArgumentException("File '" + pFile.getAbsolutePath() + "' does not exist");
 		}
 

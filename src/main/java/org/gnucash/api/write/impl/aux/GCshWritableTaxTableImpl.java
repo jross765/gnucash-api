@@ -55,7 +55,7 @@ public class GCshWritableTaxTableImpl extends GCshTaxTableImpl
 			throw new IllegalArgumentException("argument <prntID> is null");
 		}
 
-		if ( !prntID.isSet() ) {
+		if ( ! prntID.isSet() ) {
 			throw new IllegalArgumentException("argument <prntID> is not set");
 		}
 
@@ -82,7 +82,7 @@ public class GCshWritableTaxTableImpl extends GCshTaxTableImpl
 			throw new IllegalArgumentException("argument <entr> is not instance of GCshTaxTableEntryImpl");
 		}
 
-		if ( !entries.contains(entr) ) {
+		if ( ! entries.contains(entr) ) {
 			entries.add(entr);
 		}
     }

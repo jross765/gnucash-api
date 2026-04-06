@@ -314,7 +314,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
         getJwsdpPeer().setTrnNum(numStr);
         getWritableFile().setModified(true);
     
-        if (old == null || !old.equals(numStr)) {
+        if (old == null || ! old.equals(numStr)) {
             if (helper.getPropertyChangeSupport() != null) {
             	helper.getPropertyChangeSupport().firePropertyChange("transactionNumber", old, numStr);
             }
@@ -376,7 +376,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 		getJwsdpPeer().setTrnDescription(descr);
 		getWritableFile().setModified(true);
 
-		if ( old == null || !old.equals(descr) ) {
+		if ( old == null || ! old.equals(descr) ) {
 			if ( helper.getPropertyChangeSupport() != null ) {
 				helper.getPropertyChangeSupport().firePropertyChange("description", old, descr);
 			}

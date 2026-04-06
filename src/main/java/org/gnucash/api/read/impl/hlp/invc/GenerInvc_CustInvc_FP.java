@@ -34,7 +34,7 @@ public class GenerInvc_CustInvc_FP {
 		for ( GnuCashTransaction trx : invc.getPayingTransactions() ) {
 			for ( GnuCashTransactionSplit split : trx.getSplits() ) {
 				if ( split.getAccount().getType() == GnuCashAccount.Type.RECEIVABLE ) {
-					if ( !split.getValue().isPositive() ) {
+					if ( ! split.getValue().isPositive() ) {
 						takenFromReceivableAccount.subtract(split.getValue());
 					}
 				}

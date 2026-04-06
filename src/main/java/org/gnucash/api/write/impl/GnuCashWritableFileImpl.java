@@ -806,7 +806,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalArgumentException("argument <trxID> is null");
 		}
 
-		if ( !trxID.isSet() ) {
+		if ( ! trxID.isSet() ) {
 			throw new IllegalArgumentException("argument <trxID> is null");
 		}
 
@@ -931,7 +931,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalArgumentException("argument <spltID> is null");
 		}
 
-		if ( !spltID.isSet() ) {
+		if ( ! spltID.isSet() ) {
 			throw new IllegalArgumentException("argument <spltID> is null");
 		}
 
@@ -972,7 +972,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalArgumentException("argument <invcID> is null");
 		}
 
-		if ( !invcID.isSet() ) {
+		if ( ! invcID.isSet() ) {
 			throw new IllegalArgumentException("argument <invcID> is null");
 		}
 
@@ -1212,7 +1212,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalArgumentException("argument <invcEntrID> is null");
 		}
 
-		if ( !invcEntrID.isSet() ) {
+		if ( ! invcEntrID.isSet() ) {
 			throw new IllegalArgumentException("argument <invcEntrID> is not set");
 		}
 
@@ -1391,7 +1391,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalArgumentException("argument <custID> is null");
 		}
 
-		if ( !custID.isSet() ) {
+		if ( ! custID.isSet() ) {
 			throw new IllegalArgumentException("argument <custID> is not set");
 		}
 
@@ -1447,7 +1447,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalArgumentException("argument <vendID> is null");
 		}
 
-		if ( !vendID.isSet() ) {
+		if ( ! vendID.isSet() ) {
 			throw new IllegalArgumentException("argument <vendID> is not set");
 		}
 
@@ -1504,7 +1504,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalArgumentException("argument <emplID> is null");
 		}
 
-		if ( !emplID.isSet() ) {
+		if ( ! emplID.isSet() ) {
 			throw new IllegalArgumentException("argument <emplID> is not set");
 		}
 
@@ -1564,7 +1564,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalArgumentException("argument <jobID> is null");
 		}
 
-		if ( !jobID.isSet() ) {
+		if ( ! jobID.isSet() ) {
 			throw new IllegalArgumentException("argument <jobID> is not set");
 		}
 
@@ -1947,7 +1947,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalArgumentException("argument <prcID> is null");
 		}
 
-		if ( !prcID.isSet() ) {
+		if ( ! prcID.isSet() ) {
 			throw new IllegalArgumentException("argument <prcID> is not set");
 		}
 
@@ -2028,7 +2028,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalArgumentException("argument <taxTabID> is null");
 		}
 
-		if ( !taxTabID.isSet() ) {
+		if ( ! taxTabID.isSet() ) {
 			throw new IllegalArgumentException("argument <taxTabID> is not set");
 		}
 
@@ -2066,7 +2066,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalArgumentException("argument <bllTrmID> is null");
 		}
 
-		if ( !bllTrmID.isSet() ) {
+		if ( ! bllTrmID.isSet() ) {
 			throw new IllegalArgumentException("argument <bllTrmID> is not set");
 		}
 

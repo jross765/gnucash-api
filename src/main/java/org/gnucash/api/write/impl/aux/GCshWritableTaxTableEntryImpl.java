@@ -64,7 +64,7 @@ public class GCshWritableTaxTableEntryImpl extends GCshTaxTableEntryImpl
 			throw new IllegalArgumentException("argument <typeStr> is null");
 		}
 
-		if ( !acctID.isSet() ) {
+		if ( ! acctID.isSet() ) {
 			throw new IllegalArgumentException("argument <typeStr> is not set");
 		}
 

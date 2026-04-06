@@ -162,9 +162,9 @@ public class TestGnuCashEmployeeVoucherImpl {
 		assertEquals(false, vchSpec.isEmplVchFullyPaid());
 		assertEquals(false, vchSpec.isFullyPaid());
 
-		assertEquals(!invcGen.isEmplVchFullyPaid(), invcGen.isNotEmplVchFullyPaid());
-		assertEquals(!vchSpec.isEmplVchFullyPaid(), vchSpec.isNotEmplVchFullyPaid());
-		assertEquals(!vchSpec.isFullyPaid(), vchSpec.isNotFullyPaid());
+		assertEquals(! invcGen.isEmplVchFullyPaid(), invcGen.isNotEmplVchFullyPaid());
+		assertEquals(! vchSpec.isEmplVchFullyPaid(), vchSpec.isNotEmplVchFullyPaid());
+		assertEquals(! vchSpec.isFullyPaid(),        vchSpec.isNotFullyPaid());
 	}
 
 	//  @Test

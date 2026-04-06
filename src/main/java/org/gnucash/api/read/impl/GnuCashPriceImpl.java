@@ -170,7 +170,7 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 		if ( curr.getCmdtySpace() == null || curr.getCmdtyId() == null )
 			return null;
 
-		if ( !curr.getCmdtySpace().equals(GCshCmdtyNameSpace.CURRENCY) )
+		if ( ! curr.getCmdtySpace().equals(GCshCmdtyNameSpace.CURRENCY) )
 			throw new InvalidCmdtyTypeException();
 
 		return curr.getCmdtyId();

@@ -79,7 +79,7 @@ public class GCshWritableAccountLotImpl extends GCshAcctLotImpl
 			throw new IllegalArgumentException("argument <newID> is null");
 		}
 
-		if ( !newID.isSet() ) {
+		if ( ! newID.isSet() ) {
 			throw new IllegalArgumentException("argument <newID> is not set");
 		}
 

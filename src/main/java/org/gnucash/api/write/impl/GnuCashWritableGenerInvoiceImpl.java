@@ -1876,7 +1876,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 			 getType() != GCshOwner.Type.JOB ) // ::CHECK
 			throw new WrongInvoiceTypeException();
 
-		if ( !isModifiable() ) {
+		if ( ! isModifiable() ) {
 			throw new IllegalStateException("This customer invoice has payments and is not modifiable");
 		}
 
@@ -1897,7 +1897,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 			 getType() != GCshOwner.Type.JOB ) // ::CHECK
 			throw new WrongInvoiceTypeException();
 
-		if ( !isModifiable() ) {
+		if ( ! isModifiable() ) {
 			throw new IllegalStateException("This vendor bill has payments and is not modifiable");
 		}
 
@@ -1922,7 +1922,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 			 getType() != GCshOwner.Type.JOB ) // ::CHECK
 			throw new WrongInvoiceTypeException();
 
-		if ( !isModifiable() ) {
+		if ( ! isModifiable() ) {
 			throw new IllegalStateException("This employee voucher has payments and is not modifiable");
 		}
 
@@ -1942,7 +1942,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 		if ( getType() != GCshOwner.Type.JOB )
 			throw new WrongInvoiceTypeException();
 
-		if ( !isModifiable() ) {
+		if ( ! isModifiable() ) {
 			throw new IllegalStateException("This job invoice has payments and is not modifiable");
 		}
 
@@ -1964,7 +1964,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
     public void addRawGenerEntry(final GnuCashWritableGenerInvoiceEntryImpl generEntr) {
 //		System.err.println("GnuCashWritableGenerInvoiceImpl.addRawGenerEntry " + generEntr.toString());
 
-    	if (!isModifiable()) {
+    	if ( ! isModifiable() ) {
     		throw new IllegalArgumentException("This invoice/bill has payments and thus is not modifiable");
     	}
 
@@ -2409,8 +2409,8 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 				// split.setQuantity(split.getQuantity().subtract(entryTaxAmount));
 				split.setValue(split.getValue().subtract(entryTaxAmount));
 
-				// failed for subtractEntry assert !split.getValue().isPositive();
-				// failed for subtractEntry assert !split.getQuantity().isPositive();
+				// failed for subtractEntry assert ! split.getValue().isPositive();
+				// failed for subtractEntry assert ! split.getQuantity().isPositive();
 
 				LOGGER.info("GnuCashWritableGenerInvoiceImpl.updateEntry_taxStuff " + "updated tax-split="
 						+ split.getID() + " " + "of account " + split.getAccount().getQualifiedName() + " "
@@ -2424,15 +2424,15 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 					+ split.getAccount().getQualifiedName());
 		}
 
-		if ( !postTransactionTaxUpdated ) {
+		if ( ! postTransactionTaxUpdated ) {
 			GnuCashWritableTransactionSplitImpl split = 
 					(GnuCashWritableTransactionSplitImpl) postTrx
 						.createWritableSplit(taxAcct);
 			split.setQuantity(entryTaxAmount.copy().negate());
 			split.setValue(entryTaxAmount.copy().negate());
 
-			// assert !split.getValue().isPositive();
-			// assert !split.getQuantity().isPositive();
+			// assert ! split.getValue().isPositive();
+			// assert ! split.getQuantity().isPositive();
 
 			split.setAction(GnuCashTransactionSplit.Action.INVOICE);
 
@@ -2483,7 +2483,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 			}
 		}
 
-		if ( !postTransactionSumUpdated ) {
+		if ( ! postTransactionSumUpdated ) {
 			GnuCashWritableTransactionSplitImpl split = 
 					(GnuCashWritableTransactionSplitImpl) postTransaction
 						.createWritableSplit(getGnuCashFile()
@@ -2525,7 +2525,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 			}
 		}
 
-		if ( !postTransactionNetSumUpdated ) {
+		if ( ! postTransactionNetSumUpdated ) {
 			GnuCashWritableTransactionSplitImpl split = new GnuCashWritableTransactionSplitImpl(postTransaction,
 					getGnuCashFile().getAccountByID(accountToTransferMoneyFrom));
 			split.setQuantity(sumExclTaxes.copy().negate());
@@ -2549,7 +2549,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
      * @see #isModifiable()
      */
     protected void attemptChange() {
-		if ( !isModifiable() ) {
+		if ( ! isModifiable() ) {
 			throw new IllegalStateException("this invoice is NOT modifiable because there already have been made payments for it");
 		}
     }
@@ -2783,7 +2783,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
      * @see GnuCashWritableGenerInvoice#remove()
      */
     public void remove(final boolean withEntries) throws TaxTableNotFoundException {
-		if ( !isModifiable() ) {
+		if ( ! isModifiable() ) {
 			throw new IllegalStateException("This (generic) invoice has payments and cannot be deleted");
 		}
 

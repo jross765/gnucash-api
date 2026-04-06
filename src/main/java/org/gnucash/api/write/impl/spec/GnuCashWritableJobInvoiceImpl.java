@@ -343,7 +343,7 @@ public class GnuCashWritableJobInvoiceImpl extends GnuCashWritableGenerInvoiceIm
 	 * @see #isModifiable()
 	 */
 	protected void attemptChange() {
-		if ( !isModifiable() ) {
+		if ( ! isModifiable() ) {
 			throw new IllegalStateException(
 					"this job invoice is NOT modifiable because there are already payment for it made");
 		}

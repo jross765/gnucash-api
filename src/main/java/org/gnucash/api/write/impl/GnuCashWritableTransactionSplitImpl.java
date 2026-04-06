@@ -121,7 +121,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 			throw new IllegalArgumentException("argument <newID> is null");
 		}
 
-		if ( !newID.isSet() ) {
+		if ( ! newID.isSet() ) {
 			throw new IllegalArgumentException("argument <newID> is null");
 		}
 
@@ -198,7 +198,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		getJwsdpPeer().getSplitAccount().setValue(acct.getID().toString());
 		((GnuCashWritableFile) getGnuCashFile()).setModified(true);
 
-		if ( old == null || !old.equals(acct.getID()) ) {
+		if ( old == null || ! old.equals(acct.getID()) ) {
 			if ( helper.getPropertyChangeSupport() != null ) {
 				helper.getPropertyChangeSupport().firePropertyChange("accountID", old, acct.getID());
 			}
@@ -241,7 +241,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		if ( isCurrencyMatching() ) {
 			String oldQuant = getJwsdpPeer().getSplitQuantity();
 			getJwsdpPeer().setSplitQuantity(quant.toGnuCashString());
-			if ( old == null || !old.equals(quant.toGnuCashString()) ) {
+			if ( old == null || ! old.equals(quant.toGnuCashString()) ) {
 				if ( helper.getPropertyChangeSupport() != null ) {
 					helper
 						.getPropertyChangeSupport()
@@ -250,7 +250,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 			}
 		}
 
-		if ( old == null || !old.equals(quant.toGnuCashString()) ) {
+		if ( old == null || ! old.equals(quant.toGnuCashString()) ) {
 			if ( helper.getPropertyChangeSupport() != null ) {
 				helper.getPropertyChangeSupport().firePropertyChange("quantity", new FixedPointNumber(old), quant);
 			}
@@ -282,14 +282,14 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		if ( isCurrencyMatching() ) {
 			String oldValue = getJwsdpPeer().getSplitQuantity();
 			getJwsdpPeer().setSplitValue(val.toGnuCashString());
-			if ( old == null || !old.equals(val.toGnuCashString()) ) {
+			if ( old == null || ! old.equals(val.toGnuCashString()) ) {
 				if ( helper.getPropertyChangeSupport() != null ) {
 					helper.getPropertyChangeSupport().firePropertyChange("value", new FixedPointNumber(oldValue), val);
 				}
 			}
 		}
 	
-		if ( old == null || !old.equals(val.toGnuCashString()) ) {
+		if ( old == null || ! old.equals(val.toGnuCashString()) ) {
 			if ( helper.getPropertyChangeSupport() != null ) {
 				helper.getPropertyChangeSupport().firePropertyChange("value", new FixedPointNumber(old), val);
 			}
@@ -326,7 +326,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		getJwsdpPeer().setSplitMemo(descr);
 		((GnuCashWritableFile) getGnuCashFile()).setModified(true);
 
-		if ( old == null || !old.equals(descr) ) {
+		if ( old == null || ! old.equals(descr) ) {
 			if ( helper.getPropertyChangeSupport() != null ) {
 				helper.getPropertyChangeSupport().firePropertyChange("description", old, descr);
 			}
@@ -356,7 +356,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		getJwsdpPeer().setSplitAction(actStr);
 		((GnuCashWritableFile) getGnuCashFile()).setModified(true);
 
-		if ( oldActStr == null || !oldActStr.equals(actStr) ) {
+		if ( oldActStr == null || ! oldActStr.equals(actStr) ) {
 			if ( helper.getPropertyChangeSupport() != null ) {
 				helper.getPropertyChangeSupport().firePropertyChange("splitAction", oldActStr, actStr);
 			}
@@ -368,7 +368,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 			throw new IllegalArgumentException("argument <lotID> is null");
 		}
 
-		if ( !lotID.isSet() ) {
+		if ( ! lotID.isSet() ) {
 			throw new IllegalArgumentException("argument <lotID> is not set");
 		}
 
