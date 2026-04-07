@@ -644,7 +644,7 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
     	}
 
 	
-//		if ( descr.trim().length() == 0 ) {
+//		if ( descr.isBlank() ) {
 //	    	throw new IllegalArgumentException("argument <descr> is null");
 //		}
 
@@ -1155,8 +1155,8 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
 			throw new IllegalArgumentException("argument <actStr> is null");
 		}
 
-		if ( actStr.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <actStr> is empty");
+		if ( actStr.isBlank() ) {
+			throw new IllegalArgumentException("argument <actStr> is blank");
 		}
 
 		if ( ! this.getGenerInvoice().isModifiable() ) {

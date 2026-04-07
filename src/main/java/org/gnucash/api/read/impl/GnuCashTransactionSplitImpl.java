@@ -128,7 +128,7 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
     	if ( getActionStr() == null )
     		return null;
     	
-    	if ( getActionStr().trim().length() == 0 )
+    	if ( getActionStr().isBlank() )
     		return null;
 
     	return Action.valueOfff( getActionStr() );
@@ -149,7 +149,7 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
     	if ( getReconStateStr() == null )
     		return null;
     	
-    	if ( getReconStateStr().trim().length() == 0 )
+    	if ( getReconStateStr().isBlank() )
     		return null;
 
     	return ReconState.valueOff( getReconStateStr() );

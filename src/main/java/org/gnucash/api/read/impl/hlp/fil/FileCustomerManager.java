@@ -93,8 +93,8 @@ public class FileCustomerManager {
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 		
-		if ( name.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 		
 		return getCustomersByName(name, true);
@@ -105,8 +105,8 @@ public class FileCustomerManager {
 			throw new IllegalArgumentException("argument <expr> is null");
 		}
 		
-		if ( expr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <expr> is empty");
+		if ( expr.isBlank() ) {
+			throw new IllegalArgumentException("argument <expr> is blank");
 		}
 		
 		if ( custMap == null ) {
@@ -136,8 +136,8 @@ public class FileCustomerManager {
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 		
-		if ( name.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 		
 		List<GnuCashCustomer> custList = getCustomersByName(name);

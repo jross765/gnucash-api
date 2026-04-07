@@ -93,8 +93,8 @@ public class FileEmployeeManager {
 			throw new IllegalArgumentException("argument <userName> is null");
 		}
 		
-		if ( userName.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <userName> is empty");
+		if ( userName.isBlank() ) {
+			throw new IllegalArgumentException("argument <userName> is blank");
 		}
 		
 		return getEmployeesByUserName(userName, true);
@@ -105,8 +105,8 @@ public class FileEmployeeManager {
 			throw new IllegalArgumentException("argument <expr> is null");
 		}
 		
-		if ( expr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <expr> is empty");
+		if ( expr.isBlank() ) {
+			throw new IllegalArgumentException("argument <expr> is blank");
 		}
 		
 		if ( emplMap == null ) {
@@ -136,8 +136,8 @@ public class FileEmployeeManager {
 			throw new IllegalArgumentException("argument <userName> is null");
 		}
 		
-		if ( userName.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <userName> is empty");
+		if ( userName.isBlank() ) {
+			throw new IllegalArgumentException("argument <userName> is blank");
 		}
 		
 		List<GnuCashEmployee> emplList = getEmployeesByUserName(userName);

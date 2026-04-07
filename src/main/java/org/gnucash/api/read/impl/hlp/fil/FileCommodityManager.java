@@ -121,16 +121,16 @@ public class FileCommodityManager {
 			throw new IllegalArgumentException("argument <nameSpace> is null");
 		}
 
-		if ( nameSpace.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <nameSpace> is empty");
+		if ( nameSpace.isBlank() ) {
+			throw new IllegalArgumentException("argument <nameSpace> is blank");
 		}
 
 		if ( code == null ) {
 			throw new IllegalArgumentException("argument <code> is null");
 		}
 
-		if ( code.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <code> is empty");
+		if ( code.isBlank() ) {
+			throw new IllegalArgumentException("argument <code> is blank");
 		}
 
 		return getCommodityByQualifIDStr(nameSpace + GCshCmdtyID.SEPARATOR + code);
@@ -145,8 +145,8 @@ public class FileCommodityManager {
 			throw new IllegalArgumentException("argument <code> is null");
 		}
 
-		if ( code.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <code> is empty");
+		if ( code.isBlank() ) {
+			throw new IllegalArgumentException("argument <code> is blank");
 		}
 
 		return getCommodityByQualifIDStr(exch.toString() + GCshCmdtyID.SEPARATOR + code);
@@ -161,8 +161,8 @@ public class FileCommodityManager {
 			throw new IllegalArgumentException("argument <code> is null");
 		}
 
-		if ( code.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <code> is empty");
+		if ( code.isBlank() ) {
+			throw new IllegalArgumentException("argument <code> is blank");
 		}
 
 		return getCommodityByQualifIDStr(mic.toString() + GCshCmdtyID.SEPARATOR + code);
@@ -177,8 +177,8 @@ public class FileCommodityManager {
 			throw new IllegalArgumentException("argument <code> is null");
 		}
 
-		if ( code.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <code> is empty");
+		if ( code.isBlank() ) {
+			throw new IllegalArgumentException("argument <code> is blank");
 		}
 
 		return getCommodityByQualifIDStr(secIdType.toString() + GCshCmdtyID.SEPARATOR + code);
@@ -189,8 +189,8 @@ public class FileCommodityManager {
 			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
 		}
 
-		if ( cmdtyIDStr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
+		if ( cmdtyIDStr.isBlank() ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is blank");
 		}
 
 		if ( cmdtyMap == null ) {
@@ -211,8 +211,8 @@ public class FileCommodityManager {
 			throw new IllegalArgumentException("argument <xCode> is null");
 		}
 
-		if ( xCode.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <xCode> is empty");
+		if ( xCode.isBlank() ) {
+			throw new IllegalArgumentException("argument <xCode> is blank");
 		}
 
 		if ( cmdtyMap == null || xCodeMap == null ) {
@@ -248,8 +248,8 @@ public class FileCommodityManager {
 			throw new IllegalArgumentException("argument <expr> is null");
 		}
 
-		if ( expr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <expr> is empty");
+		if ( expr.isBlank() ) {
+			throw new IllegalArgumentException("argument <expr> is blank");
 		}
 
 		if ( cmdtyMap == null ) {
@@ -264,8 +264,8 @@ public class FileCommodityManager {
 			throw new IllegalArgumentException("argument <expr> is null");
 		}
 
-		if ( expr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <expr> is empty");
+		if ( expr.isBlank() ) {
+			throw new IllegalArgumentException("argument <expr> is blank");
 		}
 
 		if ( cmdtyMap == null ) {
@@ -300,8 +300,8 @@ public class FileCommodityManager {
 			throw new IllegalArgumentException("argument <expr> is null");
 		}
 
-		if ( expr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <expr> is empty");
+		if ( expr.isBlank() ) {
+			throw new IllegalArgumentException("argument <expr> is blank");
 		}
 
 		if ( cmdtyMap == null ) {

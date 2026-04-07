@@ -48,8 +48,8 @@ public class GCshWritableTaxTableEntryImpl extends GCshTaxTableEntryImpl
 			throw new IllegalArgumentException("argument <typeStr> is null");
 		}
 
-		if ( typeStr.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <typeStr> is empty");
+		if ( typeStr.isBlank() ) {
+			throw new IllegalArgumentException("argument <typeStr> is blank");
 		}
 
 		getJwsdpPeer().setTteType(typeStr);

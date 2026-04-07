@@ -227,8 +227,8 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 
-		if ( name.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 
 		String oldName = getName();
@@ -290,7 +290,7 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
 		}
 
 		// Caution: empty string are allowed here
-//		if ( notes.trim().length() == 0 ) {
+//		if ( notes.isBlank() ) {
 //	    	throw new IllegalArgumentException("argument <nts> is null");
 //		}
 

@@ -246,8 +246,8 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
 			throw new IllegalArgumentException("argument <symb> is null");
 		}
 
-		if ( symb.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <symb> is empty");
+		if ( symb.isBlank() ) {
+			throw new IllegalArgumentException("argument <symb> is blank");
 		}
 
 		try {
@@ -263,8 +263,8 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
 			throw new IllegalArgumentException("argument <xCode> is null");
 		}
 
-		if ( xCode.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <xCode> is empty");
+		if ( xCode.isBlank() ) {
+			throw new IllegalArgumentException("argument <xCode> is blank");
 		}
 
 		getJwsdpPeer().setCmdtyXcode(xCode);
@@ -277,8 +277,8 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 
-		if ( name.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 
 		getJwsdpPeer().setCmdtyName(name);

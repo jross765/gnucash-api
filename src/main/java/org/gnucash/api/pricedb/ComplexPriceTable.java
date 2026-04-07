@@ -70,8 +70,8 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
 		}
 
-		if ( cmdtyIDStr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
+		if ( cmdtyIDStr.isBlank() ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is blank");
 		}
 		
 		if ( factor == null ) {
@@ -97,8 +97,8 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
 		}
 
-		if ( cmdtyIDStr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
+		if ( cmdtyIDStr.isBlank() ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is blank");
 		}
 		
 		if ( factor == null ) {
@@ -251,16 +251,16 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <nameSpace> is null");
 		}
 
-		if ( nameSpace.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <nameSpace> is empty");
+		if ( nameSpace.isBlank() ) {
+			throw new IllegalArgumentException("argument <nameSpace> is blank");
 		}
 
 		if ( code == null ) {
 			throw new IllegalArgumentException("argument <code> is null");
 		}
 
-		if ( code.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <code> is empty");
+		if ( code.isBlank() ) {
+			throw new IllegalArgumentException("argument <code> is blank");
 		}
 
 		if ( nameSpace.equals( GCshCmdtyNameSpace.CURRENCY ) ) {
@@ -314,16 +314,16 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <nameSpace> is null");
 		}
 
-		if ( nameSpace.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <nameSpace> is empty");
+		if ( nameSpace.isBlank() ) {
+			throw new IllegalArgumentException("argument <nameSpace> is blank");
 		}
 
 		if ( code == null ) {
 			throw new IllegalArgumentException("argument <code> is null");
 		}
 
-		if ( code.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <code> is empty");
+		if ( code.isBlank() ) {
+			throw new IllegalArgumentException("argument <code> is blank");
 		}
 		
 		if ( nameSpace.equals( GCshCmdtyNameSpace.CURRENCY ) ) {
@@ -387,16 +387,16 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <nameSpace> is null");
 		}
 
-		if ( nameSpace.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <nameSpace> is empty");
+		if ( nameSpace.isBlank() ) {
+			throw new IllegalArgumentException("argument <nameSpace> is blank");
 		}
 		
 		if ( code == null ) {
 			throw new IllegalArgumentException("argument <code> is null");
 		}
 
-		if ( code.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <code> is empty");
+		if ( code.isBlank() ) {
+			throw new IllegalArgumentException("argument <code> is blank");
 		}
 		
 		GCshCmdtyID cmdtyID = new GCshCmdtyID(nameSpace, code);
@@ -409,8 +409,8 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <cmdtyCurrIDStr> is null");
 		}
 
-		if ( cmdtyCurrIDStr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyCurrIDStr> is empty");
+		if ( cmdtyCurrIDStr.isBlank() ) {
+			throw new IllegalArgumentException("argument <cmdtyCurrIDStr> is blank");
 		}
 
 		GCshCmdtyID cmdtyID = GCshCmdtyID.parse(cmdtyCurrIDStr);
@@ -522,16 +522,16 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <nameSpace> is null");
 		}
 
-		if ( nameSpace.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <nameSpace> is empty");
+		if ( nameSpace.isBlank() ) {
+			throw new IllegalArgumentException("argument <nameSpace> is blank");
 		}
 		
 		if ( code == null ) {
 			throw new IllegalArgumentException("argument <code> is null");
 		}
 
-		if ( code.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <code> is empty");
+		if ( code.isBlank() ) {
+			throw new IllegalArgumentException("argument <code> is blank");
 		}
 		
 		GCshCmdtyID cmdtyCurrID = new GCshCmdtyID(nameSpace, code);
@@ -544,8 +544,8 @@ public class ComplexPriceTable implements Serializable {
 			throw new IllegalArgumentException("argument <cmdtyIDStr> is null");
 		}
 
-		if ( cmdtyIDStr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <cmdtyIDStr> is empty");
+		if ( cmdtyIDStr.isBlank() ) {
+			throw new IllegalArgumentException("argument <cmdtyIDStr> is blank");
 		}
 		
 		GCshCmdtyID cmdtyID = GCshCmdtyID.parse(cmdtyIDStr);

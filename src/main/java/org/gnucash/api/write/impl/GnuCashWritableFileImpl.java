@@ -356,8 +356,8 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalArgumentException("argument <type> is null");
 		}
 	
-		if ( type.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <type> is empty");
+		if ( type.isBlank() ) {
+			throw new IllegalArgumentException("argument <type> is blank");
 		}
 
 		if ( val < 0 ) {
@@ -386,8 +386,8 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalArgumentException("argument <type> is null");
 		}
 
-		if ( type.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <type> is empty");
+		if ( type.isBlank() ) {
+			throw new IllegalArgumentException("argument <type> is blank");
 		}
 		
 		incrementCountDataForCore(type, 1);
@@ -405,8 +405,8 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalArgumentException("argument <type> is null");
 		}
 
-		if ( type.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <type> is empty");
+		if ( type.isBlank() ) {
+			throw new IllegalArgumentException("argument <type> is blank");
 		}
 		
 		incrementCountDataForCore(type, -1);
@@ -417,8 +417,8 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalArgumentException("argument <type> is null");
 		}
 
-		if ( type.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <type> is empty");
+		if ( type.isBlank() ) {
+			throw new IllegalArgumentException("argument <type> is blank");
 		}
 		
 		// 1) Search for existing
@@ -1864,16 +1864,16 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalArgumentException("argument <pCmdtySpace> is null");
 		}
 
-		if ( pCmdtySpace.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <pCmdtySpace> is empty");
+		if ( pCmdtySpace.isBlank() ) {
+			throw new IllegalArgumentException("argument <pCmdtySpace> is blank");
 		}
 
 		if ( pCmdtyID == null ) {
 			throw new IllegalArgumentException("argument <pCmdtyID> is null");
 		}
 		
-		if ( pCmdtyID.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <pCmdtyID> is empty");
+		if ( pCmdtyID.isBlank() ) {
+			throw new IllegalArgumentException("argument <pCmdtyID> is blank");
 		}
 
 		if ( conversionFactor == null ) {
@@ -1888,8 +1888,8 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			throw new IllegalArgumentException("argument <pCmdtyName> is null");
 		}
 		
-		if ( pCmdtyName.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <pCmdtyName> is empty");
+		if ( pCmdtyName.isBlank() ) {
+			throw new IllegalArgumentException("argument <pCmdtyName> is blank");
 		}
 		
 		if ( getCurrencyTable().getConversionFactor(pCmdtySpace, pCmdtyID) == null ) {

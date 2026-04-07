@@ -93,8 +93,8 @@ public class FileVendorManager {
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 		
-		if ( name.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 		
 		return getVendorsByName(name, true);
@@ -105,8 +105,8 @@ public class FileVendorManager {
 			throw new IllegalArgumentException("argument <expr> is null");
 		}
 		
-		if ( expr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <expr> is empty");
+		if ( expr.isBlank() ) {
+			throw new IllegalArgumentException("argument <expr> is blank");
 		}
 		
 		if ( vendMap == null ) {
@@ -136,8 +136,8 @@ public class FileVendorManager {
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 		
-		if ( name.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 		
 		List<GnuCashVendor> vendList = getVendorsByName(name);

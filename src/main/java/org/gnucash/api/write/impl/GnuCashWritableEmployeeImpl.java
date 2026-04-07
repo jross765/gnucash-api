@@ -209,8 +209,8 @@ public class GnuCashWritableEmployeeImpl extends GnuCashEmployeeImpl
 			throw new IllegalArgumentException("argument <numStr> is null");
 		}
 
-		if ( numStr.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <numStr> is empty");
+		if ( numStr.isBlank() ) {
+			throw new IllegalArgumentException("argument <numStr> is blank");
 		}
 
 		String oldNumber = getNumber();
@@ -229,8 +229,8 @@ public class GnuCashWritableEmployeeImpl extends GnuCashEmployeeImpl
 			throw new IllegalArgumentException("argument <userName> is null");
 		}
 
-		if ( userName.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <userName> is empty");
+		if ( userName.isBlank() ) {
+			throw new IllegalArgumentException("argument <userName> is blank");
 		}
 
 		String oldUserName = getUserName();

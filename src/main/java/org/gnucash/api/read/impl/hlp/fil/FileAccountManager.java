@@ -167,8 +167,8 @@ public class FileAccountManager {
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 
-		if ( name.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 
 		return getAccountsByName(name, true, true);
@@ -179,8 +179,8 @@ public class FileAccountManager {
 			throw new IllegalArgumentException("argument <expr> is null");
 		}
 
-		if ( expr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <expr> is empty");
+		if ( expr.isBlank() ) {
+			throw new IllegalArgumentException("argument <expr> is blank");
 		}
 
 		if ( acctMap == null ) {
@@ -224,8 +224,8 @@ public class FileAccountManager {
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 
-		if ( name.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 
 		List<GnuCashAccount> acctList = getAccountsByName(name, qualif, false);
@@ -248,8 +248,8 @@ public class FileAccountManager {
 			throw new IllegalArgumentException("argument <nameRegEx> is null");
 		}
 		
-		if ( nameRegEx.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <nameRegEx> is empty");
+		if ( nameRegEx.isBlank() ) {
+			throw new IllegalArgumentException("argument <nameRegEx> is blank");
 		}
 
 		if ( acctMap == null ) {
@@ -290,8 +290,8 @@ public class FileAccountManager {
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 
-		if ( name.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 
 		GnuCashAccount retval = getAccountByID(acctID);
@@ -320,8 +320,8 @@ public class FileAccountManager {
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 
-		if ( name.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 
 		GnuCashAccount retval = getAccountByID(acctID);
@@ -351,8 +351,8 @@ public class FileAccountManager {
 			throw new IllegalArgumentException("argument <expr> is null");
 		}
 
-		if ( expr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <expr> is empty");
+		if ( expr.isBlank() ) {
+			throw new IllegalArgumentException("argument <expr> is blank");
 		}
 
 		List<GnuCashAccount> result = new ArrayList<GnuCashAccount>();

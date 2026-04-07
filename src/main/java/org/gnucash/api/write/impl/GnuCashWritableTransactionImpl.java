@@ -306,8 +306,8 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
             throw new IllegalArgumentException("argument <numStr> is null");
         }
     
-        if ( numStr.trim().length() == 0 ) {
-            throw new IllegalArgumentException("argument <numStr> is empty");
+        if ( numStr.isBlank() ) {
+            throw new IllegalArgumentException("argument <numStr> is blank");
         }
     
         String old = getJwsdpPeer().getTrnNum();
@@ -368,8 +368,8 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 		}
 
 		// Caution: empty string allowed here
-//		if ( descr.trim().length() == 0 ) {
-//	    	throw new IllegalArgumentException("argument <descr> is empty");
+//		if ( descr.isBlank() ) {
+//	    	throw new IllegalArgumentException("argument <descr> is blank");
 //		}
 
 		String old = getJwsdpPeer().getTrnDescription();

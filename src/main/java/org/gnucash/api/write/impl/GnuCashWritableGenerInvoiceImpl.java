@@ -2636,8 +2636,8 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 			throw new IllegalArgumentException("argument <dateStr> is null");
 		}
 
-		if ( dateStr.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <dateStr> is empty");
+		if ( dateStr.isBlank() ) {
+			throw new IllegalArgumentException("argument <dateStr> is blank");
 		}
 
 		setDateOpened(LocalDate.parse(dateStr, DATE_OPENED_FORMAT));
@@ -2672,8 +2672,8 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 			throw new IllegalArgumentException("argument <dateStr> is null");
 		}
 
-		if ( dateStr.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <dateStr> is empty");
+		if ( dateStr.isBlank() ) {
+			throw new IllegalArgumentException("argument <dateStr> is blank");
 		}
 
 		setDatePosted(LocalDate.parse(dateStr, DATE_OPENED_FORMAT));
@@ -2686,7 +2686,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 			throw new IllegalArgumentException("argument <numStr> is null");
 		}
 
-		if ( numStr.trim().length() == 0 ) {
+		if ( numStr.isBlank() ) {
 			throw new IllegalArgumentException("argument <dateStr> is null");
 		}
 
@@ -2702,8 +2702,8 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 		}
 
 		// Caution: empty string allowed here
-//		if ( descr.trim().length() == 0 ) {
-//	   		throw new IllegalArgumentException("argument <descr> is empty");
+//		if ( descr.isBlank() ) {
+//	   		throw new IllegalArgumentException("argument <descr> is blank");
 //		}
 
 		// Sic, changing description is uncritical:

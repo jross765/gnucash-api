@@ -309,8 +309,8 @@ public abstract class GnuCashWritableGenerJobImpl extends GnuCashGenerJobImpl
 			throw new IllegalArgumentException("argument <jobNum> is null");
 		}
 
-		if ( jobNum.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <jobNum> is empty");
+		if ( jobNum.isBlank() ) {
+			throw new IllegalArgumentException("argument <jobNum> is blank");
 		}
 
 		GnuCashGenerJob otherJob = getWritableGnuCashFile().getWritableGenerJobByNumber(jobNum);
@@ -342,8 +342,8 @@ public abstract class GnuCashWritableGenerJobImpl extends GnuCashGenerJobImpl
 			throw new IllegalArgumentException("argument <jobName> is null");
 		}
 
-		if ( jobName.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <jobName> is empty");
+		if ( jobName.isBlank() ) {
+			throw new IllegalArgumentException("argument <jobName> is blank");
 		}
 
 		String oldJobName = getJwsdpPeer().getJobName();

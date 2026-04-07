@@ -509,7 +509,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 			throw new IllegalArgumentException("null string given");
 		}
 
-//		if ( s.trim().equals("") ) {
+//		if ( s.isBlank() ) {
 //			throw new IllegalArgumentException("empty string given");
 //		}
 

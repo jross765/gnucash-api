@@ -42,21 +42,21 @@ public class HasWritableUserDefinedAttributesImpl extends HasUserDefinedAttribut
 		if ( type == null )
 			throw new IllegalArgumentException("argument <type> is null");
 		
-		if ( type.trim().length() == 0 )
-			throw new IllegalArgumentException("argument <type> is empty");
+		if ( type.isBlank() )
+			throw new IllegalArgumentException("argument <type> is blank");
 		
 		if ( name == null )
 			throw new IllegalArgumentException("argument <name> is null");
 		
-		if ( name.trim().length() == 0 )
-			throw new IllegalArgumentException("argument <vend> is empty");
+		if ( name.isBlank() )
+			throw new IllegalArgumentException("argument <vend> is blank");
 
 		if ( value == null )
 			throw new IllegalArgumentException("argument <value> is null");
 		
 		// CAUTION: Yes, that's valid
-//		if ( value.trim().length() == 0 )
-//			throw new IllegalArgumentException("argument <value> is empty");
+//		if ( value.isBlank() )
+//			throw new IllegalArgumentException("argument <value> is blank");
 		
 		// This makes sure that the slots list is initialized
 		// in case it had has been null.
@@ -79,8 +79,8 @@ public class HasWritableUserDefinedAttributesImpl extends HasUserDefinedAttribut
 		if ( name == null )
 			throw new IllegalArgumentException("argument <name> is null");
 
-		if ( name.trim().length() == 0 )
-			throw new IllegalArgumentException("argument <vend> is empty");
+		if ( name.isBlank() )
+			throw new IllegalArgumentException("argument <vend> is blank");
 
 		// This makes sure that the slots list is initialized
 		// in case it had has been null.
@@ -119,20 +119,20 @@ public class HasWritableUserDefinedAttributesImpl extends HasUserDefinedAttribut
 		if ( type == null )
 			throw new IllegalArgumentException("argument <type> is null");
 		
-		if ( type.trim().length() == 0 )
-			throw new IllegalArgumentException("argument <slotList> is empty");
+		if ( type.isBlank() )
+			throw new IllegalArgumentException("argument <slotList> is blank");
 		
 		if ( name == null )
 			throw new IllegalArgumentException("argument <name> is null");
 		
-		if ( name.trim().length() == 0 )
-			throw new IllegalArgumentException("argument <slotList> is empty");
+		if ( name.isBlank() )
+			throw new IllegalArgumentException("argument <slotList> is blank");
 
 		if ( value == null )
 			throw new IllegalArgumentException("argument <values> is null");
 		
 		// CAUTION: Yes, that's valid
-//		if ( value.trim().length() == 0 )
+//		if ( value.isBlank() )
 //			throw new IllegalArgumentException("argument <value> is null");
 
 		if ( getUserDefinedAttributeKeysCore(slotList).contains(name) )
@@ -164,8 +164,8 @@ public class HasWritableUserDefinedAttributesImpl extends HasUserDefinedAttribut
 		if ( name == null )
 			throw new IllegalArgumentException("argument <name> is null");
 
-		if ( name.trim().length() == 0 )
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() )
+			throw new IllegalArgumentException("argument <name> is blank");
 
 		if ( ! getUserDefinedAttributeKeysCore(slotList).contains(name) )
 			throw new SlotListDoesNotContainKeyException();
@@ -195,14 +195,14 @@ public class HasWritableUserDefinedAttributesImpl extends HasUserDefinedAttribut
 		if ( name == null )
 			throw new IllegalArgumentException("argument <name> is null");
 		
-		if ( name.trim().length() == 0 )
-			throw new IllegalArgumentException("argument <slotList> is empty");
+		if ( name.isBlank() )
+			throw new IllegalArgumentException("argument <slotList> is blank");
 
 		if ( value == null )
 			throw new IllegalArgumentException("argument <value> is null");
 		
 		// CAUTION: Yes, that's valid
-//		if ( value.trim().length() == 0 )
+//		if ( value.isBlank() )
 //			throw new IllegalArgumentException("argument <value> is null");
 		
 		if ( ! getUserDefinedAttributeKeysCore(slotList).contains(name) )

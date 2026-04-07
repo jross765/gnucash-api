@@ -191,8 +191,8 @@ public class GnuCashWritableVendorImpl extends GnuCashVendorImpl
 			throw new IllegalArgumentException("argument <numStr> is null");
 		}
 
-		if ( numStr.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <numStr> is empty");
+		if ( numStr.isBlank() ) {
+			throw new IllegalArgumentException("argument <numStr> is blank");
 		}
 
 		String oldNumber = getNumber();
@@ -214,8 +214,8 @@ public class GnuCashWritableVendorImpl extends GnuCashVendorImpl
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 
-		if ( name.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 
 		String oldName = getName();
@@ -239,8 +239,8 @@ public class GnuCashWritableVendorImpl extends GnuCashVendorImpl
 		}
 
 		// Caution: empty string allowed here
-//		if ( notes.trim().length() == 0 ) {
-//	  	  throw new IllegalArgumentException("argument <nts> is empty");
+//		if ( notes.isBlank() ) {
+//	  	  throw new IllegalArgumentException("argument <nts> is blank");
 //		}
 
 		String oldNotes = getNotes();

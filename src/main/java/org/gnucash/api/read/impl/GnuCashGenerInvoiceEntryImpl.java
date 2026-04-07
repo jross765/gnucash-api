@@ -1376,7 +1376,7 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
     	if ( getActionStr() == null )
     		return null;
     	
-    	if ( getActionStr().trim().length() == 0 )
+    	if ( getActionStr().isBlank() )
     		return null;
 
     	return Action.valueOfff( getActionStr() );

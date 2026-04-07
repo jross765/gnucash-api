@@ -313,8 +313,8 @@ public class GnuCashFileImpl implements GnuCashFile,
 			throw new IllegalArgumentException("argument <type> is null");
 		}
 
-		if ( type.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <type> is empty");
+		if ( type.isBlank() ) {
+			throw new IllegalArgumentException("argument <type> is blank");
 		}
 
 		List<GncCountData> cdList = getRootElement().getGncBook().getGncCountData();

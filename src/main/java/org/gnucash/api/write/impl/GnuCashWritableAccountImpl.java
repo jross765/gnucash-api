@@ -471,8 +471,8 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 
-		if ( name.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 
 		if ( /* getGnuCashFile().getTopAccountIDs().contains(getID() ) || */
@@ -506,8 +506,8 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 			throw new IllegalArgumentException("argument <code> is null");
 		}
 
-		if ( code.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <code> is empty");
+		if ( code.isBlank() ) {
+			throw new IllegalArgumentException("argument <code> is blank");
 		}
 
 		if ( getGnuCashFile().getTopAccountIDs().contains(getID()) ||
@@ -538,8 +538,8 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 			throw new IllegalArgumentException("argument <cmdtyNameSpace> is null");
 		}
 
-		if ( cmdtyNameSpace.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <cmdtyNameSpace> is empty");
+		if ( cmdtyNameSpace.isBlank() ) {
+			throw new IllegalArgumentException("argument <cmdtyNameSpace> is blank");
 		}
 
 		if ( getGnuCashFile().getTopAccountIDs().contains(getID())
@@ -591,7 +591,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 			throw new IllegalArgumentException("argument <currID> is null");
 		}
 
-		if ( currID.trim().length() == 0 ) {
+		if ( currID.isBlank() ) {
 			throw new IllegalArgumentException("argument <currID> is null");
 		}
 
@@ -635,7 +635,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 		}
 
 		// Caution: empty string allowed here
-		// if ( descr.trim().length() == 0 ) {
+		// if ( descr.isBlank() ) {
 		//   throw new IllegalArgumentException("argument <descr> is null");
 		// }
 
@@ -961,16 +961,16 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 
-		if ( name.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 
 		if ( value == null ) {
 			throw new IllegalArgumentException("argument <value> is null");
 		}
 
-		if ( value.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <value> is empty");
+		if ( value.isBlank() ) {
+			throw new IllegalArgumentException("argument <value> is blank");
 		}
 
 		if ( getGnuCashFile().getTopAccountIDs().contains(getID()) ||
@@ -999,8 +999,8 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 
-		if ( name.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 
 		if ( getGnuCashFile().getTopAccountIDs().contains(getID()) ||
@@ -1027,8 +1027,8 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 
-		if ( name.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 
 		if ( getGnuCashFile().getTopAccountIDs().contains(getID()) ||

@@ -318,8 +318,8 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		}
 
 		// Caution: empty string allowed here
-//		if ( descr.trim().length() == 0 ) {
-//		    throw new IllegalArgumentException("argument <descr> is empty");
+//		if ( descr.isBlank() ) {
+//		    throw new IllegalArgumentException("argument <descr> is blank");
 //		}
 
 		String old = getJwsdpPeer().getSplitMemo();
@@ -348,8 +348,8 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 			throw new IllegalArgumentException("argument <actStr> is null");
 		}
 
-		if ( actStr.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <actStr> is empty");
+		if ( actStr.isBlank() ) {
+			throw new IllegalArgumentException("argument <actStr> is blank");
 		}
 
 		String oldActStr = getActionStr();

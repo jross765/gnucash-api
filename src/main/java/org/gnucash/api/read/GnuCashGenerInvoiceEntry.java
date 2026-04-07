@@ -91,8 +91,8 @@ public interface GnuCashGenerInvoiceEntry extends Comparable<GnuCashGenerInvoice
     		if ( code == null )
     			throw new IllegalArgumentException("argument <code> is null");
     		
-    		if ( code.trim().length() == 0 )
-    			throw new IllegalArgumentException("argument <code> is empty");
+    		if ( code.isBlank() )
+    			throw new IllegalArgumentException("argument <code> is blank");
     		
     		this.code = code;
     	}
@@ -131,8 +131,8 @@ public interface GnuCashGenerInvoiceEntry extends Comparable<GnuCashGenerInvoice
       		  throw new IllegalStateException("argument <code> is null");
       	  }
     		
-      	  if ( code.trim().length() == 0 ) {
-      		  throw new IllegalStateException("argument <code> is empty");
+      	  if ( code.isBlank() ) {
+      		  throw new IllegalStateException("argument <code> is blank");
       	  }
     		
       	  for ( Action val : values() ) {
@@ -154,8 +154,8 @@ public interface GnuCashGenerInvoiceEntry extends Comparable<GnuCashGenerInvoice
       		  throw new IllegalArgumentException("argument <lclStr> is null");
       	  }
   		
-      	  if ( lclStr.trim().length() == 0 ) {
-      		  throw new IllegalArgumentException("argument <lclStr> is empty");
+      	  if ( lclStr.isBlank() ) {
+      		  throw new IllegalArgumentException("argument <lclStr> is blank");
       	  }
   		
       	  if ( lcl == null )

@@ -63,8 +63,8 @@ public class GCshWritableAddressImpl extends GCshAddressImpl
     	}
 
 //    	// sic: empty is allowed
-//    	if ( val.trim().length() == 0 ) {
-//    		throw new IllegalArgumentException("argument <val> is empty");
+//    	if ( val.isBlank() ) {
+//    		throw new IllegalArgumentException("argument <val> is blank");
 //    	}
     	
     	getJwsdpPeer().setAddrName(name);
@@ -82,8 +82,8 @@ public class GCshWritableAddressImpl extends GCshAddressImpl
     	}
 
 //    	// sic: empty is allowed
-//    	if ( val.trim().length() == 0 ) {
-//    		throw new IllegalArgumentException("argument <val> is empty");
+//    	if ( val.isBlank() ) {
+//    		throw new IllegalArgumentException("argument <val> is blank");
 //    	}
     	
     	getJwsdpPeer().setAddrAddr1(val);
@@ -101,8 +101,8 @@ public class GCshWritableAddressImpl extends GCshAddressImpl
     	}
 
 //    	// sic: empty is allowed
-//    	if ( val.trim().length() == 0 ) {
-//    		throw new IllegalArgumentException("argument <val> is empty");
+//    	if ( val.isBlank() ) {
+//    		throw new IllegalArgumentException("argument <val> is blank");
 //    	}
     	
     	getJwsdpPeer().setAddrAddr2(val);
@@ -120,8 +120,8 @@ public class GCshWritableAddressImpl extends GCshAddressImpl
     	}
 
 //    	// sic: empty is allowed
-//    	if ( val.trim().length() == 0 ) {
-//    		throw new IllegalArgumentException("argument <val> is empty");
+//    	if ( val.isBlank() ) {
+//    		throw new IllegalArgumentException("argument <val> is blank");
 //    	}
     	
     	getJwsdpPeer().setAddrAddr3(val);
@@ -139,8 +139,8 @@ public class GCshWritableAddressImpl extends GCshAddressImpl
     	}
 
 //    	// sic: empty is allowed
-//    	if ( val.trim().length() == 0 ) {
-//    		throw new IllegalArgumentException("argument <val> is empty");
+//    	if ( val.isBlank() ) {
+//    		throw new IllegalArgumentException("argument <val> is blank");
 //    	}
     	
     	getJwsdpPeer().setAddrAddr4(val);
@@ -153,8 +153,8 @@ public class GCshWritableAddressImpl extends GCshAddressImpl
     	}
 
 //    	// sic: empty is allowed
-//    	if ( val.trim().length() == 0 ) {
-//    		throw new IllegalArgumentException("argument <tel> is empty");
+//    	if ( val.isBlank() ) {
+//    		throw new IllegalArgumentException("argument <tel> is blank");
 //    	}
     	
     	getJwsdpPeer().setAddrPhone(tel);
@@ -167,8 +167,8 @@ public class GCshWritableAddressImpl extends GCshAddressImpl
     	}
 
 //    	// sic: empty is allowed
-//    	if ( val.trim().length() == 0 ) {
-//    		throw new IllegalArgumentException("argument <fax> is empty");
+//    	if ( val.isBlank() ) {
+//    		throw new IllegalArgumentException("argument <fax> is blank");
 //    	}
     	
     	getJwsdpPeer().setAddrFax(fax);
@@ -181,8 +181,8 @@ public class GCshWritableAddressImpl extends GCshAddressImpl
     	}
 
 //    	// sic: empty is allowed
-//    	if ( val.trim().length() == 0 ) {
-//    		throw new IllegalArgumentException("argument <eml> is empty");
+//    	if ( val.isBlank() ) {
+//    		throw new IllegalArgumentException("argument <eml> is blank");
 //    	}
     	
     	getJwsdpPeer().setAddrEmail(eml);

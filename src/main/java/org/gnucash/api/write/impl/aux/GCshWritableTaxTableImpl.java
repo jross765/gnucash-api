@@ -42,8 +42,8 @@ public class GCshWritableTaxTableImpl extends GCshTaxTableImpl
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 
-		if ( name.trim().length() == 0 ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 
 		getJwsdpPeer().setTaxtableName(name);

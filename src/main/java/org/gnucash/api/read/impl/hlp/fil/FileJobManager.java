@@ -138,8 +138,8 @@ public class FileJobManager {
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 		
-		if ( name.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 		
 		return getGenerJobsByName(name, true);
@@ -150,8 +150,8 @@ public class FileJobManager {
 			throw new IllegalArgumentException("argument <expr> is null");
 		}
 		
-		if ( expr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( expr.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 		
 		if ( jobMap == null ) {
@@ -181,8 +181,8 @@ public class FileJobManager {
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 		
-		if ( name.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 		
 		List<GnuCashGenerJob> jobList = getGenerJobsByName(name, false);
@@ -231,8 +231,8 @@ public class FileJobManager {
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 		
-		if ( name.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 		
 		return getCustomerJobsByName(name, true);
@@ -243,8 +243,8 @@ public class FileJobManager {
 			throw new IllegalArgumentException("argument <expr> is null");
 		}
 		
-		if ( expr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <expr> is empty");
+		if ( expr.isBlank() ) {
+			throw new IllegalArgumentException("argument <expr> is blank");
 		}
 		
 		if ( jobMap == null ) {
@@ -274,8 +274,8 @@ public class FileJobManager {
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 		
-		if ( name.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 		
 		List<GnuCashCustomerJob> jobList = getCustomerJobsByName(name, false);
@@ -333,8 +333,8 @@ public class FileJobManager {
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 		
-		if ( name.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 		
 		return getVendorJobsByName(name, true);
@@ -345,8 +345,8 @@ public class FileJobManager {
 			throw new IllegalArgumentException("argument <expr> is null");
 		}
 		
-		if ( expr.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <expr> is empty");
+		if ( expr.isBlank() ) {
+			throw new IllegalArgumentException("argument <expr> is blank");
 		}
 		
 		if ( jobMap == null ) {
@@ -376,8 +376,8 @@ public class FileJobManager {
 			throw new IllegalArgumentException("argument <name> is null");
 		}
 		
-		if ( name.trim().equals("") ) {
-			throw new IllegalArgumentException("argument <name> is empty");
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
 		}
 		
 		List<GnuCashVendorJob> jobList = getVendorJobsByName(name, false);
