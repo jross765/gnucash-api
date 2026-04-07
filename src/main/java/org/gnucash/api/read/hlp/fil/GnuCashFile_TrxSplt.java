@@ -11,10 +11,6 @@ import org.gnucash.base.basetypes.simple.aux.GCshLotID;
 
 public interface GnuCashFile_TrxSplt {
 
-    // ::TODO
-    
-	// ---------------------------------------------------------------
-
     /**
      * @param spltID the unique ID of the transaction split to look for
      * @return the transaction split or null if it's not found
@@ -25,12 +21,16 @@ public interface GnuCashFile_TrxSplt {
 
     GnuCashTransactionSplit getTransactionSplitByAcctIDAndTrxID(GCshAcctID acctID, GCshTrxID trxID);
 
+	// ---------------------------------------------------------------
+
     /**
      * @param acctLotID 
      * @return list of all transaction splits (ro-objects)
      *   referencing the given account lot ID (not account ID!).
      */
     List<GnuCashTransactionSplit> getTransactionSplitsByAccountLotID(GCshLotID acctLotID);
+    
+	// ---------------------------------------------------------------
 
     /**
      * @param cmdtyID 
@@ -38,6 +38,8 @@ public interface GnuCashFile_TrxSplt {
      *   denominated in the given commodity. 
      */
     List<GnuCashTransactionSplit> getTransactionSplitsByCmdtyID(GCshCmdtyID cmdtyID);
+
+	// ---------------------------------------------------------------
 
     /**
      * @return list of all transaction splits (ro-objects)
