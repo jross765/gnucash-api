@@ -42,7 +42,7 @@ public class HasUserDefinedAttributesImpl // implements HasUserDefinedAttributes
 		if ( slotList == null )
 			return null;
 
-		if ( name.equals("") )
+		if ( name.isBlank() )
 			return null;
 
 		// NO:

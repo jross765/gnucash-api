@@ -244,7 +244,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
     	if ( taxTabName == null )
     		throw new IllegalStateException("Tax table name is null");
 	
-    	if ( taxTabName.equals("") ) {
+    	if ( taxTabName.isBlank() ) {
     		// no taxes
     		return createCustInvcEntry(acct, sglUntPrc, qty);
     	} else {
@@ -324,7 +324,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
     	if ( taxTabName == null )
     		throw new IllegalStateException("Tax table name is null");
 	
-    	if ( taxTabName.equals("") ) {
+    	if ( taxTabName.isBlank() ) {
     		// no taxes
     		return createCustInvcEntryRat(acct, sglUntPrc, qty);
     	} else {
@@ -404,7 +404,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 		if ( taxTabName == null )
 			throw new IllegalStateException("Tax table name is null");
 
-		if ( taxTabName.equals("") ) {
+		if ( taxTabName.isBlank() ) {
 			// no taxes
 			return createVendBllEntry(acct, sglUntPrc, qty);
 		} else {
@@ -483,7 +483,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 		if ( taxTabName == null )
 			throw new IllegalStateException("Tax table name is null");
 
-		if ( taxTabName.equals("") ) {
+		if ( taxTabName.isBlank() ) {
 			// no taxes
 			return createVendBllEntryRat(acct, sglUntPrc, qty);
 		} else {
@@ -562,7 +562,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 		if ( taxTabName == null )
 			throw new IllegalStateException("Tax table name is null");
 
-		if ( taxTabName.equals("") ) {
+		if ( taxTabName.isBlank() ) {
 			// no taxes
 			return createEmplVchEntry(acct, sglUntPrc, qty);
 		} else {
@@ -641,7 +641,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 		if ( taxTabName == null )
 			throw new IllegalStateException("Tax table name is null");
 
-		if ( taxTabName.equals("") ) {
+		if ( taxTabName.isBlank() ) {
 			// no taxes
 			return createEmplVchEntryRat(acct, sglUntPrc, qty);
 		} else {
@@ -722,7 +722,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 		if ( taxTabName == null )
 			throw new IllegalStateException("Tax table name is null");
 
-		if ( taxTabName.equals("") ) {
+		if ( taxTabName.isBlank() ) {
 			// no taxes
 			return createJobInvcEntry(acct, sglUntPrc, qty);
 		} else {
@@ -804,7 +804,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 		if ( taxTabName == null )
 			throw new IllegalStateException("Tax table name is null");
 
-		if ( taxTabName.equals("") ) {
+		if ( taxTabName.isBlank() ) {
 			// no taxes
 			return createJobInvcEntryRat(acct, sglUntPrc, qty);
 		} else {

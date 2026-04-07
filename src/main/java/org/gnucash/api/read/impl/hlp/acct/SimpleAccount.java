@@ -110,7 +110,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 		if ( acc == null || 
 			 acc.getID() == getID() ) {
 			if ( getParentAccountID() == null || 
-				 getParentAccountID().equals("") ) {
+				 ! getParentAccountID().isSet() ) {
 				return getName();
 			}
 
