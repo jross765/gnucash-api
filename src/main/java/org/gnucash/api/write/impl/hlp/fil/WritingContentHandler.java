@@ -225,12 +225,11 @@ public class WritingContentHandler implements ContentHandler {
 
 			wrt.write("<" + qName);
 
-			// ::MAGIC
-			if ( qName.equals("gnc_template-transactions") ) {
+			if ( qName.equals("gnc_template-transactions") ) { // ::MAGIC ::CHECK: Is that obsolete? 
 				insideGncTemplateTransactions = true;
 			}
 
-			isTrnDescription = qName.equals("trn_description");
+			isTrnDescription = qName.equals("trn_description"); // ::MAGIC ::CHECK "trn:description"?
 			isGUID = false;
 			isSlotvalueTypeString = false;
 			for ( int i = 0; i < atts.getLength(); i++ ) {

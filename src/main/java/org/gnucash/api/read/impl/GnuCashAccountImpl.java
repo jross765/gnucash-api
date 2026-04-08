@@ -390,7 +390,7 @@ public class GnuCashAccountImpl extends SimpleAccount
     	
     	String hiddenFlag = getUserDefinedAttribute(Const.SLOT_KEY_ACCT_HIDDEN); 
     	if ( hiddenFlag != null ) {
-			if ( hiddenFlag.equals("true")) { // ::MAGIC
+			if ( hiddenFlag.equals(Const.SLOT_VAL_ACCT_HIDDEN)) {
 				return true;
 			} else {
 				return false;

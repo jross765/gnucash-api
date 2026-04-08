@@ -143,8 +143,8 @@ public class GnuCashWritableEmployeeImpl extends GnuCashEmployeeImpl
 
 		// These two have to be set, else GnuCash runs into a parse error
 		{
-			jwsdpEmpl.setEmployeeWorkday("8"); // ::MAGIC
-			jwsdpEmpl.setEmployeeRate("1"); // ::MAGIC
+			jwsdpEmpl.setEmployeeWorkday(Const.EMPL_WORKDAY);
+			jwsdpEmpl.setEmployeeRate(Const.EMPL_RATE);
 		}
 
 		{

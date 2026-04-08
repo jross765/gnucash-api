@@ -2,6 +2,7 @@ package org.gnucash.api;
 
 public class Const {
   
+  public static final String XML_SCHEMA_VERSION = "2";
   public static final String XML_FORMAT_VERSION = "2.0.0";
   public static final String XML_FORMAT_VERSION_PRICEDB = "1";
   
@@ -23,6 +24,7 @@ public class Const {
   public static final String SLOT_KEY_ACCT_PLACEHOLDER          = "placeholder";
   public static final String SLOT_KEY_ACCT_NOTES                = "notes";
   public static final String SLOT_KEY_ACCT_HIDDEN               = "hidden";
+  public static final String SLOT_VAL_ACCT_HIDDEN               = "true";
   public static final String SLOT_KEY_ACCT_RECONCILE_INFO       = "reconcile-info";
   public static final String SLOT_KEY_ACCT_INCLUDE_CHILDREN     = "include-children";
   public static final String SLOT_KEY_ACCT_LAST_DATE            = "last-date";
@@ -67,6 +69,9 @@ public class Const {
   public static final double DIFF_TOLERANCE = 0.005;
 
   // -----------------------------------------------------------------
+
+  public static final String EMPL_WORKDAY       = "8";
+  public static final String EMPL_RATE          = "1";
 
   public static final int CMDTY_FRACTION_DEFAULT = 10000;
   public static final String CMDTY_XCODE_DEFAULT = "DE000000001"; // pseudo-ISIN

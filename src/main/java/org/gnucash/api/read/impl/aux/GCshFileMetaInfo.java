@@ -1,5 +1,6 @@
 package org.gnucash.api.read.impl.aux;
 
+import org.gnucash.api.Const;
 import org.gnucash.api.generated.GncV2;
 import org.gnucash.api.read.impl.GnuCashFileImpl;
 import org.slf4j.Logger;
@@ -26,7 +27,7 @@ public class GCshFileMetaInfo {
 	// ---------------------------------------------------------------
 
 	public String getSchemaVersion() {
-		return "2"; // ::MAGIC
+		return Const.XML_SCHEMA_VERSION;
 	}
 
 	public String getBookVersion() {
