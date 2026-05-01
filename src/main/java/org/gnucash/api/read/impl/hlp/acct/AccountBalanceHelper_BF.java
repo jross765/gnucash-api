@@ -39,12 +39,13 @@ public class AccountBalanceHelper_BF
 		BigFraction balance = BigFraction.ZERO;
 	
 		for ( GnuCashTransactionSplit splt : acct.getTransactionSplits() ) {
-			if ( date != null && 
-				 after != null ) {
+			if ( date != null ) {
 				LocalDateTime startOfDay = date.atStartOfDay();
 				ZonedDateTime startOfDay_zdt = startOfDay.atZone(ZoneId.systemDefault());
 				if ( splt.getTransaction().getDatePosted().isAfter(startOfDay_zdt) ) {
-					after.add(splt);
+					if ( after != null ) {
+						after.add(splt);
+					}
 					continue;
 				}
 			}
