@@ -186,6 +186,7 @@ public class GnuCashWritableEmployeeVoucherImpl extends GnuCashWritableGenerInvo
 	 * 
 	 * @throws TaxTableNotFoundException
 	 */
+	@Deprecated
 	public GnuCashWritableEmployeeVoucherEntry createEntry(
 			final GnuCashAccount acct,
 			final FixedPointNumber singleUnitPrice, 
@@ -201,6 +202,7 @@ public class GnuCashWritableEmployeeVoucherImpl extends GnuCashWritableGenerInvo
 	 * 
 	 * @throws TaxTableNotFoundException
 	 */
+	@Deprecated
 	public GnuCashWritableEmployeeVoucherEntry createEntry(
 			final GnuCashAccount acct,
 			final FixedPointNumber singleUnitPrice, 
@@ -217,6 +219,7 @@ public class GnuCashWritableEmployeeVoucherImpl extends GnuCashWritableGenerInvo
 	 * @return an entry using the given Tax-Table
 	 * @throws TaxTableNotFoundException
 	 */
+	@Deprecated
 	public GnuCashWritableEmployeeVoucherEntry createEntry(
 			final GnuCashAccount acct,
 			final FixedPointNumber singleUnitPrice, 
@@ -224,6 +227,55 @@ public class GnuCashWritableEmployeeVoucherImpl extends GnuCashWritableGenerInvo
 			final GCshTaxTable taxTab)
 			throws TaxTableNotFoundException {
 		GnuCashWritableEmployeeVoucherEntry entry = createEmplVchEntry(acct, singleUnitPrice, quantity, taxTab);
+		LOGGER.info("createEntry: Created employee voucher entry: " + entry.getID());
+		return entry;
+	}
+
+	// -----------------------------------------------------------
+
+	/**
+	 * create and add a new entry.
+	 * 
+	 * @throws TaxTableNotFoundException
+	 */
+	public GnuCashWritableEmployeeVoucherEntry createEntry(
+			final GnuCashAccount acct,
+			final BigFraction singleUnitPrice, 
+			final BigFraction quantity)
+			throws TaxTableNotFoundException {
+		GnuCashWritableEmployeeVoucherEntry entry = createEmplVchEntryRat(acct, singleUnitPrice, quantity);
+		return entry;
+	}
+
+	/**
+	 * create and add a new entry.<br/>
+	 * The entry will use the accounts of the SKR03.
+	 * 
+	 * @throws TaxTableNotFoundException
+	 */
+	public GnuCashWritableEmployeeVoucherEntry createEntry(
+			final GnuCashAccount acct,
+			final BigFraction singleUnitPrice, 
+			final BigFraction quantity, 
+			final String taxTabName)
+			throws TaxTableNotFoundException {
+		GnuCashWritableEmployeeVoucherEntry entry = createEmplVchEntryRat(acct, singleUnitPrice, quantity, taxTabName);
+		return entry;
+	}
+
+	/**
+	 * create and add a new entry.<br/>
+	 *
+	 * @return an entry using the given Tax-Table
+	 * @throws TaxTableNotFoundException
+	 */
+	public GnuCashWritableEmployeeVoucherEntry createEntry(
+			final GnuCashAccount acct,
+			final BigFraction singleUnitPrice, 
+			final BigFraction quantity, 
+			final GCshTaxTable taxTab)
+			throws TaxTableNotFoundException {
+		GnuCashWritableEmployeeVoucherEntry entry = createEmplVchEntryRat(acct, singleUnitPrice, quantity, taxTab);
 		LOGGER.info("createEntry: Created employee voucher entry: " + entry.getID());
 		return entry;
 	}
@@ -378,26 +430,31 @@ public class GnuCashWritableEmployeeVoucherImpl extends GnuCashWritableGenerInvo
 	// ---------------------------------------------------------------
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountUnpaidWithTaxes() {
 		return getEmplVchAmountUnpaidWithTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountPaidWithTaxes() {
 		return getEmplVchAmountPaidWithTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountPaidWithoutTaxes() {
 		return getEmplVchAmountPaidWithoutTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountWithTaxes() {
 		return getEmplVchAmountWithTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountWithoutTaxes() {
 		return getEmplVchAmountWithoutTaxes();
 	}

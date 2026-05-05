@@ -66,6 +66,7 @@ public interface GnuCashFile_Prc {
      * @param pCmdtyId    the currency-name
      * @return the latest price-quote in the GnuCash file in EURO
      */
+	@Deprecated
     FixedPointNumber getLatestPrice(GCshCmdtyID cmdtyID);
 
     BigFraction      getLatestPriceRat(GCshCmdtyID cmdtyID);
@@ -73,7 +74,7 @@ public interface GnuCashFile_Prc {
     @Deprecated
     FixedPointNumber getLatestPrice(String nameSpace, String code);
     
-    @Deprecated
+    @Deprecated // sic!
     BigFraction      getLatestPriceRat(String nameSpace, String code);
     
 }

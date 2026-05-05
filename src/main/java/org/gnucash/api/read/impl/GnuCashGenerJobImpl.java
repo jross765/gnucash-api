@@ -145,6 +145,7 @@ public class GnuCashGenerJobImpl extends GnuCashObjectImpl
 	/**
 	 * {@inheritDoc}
 	 */
+    @Deprecated
 	public FixedPointNumber getIncomeGenerated() {
 		return GenerJob_IncOutst_FP.getIncomeGenerated(this);
 	}
@@ -179,6 +180,7 @@ public class GnuCashGenerJobImpl extends GnuCashObjectImpl
 	/**
 	 * {@inheritDoc}
 	 */
+    @Deprecated
 	public FixedPointNumber getOutstandingValue() {
 		return GenerJob_IncOutst_FP.getOutstandingValue(this);
 	}

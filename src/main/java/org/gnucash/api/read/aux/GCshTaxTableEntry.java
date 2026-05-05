@@ -33,6 +33,7 @@ public interface GCshTaxTableEntry {
     /**
      * @return the amount the tax is ("16" for "16%")
      */
+    @Deprecated
     FixedPointNumber getAmount();
 
     BigFraction      getAmountRat();

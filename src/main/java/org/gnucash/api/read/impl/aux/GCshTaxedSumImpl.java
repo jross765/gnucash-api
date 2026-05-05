@@ -1,5 +1,7 @@
 package org.gnucash.api.read.impl.aux;
 
+import org.apache.commons.numbers.fraction.BigFraction;
+
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 /**
@@ -16,12 +18,12 @@ public class GCshTaxedSumImpl {
     /**
      * How much tax it is. 16%=0.16
      */
-    private FixedPointNumber myTaxpercent;
+    private BigFraction      myTaxpercent;
 
     /**
      * The sum of Paid taxes.
      */
-    private FixedPointNumber taxsum;
+    private BigFraction      taxSum;
 
     // -----------------------------------------------------------
 
@@ -31,14 +33,25 @@ public class GCshTaxedSumImpl {
      */
     public GCshTaxedSumImpl(final FixedPointNumber pTaxpercent, final FixedPointNumber pTaxsum) {
     	super();
+    	myTaxpercent = pTaxpercent.toBigFraction();
+    	taxSum = pTaxpercent.toBigFraction();
+    }
+
+    public GCshTaxedSumImpl(final BigFraction pTaxpercent, final BigFraction pTaxsum) {
+    	super();
     	myTaxpercent = pTaxpercent;
-    	taxsum = pTaxsum.copy();
+    	taxSum = pTaxsum;
     }
 
     /**
      * @param taxpercent How much tax it is.
      */
     public GCshTaxedSumImpl(final FixedPointNumber taxpercent) {
+    	super();
+    	myTaxpercent = taxpercent.toBigFraction();
+    }
+
+    public GCshTaxedSumImpl(final BigFraction taxpercent) {
     	super();
     	myTaxpercent = taxpercent;
     }
@@ -50,6 +63,10 @@ public class GCshTaxedSumImpl {
      * @return How much tax it is.
      */
     public FixedPointNumber getTaxpercent() {
+    	return FixedPointNumber.of(myTaxpercent);
+    }
+
+    public BigFraction getTaxpercentRat() {
     	return myTaxpercent;
     }
 
@@ -62,6 +79,14 @@ public class GCshTaxedSumImpl {
 			throw new IllegalArgumentException("negative value '" + taxpercent + "' not allowed for field this.taxpercent");
 		}
 
+		myTaxpercent = taxpercent.toBigFraction();
+    }
+
+    public void setTaxpercent(final BigFraction taxpercent) {
+		if ( taxpercent.doubleValue() < 0.0 ) {
+			throw new IllegalArgumentException("negative value '" + taxpercent + "' not allowed for field this.taxpercent");
+		}
+
 		myTaxpercent = taxpercent;
     }
 
@@ -70,7 +95,11 @@ public class GCshTaxedSumImpl {
      * @return The sum of Paid taxes.
      */
     public FixedPointNumber getTaxsum() {
-    	return taxsum;
+    	return FixedPointNumber.of(taxSum);
+    }
+
+    public BigFraction getTaxsumRat() {
+    	return taxSum;
     }
 
     /**
@@ -78,6 +107,10 @@ public class GCshTaxedSumImpl {
      * @param pTaxsum The sum of Paid taxes.
      */
     public void setTaxsum(final FixedPointNumber pTaxsum) {
-    	taxsum = pTaxsum;
+    	taxSum = pTaxsum.toBigFraction();
+    }
+
+    public void setTaxsum(final BigFraction pTaxsum) {
+    	taxSum = pTaxsum;
     }
 }

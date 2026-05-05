@@ -2,6 +2,7 @@ package org.gnucash.api.write.spec;
 
 import java.time.LocalDate;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashCustomer;
 import org.gnucash.api.read.TaxTableNotFoundException;
@@ -51,11 +52,13 @@ public interface GnuCashWritableCustomerInvoice extends GnuCashWritableGenerInvo
 
     // ---------------------------------------------------------------
 
+    @Deprecated
     GnuCashWritableCustomerInvoiceEntry createEntry(
 	    GnuCashAccount acct, 
 	    FixedPointNumber singleUnitPrice,
 	    FixedPointNumber quantity) throws TaxTableNotFoundException, IllegalTransactionSplitActionException;
 
+    @Deprecated
     GnuCashWritableCustomerInvoiceEntry createEntry(
 	    GnuCashAccount acct, 
 	    FixedPointNumber singleUnitPrice,
@@ -63,10 +66,32 @@ public interface GnuCashWritableCustomerInvoice extends GnuCashWritableGenerInvo
 	    String taxTabName)
 	    throws TaxTableNotFoundException, IllegalTransactionSplitActionException;
 
+    @Deprecated
     GnuCashWritableCustomerInvoiceEntry createEntry(
 	    GnuCashAccount acct, 
 	    FixedPointNumber singleUnitPrice,
 	    FixedPointNumber quantity, 
+	    GCshTaxTable taxTab)
+	    throws TaxTableNotFoundException, IllegalTransactionSplitActionException;
+
+    // ---------------------------------------------------------------
+
+    GnuCashWritableCustomerInvoiceEntry createEntry(
+	    GnuCashAccount acct, 
+	    BigFraction singleUnitPrice,
+	    BigFraction quantity) throws TaxTableNotFoundException, IllegalTransactionSplitActionException;
+
+    GnuCashWritableCustomerInvoiceEntry createEntry(
+	    GnuCashAccount acct, 
+	    BigFraction singleUnitPrice,
+	    BigFraction quantity, 
+	    String taxTabName)
+	    throws TaxTableNotFoundException, IllegalTransactionSplitActionException;
+
+    GnuCashWritableCustomerInvoiceEntry createEntry(
+	    GnuCashAccount acct, 
+	    BigFraction singleUnitPrice,
+	    BigFraction quantity, 
 	    GCshTaxTable taxTab)
 	    throws TaxTableNotFoundException, IllegalTransactionSplitActionException;
 

@@ -4,6 +4,7 @@ import org.gnucash.api.read.GnuCashGenerInvoice;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
+@Deprecated
 public interface GnuCashCustomer_Invc_FP {
 	
     /**
@@ -14,7 +15,8 @@ public interface GnuCashCustomer_Invc_FP {
      * @see #getIncomeGenerated_viaAllJobs()
      *  
      */
-    FixedPointNumber getIncomeGenerated(GnuCashGenerInvoice.ReadVariant readVar);
+    @Deprecated
+	FixedPointNumber getIncomeGenerated(GnuCashGenerInvoice.ReadVariant readVar);
 
     /**
      * @return Returns the sum of payments for invoices to this customer
@@ -22,7 +24,8 @@ public interface GnuCashCustomer_Invc_FP {
      * @see #getIncomeGenerated_viaAllJobs()
      * @see #getIncomeGenerated(org.gnucash.api.read.GnuCashGenerInvoice.ReadVariant)
      */
-    FixedPointNumber getIncomeGenerated_direct();
+    @Deprecated
+	FixedPointNumber getIncomeGenerated_direct();
 
     /**
      * @return Returns the sum of payments for invoices to this customer
@@ -30,7 +33,8 @@ public interface GnuCashCustomer_Invc_FP {
      * @see #getIncomeGenerated_direct()
      * @see #getIncomeGenerated(org.gnucash.api.read.GnuCashGenerInvoice.ReadVariant)
      */
-    FixedPointNumber getIncomeGenerated_viaAllJobs();
+    @Deprecated
+	FixedPointNumber getIncomeGenerated_viaAllJobs();
 
     // -------------------------------------
 
@@ -38,17 +42,20 @@ public interface GnuCashCustomer_Invc_FP {
      * @param readVar 
      * @return the sum of left to pay Unpaid invoiced
      */
-    FixedPointNumber getOutstandingValue(GnuCashGenerInvoice.ReadVariant readVar);
+    @Deprecated
+	FixedPointNumber getOutstandingValue(GnuCashGenerInvoice.ReadVariant readVar);
 
     /**
      * @return the sum of left to pay Unpaid invoiced
      *  
      */
-    FixedPointNumber getOutstandingValue_direct();
+    @Deprecated
+	FixedPointNumber getOutstandingValue_direct();
 
     /**
      * @return the sum of left to pay Unpaid invoiced
      */
-    FixedPointNumber getOutstandingValue_viaAllJobs();
+    @Deprecated
+	FixedPointNumber getOutstandingValue_viaAllJobs();
 
 }

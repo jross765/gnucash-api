@@ -1,5 +1,6 @@
 package org.gnucash.api.write.spec.hlp.fil;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.TaxTableNotFoundException;
 import org.gnucash.api.write.impl.spec.GnuCashWritableEmployeeVoucherImpl;
@@ -9,11 +10,18 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 public interface GnuCashWritableFile_InvcEntr_Empl {
 
+	@Deprecated
     GnuCashWritableEmployeeVoucherEntry createWritableEmployeeVoucherEntry(
 			GnuCashWritableEmployeeVoucherImpl vch,
 			GnuCashAccount account, 
 			FixedPointNumber quantity, 
 			FixedPointNumber price) throws TaxTableNotFoundException;
+
+    GnuCashWritableEmployeeVoucherEntry createWritableEmployeeVoucherEntry(
+			GnuCashWritableEmployeeVoucherImpl vch,
+			GnuCashAccount account, 
+			BigFraction quantity, 
+			BigFraction price) throws TaxTableNotFoundException;
 
     // ----------------------------
 

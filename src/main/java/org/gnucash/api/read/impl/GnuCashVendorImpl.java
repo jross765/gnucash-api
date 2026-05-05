@@ -186,6 +186,7 @@ public class GnuCashVendorImpl extends GnuCashObjectImpl
      * @return the net sum of payments for invoices to this client
      */
     @Override
+    @Deprecated
 	public FixedPointNumber getExpensesGenerated(GnuCashGenerInvoice.ReadVariant readVar) {
 		return Vendor_ExpOutst_FP.getExpensesGenerated(this, readVar);
     }
@@ -194,6 +195,7 @@ public class GnuCashVendorImpl extends GnuCashObjectImpl
      * @return the net sum of payments for invoices to this client
      */
     @Override
+    @Deprecated
 	public FixedPointNumber getExpensesGenerated_direct() {
 		return Vendor_ExpOutst_FP.getExpensesGenerated_direct(this);
     }
@@ -202,6 +204,7 @@ public class GnuCashVendorImpl extends GnuCashObjectImpl
      * @return the net sum of payments for invoices to this client
      */
     @Override
+    @Deprecated
 	public FixedPointNumber getExpensesGenerated_viaAllJobs() {
 		return Vendor_ExpOutst_FP.getExpensesGenerated_viaAllJobs(this);
     }
@@ -265,6 +268,7 @@ public class GnuCashVendorImpl extends GnuCashObjectImpl
      * @see #getOutstandingValue_viaAllJobs()
      */
     @Override
+    @Deprecated
 	public FixedPointNumber getOutstandingValue(GnuCashGenerInvoice.ReadVariant readVar) {
 		return Vendor_ExpOutst_FP.getOutstandingValue(this, readVar);
     }
@@ -275,6 +279,7 @@ public class GnuCashVendorImpl extends GnuCashObjectImpl
      * @see #getOutstandingValue_viaAllJobs()
      */
     @Override
+    @Deprecated
 	public FixedPointNumber getOutstandingValue_direct() {
 		return Vendor_ExpOutst_FP.getOutstandingValue_direct(this);
     }
@@ -285,6 +290,7 @@ public class GnuCashVendorImpl extends GnuCashObjectImpl
      * @see #getOutstandingValue_direct()
      */
     @Override
+    @Deprecated
 	public FixedPointNumber getOutstandingValue_viaAllJobs() {
 		return Vendor_ExpOutst_FP.getOutstandingValue_viaAllJobs(this);
     }

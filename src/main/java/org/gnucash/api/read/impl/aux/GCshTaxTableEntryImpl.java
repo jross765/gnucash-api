@@ -102,6 +102,7 @@ public class GCshTaxTableEntryImpl implements GCshTaxTableEntry {
     /**
      * {@inheritDoc}
      */
+    @Deprecated
     @Override
     public FixedPointNumber getAmount() {
     	return new FixedPointNumber(getJwsdpPeer().getTteAmount());

@@ -71,6 +71,7 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
     /**
      * @see {@link #GnuCashWritableInvoiceEntryImpl(GnuCashWritableGenerInvoiceImpl, GnuCashAccount, FixedPointNumber, FixedPointNumber)}
      */
+    @Deprecated
     protected static GncGncEntry createCustInvoiceEntry_int(
     	    final GnuCashWritableGenerInvoiceImpl invc, // important: NOT GnuCashWritableCustomerInvoiceImpl
     	    final GnuCashAccount acct, 
@@ -80,7 +81,7 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
     										   qty.toGnuCashString(), prc.toGnuCashString());
     }
     
-    protected static GncGncEntry createCustInvoiceEntryRat_int(
+    protected static GncGncEntry createCustInvoiceEntry_int(
     	    final GnuCashWritableGenerInvoiceImpl invc, // important: NOT GnuCashWritableCustomerInvoiceImpl
     	    final GnuCashAccount acct, 
     	    final BigFraction qty, 
@@ -186,6 +187,7 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
     /**
      * @see {@link #GnuCashWritableInvoiceEntryImpl(GnuCashWritableGenerInvoiceImpl, GnuCashAccount, FixedPointNumber, FixedPointNumber)}
      */
+    @Deprecated
     protected static GncGncEntry createVendBillEntry_int(
     	    final GnuCashWritableGenerInvoiceImpl invc, // important: NOT GnuCashWritableVendorBillImpl
     	    final GnuCashAccount acct, 
@@ -298,6 +300,7 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
     /**
      * @see {@link #GnuCashWritableInvoiceEntryImpl(GnuCashWritableGenerInvoiceImpl, GnuCashAccount, FixedPointNumber, FixedPointNumber)}
      */
+    @Deprecated
     protected static GncGncEntry createEmplVchEntry_int(
 	    final GnuCashWritableGenerInvoiceImpl invc, // important: NOT GnuCashWritableEmployeeVoucherImpl
 	    final GnuCashAccount acct, 
@@ -400,6 +403,7 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
     /**
      * @see {@link #GnuCashWritableInvoiceEntryImpl(GnuCashWritableGenerInvoiceImpl, GnuCashAccount, FixedPointNumber, FixedPointNumber)}
      */
+    @Deprecated
     protected static GncGncEntry createJobInvoiceEntry_int(
     	    final GnuCashWritableGenerInvoiceImpl invc, // important: NOT GnuCashWritableJobInvoiceImpl
     	    final GnuCashAccount acct, 
@@ -536,6 +540,7 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
      * @throws TaxTableNotFoundException
      *  
      */
+    @Deprecated
     public GnuCashWritableGenerInvoiceEntryImpl(
 	    final GnuCashWritableGenerInvoiceImpl invoice,
 	    final GnuCashAccount account, 
@@ -549,6 +554,20 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
     	invoice.addRawGenerEntry(this);
     	this.invoice = invoice;
    	}
+
+    public GnuCashWritableGenerInvoiceEntryImpl(
+    	    final GnuCashWritableGenerInvoiceImpl invoice,
+    	    final GnuCashAccount account, 
+    	    final BigFraction quantity, 
+    	    final BigFraction price)
+    	    throws TaxTableNotFoundException {
+        	super(invoice, 
+        		  createCustInvoiceEntry_int(invoice, account, quantity, price), 
+        		  true);
+
+        	invoice.addRawGenerEntry(this);
+        	this.invoice = invoice;
+       	}
 
     public GnuCashWritableGenerInvoiceEntryImpl(final GnuCashGenerInvoiceEntry entry) {
     	super(entry.getGenerInvoice(), entry.getJwsdpPeer(), false); // <-- last one: important!
@@ -933,6 +952,7 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
     /**
      * {@inheritDoc}
      */
+    @Deprecated
     public void setCustInvcPrice(final FixedPointNumber price) throws TaxTableNotFoundException {
 		if ( getType() != GCshOwner.Type.CUSTOMER && 
 			 getType() != GCshOwner.Type.JOB )
@@ -968,7 +988,7 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
 			throw new IllegalStateException("This customer invoice has payments and is not modifiable");
 		}
 
-		FixedPointNumber oldPrice = getCustInvcPrice();
+		BigFraction oldPrice = getCustInvcPriceRat();
 
 		((GnuCashWritableGenerInvoiceImpl) getGenerInvoice()).subtractInvcEntry(this);
 
@@ -988,6 +1008,7 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public void setVendBllPrice(final FixedPointNumber price)
 	    throws TaxTableNotFoundException {
 		if ( getType() != GCshOwner.Type.VENDOR && 
@@ -1026,7 +1047,7 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
 			throw new IllegalStateException("This vendor bill has payments and is not modifiable");
 		}
 
-		FixedPointNumber oldPrice = getVendBllPrice();
+		BigFraction oldPrice = getVendBllPriceRat();
 
 		((GnuCashWritableGenerInvoiceImpl) getGenerInvoice()).subtractBillEntry(this);
 
@@ -1046,6 +1067,7 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public void setEmplVchPrice(final FixedPointNumber price)
 	    throws TaxTableNotFoundException {
 		if ( getType() != GCshOwner.Type.EMPLOYEE && 
@@ -1084,7 +1106,7 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
 			throw new IllegalStateException("This employee voucher has payments and is not modifiable");
 		}
 
-		FixedPointNumber oldPrice = getEmplVchPrice();
+		BigFraction oldPrice = getEmplVchPriceRat();
 
 		((GnuCashWritableGenerInvoiceImpl) getGenerInvoice()).subtractVoucherEntry(this);
 
@@ -1104,6 +1126,7 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public void setJobInvcPrice(final FixedPointNumber price)
 	    throws TaxTableNotFoundException, UnknownInvoiceTypeException {
 		if ( getType() != GCshOwner.Type.JOB )
@@ -1176,6 +1199,7 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
     /**
      * {@inheritDoc}
      */
+    @Deprecated
     public void setQuantity(final FixedPointNumber qty)
 	    throws TaxTableNotFoundException {
     	if ( ! this.getGenerInvoice().isModifiable() ) {

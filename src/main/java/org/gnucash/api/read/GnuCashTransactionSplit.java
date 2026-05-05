@@ -340,6 +340,7 @@ public interface GnuCashTransactionSplit extends Comparable<GnuCashTransactionSp
      * @see #getValueFormatted()
      * @see #getValueFormatted(Locale)
      */
+    @Deprecated
     FixedPointNumber getValue();
 
     BigFraction getValueRat();
@@ -375,6 +376,7 @@ public interface GnuCashTransactionSplit extends Comparable<GnuCashTransactionSp
      * @see #getQuantityFormatted()
      * @see #getQuantityFormatted(Locale)
      */
+    @Deprecated
     FixedPointNumber getQuantity();
 
     /**

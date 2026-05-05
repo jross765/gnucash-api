@@ -2,6 +2,7 @@ package org.gnucash.api.write.spec;
 
 import java.time.LocalDate;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashGenerJob;
 import org.gnucash.api.read.TaxTableNotFoundException;
@@ -73,11 +74,13 @@ public interface GnuCashWritableJobInvoice extends GnuCashWritableGenerInvoice,
 
     // ---------------------------------------------------------------
 
+    @Deprecated
     GnuCashWritableJobInvoiceEntry createEntry(
 	    GnuCashAccount acct, 
 	    FixedPointNumber singleUnitPrice,
 	    FixedPointNumber quantity) throws TaxTableNotFoundException, UnknownInvoiceTypeException, IllegalTransactionSplitActionException;
 
+    @Deprecated
     GnuCashWritableJobInvoiceEntry createEntry(
 	    GnuCashAccount acct, 
 	    FixedPointNumber singleUnitPrice,
@@ -85,10 +88,32 @@ public interface GnuCashWritableJobInvoice extends GnuCashWritableGenerInvoice,
 	    String taxTabName)
 	    throws TaxTableNotFoundException, UnknownInvoiceTypeException, IllegalTransactionSplitActionException;
 
+    @Deprecated
     GnuCashWritableJobInvoiceEntry createEntry(
 	    GnuCashAccount acct, 
 	    FixedPointNumber singleUnitPrice,
 	    FixedPointNumber quantity, 
+	    GCshTaxTable taxTab)
+	    throws TaxTableNotFoundException, UnknownInvoiceTypeException, IllegalTransactionSplitActionException;
+
+    // ---------------------------------------------------------------
+
+    GnuCashWritableJobInvoiceEntry createEntry(
+	    GnuCashAccount acct, 
+	    BigFraction singleUnitPrice,
+	    BigFraction quantity) throws TaxTableNotFoundException, UnknownInvoiceTypeException, IllegalTransactionSplitActionException;
+
+    GnuCashWritableJobInvoiceEntry createEntry(
+	    GnuCashAccount acct, 
+	    BigFraction singleUnitPrice,
+	    BigFraction quantity, 
+	    String taxTabName)
+	    throws TaxTableNotFoundException, UnknownInvoiceTypeException, IllegalTransactionSplitActionException;
+
+    GnuCashWritableJobInvoiceEntry createEntry(
+	    GnuCashAccount acct, 
+	    BigFraction singleUnitPrice,
+	    BigFraction quantity, 
 	    GCshTaxTable taxTab)
 	    throws TaxTableNotFoundException, UnknownInvoiceTypeException, IllegalTransactionSplitActionException;
 

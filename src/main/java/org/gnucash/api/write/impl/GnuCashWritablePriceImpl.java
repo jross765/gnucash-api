@@ -269,6 +269,7 @@ public class GnuCashWritablePriceImpl extends GnuCashPriceImpl
     }
 
     @Override
+    @Deprecated
     public void setValue(FixedPointNumber val) {
 		if ( val == null ) {
 			throw new IllegalArgumentException("argument <val> is null");
@@ -279,14 +280,13 @@ public class GnuCashWritablePriceImpl extends GnuCashPriceImpl
     }
 
 	@Override
-	// ::TODO
 	public void setValue(final BigFraction val) {
 		if ( val == null ) {
 			throw new IllegalArgumentException("argument <val> is null");
 		}
 
-		FixedPointNumber temp = FixedPointNumber.of(val);
-		setValue(temp);
+    	jwsdpPeer.setPriceValue(val.toString());
+    	getWritableGnuCashFile().setModified(true);
 	}
 
     // ---------------------------------------------------------------

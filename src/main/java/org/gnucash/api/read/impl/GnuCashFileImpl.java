@@ -1236,6 +1236,7 @@ public class GnuCashFileImpl implements GnuCashFile,
 	 * {@inheritDoc}
 	 */
 	@Override
+    @Deprecated
 	public FixedPointNumber getLatestPrice(final GCshCmdtyID cmdtyID) {
 		return prcMgr.getLatestPrice(cmdtyID);
 	}

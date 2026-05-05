@@ -107,6 +107,7 @@ public class GnuCashEmployeeVoucherEntryImpl extends GnuCashGenerInvoiceEntryImp
 	// ---------------------------------------------------------------
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getPrice() {
 		return getEmplVchPrice();
 	}
@@ -127,6 +128,7 @@ public class GnuCashEmployeeVoucherEntryImpl extends GnuCashGenerInvoiceEntryImp
 	 * Do not use
 	 */
 	@Override
+	@Deprecated
 	public FixedPointNumber getCustInvcPrice() {
 		throw new WrongInvoiceTypeException();
 	}
@@ -145,6 +147,7 @@ public class GnuCashEmployeeVoucherEntryImpl extends GnuCashGenerInvoiceEntryImp
 	 * Do not use
 	 */
 	@Override
+	@Deprecated
 	public FixedPointNumber getVendBllPrice() {
 		throw new WrongInvoiceTypeException();
 	}
@@ -163,6 +166,7 @@ public class GnuCashEmployeeVoucherEntryImpl extends GnuCashGenerInvoiceEntryImp
 	 * Do not use
 	 */
 	@Override
+	@Deprecated
 	public FixedPointNumber getJobInvcPrice() {
 		throw new WrongInvoiceTypeException();
 	}
@@ -190,6 +194,7 @@ public class GnuCashEmployeeVoucherEntryImpl extends GnuCashGenerInvoiceEntryImp
 	// ----------------------------
 	
 	@Override
+	@Deprecated
 	public FixedPointNumber getApplicableTaxPercent() {
 		return getEmplVchApplicableTaxPercent();
 	}
@@ -207,16 +212,19 @@ public class GnuCashEmployeeVoucherEntryImpl extends GnuCashGenerInvoiceEntryImp
 	// ---------------------------------------------------------------
 	
 	@Override
+	@Deprecated
 	public FixedPointNumber getSum() {
 		return getEmplVchSum();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getSumInclTaxes() {
 		return getEmplVchSumInclTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getSumExclTaxes() {
 		return getEmplVchSumExclTaxes();
 	}

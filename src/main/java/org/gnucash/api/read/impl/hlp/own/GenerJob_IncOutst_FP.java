@@ -7,12 +7,14 @@ import org.slf4j.LoggerFactory;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
+@Deprecated
 public class GenerJob_IncOutst_FP {
 
 	protected static final Logger LOGGER = LoggerFactory.getLogger(GenerJob_IncOutst_FP.class);
 	
 	// ---------------------------------------------------------------
 
+	@Deprecated
 	public static FixedPointNumber getIncomeGenerated(final GnuCashGenerJob job) {
 		FixedPointNumber retval = new FixedPointNumber();
 
@@ -31,6 +33,7 @@ public class GenerJob_IncOutst_FP {
 
 	// ----------------------------
 
+	@Deprecated
 	public static FixedPointNumber getOutstandingValue(final GnuCashGenerJob job) {
 		FixedPointNumber retval = new FixedPointNumber();
 

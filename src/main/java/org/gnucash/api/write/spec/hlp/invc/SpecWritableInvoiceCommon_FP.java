@@ -8,6 +8,7 @@ package org.gnucash.api.write.spec.hlp.invc;
  * @see GnuCashWritableVendorBill
  * @see GnuCashWritableJobInvoice
  */
+@Deprecated
 public interface SpecWritableInvoiceCommon_FP {
 	
 	// ::TODO

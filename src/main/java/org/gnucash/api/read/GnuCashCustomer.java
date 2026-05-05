@@ -70,6 +70,7 @@ public interface GnuCashCustomer extends GnuCashObject,
      *
      * @return The customer-specific discount
      */
+    @Deprecated
     FixedPointNumber getDiscount();
 
     BigFraction      getDiscountRat();
@@ -78,6 +79,7 @@ public interface GnuCashCustomer extends GnuCashObject,
      *
      * @return the customer-specific credit
      */
+    @Deprecated
     FixedPointNumber getCredit();
 
     BigFraction      getCreditRat();

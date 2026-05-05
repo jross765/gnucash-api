@@ -16,11 +16,13 @@ import org.slf4j.LoggerFactory;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
+@Deprecated
 public class GenerInvcEntr_VendBll_FP {
     private static final Logger LOGGER = LoggerFactory.getLogger(GenerInvcEntr_VendBll_FP.class);
 
     // ---------------------------------------------------------------
 
+	@Deprecated
     public static FixedPointNumber getVendBllApplicableTaxPercent(GnuCashGenerInvoiceEntry entr) {
 		if ( entr.getType() != GnuCashGenerInvoice.TYPE_VENDOR && 
 			 entr.getType() != GnuCashGenerInvoice.TYPE_JOB )
@@ -69,6 +71,7 @@ public class GenerInvcEntr_VendBll_FP {
 
     // ---------------------------------------------------------------
 
+	@Deprecated
     public static FixedPointNumber getVendBllPrice(GnuCashGenerInvoiceEntry entr) {
     	if ( entr.getType() != GCshOwner.Type.VENDOR && 
     		 entr.getType() != GCshOwner.Type.JOB )
@@ -79,18 +82,22 @@ public class GenerInvcEntr_VendBll_FP {
 
     // ---------------------------------------------------------------
 
+	@Deprecated
     public static FixedPointNumber getVendBllSum(GnuCashGenerInvoiceEntry entr) {
     	return getVendBllSum_int(entr);
     }
     
+	@Deprecated
     private static FixedPointNumber getVendBllSum_int(GnuCashGenerInvoiceEntry entr) {
     	return getVendBllPrice(entr).multiply(entr.getQuantity());
     }
 
+	@Deprecated
     public static FixedPointNumber getVendBllSumInclTaxes(GnuCashGenerInvoiceEntry entr) {
     	return getVendBllSumInclTaxes_int(entr);
     }
     
+	@Deprecated
     private static FixedPointNumber getVendBllSumInclTaxes_int(GnuCashGenerInvoiceEntry entr) {
     	if ( entr.getJwsdpPeer().getEntryBTaxincluded() == 1 ) {
     		return getVendBllSum_int(entr);
@@ -99,6 +106,7 @@ public class GenerInvcEntr_VendBll_FP {
     	return getVendBllSum_int(entr).multiply(getVendBllApplicableTaxPercent(entr).add(BigDecimal.ONE));
     }
 
+	@Deprecated
     public static FixedPointNumber getVendBllSumExclTaxes(GnuCashGenerInvoiceEntry entr) {
     	// System.err.println("debug: GnuCashInvoiceEntryImpl.getSumExclTaxes():"
     	// taxIncluded="+jwsdpPeer.getEntryITaxincluded()+" getSum()="+getSum()+"

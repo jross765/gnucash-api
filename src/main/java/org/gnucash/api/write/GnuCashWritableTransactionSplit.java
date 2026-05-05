@@ -89,6 +89,7 @@ public interface GnuCashWritableTransactionSplit extends GnuCashTransactionSplit
 	 * @see #getQuantity()
 	 * @see #setQuantity(BigFraction)
 	 */
+	@Deprecated
 	void setQuantity(FixedPointNumber n);
 
 	/**
@@ -110,6 +111,7 @@ public interface GnuCashWritableTransactionSplit extends GnuCashTransactionSplit
 	 * @see #getValue()
 	 * @see #setValue(FixedPointNumber)
 	 */
+	@Deprecated
 	void setValue(FixedPointNumber n);
 
 	void setValue(BigFraction n);

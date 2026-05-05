@@ -222,6 +222,7 @@ public class GnuCashWritableJobInvoiceImpl extends GnuCashWritableGenerInvoiceIm
 	 * @throws TaxTableNotFoundException
 	 * @throws UnknownInvoiceTypeException
 	 */
+	@Deprecated
 	public GnuCashWritableJobInvoiceEntry createEntry(
 			final GnuCashAccount acct, 
 			final FixedPointNumber singleUnitPrice,
@@ -238,6 +239,7 @@ public class GnuCashWritableJobInvoiceImpl extends GnuCashWritableGenerInvoiceIm
 	 * @throws TaxTableNotFoundException
 	 * @throws UnknownInvoiceTypeException
 	 */
+	@Deprecated
 	public GnuCashWritableJobInvoiceEntry createEntry(
 			final GnuCashAccount acct, 
 			final FixedPointNumber singleUnitPrice,
@@ -255,6 +257,7 @@ public class GnuCashWritableJobInvoiceImpl extends GnuCashWritableGenerInvoiceIm
 	 * @throws TaxTableNotFoundException
 	 * @throws UnknownInvoiceTypeException
 	 */
+	@Deprecated
 	public GnuCashWritableJobInvoiceEntry createEntry(
 			final GnuCashAccount acct, 
 			final FixedPointNumber singleUnitPrice,
@@ -262,6 +265,58 @@ public class GnuCashWritableJobInvoiceImpl extends GnuCashWritableGenerInvoiceIm
 			final GCshTaxTable taxTab) throws TaxTableNotFoundException, 
 		UnknownInvoiceTypeException {
 		GnuCashWritableJobInvoiceEntry entry = createJobInvcEntry(acct, singleUnitPrice, quantity, taxTab);
+		LOGGER.info("createEntry: Created job invoice entry: " + entry.getID());
+		return entry;
+	}
+
+	// -----------------------------------------------------------
+
+	/**
+	 * create and add a new entry.
+	 * 
+	 * @throws TaxTableNotFoundException
+	 * @throws UnknownInvoiceTypeException
+	 */
+	public GnuCashWritableJobInvoiceEntry createEntry(
+			final GnuCashAccount acct, 
+			final BigFraction singleUnitPrice,
+			final BigFraction quantity) throws TaxTableNotFoundException,
+			UnknownInvoiceTypeException {
+		GnuCashWritableJobInvoiceEntry entry = createJobInvcEntryRat(acct, singleUnitPrice, quantity);
+		return entry;
+	}
+
+	/**
+	 * create and add a new entry.<br/>
+	 * The entry will use the accounts of the SKR03.
+	 * 
+	 * @throws TaxTableNotFoundException
+	 * @throws UnknownInvoiceTypeException
+	 */
+	public GnuCashWritableJobInvoiceEntry createEntry(
+			final GnuCashAccount acct, 
+			final BigFraction singleUnitPrice,
+			final BigFraction quantity, 
+			final String taxTabName) throws TaxTableNotFoundException, 
+		UnknownInvoiceTypeException {
+		GnuCashWritableJobInvoiceEntry entry = createJobInvcEntryRat(acct, singleUnitPrice, quantity, taxTabName);
+		return entry;
+	}
+
+	/**
+	 * create and add a new entry.<br/>
+	 *
+	 * @return an entry using the given Tax-Table
+	 * @throws TaxTableNotFoundException
+	 * @throws UnknownInvoiceTypeException
+	 */
+	public GnuCashWritableJobInvoiceEntry createEntry(
+			final GnuCashAccount acct, 
+			final BigFraction singleUnitPrice,
+			final BigFraction quantity, 
+			final GCshTaxTable taxTab) throws TaxTableNotFoundException, 
+		UnknownInvoiceTypeException {
+		GnuCashWritableJobInvoiceEntry entry = createJobInvcEntryRat(acct, singleUnitPrice, quantity, taxTab);
 		LOGGER.info("createEntry: Created job invoice entry: " + entry.getID());
 		return entry;
 	}
@@ -482,26 +537,31 @@ public class GnuCashWritableJobInvoiceImpl extends GnuCashWritableGenerInvoiceIm
 	// ---------------------------------------------------------------
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountUnpaidWithTaxes() {
 		return getJobInvcAmountUnpaidWithTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountPaidWithTaxes() {
 		return getJobInvcAmountPaidWithTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountPaidWithoutTaxes() {
 		return getJobInvcAmountPaidWithoutTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountWithTaxes() {
 		return getJobInvcAmountWithTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountWithoutTaxes() {
 		return getJobInvcAmountWithoutTaxes();
 	}

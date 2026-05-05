@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
+@Deprecated
 public class AmountFormatter_FP
 {
 	
@@ -19,6 +20,7 @@ public class AmountFormatter_FP
 	
 	// ---------------------------------------------------------------
 
+	@Deprecated
 	public static String formatAmount(GnuCashFile gcshFile, 
 									  FixedPointNumber amt, GCshCmdtyID cmdtyID) {
 		if ( amt == null ) {
@@ -34,6 +36,7 @@ public class AmountFormatter_FP
 							amt, cmdtyID, lcl);
 	}
 	
+	@Deprecated
 	public static String formatAmount(GnuCashFile gcshFile,
 									  FixedPointNumber amt, GCshCmdtyID cmdtyID, Locale lcl) {
 		if ( amt == null ) {
@@ -74,10 +77,12 @@ public class AmountFormatter_FP
 	
 	// ----------------------------
 
+	@Deprecated
 	public static NumberFormat getCurrencyFormat(GCshCmdtyID cmdtyID) {
 		return getCmdtyFormat(cmdtyID, Locale.getDefault());
 	}
 	
+	@Deprecated
 	public static NumberFormat getCmdtyFormat(GCshCmdtyID cmdtyID, Locale lcl) {
 		NumberFormat fmt = null;
 		

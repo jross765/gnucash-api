@@ -199,6 +199,7 @@ public class GnuCashWritableVendorBillImpl extends GnuCashWritableGenerInvoiceIm
 	 * 
 	 * @throws TaxTableNotFoundException
 	 */
+	@Deprecated
 	public GnuCashWritableVendorBillEntry createEntry(
 			final GnuCashAccount acct, 
 			final FixedPointNumber singleUnitPrice,
@@ -214,6 +215,7 @@ public class GnuCashWritableVendorBillImpl extends GnuCashWritableGenerInvoiceIm
 	 * 
 	 * @throws TaxTableNotFoundException
 	 */
+	@Deprecated
 	public GnuCashWritableVendorBillEntry createEntry(
 			final GnuCashAccount acct, 
 			final FixedPointNumber singleUnitPrice,
@@ -230,6 +232,7 @@ public class GnuCashWritableVendorBillImpl extends GnuCashWritableGenerInvoiceIm
 	 * @return an entry using the given Tax-Table
 	 * @throws TaxTableNotFoundException
 	 */
+	@Deprecated
 	public GnuCashWritableVendorBillEntry createEntry(
 			final GnuCashAccount acct, 
 			final FixedPointNumber singleUnitPrice,
@@ -237,6 +240,55 @@ public class GnuCashWritableVendorBillImpl extends GnuCashWritableGenerInvoiceIm
 			final GCshTaxTable taxTab)
 			throws TaxTableNotFoundException {
 		GnuCashWritableVendorBillEntry entry = createVendBllEntry(acct, singleUnitPrice, quantity, taxTab);
+		LOGGER.info("createEntry: Created vendor bill entry: " + entry.getID());
+		return entry;
+	}
+
+	// -----------------------------------------------------------
+
+	/**
+	 * create and add a new entry.
+	 * 
+	 * @throws TaxTableNotFoundException
+	 */
+	public GnuCashWritableVendorBillEntry createEntry(
+			final GnuCashAccount acct, 
+			final BigFraction singleUnitPrice,
+			final BigFraction quantity)
+			throws TaxTableNotFoundException {
+		GnuCashWritableVendorBillEntry entry = createVendBllEntryRat(acct, singleUnitPrice, quantity);
+		return entry;
+	}
+
+	/**
+	 * create and add a new entry.<br/>
+	 * The entry will use the accounts of the SKR03.
+	 * 
+	 * @throws TaxTableNotFoundException
+	 */
+	public GnuCashWritableVendorBillEntry createEntry(
+			final GnuCashAccount acct, 
+			final BigFraction singleUnitPrice,
+			final BigFraction quantity, 
+			final String taxTabName)
+			throws TaxTableNotFoundException {
+		GnuCashWritableVendorBillEntry entry = createVendBllEntryRat(acct, singleUnitPrice, quantity, taxTabName);
+		return entry;
+	}
+
+	/**
+	 * create and add a new entry.<br/>
+	 *
+	 * @return an entry using the given Tax-Table
+	 * @throws TaxTableNotFoundException
+	 */
+	public GnuCashWritableVendorBillEntry createEntry(
+			final GnuCashAccount acct, 
+			final BigFraction singleUnitPrice,
+			final BigFraction quantity, 
+			final GCshTaxTable taxTab)
+			throws TaxTableNotFoundException {
+		GnuCashWritableVendorBillEntry entry = createVendBllEntryRat(acct, singleUnitPrice, quantity, taxTab);
 		LOGGER.info("createEntry: Created vendor bill entry: " + entry.getID());
 		return entry;
 	}
@@ -389,26 +441,31 @@ public class GnuCashWritableVendorBillImpl extends GnuCashWritableGenerInvoiceIm
 	// ---------------------------------------------------------------
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountUnpaidWithTaxes() {
 		return getVendBllAmountUnpaidWithTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountPaidWithTaxes() {
 		return getVendBllAmountPaidWithTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountPaidWithoutTaxes() {
 		return getVendBllAmountPaidWithoutTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountWithTaxes() {
 		return getVendBllAmountWithTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountWithoutTaxes() {
 		return getVendBllAmountWithoutTaxes();
 	}

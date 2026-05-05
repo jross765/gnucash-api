@@ -1,5 +1,6 @@
 package org.gnucash.api.write.aux;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.aux.GCshTaxTableEntry;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
@@ -50,4 +51,7 @@ public interface GCshWritableTaxTableEntry extends GCshTaxTableEntry {
      * @see #getAmount()
      */
     void setAmount(FixedPointNumber amt);
+
+    void setAmount(BigFraction amt);
+
 }

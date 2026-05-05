@@ -201,6 +201,7 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
     /**
      * @see GnuCashTransactionSplit#getValue()
      */
+    @Deprecated
     public FixedPointNumber getValue() {
     	return new FixedPointNumber(jwsdpPeer.getSplitValue());
     }
@@ -228,6 +229,7 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
     /**
      * @see GnuCashTransactionSplit#getQuantity()
      */
+    @Deprecated
     public FixedPointNumber getQuantity() {
     	return new FixedPointNumber(jwsdpPeer.getSplitQuantity());
     }

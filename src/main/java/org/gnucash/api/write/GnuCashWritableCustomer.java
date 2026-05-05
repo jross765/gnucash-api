@@ -1,5 +1,6 @@
 package org.gnucash.api.write;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.GnuCashCustomer;
 import org.gnucash.api.read.aux.GCshAddress;
 import org.gnucash.api.write.aux.GCshWritableAddress;
@@ -55,6 +56,8 @@ public interface GnuCashWritableCustomer extends GnuCashCustomer,
      */
     void setDiscount(FixedPointNumber discount);
 
+    void setDiscount(BigFraction discount);
+
     /**
      * Sets the customer's credit.
      * 
@@ -63,6 +66,8 @@ public interface GnuCashWritableCustomer extends GnuCashCustomer,
      * #getCredit()
      */
     void setCredit(FixedPointNumber credit);
+
+    void setCredit(BigFraction credit);
 
     /**
      * Sets the customer's notes.

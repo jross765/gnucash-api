@@ -230,6 +230,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
      * @see GnuCashWritableTransactionSplit#setQuantity(FixedPointNumber)
      */
     @Override
+    @Deprecated
     public void setQuantity(final FixedPointNumber quant) {
 		if ( quant == null ) {
 			throw new NullPointerException("argument <quant> is null");
@@ -257,19 +258,39 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		}
     }
 
+    @Override
 	public void setQuantity(final BigFraction quant) {
 		if ( quant == null ) {
 			throw new IllegalArgumentException("argument <quant> is null");
 		}
 
-		FixedPointNumber temp = FixedPointNumber.of(quant);
-		setQuantity(temp);
+		String old = getJwsdpPeer().getSplitQuantity();
+		getJwsdpPeer().setSplitQuantity(quant.toString());
+		((GnuCashWritableFile) getGnuCashFile()).setModified(true);
+		if ( isCurrencyMatching() ) {
+			String oldQuant = getJwsdpPeer().getSplitQuantity();
+			getJwsdpPeer().setSplitQuantity(quant.toString());
+			if ( old == null || ! old.equals(quant.toString()) ) {
+				if ( helper.getPropertyChangeSupport() != null ) {
+					helper
+						.getPropertyChangeSupport()
+						.firePropertyChange("quantity", oldQuant, quant);
+				}
+			}
+		}
+
+		if ( old == null || ! old.equals(quant.toString()) ) {
+			if ( helper.getPropertyChangeSupport() != null ) {
+				helper.getPropertyChangeSupport().firePropertyChange("quantity", new FixedPointNumber(old), quant);
+			}
+		}
 	}
 	
 	/**
 	 * @see GnuCashWritableTransactionSplit#setValue(FixedPointNumber)
 	 */
 	@Override
+	@Deprecated
 	public void setValue(final FixedPointNumber val) {
 		if (val == null) {
 			throw new IllegalArgumentException("argument <val> is null");
@@ -297,14 +318,30 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 	}
 
 	@Override
-	// ::TODO
 	public void setValue(final BigFraction val) {
 		if ( val == null ) {
 			throw new IllegalArgumentException("argument <val> is null");
 		}
 
-		FixedPointNumber temp = FixedPointNumber.of(val);
-		setValue(temp);
+		String old = getJwsdpPeer().getSplitValue();
+		jwsdpPeer.setSplitValue(val.toString());
+		((GnuCashWritableFile) getGnuCashFile()).setModified(true);
+	
+		if ( isCurrencyMatching() ) {
+			String oldValue = getJwsdpPeer().getSplitQuantity();
+			getJwsdpPeer().setSplitValue(val.toString());
+			if ( old == null || ! old.equals(val.toString()) ) {
+				if ( helper.getPropertyChangeSupport() != null ) {
+					helper.getPropertyChangeSupport().firePropertyChange("value", oldValue, val);
+				}
+			}
+		}
+	
+		if ( old == null || ! old.equals(val.toString()) ) {
+			if ( helper.getPropertyChangeSupport() != null ) {
+				helper.getPropertyChangeSupport().firePropertyChange("value", old, val);
+			}
+		}
 	}
 	
     /**

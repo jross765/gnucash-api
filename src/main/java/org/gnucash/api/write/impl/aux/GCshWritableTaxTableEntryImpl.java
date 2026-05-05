@@ -1,5 +1,6 @@
 package org.gnucash.api.write.impl.aux;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.Const;
 import org.gnucash.api.generated.GncGncTaxTable;
 import org.gnucash.api.read.GnuCashAccount;
@@ -89,8 +90,14 @@ public class GCshWritableTaxTableEntryImpl extends GCshTaxTableEntryImpl
     }
 
     @Override
+    @Deprecated
     public void setAmount(final FixedPointNumber amt) {
     	getJwsdpPeer().setTteAmount(amt.toGnuCashString());
+    }
+
+    @Override
+    public void setAmount(final BigFraction amt) {
+    	getJwsdpPeer().setTteAmount(amt.toString());
     }
 
     // ---------------------------------------------------------------

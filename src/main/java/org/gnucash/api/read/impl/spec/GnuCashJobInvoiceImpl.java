@@ -240,26 +240,31 @@ public class GnuCashJobInvoiceImpl extends GnuCashGenerInvoiceImpl
 	// -----------------------------------------------------------------
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountUnpaidWithTaxes() {
 		return getJobInvcAmountUnpaidWithTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountPaidWithTaxes() {
 		return getJobInvcAmountPaidWithTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountPaidWithoutTaxes() {
 		return getJobInvcAmountPaidWithoutTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountWithTaxes() {
 		return getJobInvcAmountWithTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountWithoutTaxes() {
 		return getJobInvcAmountWithoutTaxes();
 	}
@@ -334,30 +339,35 @@ public class GnuCashJobInvoiceImpl extends GnuCashGenerInvoiceImpl
 	// ------------------------------
 
   @Override
+  @Deprecated
   public FixedPointNumber getCustInvcAmountUnpaidWithTaxes() 
   {
     throw new WrongInvoiceTypeException();
   }
 
-  @Override
+  @Override	
+  @Deprecated
   public FixedPointNumber getCustInvcAmountPaidWithTaxes() 
   {
     throw new WrongInvoiceTypeException();
   }
 
   @Override
+  @Deprecated
   public FixedPointNumber getCustInvcAmountPaidWithoutTaxes() 
   {
     throw new WrongInvoiceTypeException();
   }
 
   @Override
+  @Deprecated
   public FixedPointNumber getCustInvcAmountWithTaxes() 
   {
     throw new WrongInvoiceTypeException();
   }
   
   @Override
+  @Deprecated
   public FixedPointNumber getCustInvcAmountWithoutTaxes() 
   {
     throw new WrongInvoiceTypeException();
@@ -398,18 +408,21 @@ public class GnuCashJobInvoiceImpl extends GnuCashGenerInvoiceImpl
   // ------------------------------
 
   @Override
+  @Deprecated
   public FixedPointNumber getVendBllAmountUnpaidWithTaxes() 
   {
     throw new WrongInvoiceTypeException();
   }
 
   @Override
+  @Deprecated
   public FixedPointNumber getVendBllAmountPaidWithTaxes() 
   {
     throw new WrongInvoiceTypeException();
   }
 
   @Override
+  @Deprecated
   public FixedPointNumber getVendBllAmountPaidWithoutTaxes() 
   {
     throw new WrongInvoiceTypeException();
@@ -422,6 +435,7 @@ public class GnuCashJobInvoiceImpl extends GnuCashGenerInvoiceImpl
   }
   
   @Override
+  @Deprecated
   public FixedPointNumber getVendBllAmountWithoutTaxes() 
   {
     throw new WrongInvoiceTypeException();
@@ -462,30 +476,35 @@ public class GnuCashJobInvoiceImpl extends GnuCashGenerInvoiceImpl
   // ------------------------------
 
   @Override
+  @Deprecated
   public FixedPointNumber getEmplVchAmountUnpaidWithTaxes() 
   {
     throw new WrongInvoiceTypeException();
   }
 
   @Override
+  @Deprecated
   public FixedPointNumber getEmplVchAmountPaidWithTaxes() 
   {
     throw new WrongInvoiceTypeException();
   }
 
   @Override
+  @Deprecated
   public FixedPointNumber getEmplVchAmountPaidWithoutTaxes() 
   {
     throw new WrongInvoiceTypeException();
   }
 
   @Override
+  @Deprecated
   public FixedPointNumber getEmplVchAmountWithTaxes() 
   {
     throw new WrongInvoiceTypeException();
   }
   
   @Override
+  @Deprecated
   public FixedPointNumber getEmplVchAmountWithoutTaxes() 
   {
     throw new WrongInvoiceTypeException();

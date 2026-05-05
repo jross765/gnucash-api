@@ -239,6 +239,7 @@ public interface GnuCashGenerInvoiceEntry extends Comparable<GnuCashGenerInvoice
    * @return the number of items of price ${@link #getCustInvcPrice()} and type
    *         ${@link #getAction()}.
    */
+  @Deprecated
   FixedPointNumber getQuantity();
 
   BigFraction      getQuantityRat();

@@ -194,6 +194,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 	/**
      * {@inheritDoc}
      */
+    @Deprecated
     public FixedPointNumber getBalance() {
 		FixedPointNumber fp = new FixedPointNumber();
 
@@ -234,6 +235,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     /**
      * {@inheritDoc}
      */
+    @Deprecated
     public FixedPointNumber getNegatedBalance() {
     	return getBalance().copy().negate();
     }

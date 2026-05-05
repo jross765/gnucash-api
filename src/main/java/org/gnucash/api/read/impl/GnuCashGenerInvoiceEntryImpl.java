@@ -451,6 +451,7 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public FixedPointNumber getCustInvcApplicableTaxPercent() {
     	return getCustInvcApplicableTaxPercent_int();
     }
@@ -458,6 +459,7 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
     // Important separate it from public variant for
     // getJobInvcApplicableTaxPercent().
     // Else, we would have funny effects.
+    @Deprecated
     private FixedPointNumber getCustInvcApplicableTaxPercent_int() {
 		return GenerInvcEntr_CustInvc_FP.getCustInvcApplicableTaxPercent(this);
     }
@@ -486,6 +488,7 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public FixedPointNumber getVendBllApplicableTaxPercent() {
     	return getVendBllApplicableTaxPercent_int();
     }
@@ -493,6 +496,7 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
     // Important separate it from public variant for
     // getJobInvcApplicableTaxPercent().
     // Else, we would have funny effects.
+    @Deprecated
     private FixedPointNumber getVendBllApplicableTaxPercent_int() {
 		return GenerInvcEntr_VendBll_FP.getVendBllApplicableTaxPercent(this);
     }
@@ -520,6 +524,7 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public FixedPointNumber getEmplVchApplicableTaxPercent() {
 		return GenerInvcEntr_EmplVch_FP.getEmplVchApplicableTaxPercent(this);
     }
@@ -528,6 +533,7 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public BigFraction getEmplVchApplicableTaxPercentRat() {
 		return GenerInvcEntr_EmplVch_BF.getEmplVchApplicableTaxPercent(this);
     }
@@ -539,6 +545,7 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      *  
      */
     @Override
+    @Deprecated
     public FixedPointNumber getJobInvcApplicableTaxPercent() {
 		return GenerInvcEntr_JobInvc_FP.getJobInvcApplicableTaxPercent(this);
     }
@@ -616,10 +623,12 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      * @see GnuCashGenerInvoiceEntry#getCustInvcPrice()
      */
     @Override
+    @Deprecated
     public FixedPointNumber getCustInvcPrice() {
     	return getCustInvcPrice_int();
     }
     
+    @Deprecated
     private FixedPointNumber getCustInvcPrice_int() {
     	return GenerInvcEntr_CustInvc_FP.getCustInvcPrice(this);
     }
@@ -644,10 +653,12 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      * @see GnuCashGenerInvoiceEntry#getCustInvcPrice()
      */
     @Override
+    @Deprecated
     public FixedPointNumber getVendBllPrice() {
     	return getVendBllPrice_int();
     }
     
+    @Deprecated
     private FixedPointNumber getVendBllPrice_int() {
     	return GenerInvcEntr_VendBll_FP.getVendBllPrice(this);
     }
@@ -672,6 +683,7 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      * @see GnuCashGenerInvoiceEntry#getCustInvcPrice()
      */
     @Override
+    @Deprecated
     public FixedPointNumber getEmplVchPrice() {
     	return GenerInvcEntr_EmplVch_FP.getEmplVchPrice(this);
     }
@@ -691,6 +703,7 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      * @see GnuCashGenerInvoiceEntry#getCustInvcPrice()
      */
     @Override
+    @Deprecated
     public FixedPointNumber getJobInvcPrice() {
     	return GenerInvcEntr_JobInvc_FP.getJobInvcPrice(this);
     }
@@ -865,10 +878,12 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      * @see GnuCashGenerInvoiceEntry#getCustInvcSum()
      */
     @Override
+    @Deprecated
     public FixedPointNumber getCustInvcSum() {
     	return getCustInvcSum_int();
     }
     
+    @Deprecated
     private FixedPointNumber getCustInvcSum_int() {
     	return GenerInvcEntr_CustInvc_FP.getCustInvcSum(this);
     }
@@ -877,10 +892,12 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      * @see GnuCashGenerInvoiceEntry#getCustInvcSumInclTaxes()
      */
     @Override
+    @Deprecated
     public FixedPointNumber getCustInvcSumInclTaxes() {
     	return getCustInvcSumInclTaxes_int();
     }
     
+    @Deprecated
     private FixedPointNumber getCustInvcSumInclTaxes_int() {
     	return GenerInvcEntr_CustInvc_FP.getCustInvcSumInclTaxes(this);
     }
@@ -889,10 +906,12 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      * @see GnuCashGenerInvoiceEntry#getCustInvcSumExclTaxes()
      */
     @Override
+    @Deprecated
     public FixedPointNumber getCustInvcSumExclTaxes() {
     	return getCustInvcSumExclTaxes_int();
     }
     
+    @Deprecated
     private FixedPointNumber getCustInvcSumExclTaxes_int() {
     	return GenerInvcEntr_CustInvc_FP.getCustInvcSumExclTaxes(this);
     }
@@ -994,10 +1013,12 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      * @see GnuCashGenerInvoiceEntry#getCustInvcSum()
      */
     @Override
+    @Deprecated
     public FixedPointNumber getVendBllSum() {
     	return getVendBllSum_int();
     }
     
+    @Deprecated
     private FixedPointNumber getVendBllSum_int() {
     	return GenerInvcEntr_VendBll_FP.getVendBllSum(this);
     }
@@ -1006,10 +1027,12 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      * @see GnuCashGenerInvoiceEntry#getCustInvcSumInclTaxes()
      */
     @Override
+    @Deprecated
     public FixedPointNumber getVendBllSumInclTaxes() {
     	return getVendBllSumInclTaxes_int();
     }
     
+    @Deprecated
     private FixedPointNumber getVendBllSumInclTaxes_int() {
     	return GenerInvcEntr_VendBll_FP.getVendBllSumInclTaxes(this);
     }
@@ -1018,10 +1041,12 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      * @see GnuCashGenerInvoiceEntry#getCustInvcSumExclTaxes()
      */
     @Override
+    @Deprecated
     public FixedPointNumber getVendBllSumExclTaxes() {
     	return getVendBllSumExclTaxes_int();
     }
     
+    @Deprecated
     private FixedPointNumber getVendBllSumExclTaxes_int() {
     	return GenerInvcEntr_VendBll_FP.getVendBllSumExclTaxes(this);
     }
@@ -1123,6 +1148,7 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      * @see GnuCashGenerInvoiceEntry#getCustInvcSum()
      */
     @Override
+    @Deprecated
     public FixedPointNumber getEmplVchSum() {
     	return GenerInvcEntr_EmplVch_FP.getEmplVchSum(this);
     }
@@ -1131,6 +1157,7 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      * @see GnuCashGenerInvoiceEntry#getCustInvcSumInclTaxes()
      */
     @Override
+    @Deprecated
     public FixedPointNumber getEmplVchSumInclTaxes() {
     	return GenerInvcEntr_EmplVch_FP.getEmplVchSumInclTaxes(this);
     }
@@ -1139,6 +1166,7 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      * @see GnuCashGenerInvoiceEntry#getCustInvcSumExclTaxes()
      */
     @Override
+    @Deprecated
     public FixedPointNumber getEmplVchSumExclTaxes() {
     	return GenerInvcEntr_EmplVch_FP.getEmplVchSumExclTaxes(this);
     }
@@ -1217,6 +1245,7 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      * @see GnuCashGenerInvoiceEntry#getCustInvcSum()
      */
     @Override
+    @Deprecated
     public FixedPointNumber getJobInvcSum() {
 		return GenerInvcEntr_JobInvc_FP.getJobInvcSum(this);
     }
@@ -1225,6 +1254,7 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      * @see GnuCashGenerInvoiceEntry#getCustInvcSumInclTaxes()
      */
     @Override
+    @Deprecated
     public FixedPointNumber getJobInvcSumInclTaxes() {
 		return GenerInvcEntr_JobInvc_FP.getJobInvcSumInclTaxes(this);
     }
@@ -1233,6 +1263,7 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
      * @see GnuCashGenerInvoiceEntry#getCustInvcSumExclTaxes()
      */
     @Override
+    @Deprecated
     public FixedPointNumber getJobInvcSumExclTaxes() {
 		return GenerInvcEntr_JobInvc_FP.getJobInvcSumExclTaxes(this);
     }
@@ -1393,6 +1424,7 @@ public class GnuCashGenerInvoiceEntryImpl extends GnuCashObjectImpl
     /**
      * {@inheritDoc}
      */
+    @Deprecated
     public FixedPointNumber getQuantity() {
     	String val = getJwsdpPeer().getEntryQty();
     	return new FixedPointNumber(val);

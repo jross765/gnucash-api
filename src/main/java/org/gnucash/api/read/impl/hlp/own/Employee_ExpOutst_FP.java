@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
+@Deprecated
 public class Employee_ExpOutst_FP {
     @SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(Employee_ExpOutst_FP.class);
@@ -32,10 +33,12 @@ public class Employee_ExpOutst_FP {
 
     // ---------------------------------------------------------------
 
+	@Deprecated
 	public static FixedPointNumber getExpensesGenerated(final GnuCashEmployee empl) {
     	return getExpensesGenerated_direct(empl);
     }
 
+	@Deprecated
 	public static FixedPointNumber getExpensesGenerated_direct(final GnuCashEmployee empl) {
 		FixedPointNumber retval = new FixedPointNumber();
 
@@ -54,10 +57,12 @@ public class Employee_ExpOutst_FP {
 
     // -------------------------------------
 
+	@Deprecated
 	public static FixedPointNumber getOutstandingValue(GnuCashEmployee empl) {
     	return getOutstandingValue_direct(empl);
     }
 
+	@Deprecated
 	public static FixedPointNumber getOutstandingValue_direct(GnuCashEmployee empl) {
 		FixedPointNumber retval = new FixedPointNumber();
 

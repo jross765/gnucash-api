@@ -144,6 +144,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	// ---------------------------------------------------------------
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getBalance() {
 		return AccountBalanceHelper_FP.getBalance(this);
 	}
@@ -156,6 +157,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	// ---
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getBalance(final LocalDate date) {
 		return AccountBalanceHelper_FP.getBalance(date, this);
 	}
@@ -168,6 +170,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	// ---
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getBalance(final LocalDate date, List<GnuCashTransactionSplit> after) {
 		return AccountBalanceHelper_FP.getBalance(date, after, this);
 	}
@@ -179,6 +182,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	// ---
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getBalance(final LocalDate date, final GCshCmdtyID cmdtyCurrID) {
 		return AccountBalanceHelper_FP.getBalance(date, cmdtyCurrID, this);
 	}
@@ -191,6 +195,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	// ---
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getBalance(final LocalDate date, final GCshSecID cmdtyID) {
 		return AccountBalanceHelper_FP.getBalance(date, cmdtyID, this);
 	}
@@ -203,6 +208,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	// ---
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getBalance(final LocalDate date, final GCshCurrID currID) {
 		return AccountBalanceHelper_FP.getBalance(date, currID, this);
 	}
@@ -215,6 +221,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	// ---
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getBalance(final LocalDate date, final Currency curr) {
 		return AccountBalanceHelper_FP.getBalance(date, curr, this);
 	}
@@ -227,6 +234,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	// ---
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getBalance(final GnuCashTransactionSplit lastSpltIncl) {
 		return AccountBalanceHelper_FP.getBalance(lastSpltIncl, this);
 	}
@@ -263,6 +271,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	// ---
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getBalanceRecursive(final LocalDate date) {
 		return AccountBalanceHelper_FP.getBalanceRecursive(date, this);
 	}
@@ -275,6 +284,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	// ---
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getBalanceRecursive(final LocalDate date, final GCshCmdtyID cmdtyID) {
 		return AccountBalanceHelper_FP.getBalanceRecursive(date, cmdtyID, this);
 	}
@@ -287,6 +297,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	// ---
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getBalanceRecursive(final LocalDate date, final GCshSecID secID) {
 		return AccountBalanceHelper_FP.getBalanceRecursive(date, secID, this);
 	}
@@ -299,6 +310,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	// ---
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getBalanceRecursive(final LocalDate date, final Currency curr) {
 		return AccountBalanceHelper_FP.getBalanceRecursive(date, curr, this);
 	}
@@ -311,6 +323,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	// ---
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getBalanceRecursive(final GnuCashTransactionSplit lastSpltIncl) {
 		return AccountBalanceHelper_FP.getBalanceRecursive(lastSpltIncl, this);
 	}

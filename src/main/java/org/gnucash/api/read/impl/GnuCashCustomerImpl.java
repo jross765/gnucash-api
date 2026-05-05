@@ -117,6 +117,7 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
 	public FixedPointNumber getDiscount() {
     	if ( jwsdpPeer.getCustDiscount() == null ) {
 			return null;
@@ -141,6 +142,7 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
 	public FixedPointNumber getCredit() {
 		if ( jwsdpPeer.getCustCredit() == null ) {
 			return null;
@@ -245,6 +247,7 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      * @see #getIncomeGenerated_viaAllJobs()
      */
     @Override
+    @Deprecated
 	public FixedPointNumber getIncomeGenerated(GnuCashGenerInvoice.ReadVariant readVar) {
 		return Customer_IncOutst_FP.getIncomeGenerated(this, readVar);
     }
@@ -255,6 +258,7 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      * @see #getIncomeGenerated_viaAllJobs()
      */
     @Override
+    @Deprecated
 	public FixedPointNumber getIncomeGenerated_direct() {
 		return Customer_IncOutst_FP.getIncomeGenerated_direct(this);
     }
@@ -265,6 +269,7 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      * @see #getIncomeGenerated_direct()
      */
     @Override
+    @Deprecated
 	public FixedPointNumber getIncomeGenerated_viaAllJobs() {
 		return Customer_IncOutst_FP.getIncomeGenerated_viaAllJobs(this);
     }
@@ -333,6 +338,7 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      * @see #getOutstandingValue_viaAllJobs()
      */
     @Override
+    @Deprecated
 	public FixedPointNumber getOutstandingValue(GnuCashGenerInvoice.ReadVariant readVar) {
 		return Customer_IncOutst_FP.getOutstandingValue(this, readVar);
     }
@@ -343,6 +349,7 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      * @see #getOutstandingValue_viaAllJobs()
      */
     @Override
+    @Deprecated
 	public FixedPointNumber getOutstandingValue_direct() {
 		return Customer_IncOutst_FP.getOutstandingValue_direct(this);
     }
@@ -353,6 +360,7 @@ public class GnuCashCustomerImpl extends GnuCashObjectImpl
      * @see #getOutstandingValue_direct()
      */
     @Override
+    @Deprecated
 	public FixedPointNumber getOutstandingValue_viaAllJobs() {
 		return Customer_IncOutst_FP.getOutstandingValue_viaAllJobs(this);
     }

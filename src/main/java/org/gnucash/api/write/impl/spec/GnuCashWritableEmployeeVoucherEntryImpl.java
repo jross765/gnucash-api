@@ -61,6 +61,7 @@ public class GnuCashWritableEmployeeVoucherEntryImpl extends GnuCashWritableGene
 	 * @param prc    see ${@link GnuCashGenerInvoiceEntry#getEmplVchPrice()}}
 	 * @throws TaxTableNotFoundException
 	 */
+	@Deprecated
 	public GnuCashWritableEmployeeVoucherEntryImpl(
 			final GnuCashWritableEmployeeVoucherImpl vch,
 			final GnuCashAccount acct, 
@@ -164,6 +165,7 @@ public class GnuCashWritableEmployeeVoucherEntryImpl extends GnuCashWritableGene
     // 	---------------------------------------------------------------
 	
 	@Override
+	@Deprecated
 	public void setPrice(final FixedPointNumber prc) throws Exception {
 		setEmplVchPrice(prc);
 	}
@@ -209,6 +211,7 @@ public class GnuCashWritableEmployeeVoucherEntryImpl extends GnuCashWritableGene
 	// ---------------------------------------------------------------
 	
 	@Override
+	@Deprecated
 	public FixedPointNumber getPrice() {
 		return super.getEmplVchPrice();
 	}
@@ -236,11 +239,13 @@ public class GnuCashWritableEmployeeVoucherEntryImpl extends GnuCashWritableGene
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getApplicableTaxPercent() {
 		return super.getEmplVchApplicableTaxPercent();
 	}
 
 	@Override
+	@Deprecated
 	public BigFraction getApplicableTaxPercentRat() {
 		return super.getEmplVchApplicableTaxPercentRat();
 	}
@@ -253,16 +258,19 @@ public class GnuCashWritableEmployeeVoucherEntryImpl extends GnuCashWritableGene
 	// ----------------------------
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getSum() {
 		return super.getEmplVchSum();
 	}
 	
 	@Override
+	@Deprecated
 	public FixedPointNumber getSumInclTaxes() {
 		return super.getEmplVchSumInclTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getSumExclTaxes() {
 		return super.getEmplVchSumExclTaxes();
 	}

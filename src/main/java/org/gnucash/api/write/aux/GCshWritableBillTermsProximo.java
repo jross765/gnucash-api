@@ -1,5 +1,6 @@
 package org.gnucash.api.write.aux;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.aux.GCshBillTermsProximo;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
@@ -34,5 +35,7 @@ public interface GCshWritableBillTermsProximo extends GCshBillTermsProximo {
      * @see #setDiscountDay(Integer)
      */
     void setDiscount(FixedPointNumber dscnt);
+
+    void setDiscount(BigFraction dscnt);
 
 }

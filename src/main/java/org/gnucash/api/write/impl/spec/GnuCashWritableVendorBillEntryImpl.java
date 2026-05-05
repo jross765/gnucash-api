@@ -61,6 +61,7 @@ public class GnuCashWritableVendorBillEntryImpl extends GnuCashWritableGenerInvo
 	 * @param prc    see ${@link GnuCashGenerInvoiceEntry#getVendBllPrice()}}
 	 * @throws TaxTableNotFoundException
 	 */
+	@Deprecated
 	public GnuCashWritableVendorBillEntryImpl(
 			final GnuCashWritableVendorBillImpl bll, 
 			final GnuCashAccount acct,
@@ -164,6 +165,7 @@ public class GnuCashWritableVendorBillEntryImpl extends GnuCashWritableGenerInvo
     // 	---------------------------------------------------------------
 	
 	@Override
+	@Deprecated
 	public void setPrice(final FixedPointNumber prc) throws Exception {
 		setVendBllPrice(prc);
 	}
@@ -209,6 +211,7 @@ public class GnuCashWritableVendorBillEntryImpl extends GnuCashWritableGenerInvo
 	// ---------------------------------------------------------------
 	
 	@Override
+	@Deprecated
 	public FixedPointNumber getPrice() {
 		return super.getVendBllPrice();
 	}
@@ -236,6 +239,7 @@ public class GnuCashWritableVendorBillEntryImpl extends GnuCashWritableGenerInvo
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getApplicableTaxPercent() {
 		return super.getVendBllApplicableTaxPercent();
 	}
@@ -253,16 +257,19 @@ public class GnuCashWritableVendorBillEntryImpl extends GnuCashWritableGenerInvo
 	// ----------------------------
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getSum() {
 		return super.getVendBllSum();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getSumInclTaxes() {
 		return super.getVendBllSumInclTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getSumExclTaxes() {
 		return super.getVendBllSumExclTaxes();
 	}

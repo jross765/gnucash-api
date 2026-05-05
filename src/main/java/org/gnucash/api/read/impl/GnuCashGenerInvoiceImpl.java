@@ -427,10 +427,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * {@inheritDoc}
 	 */
 	@Override
+    @Deprecated
 	public FixedPointNumber getCustInvcAmountUnpaidWithTaxes() {
 		return getCustInvcAmountUnpaidWithTaxes_int();
 	}
 	
+    @Deprecated
 	private FixedPointNumber getCustInvcAmountUnpaidWithTaxes_int() {
 		return GenerInvc_CustInvc_FP.getCustInvcAmountUnpaidWithTaxes(this);
 	}
@@ -439,19 +441,23 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * {@inheritDoc}
 	 */
 	@Override
+    @Deprecated
 	public FixedPointNumber getCustInvcAmountPaidWithTaxes() {
 		return getCustInvcAmountPaidWithTaxes_int();
 	}
 	
+    @Deprecated
 	private FixedPointNumber getCustInvcAmountPaidWithTaxes_int() {
 		return GenerInvc_CustInvc_FP.getCustInvcAmountPaidWithTaxes(this);
 	}
 
 	@Override
+    @Deprecated
 	public FixedPointNumber getCustInvcAmountPaidWithoutTaxes() {
 		return getCustInvcAmountPaidWithoutTaxes_int();
 	}
 	
+    @Deprecated
 	private FixedPointNumber getCustInvcAmountPaidWithoutTaxes_int() {
 		return GenerInvc_CustInvc_FP.getCustInvcAmountPaidWithoutTaxes(this);
 	}
@@ -460,10 +466,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * {@inheritDoc}
 	 */
 	@Override
+    @Deprecated
 	public FixedPointNumber getCustInvcAmountWithTaxes() {
 		return getCustInvcAmountWithTaxes_int();
 	}
 	
+    @Deprecated
 	private FixedPointNumber getCustInvcAmountWithTaxes_int() {
 		return GenerInvc_CustInvc_FP.getCustInvcAmountWithTaxes(this);
 	}
@@ -472,10 +480,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * {@inheritDoc}
 	 */
 	@Override
+    @Deprecated
 	public FixedPointNumber getCustInvcAmountWithoutTaxes() {
 		return getCustInvcAmountWithoutTaxes_int();
 	}
 	
+    @Deprecated
 	private FixedPointNumber getCustInvcAmountWithoutTaxes_int() {
 		return GenerInvc_CustInvc_FP.getCustInvcAmountWithoutTaxes(this);
 	}
@@ -632,10 +642,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * {@inheritDoc}
 	 */
 	@Override
+    @Deprecated
 	public FixedPointNumber getVendBllAmountUnpaidWithTaxes() {
 		return getVendBllAmountUnpaidWithTaxes_int();
 	}
 	
+    @Deprecated
 	private FixedPointNumber getVendBllAmountUnpaidWithTaxes_int() {
 		return GenerInvc_VendBll_FP.getVendBllAmountUnpaidWithTaxes(this);
 	}
@@ -644,19 +656,23 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * {@inheritDoc}
 	 */
 	@Override
+    @Deprecated
 	public FixedPointNumber getVendBllAmountPaidWithTaxes() {
 		return getVendBllAmountPaidWithTaxes_int();
 	}
 	
+    @Deprecated
 	private FixedPointNumber getVendBllAmountPaidWithTaxes_int() {
 		return GenerInvc_VendBll_FP.getVendBllAmountPaidWithTaxes(this);
 	}
 
 	@Override
+    @Deprecated
 	public FixedPointNumber getVendBllAmountPaidWithoutTaxes() {
 		return getVendBllAmountPaidWithoutTaxes_int();
 	}
 	
+    @Deprecated
 	private FixedPointNumber getVendBllAmountPaidWithoutTaxes_int() {
 		return GenerInvc_VendBll_FP.getVendBllAmountPaidWithoutTaxes(this);
 	}
@@ -665,10 +681,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * {@inheritDoc}
 	 */
 	@Override
+    @Deprecated
 	public FixedPointNumber getVendBllAmountWithTaxes() {
 		return getVendBllAmountWithTaxes_int();
 	}
 	
+    @Deprecated
 	private FixedPointNumber getVendBllAmountWithTaxes_int() {
 		return GenerInvc_VendBll_FP.getVendBllAmountWithTaxes(this);
 	}
@@ -677,10 +695,12 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * {@inheritDoc}
 	 */
 	@Override
+    @Deprecated
 	public FixedPointNumber getVendBllAmountWithoutTaxes() {
 		return getVendBllAmountWithoutTaxes_int();
 	}
 	
+    @Deprecated
 	private FixedPointNumber getVendBllAmountWithoutTaxes_int() {
 		return GenerInvc_VendBll_FP.getVendBllAmountWithoutTaxes(this);
 	}
@@ -837,6 +857,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * {@inheritDoc}
 	 */
 	@Override
+    @Deprecated
 	public FixedPointNumber getEmplVchAmountUnpaidWithTaxes() {
 		return GenerInvc_EmplVch_FP.getEmplVchAmountUnpaidWithTaxes(this);
 	}
@@ -845,11 +866,13 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * {@inheritDoc}
 	 */
 	@Override
+    @Deprecated
 	public FixedPointNumber getEmplVchAmountPaidWithTaxes() {
 		return GenerInvc_EmplVch_FP.getEmplVchAmountPaidWithTaxes(this);
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getEmplVchAmountPaidWithoutTaxes() {
 		return GenerInvc_EmplVch_FP.getEmplVchAmountPaidWithoutTaxes(this);
 	}
@@ -858,6 +881,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * {@inheritDoc}
 	 */
 	@Override
+    @Deprecated
 	public FixedPointNumber getEmplVchAmountWithTaxes() {
 		return GenerInvc_EmplVch_FP.getEmplVchAmountWithTaxes(this);
 	}
@@ -866,6 +890,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * {@inheritDoc}
 	 */
 	@Override
+    @Deprecated
 	public FixedPointNumber getEmplVchAmountWithoutTaxes() {
 		return GenerInvc_EmplVch_FP.getEmplVchAmountWithoutTaxes(this);
 	}
@@ -982,6 +1007,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * @return what the customer must still pay (incl. taxes)
 	 */
 	@Override
+    @Deprecated
 	public FixedPointNumber getJobInvcAmountUnpaidWithTaxes() {
 		return GenerInvc_JobInvc_FP.getJobInvcAmountUnpaidWithTaxes(this);
 	}
@@ -990,6 +1016,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * @return what the customer has already pay (incl. taxes)
 	 */
 	@Override
+    @Deprecated
 	public FixedPointNumber getJobInvcAmountPaidWithTaxes() {
 		return GenerInvc_JobInvc_FP.getJobInvcAmountPaidWithTaxes(this);
 	}
@@ -998,6 +1025,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * @return what the customer has already pay (incl. taxes)
 	 */
 	@Override
+    @Deprecated
 	public FixedPointNumber getJobInvcAmountPaidWithoutTaxes() {
 		return GenerInvc_JobInvc_FP.getJobInvcAmountPaidWithoutTaxes(this);
 	}
@@ -1006,6 +1034,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * @return what the customer needs to pay in total (incl. taxes)
 	 */
 	@Override
+    @Deprecated
 	public FixedPointNumber getJobInvcAmountWithTaxes() {
 		return GenerInvc_JobInvc_FP.getJobInvcAmountWithTaxes(this);
 	}
@@ -1014,6 +1043,7 @@ public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
 	 * @return what the customer needs to pay in total (excl. taxes)
 	 */
 	@Override
+    @Deprecated
 	public FixedPointNumber getJobInvcAmountWithoutTaxes() {
 		return GenerInvc_JobInvc_FP.getJobInvcAmountWithoutTaxes(this);
 	}

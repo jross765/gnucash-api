@@ -146,6 +146,7 @@ public interface GnuCashPrice extends Comparable<GnuCashPrice>,
 
     // String getTypeStr();
 
+    @Deprecated
     FixedPointNumber getValue();
     
     BigFraction      getValueRat();

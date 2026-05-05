@@ -103,6 +103,7 @@ public interface GnuCashWritableGenerInvoiceEntry extends GnuCashGenerInvoiceEnt
      * @see #getQuantity()
      * @see #setQuantityRat(BigFraction)
      */
+    @Deprecated
     void setQuantity(FixedPointNumber quantity)
 	    throws TaxTableNotFoundException, IllegalTransactionSplitActionException;
 

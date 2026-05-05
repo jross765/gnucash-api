@@ -61,6 +61,7 @@ public class GnuCashWritableJobInvoiceEntryImpl extends GnuCashWritableGenerInvo
 	 * @param prc    see ${@link GnuCashGenerInvoiceEntry#getJobInvcPrice()}}
 	 * @throws TaxTableNotFoundException
 	 */
+	@Deprecated
 	public GnuCashWritableJobInvoiceEntryImpl(
 			final GnuCashWritableJobInvoiceImpl invc, 
 			final GnuCashAccount acct,
@@ -235,6 +236,7 @@ public class GnuCashWritableJobInvoiceEntryImpl extends GnuCashWritableGenerInvo
 	// ---------------------------------------------------------------
 	
 	@Override
+	@Deprecated
 	public FixedPointNumber getPrice() {
 		return super.getJobInvcPrice();
 	}
@@ -262,6 +264,7 @@ public class GnuCashWritableJobInvoiceEntryImpl extends GnuCashWritableGenerInvo
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getApplicableTaxPercent() {
 		return super.getJobInvcApplicableTaxPercent();
 	}
@@ -279,16 +282,19 @@ public class GnuCashWritableJobInvoiceEntryImpl extends GnuCashWritableGenerInvo
 	// ----------------------------
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getSum() {
 		return super.getJobInvcSum();
 	}
 	
 	@Override
+	@Deprecated
 	public FixedPointNumber getSumInclTaxes() {
 		return super.getJobInvcSumInclTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getSumExclTaxes() {
 		return super.getJobInvcSumExclTaxes();
 	}

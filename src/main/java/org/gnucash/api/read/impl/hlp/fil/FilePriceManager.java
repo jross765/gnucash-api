@@ -221,11 +221,13 @@ public class FilePriceManager {
 
 	// ---------------------------------------------------------------
 
+	@Deprecated
 	public FixedPointNumber getLatestPrice(final GCshCmdtyID cmdtyID) {
 		return PriceHelper_FP.getLatestPrice(cmdtyID, 
 											 gcshFile, priceDB);
 	}
 
+	@Deprecated
 	public FixedPointNumber getLatestPrice(final Currency curr) {
 		return PriceHelper_FP.getLatestPrice(curr, 
 											 gcshFile, priceDB);

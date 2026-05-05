@@ -8,8 +8,8 @@ import org.gnucash.api.read.GnuCashCommodity;
 import org.gnucash.api.read.GnuCashPrice;
 import org.gnucash.api.write.hlp.GnuCashWritableObject;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
-import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
@@ -144,6 +144,7 @@ public interface GnuCashWritablePrice extends GnuCashPrice,
      * 
      * @see #getValue()
      */
+    @Deprecated
     void setValue(FixedPointNumber val);
 
     void setValue(BigFraction val);

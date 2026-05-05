@@ -3,6 +3,7 @@ package org.gnucash.api.write;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashGenerInvoice;
 import org.gnucash.api.read.GnuCashTransaction;
@@ -183,8 +184,13 @@ public interface GnuCashWritableGenerInvoice extends GnuCashGenerInvoice,
      * @throws TaxTableNotFoundException
      * 
      */
+    @Deprecated
     GnuCashWritableGenerInvoiceEntry createGenerEntry(GnuCashAccount acct, FixedPointNumber singleUnitPrice,
 	    FixedPointNumber quantity)
 	    throws TaxTableNotFoundException;
+
+    GnuCashWritableGenerInvoiceEntry createGenerEntry(GnuCashAccount acct, BigFraction singleUnitPrice,
+    		BigFraction quantity)
+    	    throws TaxTableNotFoundException;
 
 }

@@ -190,6 +190,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
      * 
      * @throws TaxTableNotFoundException
      */
+    @Deprecated
     public GnuCashWritableGenerInvoiceEntry createGenerEntry(
 	    final GnuCashAccount acct,
 	    final FixedPointNumber sglUntPrc, 
@@ -206,6 +207,22 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
     	return entry;
     }
     
+    public GnuCashWritableGenerInvoiceEntry createGenerEntry(
+    	    final GnuCashAccount acct,
+    	    final BigFraction sglUntPrc, 
+    	    final BigFraction quantity)
+    	    throws TaxTableNotFoundException {
+//    		System.err.println("GnuCashWritableGenerInvoiceEntry.createGenerEntry");
+    	
+        	GnuCashWritableGenerInvoiceEntryImpl entry = 
+        			new GnuCashWritableGenerInvoiceEntryImpl(
+        					this, 
+    						acct, quantity, sglUntPrc);
+    	
+        	addGenerEntry(entry);
+        	return entry;
+        }
+        
     // ----------------------------
 
     /**
@@ -213,6 +230,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
      * 
      * @throws TaxTableNotFoundException
      */
+    @Deprecated
     public GnuCashWritableCustomerInvoiceEntry createCustInvcEntry(
 	    final GnuCashAccount acct,
 	    final FixedPointNumber sglUntPrc, 
@@ -229,12 +247,29 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
         	return entry;
     }
     
+    public GnuCashWritableCustomerInvoiceEntry createCustInvcEntry(
+    	    final GnuCashAccount acct,
+    	    final BigFraction sglUntPrc, 
+    	    final BigFraction qty)
+    	    throws TaxTableNotFoundException {
+        	GnuCashWritableCustomerInvoiceEntryImpl entry = 
+        			new GnuCashWritableCustomerInvoiceEntryImpl(
+        					new GnuCashWritableCustomerInvoiceImpl(this), 
+    						acct, qty, sglUntPrc);
+
+            	entry.setCustInvcTaxable(false);
+            
+            	addInvcEntry(entry);
+            	return entry;
+        }
+        
     /**
      * create and add a new entry.<br/>
      * The entry will use the accounts of the SKR03.
      * 
      * @throws TaxTableNotFoundException
      */
+    @Deprecated
     public GnuCashWritableCustomerInvoiceEntry createCustInvcEntry(
 	    final GnuCashAccount acct,
 	    final FixedPointNumber sglUntPrc, 
@@ -254,12 +289,32 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
     	}
     }
 
+    public GnuCashWritableCustomerInvoiceEntry createCustInvcEntry(
+    	    final GnuCashAccount acct,
+    	    final BigFraction sglUntPrc, 
+    	    final BigFraction qty, 
+    	    final String taxTabName)
+    	    throws TaxTableNotFoundException {
+        	if ( taxTabName == null )
+        		throw new IllegalStateException("Tax table name is null");
+    	
+        	if ( taxTabName.isBlank() ) {
+        		// no taxes
+        		return createCustInvcEntry(acct, sglUntPrc, qty);
+        	} else {
+        		GCshTaxTable taxTab = getGnuCashFile().getTaxTableByName(taxTabName);
+        		LOGGER.debug("createCustInvcEntry: Found tax table with name '" + taxTabName + "': '" + taxTab.getID() + "'");
+        		return createCustInvcEntry(acct, sglUntPrc, qty, taxTab);
+        	}
+        }
+
     /**
      * create and add a new entry.<br/>
      *
      * @return an entry using the given Tax-Table
      * @throws TaxTableNotFoundException
      */
+    @Deprecated
     public GnuCashWritableCustomerInvoiceEntry createCustInvcEntry(
 	    final GnuCashAccount acct,
 	    final FixedPointNumber sglUntPrc, 
@@ -285,6 +340,32 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
     	addInvcEntry(entry);
     	return entry;
     }
+
+    public GnuCashWritableCustomerInvoiceEntry createCustInvcEntry(
+    	    final GnuCashAccount acct,
+    	    final BigFraction sglUntPrc, 
+    	    final BigFraction qty, 
+    	    final GCshTaxTable taxTab)
+    	    throws TaxTableNotFoundException {
+        	if ( taxTab == null )
+        		throw new IllegalStateException("Tax table is null");
+    	
+        	GnuCashWritableCustomerInvoiceEntryImpl entry = 
+        			new GnuCashWritableCustomerInvoiceEntryImpl(
+        					new GnuCashWritableCustomerInvoiceImpl(this), 
+        					acct, qty, sglUntPrc);
+    	
+        	if ( taxTab.getEntries().isEmpty() || 
+        			taxTab.getEntries().get(0).getAmount().equals(new FixedPointNumber()) ) {
+        		// no taxes
+        		entry.setCustInvcTaxable(false);
+        	} else {
+        		entry.setCustInvcTaxTable(taxTab);
+        	}
+    	
+        	addInvcEntry(entry);
+        	return entry;
+        }
 
     // ----------------------------
 
@@ -373,6 +454,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
      * 
      * @throws TaxTableNotFoundException
      */
+    @Deprecated
     public GnuCashWritableVendorBillEntry createVendBllEntry(
 	    final GnuCashAccount acct,
 	    final FixedPointNumber sglUntPrc, 
@@ -395,6 +477,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
      * 
      * @throws TaxTableNotFoundException
      */
+    @Deprecated
     public GnuCashWritableVendorBillEntry createVendBllEntry(
 	    final GnuCashAccount acct,
 	    final FixedPointNumber sglUntPrc, 
@@ -420,6 +503,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
      * @return an entry using the given Tax-Table
      * @throws TaxTableNotFoundException
      */
+    @Deprecated
     public GnuCashWritableVendorBillEntry createVendBllEntry(
 	    final GnuCashAccount acct,
 	    final FixedPointNumber sglUntPrc, 
@@ -531,6 +615,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
      * 
      * @throws TaxTableNotFoundException
      */
+    @Deprecated
     public GnuCashWritableEmployeeVoucherEntry createEmplVchEntry(
 	    final GnuCashAccount acct,
 	    final FixedPointNumber sglUntPrc, 
@@ -553,6 +638,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
      * 
      * @throws TaxTableNotFoundException
      */
+    @Deprecated
     public GnuCashWritableEmployeeVoucherEntry createEmplVchEntry(
 	    final GnuCashAccount acct,
 	    final FixedPointNumber sglUntPrc, 
@@ -578,6 +664,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
      * @return an entry using the given Tax-Table
      * @throws TaxTableNotFoundException
      */
+    @Deprecated
     public GnuCashWritableEmployeeVoucherEntry createEmplVchEntry(
 	    final GnuCashAccount acct,
 	    final FixedPointNumber sglUntPrc, 
@@ -690,6 +777,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
      * @throws TaxTableNotFoundException
      * @throws UnknownInvoiceTypeException 
      */
+    @Deprecated
     public GnuCashWritableJobInvoiceEntry createJobInvcEntry(
 	    final GnuCashAccount acct,
 	    final FixedPointNumber sglUntPrc, 
@@ -713,6 +801,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
      * @throws TaxTableNotFoundException
      * @throws UnknownInvoiceTypeException 
      */
+    @Deprecated
     public GnuCashWritableJobInvoiceEntry createJobInvcEntry(
 	    final GnuCashAccount acct,
 	    final FixedPointNumber sglUntPrc, 
@@ -739,6 +828,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
      * @throws TaxTableNotFoundException
      * @throws UnknownInvoiceTypeException 
      */
+    @Deprecated
     public GnuCashWritableJobInvoiceEntry createJobInvcEntry(
 	    final GnuCashAccount acct,
 	    final FixedPointNumber sglUntPrc, 
@@ -1323,6 +1413,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
     
     // ----------------------------
 
+    @Deprecated
     private static GCshTrxID postCustomerInvoice_int(
 	    final GnuCashWritableFileImpl file,
 	    ObjectFactory fact, 
@@ -1390,6 +1481,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 		return postTrxID;
     }
     
+    @Deprecated
     private static GCshTrxID postVendorBill_int(
 	    final GnuCashWritableFileImpl file, 
 	    ObjectFactory fact,
@@ -1457,6 +1549,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
         return postTrxID;
     }
 
+    @Deprecated
     private static GCshTrxID postEmployeeVoucher_int(
 	    final GnuCashWritableFileImpl file, 
 	    ObjectFactory fact,
@@ -1524,6 +1617,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
         return postTrxID;
     }
 
+    @Deprecated
     private static GCshTrxID postJobInvoice_int(
 	    final GnuCashWritableFileImpl file,
 	    ObjectFactory fact,
@@ -1599,6 +1693,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
      * @see #GnuCashWritableInvoiceImpl(GnuCashWritableFileImpl, String, String,
      *      GnuCashGenerJob, GnuCashAccountImpl, Date)
      */
+    @Deprecated
     private static GnuCashWritableTransaction createPostTransaction(
 	    final GnuCashWritableFileImpl file,
 	    final ObjectFactory factory, 
@@ -2356,6 +2451,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
 
     /**
      */
+    @Deprecated
     private void updateEntry(
 	    final GCshTaxTable taxTab, 
 	    final boolean isTaxable, 
@@ -2382,6 +2478,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
     	getGnuCashFile().setModified(true);
     }
 
+    @Deprecated
     private void updateEntry_taxStuff(
 	    final GCshTaxTable taxtable, 
 	    final FixedPointNumber sumExclTaxes, 
@@ -2447,6 +2544,7 @@ public class GnuCashWritableGenerInvoiceImpl extends GnuCashGenerInvoiceImpl
      * @param sumInclTaxes
      * @param accountToTransferMoneyFrom
      */
+    @Deprecated
     private void updateNonTaxableEntry(
 	    final FixedPointNumber sumExclTaxes, 
 	    final FixedPointNumber sumInclTaxes,

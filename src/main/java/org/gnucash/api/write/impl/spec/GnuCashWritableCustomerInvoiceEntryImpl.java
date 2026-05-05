@@ -61,6 +61,7 @@ public class GnuCashWritableCustomerInvoiceEntryImpl extends GnuCashWritableGene
 	 * @param prc    see ${@link GnuCashGenerInvoiceEntry#getCustInvcPrice()}}
 	 * @throws TaxTableNotFoundException
 	 */
+	@Deprecated
 	public GnuCashWritableCustomerInvoiceEntryImpl(
 			final GnuCashWritableCustomerInvoiceImpl invc,
 			final GnuCashAccount acct, 
@@ -81,7 +82,7 @@ public class GnuCashWritableCustomerInvoiceEntryImpl extends GnuCashWritableGene
 			final BigFraction qty, 
 			final BigFraction prc)
 			throws TaxTableNotFoundException {
-		super(invc, createCustInvoiceEntryRat_int(invc, acct, qty, prc));
+		super(invc, createCustInvoiceEntry_int(invc, acct, qty, prc));
 
 		// Caution: Call addInvcEntry one level above now
 		// (GnuCashWritableCustomerInvoiceImpl.createCustInvcEntry)
@@ -164,6 +165,7 @@ public class GnuCashWritableCustomerInvoiceEntryImpl extends GnuCashWritableGene
     // 	---------------------------------------------------------------
 	
 	@Override
+	@Deprecated
 	public void setPrice(final FixedPointNumber prc) throws Exception {
 		setCustInvcPrice(prc);
 	}
@@ -209,6 +211,7 @@ public class GnuCashWritableCustomerInvoiceEntryImpl extends GnuCashWritableGene
 	// ---------------------------------------------------------------
 	
 	@Override
+	@Deprecated
 	public FixedPointNumber getPrice() {
 		return super.getCustInvcPrice();
 	}
@@ -236,6 +239,7 @@ public class GnuCashWritableCustomerInvoiceEntryImpl extends GnuCashWritableGene
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getApplicableTaxPercent() {
 		return super.getCustInvcApplicableTaxPercent();
 	}
@@ -253,16 +257,19 @@ public class GnuCashWritableCustomerInvoiceEntryImpl extends GnuCashWritableGene
 	// ----------------------------
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getSum() {
 		return super.getCustInvcSum();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getSumInclTaxes() {
 		return super.getCustInvcSumInclTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getSumExclTaxes() {
 		return super.getCustInvcSumExclTaxes();
 	}

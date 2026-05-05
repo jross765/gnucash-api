@@ -4,23 +4,27 @@ import org.gnucash.api.read.GnuCashGenerInvoice;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
+@Deprecated
 public interface GnuCashVendor_Invc_FP {
     
     /**
      * @param readVar 
      * @return the sum of payments for invoices to this vendor
      */
-    FixedPointNumber getExpensesGenerated(GnuCashGenerInvoice.ReadVariant readVar);
+    @Deprecated
+	FixedPointNumber getExpensesGenerated(GnuCashGenerInvoice.ReadVariant readVar);
 
     /**
      * @return the sum of payments for invoices to this vendor
      */
-    FixedPointNumber getExpensesGenerated_direct();
+    @Deprecated
+	FixedPointNumber getExpensesGenerated_direct();
 
     /**
      * @return the sum of payments for invoices to this vendor
      */
-    FixedPointNumber getExpensesGenerated_viaAllJobs();
+    @Deprecated
+	FixedPointNumber getExpensesGenerated_viaAllJobs();
 
     // -------------------------------------
 
@@ -28,17 +32,20 @@ public interface GnuCashVendor_Invc_FP {
      * @param readVar 
      * @return the sum of left to pay Unpaid invoiced
      */
-    FixedPointNumber getOutstandingValue(GnuCashGenerInvoice.ReadVariant readVar);
+    @Deprecated
+	FixedPointNumber getOutstandingValue(GnuCashGenerInvoice.ReadVariant readVar);
 
     /**
      * @return the sum of left to pay Unpaid invoiced
      *  
      */
-    FixedPointNumber getOutstandingValue_direct();
+    @Deprecated
+	FixedPointNumber getOutstandingValue_direct();
 
     /**
      * @return the sum of left to pay Unpaid invoiced
      */
-    FixedPointNumber getOutstandingValue_viaAllJobs();
+    @Deprecated
+	FixedPointNumber getOutstandingValue_viaAllJobs();
 
 }

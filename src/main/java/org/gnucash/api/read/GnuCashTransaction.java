@@ -180,6 +180,7 @@ public interface GnuCashTransaction extends Comparable<GnuCashTransaction>,
      * @see #getBalanceFormatted(Locale)
      * @see #isBalanced()
      */
+    @Deprecated
     FixedPointNumber getBalance();
     
     BigFraction      getBalanceRat();
@@ -213,6 +214,7 @@ public interface GnuCashTransaction extends Comparable<GnuCashTransaction>,
      * @see #getNegatedBalanceFormatted(Locale)
      * @see #isBalanced()
      */
+    @Deprecated
     FixedPointNumber getNegatedBalance();
 
     BigFraction      getNegatedBalanceRat();

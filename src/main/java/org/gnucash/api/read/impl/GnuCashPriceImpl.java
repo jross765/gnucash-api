@@ -254,6 +254,7 @@ public class GnuCashPriceImpl extends GnuCashObjectImpl
 	}
 
 	@Override
+    @Deprecated
 	public FixedPointNumber getValue() {
 		if ( jwsdpPeer.getPriceValue() == null )
 			return null;

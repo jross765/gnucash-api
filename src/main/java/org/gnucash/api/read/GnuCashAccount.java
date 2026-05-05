@@ -234,6 +234,7 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      *
      * @return the balance
      */
+    @Deprecated
     FixedPointNumber getBalance();
 
     BigFraction      getBalanceRat();
@@ -245,6 +246,7 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      *             calculation
      * @return the balance formatted using the current locale
      */
+    @Deprecated
     FixedPointNumber getBalance(LocalDate date);
 
     BigFraction      getBalanceRat(LocalDate date);
@@ -259,24 +261,29 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      * @param after splits that are after date are added here.
      * @return the balance formatted using the current locale
      */
+    @Deprecated
     FixedPointNumber getBalance(LocalDate date, List<GnuCashTransactionSplit> after);
 
     BigFraction      getBalanceRat(LocalDate date, List<GnuCashTransactionSplit> after);
     
     // ----------------------------
 
+    @Deprecated
     FixedPointNumber getBalance(LocalDate date, GCshCmdtyID cmdtyID);
 
     BigFraction      getBalanceRat(LocalDate date, GCshCmdtyID cmdtyID);
 
+    @Deprecated
     FixedPointNumber getBalance(LocalDate date, GCshSecID secID);
 
     BigFraction      getBalanceRat(LocalDate date, GCshSecID secID);
 
+    @Deprecated
     FixedPointNumber getBalance(LocalDate date, GCshCurrID currID);
 
     BigFraction      getBalanceRat(LocalDate date, GCshCurrID currID);
 
+    @Deprecated
     FixedPointNumber getBalance(LocalDate date, Currency curr);
 
     BigFraction      getBalanceRat(LocalDate date, Currency curr);
@@ -287,6 +294,7 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      * @param lastSpltIncl last split to be included
      * @return the balance up to and including the given split
      */
+    @Deprecated
     FixedPointNumber getBalance(GnuCashTransactionSplit lastSpltIncl);
 
     BigFraction      getBalanceRat(GnuCashTransactionSplit lastSpltIncl);
@@ -319,6 +327,7 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      *
      * @return the balance including sub-accounts
      */
+    @Deprecated
     FixedPointNumber getBalanceRecursive();
 
     BigFraction      getBalanceRecursiveRat();
@@ -330,6 +339,7 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      *             calculation
      * @return the balance including all sub-accounts
      */
+    @Deprecated
     FixedPointNumber getBalanceRecursive(LocalDate date);
 
     BigFraction      getBalanceRecursiveRat(LocalDate date);
@@ -342,6 +352,7 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      * @return Gets the balance including all sub-accounts.
      * @see GnuCashAccount#getBalanceRecursive(LocalDate)
      */
+    @Deprecated
     FixedPointNumber getBalanceRecursive(LocalDate date, GCshCmdtyID cmdtyID);
 
     BigFraction      getBalanceRecursiveRat(LocalDate date, GCshCmdtyID cmdtyID);
@@ -352,6 +363,7 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      * @param cmdtyID
      * @return
      */
+    @Deprecated
     FixedPointNumber getBalanceRecursive(LocalDate date, GCshSecID cmdtyID);
 
     BigFraction      getBalanceRecursiveRat(LocalDate date, GCshSecID cmdtyID);
@@ -364,6 +376,7 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      * @return Gets the balance including all sub-accounts.
      * @see GnuCashAccount#getBalanceRecursive(LocalDate)
      */
+    @Deprecated
     FixedPointNumber getBalanceRecursive(LocalDate date, Currency curr);
 
     BigFraction      getBalanceRecursiveRat(LocalDate date, Currency curr);
@@ -372,6 +385,7 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
      * @param lastSpltIncl last split to be included
      * @return the balance up to and including the given split
      */
+    @Deprecated
     FixedPointNumber getBalanceRecursive(GnuCashTransactionSplit lastSpltIncl);
 
     BigFraction      getBalanceRecursiveRat(GnuCashTransactionSplit lastSpltIncl);

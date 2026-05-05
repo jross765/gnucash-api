@@ -12,12 +12,14 @@ import org.slf4j.LoggerFactory;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
+@Deprecated
 public class GenerInvcEntr_JobInvc_FP {
     @SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(GenerInvcEntr_JobInvc_FP.class);
 
     // ---------------------------------------------------------------
 
+	@Deprecated
     public static FixedPointNumber getJobInvcApplicableTaxPercent(GnuCashGenerInvoiceEntry entr) {
 		if ( entr.getType() != GnuCashGenerInvoice.TYPE_JOB )
 			throw new WrongInvoiceTypeException();
@@ -33,6 +35,7 @@ public class GenerInvcEntr_JobInvc_FP {
 
     // ---------------------------------------------------------------
 
+	@Deprecated
     public static FixedPointNumber getJobInvcPrice(GnuCashGenerInvoiceEntry entr) {
     	if ( entr.getType() != GCshOwner.Type.JOB )
     		throw new WrongInvoiceTypeException();
@@ -48,6 +51,7 @@ public class GenerInvcEntr_JobInvc_FP {
 
     // ----------------------------
 
+	@Deprecated
     public static FixedPointNumber getJobInvcSum(GnuCashGenerInvoiceEntry entr) {
 		if ( entr.getType() != GCshOwner.Type.JOB )
 			throw new WrongInvoiceTypeException();
@@ -61,6 +65,7 @@ public class GenerInvcEntr_JobInvc_FP {
 		return null; // Compiler happy
     }
 
+	@Deprecated
     public static FixedPointNumber getJobInvcSumInclTaxes(GnuCashGenerInvoiceEntry entr) {
 		if ( entr.getType() != GCshOwner.Type.JOB )
 			throw new WrongInvoiceTypeException();
@@ -74,6 +79,7 @@ public class GenerInvcEntr_JobInvc_FP {
 		return null; // Compiler happy
     }
 
+	@Deprecated
     public static FixedPointNumber getJobInvcSumExclTaxes(GnuCashGenerInvoiceEntry entr) {
 		if ( entr.getType() != GCshOwner.Type.JOB )
 			throw new WrongInvoiceTypeException();

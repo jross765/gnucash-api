@@ -2,6 +2,7 @@ package org.gnucash.api.read.hlp.invc;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
+@Deprecated
 public interface GnuCashGenerInvoiceEntry_Empl_FP {
     
     FixedPointNumber getEmplVchPrice();

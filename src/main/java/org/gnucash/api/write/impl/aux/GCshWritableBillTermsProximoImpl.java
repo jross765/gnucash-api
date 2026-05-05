@@ -1,5 +1,6 @@
 package org.gnucash.api.write.impl.aux;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.generated.GncGncBillTerm;
 import org.gnucash.api.read.impl.aux.GCshBillTermsProximoImpl;
 import org.gnucash.api.write.GnuCashWritableFile;
@@ -61,6 +62,7 @@ public class GCshWritableBillTermsProximoImpl extends GCshBillTermsProximoImpl
     }
 
     @Override
+    @Deprecated
     public void setDiscount(final FixedPointNumber dscnt) {
 		if ( dscnt == null ) {
 			throw new IllegalArgumentException("argument <dscnt> is null");
@@ -71,6 +73,19 @@ public class GCshWritableBillTermsProximoImpl extends GCshBillTermsProximoImpl
 		}
 
 		jwsdpPeer.setBtProxDiscount(dscnt.toGnuCashString());
+    }
+
+    @Override
+    public void setDiscount(final BigFraction dscnt) {
+		if ( dscnt == null ) {
+			throw new IllegalArgumentException("argument <dscnt> is null");
+		}
+
+		if ( dscnt.bigDecimalValue().doubleValue() <= 0 ) {
+			throw new IllegalArgumentException("argument <dscnt> is <= 0");
+		}
+
+		jwsdpPeer.setBtProxDiscount(dscnt.toString());
     }
 
     // ---------------------------------------------------------------

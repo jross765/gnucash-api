@@ -1,5 +1,6 @@
 package org.gnucash.api.read.impl.aux;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.generated.GncGncBillTerm;
 import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.aux.GCshBillTermsDays;
@@ -73,6 +74,15 @@ public class GCshBillTermsDaysImpl implements GCshBillTermsDays {
 		}
 
 		return new FixedPointNumber(jwsdpPeer.getBtDaysDiscount());
+    }
+
+    @Override
+    public BigFraction getDiscountRat() {
+		if ( jwsdpPeer.getBtDaysDiscount() == null ) {
+			return null;
+		}
+
+		return BigFraction.parse(jwsdpPeer.getBtDaysDiscount());
     }
 
     // ---------------------------------------------------------------

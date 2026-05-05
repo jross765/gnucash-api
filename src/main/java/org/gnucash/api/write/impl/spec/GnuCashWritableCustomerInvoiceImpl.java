@@ -185,6 +185,7 @@ public class GnuCashWritableCustomerInvoiceImpl extends GnuCashWritableGenerInvo
 	 * 
 	 * @throws TaxTableNotFoundException
 	 */
+	@Deprecated
 	public GnuCashWritableCustomerInvoiceEntry createEntry(
 			final GnuCashAccount acct,
 			final FixedPointNumber singleUnitPrice, 
@@ -200,6 +201,7 @@ public class GnuCashWritableCustomerInvoiceImpl extends GnuCashWritableGenerInvo
 	 * 
 	 * @throws TaxTableNotFoundException
 	 */
+	@Deprecated
 	public GnuCashWritableCustomerInvoiceEntry createEntry(
 			final GnuCashAccount acct,
 			final FixedPointNumber singleUnitPrice, 
@@ -216,10 +218,60 @@ public class GnuCashWritableCustomerInvoiceImpl extends GnuCashWritableGenerInvo
 	 * @return an entry using the given Tax-Table
 	 * @throws TaxTableNotFoundException
 	 */
+	@Deprecated
 	public GnuCashWritableCustomerInvoiceEntry createEntry(
 			final GnuCashAccount acct,
 			final FixedPointNumber singleUnitPrice, 
 			final FixedPointNumber quantity, 
+			final GCshTaxTable taxTab)
+			throws TaxTableNotFoundException {
+		GnuCashWritableCustomerInvoiceEntry entry = createCustInvcEntry(acct, singleUnitPrice, quantity, taxTab);
+		LOGGER.info("createEntry: Created customer invoice entry: " + entry.getID());
+		return entry;
+	}
+
+	// -----------------------------------------------------------
+
+	/**
+	 * create and add a new entry.
+	 * 
+	 * @throws TaxTableNotFoundException
+	 */
+	public GnuCashWritableCustomerInvoiceEntry createEntry(
+			final GnuCashAccount acct,
+			final BigFraction singleUnitPrice, 
+			final BigFraction quantity)
+			throws TaxTableNotFoundException {
+		GnuCashWritableCustomerInvoiceEntry entry = createCustInvcEntry(acct, singleUnitPrice, quantity);
+		return entry;
+	}
+
+	/**
+	 * create and add a new entry.<br/>
+	 * The entry will use the accounts of the SKR03.
+	 * 
+	 * @throws TaxTableNotFoundException
+	 */
+	public GnuCashWritableCustomerInvoiceEntry createEntry(
+			final GnuCashAccount acct,
+			final BigFraction singleUnitPrice, 
+			final BigFraction quantity, 
+			final String taxTabName)
+			throws TaxTableNotFoundException {
+		GnuCashWritableCustomerInvoiceEntry entry = createCustInvcEntry(acct, singleUnitPrice, quantity, taxTabName);
+		return entry;
+	}
+
+	/**
+	 * create and add a new entry.<br/>
+	 *
+	 * @return an entry using the given Tax-Table
+	 * @throws TaxTableNotFoundException
+	 */
+	public GnuCashWritableCustomerInvoiceEntry createEntry(
+			final GnuCashAccount acct,
+			final BigFraction singleUnitPrice, 
+			final BigFraction quantity, 
 			final GCshTaxTable taxTab)
 			throws TaxTableNotFoundException {
 		GnuCashWritableCustomerInvoiceEntry entry = createCustInvcEntry(acct, singleUnitPrice, quantity, taxTab);
@@ -373,26 +425,31 @@ public class GnuCashWritableCustomerInvoiceImpl extends GnuCashWritableGenerInvo
 	// ---------------------------------------------------------------
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountUnpaidWithTaxes() {
 		return getCustInvcAmountUnpaidWithTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountPaidWithTaxes() {
 		return getCustInvcAmountPaidWithTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountPaidWithoutTaxes() {
 		return getCustInvcAmountPaidWithoutTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountWithTaxes() {
 		return getCustInvcAmountWithTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getAmountWithoutTaxes() {
 		return getCustInvcAmountWithoutTaxes();
 	}

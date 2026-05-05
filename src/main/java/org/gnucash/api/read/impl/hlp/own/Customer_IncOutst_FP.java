@@ -9,12 +9,14 @@ import org.slf4j.LoggerFactory;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
+@Deprecated
 public class Customer_IncOutst_FP {
     @SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(Customer_IncOutst_FP.class);
 
     // ---------------------------------------------------------------
 
+	@Deprecated
 	public static FixedPointNumber getIncomeGenerated(final GnuCashCustomer cust, GnuCashGenerInvoice.ReadVariant readVar) {
 		if ( readVar == GnuCashGenerInvoice.ReadVariant.DIRECT ) {
 			return getIncomeGenerated_direct(cust);
@@ -25,6 +27,7 @@ public class Customer_IncOutst_FP {
 		return null; // Compiler happy
     }
 
+	@Deprecated
 	public static FixedPointNumber getIncomeGenerated_direct(final GnuCashCustomer cust) {
 		FixedPointNumber retval = new FixedPointNumber();
 
@@ -41,6 +44,7 @@ public class Customer_IncOutst_FP {
 		return retval;
     }
 
+	@Deprecated
 	public static FixedPointNumber getIncomeGenerated_viaAllJobs(final GnuCashCustomer cust) {
 		FixedPointNumber retval = new FixedPointNumber();
 
@@ -59,6 +63,7 @@ public class Customer_IncOutst_FP {
 
     // -------------------------------------
 
+	@Deprecated
 	public static FixedPointNumber getOutstandingValue(final GnuCashCustomer cust, GnuCashGenerInvoice.ReadVariant readVar) {
 		if ( readVar == GnuCashGenerInvoice.ReadVariant.DIRECT ) {
 			return getOutstandingValue_direct(cust);
@@ -69,6 +74,7 @@ public class Customer_IncOutst_FP {
 		return null; // Compiler happy
     }
 
+	@Deprecated
 	public static FixedPointNumber getOutstandingValue_direct(final GnuCashCustomer cust) {
 		FixedPointNumber retval = new FixedPointNumber();
 
@@ -85,6 +91,7 @@ public class Customer_IncOutst_FP {
 		return retval;
     }
 
+	@Deprecated
 	public static FixedPointNumber getOutstandingValue_viaAllJobs(final GnuCashCustomer cust) {
 		FixedPointNumber retval = new FixedPointNumber();
 

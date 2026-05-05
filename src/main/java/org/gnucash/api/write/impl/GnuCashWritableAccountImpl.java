@@ -776,6 +776,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Deprecated
 	public FixedPointNumber getBalance() {
 		if ( myBalanceCached != null ) {
 			return myBalanceCached;
@@ -906,6 +907,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Deprecated
 	public FixedPointNumber getBalanceChange(final LocalDate from, final LocalDate to) {
 		FixedPointNumber retval = new FixedPointNumber();
 

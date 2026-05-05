@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.TreeSet;
 import java.util.zip.GZIPOutputStream;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.Const;
 import org.gnucash.api.generated.GncAccount;
 import org.gnucash.api.generated.GncBudget;
@@ -1239,6 +1240,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	// ---------------------------------------------------------------
 
 	@Override
+	@Deprecated
 	public GnuCashWritableCustomerInvoiceEntry createWritableCustomerInvoiceEntry(
 			final GnuCashWritableCustomerInvoiceImpl invc,
 			final GnuCashAccount acct, 
@@ -1264,6 +1266,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	}
 
 	@Override
+	@Deprecated
 	public GnuCashWritableVendorBillEntry createWritableVendorBillEntry(
 			final GnuCashWritableVendorBillImpl bll, 
 			final GnuCashAccount acct,
@@ -1289,6 +1292,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	}
 
 	@Override
+	@Deprecated
 	public GnuCashWritableEmployeeVoucherEntry createWritableEmployeeVoucherEntry(
 			final GnuCashWritableEmployeeVoucherImpl vch,
 			final GnuCashAccount acct, 
@@ -1314,6 +1318,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	}
 
 	@Override
+	@Deprecated
 	public GnuCashWritableJobInvoiceEntry createWritableJobInvoiceEntry(
 			final GnuCashWritableJobInvoiceImpl invc, 
 			final GnuCashAccount acct,
@@ -1337,6 +1342,110 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		
 		return retval;
 	}
+
+	// ---------------------------------------------------------------
+
+	@Override
+	public GnuCashWritableCustomerInvoiceEntry createWritableCustomerInvoiceEntry(
+			final GnuCashWritableCustomerInvoiceImpl invc,
+			final GnuCashAccount acct, 
+			final BigFraction quant, 
+			final BigFraction prc) throws TaxTableNotFoundException {
+		if ( invc == null ) {
+			throw new IllegalArgumentException("argument <invc> is null");
+		}
+
+		if ( acct == null ) {
+			throw new IllegalArgumentException("argument <acct> is null");
+		}
+
+		GnuCashWritableCustomerInvoiceEntry retval = 
+				new GnuCashWritableCustomerInvoiceEntryImpl(invc,
+															acct,
+															quant, prc);
+
+		((org.gnucash.api.write.impl.hlp.fil.FileInvoiceEntryManager) super.invcEntrMgr)
+			.addGenerInvcEntry(retval);
+		
+		return retval;
+	}
+
+	@Override
+	public GnuCashWritableVendorBillEntry createWritableVendorBillEntry(
+			final GnuCashWritableVendorBillImpl bll, 
+			final GnuCashAccount acct,
+			final BigFraction quant, 
+			final BigFraction prc) throws TaxTableNotFoundException {
+		if ( bll == null ) {
+			throw new IllegalArgumentException("argument <bll> null");
+		}
+
+		if ( acct == null ) {
+			throw new IllegalArgumentException("argument <acct> is null");
+		}
+
+		GnuCashWritableVendorBillEntry retval = 
+				new GnuCashWritableVendorBillEntryImpl(bll,
+													   acct,
+													   quant, prc);
+
+		((org.gnucash.api.write.impl.hlp.fil.FileInvoiceEntryManager) super.invcEntrMgr)
+			.addGenerInvcEntry(retval);
+		
+		return retval;
+	}
+
+	@Override
+	public GnuCashWritableEmployeeVoucherEntry createWritableEmployeeVoucherEntry(
+			final GnuCashWritableEmployeeVoucherImpl vch,
+			final GnuCashAccount acct, 
+			final BigFraction quant, 
+			final BigFraction prc) throws TaxTableNotFoundException {
+		if ( vch == null ) {
+			throw new IllegalArgumentException("argument <vch> is null");
+		}
+
+		if ( acct == null ) {
+			throw new IllegalArgumentException("argument <acct> is null");
+		}
+
+		GnuCashWritableEmployeeVoucherEntry retval = 
+				new GnuCashWritableEmployeeVoucherEntryImpl(vch,
+															acct,
+															quant, prc);
+
+		((org.gnucash.api.write.impl.hlp.fil.FileInvoiceEntryManager) super.invcEntrMgr)
+			.addGenerInvcEntry(retval);
+		
+		return retval;
+	}
+
+	@Override
+	public GnuCashWritableJobInvoiceEntry createWritableJobInvoiceEntry(
+			final GnuCashWritableJobInvoiceImpl invc, 
+			final GnuCashAccount acct,
+			final BigFraction quant, 
+			final BigFraction prc) throws TaxTableNotFoundException {
+		if ( invc == null ) {
+			throw new IllegalArgumentException("argument <invc> is null");
+		}
+
+		if ( acct == null ) {
+			throw new IllegalArgumentException("argument <acct> is null");
+		}
+
+		GnuCashWritableJobInvoiceEntry retval = 
+				new GnuCashWritableJobInvoiceEntryImpl(invc,
+													   acct,
+													   quant, prc);
+
+		((org.gnucash.api.write.impl.hlp.fil.FileInvoiceEntryManager) super.invcEntrMgr)
+			.addGenerInvcEntry(retval);
+		
+		return retval;
+	}
+
+	// ---------------------------------------------------------------
 
 	@Override
 	public void removeGenerInvoiceEntry(GnuCashWritableGenerInvoiceEntry entr) {

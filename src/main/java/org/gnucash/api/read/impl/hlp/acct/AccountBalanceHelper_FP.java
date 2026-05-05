@@ -19,22 +19,26 @@ import org.slf4j.LoggerFactory;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
+@Deprecated
 public class AccountBalanceHelper_FP
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AccountBalanceHelper_FP.class);
 
 	// ---------------------------------------------------------------
 
+	@Deprecated
 	public static FixedPointNumber getBalance(final SimpleAccount acct) {
 		return getBalance(LocalDate.now(), acct);
 	}
 
 
+	@Deprecated
 	public static FixedPointNumber getBalance(final LocalDate date,
 											  final SimpleAccount acct) {
 		return getBalance(date, (List<GnuCashTransactionSplit>) null, acct);
 	}
 
+	@Deprecated
 	// The currency will be the one of this account.
 	public static FixedPointNumber getBalance(final LocalDate date, List<GnuCashTransactionSplit> after,
 											  final SimpleAccount acct) {
@@ -62,6 +66,7 @@ public class AccountBalanceHelper_FP
 		return balance;
 	}
 
+	@Deprecated
 	public static FixedPointNumber getBalance(final LocalDate date, final GCshCmdtyID cmdtyID,
 											  final SimpleAccount acct) {
 		if ( cmdtyID == null ) {
@@ -107,6 +112,7 @@ public class AccountBalanceHelper_FP
 		return retval;
 	}
 
+	@Deprecated
 	public static FixedPointNumber getBalance(final LocalDate date, final Currency curr,
 											  final SimpleAccount acct) {
 		FixedPointNumber retval = getBalance(date, acct);
@@ -152,6 +158,7 @@ public class AccountBalanceHelper_FP
 		return retval;
 	}
 
+	@Deprecated
 	public static FixedPointNumber getBalance(final GnuCashTransactionSplit lastSpltIncl,
 											  final SimpleAccount acct) {
 		FixedPointNumber balance = FixedPointNumber.ZERO.copy();
@@ -178,11 +185,13 @@ public class AccountBalanceHelper_FP
 
 	// ----------------------------
 
+	@Deprecated
 	public static String getBalanceFormatted(final SimpleAccount acct) {
 		Locale lcl = Locale.getDefault();
 		return getBalanceFormatted(lcl, acct);
 	}
 
+	@Deprecated
 	public static String getBalanceFormatted(final Locale lcl,
 											 final SimpleAccount acct) {
 		return formatBalance( acct, getBalance(acct), lcl );
@@ -190,15 +199,18 @@ public class AccountBalanceHelper_FP
 
 	// ---------------------------------------------------------------
 
+	@Deprecated
 	public static FixedPointNumber getBalanceRecursive(final SimpleAccount acct) {
 		return getBalanceRecursive(LocalDate.now(), acct);
 	}
 
+	@Deprecated
 	public static FixedPointNumber getBalanceRecursive(final LocalDate date,
 													   final SimpleAccount acct) {
 		return getBalanceRecursive(date, acct.getCmdtyID(), acct);
 	}
 
+	@Deprecated
 	public static FixedPointNumber getBalanceRecursive(final LocalDate date, final GCshCmdtyID cmdtyID,
 													   final SimpleAccount acct) {
 		if ( cmdtyID == null ) {
@@ -217,6 +229,7 @@ public class AccountBalanceHelper_FP
 													        // but there might be special cases)
 	}
 
+	@Deprecated
 	public static FixedPointNumber getBalanceRecursive(final LocalDate date, final Currency curr,
 													   final SimpleAccount acct) {
 		FixedPointNumber retval = getBalance(date, curr, acct);
@@ -239,6 +252,7 @@ public class AccountBalanceHelper_FP
 		return retval;
 	}
 
+	@Deprecated
 	public static FixedPointNumber getBalanceRecursive(final GnuCashTransactionSplit lastSpltIncl,
 			  										   final SimpleAccount acct) {
 		FixedPointNumber retval = getBalance(lastSpltIncl, acct);
@@ -263,11 +277,13 @@ public class AccountBalanceHelper_FP
 
 	// ----------------------------
 
+	@Deprecated
 	public static String getBalanceRecursiveFormatted(final SimpleAccount acct) {
 		Locale lcl = Locale.getDefault();
 		return getBalanceRecursiveFormatted(lcl, acct);
 	}
 
+	@Deprecated
 	public static String getBalanceRecursiveFormatted(final Locale lcl,
 													  final SimpleAccount acct) {
 		return formatBalance( acct, getBalanceRecursive(acct), lcl );
@@ -276,6 +292,7 @@ public class AccountBalanceHelper_FP
 	// ---------------------------------------------------------------
 	// Helpers -- balance pre-computed
 	
+	@Deprecated
 	public static String formatBalance(SimpleAccount acct, FixedPointNumber blnc) {
 		if ( acct == null ) {
 			throw new IllegalArgumentException("argument <acct> is null");
@@ -288,6 +305,7 @@ public class AccountBalanceHelper_FP
 		return formatBalance(acct, blnc, Locale.getDefault());
 	}
 	
+	@Deprecated
 	public static String formatBalance(SimpleAccount acct, FixedPointNumber blnc, Locale lcl) {
 		if ( acct == null ) {
 			throw new IllegalArgumentException("argument <acct> is null");

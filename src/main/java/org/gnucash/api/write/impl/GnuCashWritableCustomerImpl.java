@@ -4,6 +4,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.Const;
 import org.gnucash.api.generated.GncGncCustomer;
 import org.gnucash.api.generated.ObjectFactory;
@@ -245,6 +246,7 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
      * @see #setCredit(FixedPointNumber)
      */
     @Override
+    @Deprecated
     public void setDiscount(final FixedPointNumber dscnt) {
 		if ( dscnt == null ) {
 			throw new IllegalArgumentException("argument <dscnt> is null");
@@ -260,10 +262,27 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
 		}
     }
 
+    @Override
+    public void setDiscount(final BigFraction dscnt) {
+		if ( dscnt == null ) {
+			throw new IllegalArgumentException("argument <dscnt> is null");
+		}
+
+		BigFraction oldDiscount = getDiscountRat();
+		getJwsdpPeer().setCustDiscount(dscnt.toString());
+		getGnuCashFile().setModified(true);
+
+		PropertyChangeSupport propertyChangeSupport = helper.getPropertyChangeSupport();
+		if ( propertyChangeSupport != null ) {
+			propertyChangeSupport.firePropertyChange("discount", oldDiscount, dscnt);
+		}
+    }
+
     /**
      * @see #setDiscount(FixedPointNumber)
      */
     @Override
+    @Deprecated
     public void setCredit(final FixedPointNumber cred) {
 		if ( cred == null ) {
 			throw new IllegalArgumentException("argument <cred> is null");
@@ -271,6 +290,22 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
 
 		FixedPointNumber oldCredit = getDiscount();
 		getJwsdpPeer().setCustCredit(cred.toGnuCashString());
+		getGnuCashFile().setModified(true);
+
+		PropertyChangeSupport propertyChangeSupport = helper.getPropertyChangeSupport();
+		if ( propertyChangeSupport != null ) {
+			propertyChangeSupport.firePropertyChange("discount", oldCredit, cred);
+		}
+    }
+
+    @Override
+    public void setCredit(final BigFraction cred) {
+		if ( cred == null ) {
+			throw new IllegalArgumentException("argument <cred> is null");
+		}
+
+		BigFraction oldCredit = getDiscountRat();
+		getJwsdpPeer().setCustCredit(cred.toString());
 		getGnuCashFile().setModified(true);
 
 		PropertyChangeSupport propertyChangeSupport = helper.getPropertyChangeSupport();

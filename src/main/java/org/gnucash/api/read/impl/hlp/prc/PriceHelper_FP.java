@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
+@Deprecated
 public class PriceHelper_FP {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(PriceHelper_FP.class);
@@ -34,6 +35,7 @@ public class PriceHelper_FP {
     
 	// ---------------------------------------------------------------
 
+	@Deprecated
     public static FixedPointNumber getLatestPrice(
 			final GCshCmdtyID cmdtyID,
 			final GnuCashFile gcshFile,
@@ -58,6 +60,7 @@ public class PriceHelper_FP {
 							  gcshFile, priceDB, 0);
 	}
 
+	@Deprecated
     public static FixedPointNumber getLatestPrice(
 			final Currency curr,
 			final GnuCashFile gcshFile,
@@ -80,6 +83,7 @@ public class PriceHelper_FP {
 
 	// ----------------------------
 
+	@Deprecated
 	private static FixedPointNumber getLatestPrice(
 			final GCshCmdtyID cmdtyID,
 			final GnuCashFile gcshFile,
@@ -234,10 +238,12 @@ public class PriceHelper_FP {
 	// ---------------------------------------------------------------
 	// Helpers -- balance pre-computed
 	
+	@Deprecated
 	public static String formatValue(GnuCashPriceImpl prc, FixedPointNumber val) {
 		return formatValue(prc, val, Locale.getDefault());
 	}
 	
+	@Deprecated
 	public static String formatValue(GnuCashPriceImpl prc, FixedPointNumber val, Locale lcl) {
     	return AmountFormatter_FP.formatAmount( prc.getGnuCashFile(),
     											val, prc.getToCurrID(), lcl );

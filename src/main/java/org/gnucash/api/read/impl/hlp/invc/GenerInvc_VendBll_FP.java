@@ -10,12 +10,14 @@ import org.slf4j.LoggerFactory;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
+@Deprecated
 public class GenerInvc_VendBll_FP {
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(GenerInvc_VendBll_FP.class);
 
 	// -----------------------------------------------------------------
 
+	@Deprecated
 	public static FixedPointNumber getVendBllAmountUnpaidWithTaxes(GnuCashGenerInvoice invc) {
 		// System.err.println("debug: GnuCashInvoiceImpl.getAmountUnpaid(): "
 		// + "getBillAmountUnpaid()="+getBillAmountWithoutTaxes()+"
@@ -24,6 +26,7 @@ public class GenerInvc_VendBll_FP {
 		return getVendBllAmountWithTaxes(invc).copy().subtract(getVendBllAmountPaidWithTaxes(invc));
 	}
 
+	@Deprecated
 	public static FixedPointNumber getVendBllAmountPaidWithTaxes(GnuCashGenerInvoice invc) {
 		FixedPointNumber takenFromPayableAccount = new FixedPointNumber();
 		for ( GnuCashTransaction trx : invc.getPayingTransactions() ) {
@@ -41,6 +44,7 @@ public class GenerInvc_VendBll_FP {
 		return takenFromPayableAccount;
 	}
 
+	@Deprecated
 	public static FixedPointNumber getVendBllAmountPaidWithoutTaxes(GnuCashGenerInvoice invc) {
 		FixedPointNumber retval = new FixedPointNumber();
 
@@ -53,6 +57,7 @@ public class GenerInvc_VendBll_FP {
 		return retval;
 	}
 
+	@Deprecated
 	public static FixedPointNumber getVendBllAmountWithTaxes(GnuCashGenerInvoice invc) {
 		FixedPointNumber retval = new FixedPointNumber();
 
@@ -72,6 +77,7 @@ public class GenerInvc_VendBll_FP {
 		return retval;
 	}
 
+	@Deprecated
 	public static FixedPointNumber getVendBllAmountWithoutTaxes(GnuCashGenerInvoice invc) {
 		FixedPointNumber retval = new FixedPointNumber();
 

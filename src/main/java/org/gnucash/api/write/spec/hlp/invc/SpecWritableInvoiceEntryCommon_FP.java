@@ -12,8 +12,10 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  * @see GnuCashWritableVendorBillEntry
  * @see GnuCashWritableJobInvoiceEntry
  */
+@Deprecated
 public interface SpecWritableInvoiceEntryCommon_FP extends GnuCashGenerInvoiceEntry {
 	
+	@Deprecated
 	void setPrice(FixedPointNumber prc) throws Exception;
 
 }

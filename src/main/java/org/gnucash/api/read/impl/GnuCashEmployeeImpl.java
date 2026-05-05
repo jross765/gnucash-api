@@ -149,6 +149,7 @@ public class GnuCashEmployeeImpl extends GnuCashObjectImpl
      * @return the net sum of payments for invoices to this client
      */
     @Override
+    @Deprecated
 	public FixedPointNumber getExpensesGenerated() {
     	return Employee_ExpOutst_FP.getExpensesGenerated(this);
     }
@@ -157,6 +158,7 @@ public class GnuCashEmployeeImpl extends GnuCashObjectImpl
      * @return the net sum of payments for invoices to this client
      */
     @Override
+    @Deprecated
 	public FixedPointNumber getExpensesGenerated_direct() {
     	return Employee_ExpOutst_FP.getExpensesGenerated_direct(this);
     }
@@ -211,6 +213,7 @@ public class GnuCashEmployeeImpl extends GnuCashObjectImpl
      * @see #getOutstandingValue_direct()
      */
     @Override
+    @Deprecated
 	public FixedPointNumber getOutstandingValue() {
     	return Employee_ExpOutst_FP.getOutstandingValue(this);
     }
@@ -219,6 +222,7 @@ public class GnuCashEmployeeImpl extends GnuCashObjectImpl
      * @return the sum of left to pay Unpaid invoiced
      */
     @Override
+    @Deprecated
 	public FixedPointNumber getOutstandingValue_direct() {
     	return Employee_ExpOutst_FP.getOutstandingValue_direct(this);
     }

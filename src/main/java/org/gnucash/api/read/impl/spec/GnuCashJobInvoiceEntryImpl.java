@@ -107,6 +107,7 @@ public class GnuCashJobInvoiceEntryImpl extends GnuCashGenerInvoiceEntryImpl
 	// ---------------------------------------------------------------
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getPrice() {
 		return getJobInvcPrice();
 	}
@@ -124,6 +125,7 @@ public class GnuCashJobInvoiceEntryImpl extends GnuCashGenerInvoiceEntryImpl
 	// ---------------------------------------------------------------
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getCustInvcPrice() {
 		throw new WrongInvoiceTypeException();
 	}
@@ -139,6 +141,7 @@ public class GnuCashJobInvoiceEntryImpl extends GnuCashGenerInvoiceEntryImpl
 	 * Do not use
 	 */
 	@Override
+	@Deprecated
 	public FixedPointNumber getVendBllPrice() {
 		throw new WrongInvoiceTypeException();
 	}
@@ -157,6 +160,7 @@ public class GnuCashJobInvoiceEntryImpl extends GnuCashGenerInvoiceEntryImpl
 	 * Do not use
 	 */
 	@Override
+	@Deprecated
 	public FixedPointNumber getEmplVchPrice() {
 		throw new WrongInvoiceTypeException();
 	}
@@ -220,6 +224,7 @@ public class GnuCashJobInvoiceEntryImpl extends GnuCashGenerInvoiceEntryImpl
 	// ----------------------------
 	
 	@Override
+	@Deprecated
 	public FixedPointNumber getApplicableTaxPercent() {
 		return getJobInvcApplicableTaxPercent();
 	}
@@ -237,16 +242,19 @@ public class GnuCashJobInvoiceEntryImpl extends GnuCashGenerInvoiceEntryImpl
 	// ---------------------------------------------------------------
 	
 	@Override
+	@Deprecated
 	public FixedPointNumber getSum() {
 		return getJobInvcSum();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getSumInclTaxes() {
 		return getJobInvcSumInclTaxes();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getSumExclTaxes() {
 		return getJobInvcSumExclTaxes();
 	}
@@ -271,16 +279,19 @@ public class GnuCashJobInvoiceEntryImpl extends GnuCashGenerInvoiceEntryImpl
 	// ----------------------------
 	
 	@Override
+	@Deprecated
 	public FixedPointNumber getCustInvcSum() {
 		throw new WrongInvoiceTypeException();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getVendBllSumInclTaxes() {
 		throw new WrongInvoiceTypeException();
 	}
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getEmplVchSumExclTaxes() {
 		throw new WrongInvoiceTypeException();
 	}

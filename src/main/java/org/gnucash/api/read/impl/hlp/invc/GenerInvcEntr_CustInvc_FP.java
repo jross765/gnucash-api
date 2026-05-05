@@ -16,11 +16,13 @@ import org.slf4j.LoggerFactory;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
+@Deprecated
 public class GenerInvcEntr_CustInvc_FP {
     private static final Logger LOGGER = LoggerFactory.getLogger(GenerInvcEntr_CustInvc_FP.class);
 
     // ---------------------------------------------------------------
 
+	@Deprecated
     public static FixedPointNumber getCustInvcApplicableTaxPercent(GnuCashGenerInvoiceEntry entr) {
 		if ( entr.getType() != GnuCashGenerInvoice.TYPE_CUSTOMER && 
 			 entr.getType() != GnuCashGenerInvoice.TYPE_JOB )
@@ -69,6 +71,7 @@ public class GenerInvcEntr_CustInvc_FP {
 
     // ---------------------------------------------------------------
 
+	@Deprecated
     public static FixedPointNumber getCustInvcPrice(GnuCashGenerInvoiceEntry entr) {
     	if ( entr.getType() != GCshOwner.Type.CUSTOMER && 
     		 entr.getType() != GCshOwner.Type.JOB )
@@ -79,10 +82,12 @@ public class GenerInvcEntr_CustInvc_FP {
 
     // ---------------------------------------------------------------
 
+	@Deprecated
     public static FixedPointNumber getCustInvcSum(GnuCashGenerInvoiceEntry entr) {
     	return getCustInvcPrice(entr).multiply(entr.getQuantity());
     }
 
+	@Deprecated
     public static FixedPointNumber getCustInvcSumInclTaxes(GnuCashGenerInvoiceEntry entr) {
     	if ( entr.getJwsdpPeer().getEntryITaxincluded() == 1 ) {
     		return getCustInvcSum(entr);
@@ -91,6 +96,7 @@ public class GenerInvcEntr_CustInvc_FP {
     	return getCustInvcSum(entr).multiply(getCustInvcApplicableTaxPercent(entr).add(BigDecimal.ONE));
     }
 
+	@Deprecated
     public static FixedPointNumber getCustInvcSumExclTaxes(GnuCashGenerInvoiceEntry entr) {
     	// System.err.println("debug: GnuCashInvoiceEntryImpl.getSumExclTaxes():"
     	// taxIncluded="+jwsdpPeer.getEntryITaxincluded()+" getSum()="+getSum()+"

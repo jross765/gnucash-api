@@ -10,16 +10,22 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  * @see GnuCashVendorBill
  * @see GnuCashJobInvoice
  */
+@Deprecated
 public interface SpecInvoiceCommon_FP {
 
-    FixedPointNumber getAmountUnpaidWithTaxes();
+    @Deprecated
+	FixedPointNumber getAmountUnpaidWithTaxes();
 
-    FixedPointNumber getAmountPaidWithTaxes();
+    @Deprecated
+	FixedPointNumber getAmountPaidWithTaxes();
 
-    FixedPointNumber getAmountPaidWithoutTaxes();
+    @Deprecated
+	FixedPointNumber getAmountPaidWithoutTaxes();
 
-    FixedPointNumber getAmountWithTaxes();
+    @Deprecated
+	FixedPointNumber getAmountWithTaxes();
     
-    FixedPointNumber getAmountWithoutTaxes();
+    @Deprecated
+	FixedPointNumber getAmountWithoutTaxes();
 
 }

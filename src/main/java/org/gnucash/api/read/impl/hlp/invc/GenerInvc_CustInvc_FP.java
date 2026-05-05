@@ -11,12 +11,14 @@ import org.slf4j.LoggerFactory;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
+@Deprecated
 public class GenerInvc_CustInvc_FP {
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(GenerInvc_CustInvc_FP.class);
 
 	// -----------------------------------------------------------------
 
+	@Deprecated
 	public static FixedPointNumber getCustInvcAmountUnpaidWithTaxes(GnuCashGenerInvoice invc) {
 		if ( invc.getType() != GnuCashGenerInvoice.TYPE_CUSTOMER && 
 			 invc.getType() != GnuCashGenerInvoice.TYPE_JOB )
@@ -25,6 +27,7 @@ public class GenerInvc_CustInvc_FP {
 		return getCustInvcAmountWithTaxes(invc).copy().subtract(getCustInvcAmountPaidWithTaxes(invc));
 	}
 
+	@Deprecated
 	public static FixedPointNumber getCustInvcAmountPaidWithTaxes(GnuCashGenerInvoice invc) {
 		if ( invc.getType() != GnuCashGenerInvoice.TYPE_CUSTOMER && 
 			 invc.getType() != GnuCashGenerInvoice.TYPE_JOB )
@@ -44,6 +47,7 @@ public class GenerInvc_CustInvc_FP {
 		return takenFromReceivableAccount;
 	}
 
+	@Deprecated
 	public static FixedPointNumber getCustInvcAmountPaidWithoutTaxes(GnuCashGenerInvoice invc) {
 		if ( invc.getType() != GnuCashGenerInvoice.TYPE_CUSTOMER && 
 			 invc.getType() != GnuCashGenerInvoice.TYPE_JOB )
@@ -60,6 +64,7 @@ public class GenerInvc_CustInvc_FP {
 		return retval;
 	}
 
+	@Deprecated
 	public static FixedPointNumber getCustInvcAmountWithTaxes(GnuCashGenerInvoice invc) {
 		if ( invc.getType() != GnuCashGenerInvoice.TYPE_CUSTOMER && 
 			 invc.getType() != GnuCashGenerInvoice.TYPE_JOB )
@@ -83,6 +88,7 @@ public class GenerInvc_CustInvc_FP {
 		return retval;
 	}
 
+	@Deprecated
 	public static FixedPointNumber getCustInvcAmountWithoutTaxes(GnuCashGenerInvoice invc) {
 		if ( invc.getType() != GnuCashGenerInvoice.TYPE_CUSTOMER && 
 			 invc.getType() != GnuCashGenerInvoice.TYPE_JOB )
