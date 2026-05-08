@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.Const;
 import org.gnucash.api.generated.GncAccount;
 import org.gnucash.api.generated.Slot;
@@ -19,6 +20,7 @@ import org.gnucash.api.read.aux.GCshAcctReconInfo;
 import org.gnucash.api.read.impl.aux.GCshAcctLotImpl;
 import org.gnucash.api.read.impl.aux.GCshAcctReconInfoImpl;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
+import org.gnucash.api.read.impl.hlp.acct.AccountBalanceHelper_BF;
 import org.gnucash.api.read.impl.hlp.acct.AccountBalanceHelper_FP;
 import org.gnucash.api.read.impl.hlp.acct.SimpleAccount;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
@@ -569,6 +571,36 @@ public class GnuCashAccountImpl extends SimpleAccount
 		}
 		
 		return AccountBalanceHelper_FP.formatBalance( acct, blnc, lcl );
+	}
+	
+	// ----------------------------
+	
+	public static String formatBalanceRat(GnuCashAccountImpl acct, BigFraction blnc) {
+		if ( acct == null ) {
+			throw new IllegalArgumentException("argument <acct> is null");
+		}
+		
+		if ( blnc == null ) {
+			throw new IllegalArgumentException("argument <blnc> is null");
+		}
+		
+		return AccountBalanceHelper_BF.formatBalance( acct, blnc );
+	}
+	
+	public static String formatBalanceRat(GnuCashAccountImpl acct, BigFraction blnc, Locale lcl) {
+		if ( acct == null ) {
+			throw new IllegalArgumentException("argument <acct> is null");
+		}
+		
+		if ( blnc == null ) {
+			throw new IllegalArgumentException("argument <blnc> is null");
+		}
+		
+		if ( lcl == null ) {
+			throw new IllegalArgumentException("argument <lcl> is null");
+		}
+		
+		return AccountBalanceHelper_BF.formatBalance( acct, blnc, lcl );
 	}
 	
     // ---------------------------------------------------------------

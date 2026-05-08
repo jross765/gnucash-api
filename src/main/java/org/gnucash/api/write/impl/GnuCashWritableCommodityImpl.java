@@ -1,5 +1,6 @@
 package org.gnucash.api.write.impl;
 
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -281,8 +282,18 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
 			throw new IllegalArgumentException("argument <name> is blank");
 		}
 
+		String oldName = getName();
+		if ( oldName.equals(name) ) {
+			return; // nothing has changed
+		}
+		
 		getJwsdpPeer().setCmdtyName(name);
 		getGnuCashFile().setModified(true);
+
+		PropertyChangeSupport propertyChangeSupport = helper.getPropertyChangeSupport();
+		if (propertyChangeSupport != null) {
+		    propertyChangeSupport.firePropertyChange("name", oldName, name);
+		}
     }
 
     @Override

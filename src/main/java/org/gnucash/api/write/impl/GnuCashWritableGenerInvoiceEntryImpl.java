@@ -1188,7 +1188,7 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
 
 		String oldActStr = getActionStr();
 		getJwsdpPeer().setEntryAction(actStr);
-		((GnuCashWritableFile) getGnuCashFile()).setModified(true);
+		getWritableGnuCashFile().setModified(true);
 
 		PropertyChangeSupport propertyChangeSupport = helper.getPropertyChangeSupport();
 		if ( propertyChangeSupport != null ) {

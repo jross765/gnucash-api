@@ -483,7 +483,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 		}
 
 		String oldName = getName();
-		if ( oldName == name ) {
+		if ( oldName.equals(name) ) {
 			return; // nothing has changed
 		}
 

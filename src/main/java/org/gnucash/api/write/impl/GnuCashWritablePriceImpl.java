@@ -275,6 +275,10 @@ public class GnuCashWritablePriceImpl extends GnuCashPriceImpl
 			throw new IllegalArgumentException("argument <val> is null");
 		}
 
+		if ( val.compareTo(FixedPointNumber.ZERO) <= 0 ) {
+			throw new IllegalArgumentException("argument <val> is <= 0");
+		}
+		
     	jwsdpPeer.setPriceValue(val.toGnuCashString());
     	getWritableGnuCashFile().setModified(true);
     }
@@ -285,7 +289,11 @@ public class GnuCashWritablePriceImpl extends GnuCashPriceImpl
 			throw new IllegalArgumentException("argument <val> is null");
 		}
 
-    	jwsdpPeer.setPriceValue(val.toString());
+		if ( val.compareTo(BigFraction.ZERO) <= 0 ) {
+			throw new IllegalArgumentException("argument <val> is <= 0");
+		}
+		
+    	jwsdpPeer.setPriceValue(val.toString().replaceAll("\\s", ""));
     	getWritableGnuCashFile().setModified(true);
 	}
 
