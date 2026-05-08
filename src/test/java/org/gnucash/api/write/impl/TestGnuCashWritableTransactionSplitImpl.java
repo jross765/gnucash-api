@@ -26,7 +26,6 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import junit.framework.JUnit4TestAdapter;
-import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 public class TestGnuCashWritableTransactionSplitImpl {
 	public static final GCshAcctID ACCT_1_ID = TestGnuCashTransactionSplitImpl.ACCT_1_ID;
@@ -176,8 +175,8 @@ public class TestGnuCashWritableTransactionSplitImpl {
 		// Modify the object
 
 		splt.setAccountID(ACCT_2_ID);
-		splt.setValue(new FixedPointNumber("-123.45"));
-		splt.setQuantity(new FixedPointNumber("-67.8901"));
+		splt.setValue(BigFraction.of(-12345, 100));
+		splt.setQuantity(BigFraction.of(-678901, 10000));
 		splt.setDescription("Alle meine Entchen");
 
 		// ::TODO not possible yet

@@ -398,7 +398,7 @@ public class TestGnuCashWritablePriceImpl {
 		// Modify the object
 
 		prc.setDate(LocalDate.of(2019, 1, 1));
-		prc.setValue(new FixedPointNumber("21.20"));
+		prc.setValue(BigFraction.of(2120, 100));
 
 		// ----------------------------
 		// Check whether the object can has actually be modified
@@ -447,7 +447,7 @@ public class TestGnuCashWritablePriceImpl {
 		// Modify the object
 
 		prc.setDate(LocalDate.of(2022, 12, 12));
-		prc.setValue(new FixedPointNumber("2122.22"));
+		prc.setValue(BigFraction.of(212222, 100));
 
 		// ----------------------------
 		// Check whether the object can has actually be modified

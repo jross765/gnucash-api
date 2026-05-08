@@ -11,6 +11,7 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.ConstTest;
 import org.gnucash.api.read.GnuCashCustomer;
 import org.gnucash.api.read.aux.GCshBillTerms;
@@ -34,7 +35,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import junit.framework.JUnit4TestAdapter;
-import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 public class TestGnuCashWritableCustomerImpl {
 	private static final GCshCustID CUST_1_ID = TestGnuCashCustomerImpl.CUST_1_ID;
@@ -188,7 +188,7 @@ public class TestGnuCashWritableCustomerImpl {
 
 		cust.setNumber("LUCKLUK01");
 		cust.setName("Lucky Luke");
-		cust.setCredit(new FixedPointNumber(10600.55));
+		cust.setCredit(BigFraction.of(1060055, 100));
 		cust.setNotes("He draws quicker than his shadow does");
 
 		// ----------------------------

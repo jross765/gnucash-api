@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.Collection;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.ConstTest;
 import org.gnucash.api.read.aux.BillTermsTypeException;
 import org.gnucash.api.read.aux.GCshBillTerms;
@@ -24,7 +25,6 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import junit.framework.JUnit4TestAdapter;
-import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 public class TestGCshWritableBillTermsImpl {
 	public  static final GCshBllTrmID BLLTRM_1_ID = TestGCshBillTermsImpl.BLLTRM_1_ID;
@@ -302,7 +302,7 @@ public class TestGCshWritableBillTermsImpl {
 		bllTrm.setDescription("Une souris verte");
 		bllTrm.getWritableDays().setDueDays(31);
 		bllTrm.getWritableDays().setDiscountDays(11);
-		bllTrm.getWritableDays().setDiscount(new FixedPointNumber(4.1));
+		bllTrm.getWritableDays().setDiscount(BigFraction.of(41, 10));
 
 		// ----------------------------
 		// Check whether the object can has actually be modified
