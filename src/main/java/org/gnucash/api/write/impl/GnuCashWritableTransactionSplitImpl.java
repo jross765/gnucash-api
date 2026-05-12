@@ -25,51 +25,48 @@ import xyz.schnorxoborx.base.beanbase.IllegalTransactionSplitActionException;
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 /**
- * Extension of GnuCashTransactionSplitImpl to allow read-write access instead of
- * read-only access.
+ * Transaction-Split that can be newly created or removed from its transaction.
  */
 public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplitImpl 
-                                                 implements GnuCashWritableTransactionSplit 
+	                                             implements GnuCashWritableTransactionSplit 
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GnuCashWritableTransactionSplitImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(GnuCashWritableTransactionSplitImpl.class);
 
-    // ---------------------------------------------------------------
+	// ---------------------------------------------------------------
 
-    /**
-     * Our helper to implement the GnuCashWritableObject-interface.
-     */
-    private final GnuCashWritableObjectImpl helper = new GnuCashWritableObjectImpl(getWritableGnuCashFile(), this);
+	// Our helper to implement the GnuCashWritableObject-interface.
+	private final GnuCashWritableObjectImpl helper = new GnuCashWritableObjectImpl(getWritableGnuCashFile(), this);
 
-    // ---------------------------------------------------------------
+	// ---------------------------------------------------------------
 
-    /**
-     * @param jwsdpPeer   the JWSDP-object we are facading.
-     * @param trx the transaction we belong to
-     * @param addSpltToAcct 
-     * @param addSpltToInvc 
-     */
-    @SuppressWarnings("exports")
-    public GnuCashWritableTransactionSplitImpl(
-    		final GncTransaction.TrnSplits.TrnSplit jwsdpPeer,
-    		final GnuCashWritableTransaction trx, 
-    		final boolean addSpltToAcct, 
-    		final boolean addSpltToInvc) {
-    	super(jwsdpPeer, trx, 
-    		  addSpltToAcct, addSpltToInvc);
-    }
+	/**
+	 * @param jwsdpPeer   the JWSDP-object we are facading.
+	 * @param trx the transaction we belong to
+	 * @param addSpltToAcct 
+	 * @param addSpltToInvc 
+	 */
+	@SuppressWarnings("exports")
+	public GnuCashWritableTransactionSplitImpl(
+			final GncTransaction.TrnSplits.TrnSplit jwsdpPeer,
+			final GnuCashWritableTransaction trx, 
+			final boolean addSpltToAcct, 
+			final boolean addSpltToInvc) {
+		super(jwsdpPeer, trx, 
+			  addSpltToAcct, addSpltToInvc);
+	}
 
-    /**
-     * create a new split and and add it to the given transaction.
-     *
-     * @param trx  transaction the transaction we will belong to
-     * @param acct the account we take money (or other things) from or give it to
-     */
-    public GnuCashWritableTransactionSplitImpl(
-    		final GnuCashWritableTransactionImpl trx, 
-    		final GnuCashAccount acct) {
-    	super(createTransactionSplit_int(trx, acct,
-    									new GCshSpltID( GCshID.getNew()) ), 
-    		  trx, 
+	/**
+	 * create a new split and and add it to the given transaction.
+	 *
+	 * @param trx  transaction the transaction we will belong to
+	 * @param acct the account we take money (or other things) from or give it to
+	 */
+	public GnuCashWritableTransactionSplitImpl(
+			final GnuCashWritableTransactionImpl trx, 
+			final GnuCashAccount acct) {
+		super(createTransactionSplit_int(trx, acct,
+										new GCshSpltID( GCshID.getNew()) ), 
+			  trx, 
 				true, true);
 
 		// ::TODO ::CHECK
@@ -84,24 +81,24 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		// GnuCashWritableTransactionSplitImpl.this);
 
 		trx.addSplit(this);
-    }
+	}
 
-    public GnuCashWritableTransactionSplitImpl(final GnuCashTransactionSplit splt) {
-    	super(splt.getJwsdpPeer(), splt.getTransaction(), 
-    		  true, true);
-    }
+	public GnuCashWritableTransactionSplitImpl(final GnuCashTransactionSplit splt) {
+		super(splt.getJwsdpPeer(), splt.getTransaction(), 
+			  true, true);
+	}
 
-    public GnuCashWritableTransactionSplitImpl(
-    		final GnuCashTransactionSplit splt,
-    		final boolean addSpltToAcct,
-    		final boolean addSpltToInvc) {
-    	super(splt.getJwsdpPeer(), splt.getTransaction(), 
-    		  addSpltToAcct, addSpltToInvc);
-    }
+	public GnuCashWritableTransactionSplitImpl(
+			final GnuCashTransactionSplit splt,
+			final boolean addSpltToAcct,
+			final boolean addSpltToInvc) {
+		super(splt.getJwsdpPeer(), splt.getTransaction(), 
+			  addSpltToAcct, addSpltToInvc);
+	}
 
-    // ---------------------------------------------------------------
+	// ---------------------------------------------------------------
 
-    /**
+	/**
 	 * Creates a new Transaction and add's it to the given GnuCash file Don't modify
 	 * the ID of the new transaction!
 	 */
@@ -122,12 +119,12 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		}
 
 		if ( ! newID.isSet() ) {
-			throw new IllegalArgumentException("argument <newID> is null");
+			throw new IllegalArgumentException("argument <newID> is not set");
 		}
 
 		// This is needed because transaction.addSplit() later
-		// must have an already built List of splits --
-		// if not, it will create the list from the JAXB-Data.
+		// must have an already built list of splits.
+		// Otherwise, it will create the list from the JAXB-Data
 		// Thus, 2 instances of this GnuCashWritableTransactionSplitImpl
 		// will exist: One created in getSplits() from this JAXB-Data
 		// the other is this object.
@@ -162,27 +159,29 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		return jwsdpSplt;
 	}
 
-    // ---------------------------------------------------------------
+	// ---------------------------------------------------------------
 
-    /**
-     * @see GnuCashTransactionSplitImpl#getTransaction()
-     */
-    @Override
-    public GnuCashWritableTransaction getTransaction() {
-    	return (GnuCashWritableTransaction) super.getTransaction();
-    }
+	/**
+	 * @see GnuCashTransactionSplitImpl#getTransaction()
+	 */
+	@Override
+	public GnuCashWritableTransaction getTransaction() {
+		return (GnuCashWritableTransaction) super.getTransaction();
+	}
 
-    /**
-     * remove this split from its transaction.
-     */
-    public void remove() {
-    	getTransaction().remove(this);
-    }
+	/**
+	 * remove this split from its transaction.
+	 */
+	@Override
+	public void remove() {
+		getTransaction().remove(this);
+	}
 
-    /**
-     * @see GnuCashWritableTransactionSplit#setAccount(GnuCashAccount)
-     */
-    public void setAccountID(final GCshAcctID acctID) {
+	/**
+	 * @see GnuCashWritableTransactionSplit#setAccount(GnuCashAccount)
+	 */
+	@Override
+	public void setAccountID(final GCshAcctID acctID) {
 		if ( acctID == null ) {
 			throw new IllegalArgumentException("argument <acctID> is null");
 		}
@@ -211,42 +210,43 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 				helper.getPropertyChangeSupport().firePropertyChange("accountID", oldAcctID, acctID.toString());
 			}
 		}
-    }
+	}
 
-    /**
-     * @see GnuCashWritableTransactionSplit#setAccount(GnuCashAccount)
-     */
-    public void setAccount(final GnuCashAccount acct) {
+	/**
+	 * @see GnuCashWritableTransactionSplit#setAccount(GnuCashAccount)
+	 */
+	@Override
+	public void setAccount(final GnuCashAccount acct) {
 		if ( acct == null ) {
 			throw new IllegalArgumentException("argument <acct> is null");
 		}
 		
 		setAccountID(acct.getID());
-    }
+	}
 
-    /**
-     * @return true if the currency of transaction and account match
-     * 
-     * ::CHECK: What could we possibly need that for?
-     * 
-     * It is definitely *not* the case that a transaction's split's
-     * account's security/currency has to be the same as its resp.
-     * transaction's security/currency -- there are many real-world 
-     * instances where that is not / must not be the case (a dividend 
-     * transaction, for example).
-     * 
-     * This (or a similar) wrong assumption obviously was in one of
-     * the previous maintainers' mind, because such a check was
-     * coded into this lib before the current maintainer took over
-     * (and it took him a while to see the error).
-     * 
-     * It is, however, true that this condition must hold for at
-     * least *one* of a transaction's splits. But this is, by definition,
-     * a check to be performed on a transaction object, not a 
-     * single split object. For such a check, this could be a helper
-     * function.
-     */
-    private boolean isCmdtyMatching() {
+	/**
+	 * @return true if the currency of transaction and account match
+	 * 
+	 * ::CHECK: What could we possibly need that for?
+	 * 
+	 * It is definitely *not* the case that a transaction's split's
+	 * account's security/currency has to be the same as its resp.
+	 * transaction's security/currency -- there are many real-world 
+	 * instances where that is not / must not be the case (a dividend 
+	 * transaction, for example).
+	 * 
+	 * This (or a similar) wrong assumption obviously was in one of
+	 * the previous maintainers' mind, because such a check was
+	 * coded into this lib before the current maintainer took over
+	 * (and it took him a while to see the error).
+	 * 
+	 * It is, however, true that this condition must hold for at
+	 * least *one* of a transaction's splits. But this is, by definition,
+	 * a check to be performed on a transaction object, not a 
+	 * single split object. For such a check, this could be a helper
+	 * function.
+	 */
+	private boolean isCmdtyMatching() {
 		GnuCashAccount acct = getAccount();
 		if ( acct == null ) {
 			throw new IllegalStateException("account is null");
@@ -275,14 +275,14 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 
 		// Important: Don't forget to cast the IDs to their most basic type
 		return ((GCshCmdtyID) acctCmdtyID).equals( (GCshCmdtyID) trxCmdtyID );
-    }
+	}
 
-    /**
-     * @see GnuCashWritableTransactionSplit#setQuantity(FixedPointNumber)
-     */
-    @Override
-    @Deprecated
-    public void setQuantity(final FixedPointNumber qty) {
+	/**
+	 * @see GnuCashWritableTransactionSplit#setQuantity(FixedPointNumber)
+	 */
+	@Override
+	@Deprecated
+	public void setQuantity(final FixedPointNumber qty) {
 		if ( qty == null ) {
 			throw new NullPointerException("argument <qty> is null");
 		}
@@ -296,9 +296,9 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 				helper.getPropertyChangeSupport().firePropertyChange("quantity", oldQty, qty);
 			}
 		}
-    }
+	}
 
-    @Override
+	@Override
 	public void setQuantity(final BigFraction qty) {
 		if ( qty == null ) {
 			throw new IllegalArgumentException("argument <qty> is null");
@@ -314,7 +314,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 			}
 		}
 	}
-	
+
 	/**
 	 * @see GnuCashWritableTransactionSplit#setValue(FixedPointNumber)
 	 */
@@ -345,7 +345,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		BigFraction oldVal = getValueRat();
 		jwsdpPeer.setSplitValue(val.toString().replaceAll("\\s", ""));
 		getWritableGnuCashFile().setModified(true);
-	
+
 		if ( oldVal == null || ! oldVal.equals(val) ) {
 			if ( helper.getPropertyChangeSupport() != null ) {
 				helper.getPropertyChangeSupport().firePropertyChange("value", oldVal, val);
@@ -353,19 +353,20 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		}
 	}
 	
-    /**
-     * Set the description-text.
-     *
-     * @param descr the new description
-     */
-    public void setDescription(final String descr) {
+	/**
+	 * Set the description-text.
+	 *
+	 * @param descr the new description
+	 */
+	@Override
+	public void setDescription(final String descr) {
 		if ( descr == null ) {
 			throw new IllegalArgumentException("argument <descr> is null");
 		}
 
 		// Caution: empty string allowed here
 //		if ( descr.isBlank() ) {
-//		    throw new IllegalArgumentException("argument <descr> is blank");
+//			throw new IllegalArgumentException("argument <descr> is blank");
 //		}
 
 		String old = getJwsdpPeer().getSplitMemo();
@@ -377,19 +378,20 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 				helper.getPropertyChangeSupport().firePropertyChange("description", old, descr);
 			}
 		}
-    }
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void setAction(final Action act) {
-    	setActionStr(act.getLocaleString());
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setAction(final Action act) {
+		setActionStr(act.getLocaleString());
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void setActionStr(final String actStr) throws IllegalTransactionSplitActionException {
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setActionStr(final String actStr) throws IllegalTransactionSplitActionException {
 		if ( actStr == null ) {
 			throw new IllegalArgumentException("argument <actStr> is null");
 		}
@@ -407,9 +409,9 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 				helper.getPropertyChangeSupport().firePropertyChange("splitAction", oldActStr, actStr);
 			}
 		}
-    }
+	}
 
-    public void setLotID(final GCshLotID lotID) {
+	public void setLotID(final GCshLotID lotID) {
 		if ( lotID == null ) {
 			throw new IllegalArgumentException("argument <lotID> is null");
 		}
@@ -454,44 +456,44 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 //			slots.getSlot().add(slot);
 //		}
 
-    }
+	}
 
-    public void unsetLotID() {
+	public void unsetLotID() {
 		if ( getLotID() == null ) {
 			throw new IllegalStateException("no lot ID in this transaction split");
 		}
 
 		getJwsdpPeer().setSplitLot(null);
-    }
+	}
 
-    // --------------------- support for propertyChangeListeners ---------------
-
-    /**
-     * The GnuCash file is the top-level class to contain everything.
-     *
-     * @return the file we are associated with
-     */
-    @Override
-    public GnuCashWritableFileImpl getWritableGnuCashFile() {
-    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
-    }
-
-    /**
-     * The GnuCash file is the top-level class to contain everything.
-     *
-     * @return the file we are associated with
-     */
-    @Override
-    public GnuCashWritableFileImpl getGnuCashFile() {
-    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
-    }
-
-    // ---------------------------------------------------------------
+	// ---------------------------------------------------------------
 
 	/**
-     * @param name 
+	 * The GnuCash file is the top-level class to contain everything.
+	 *
+	 * @return the file we are associated with
+	 */
+	@Override
+	public GnuCashWritableFileImpl getWritableGnuCashFile() {
+		return (GnuCashWritableFileImpl) super.getGnuCashFile();
+	}
+
+	/**
+	 * The GnuCash file is the top-level class to contain everything.
+	 *
+	 * @return the file we are associated with
+	 */
+	@Override
+	public GnuCashWritableFileImpl getGnuCashFile() {
+		return (GnuCashWritableFileImpl) super.getGnuCashFile();
+	}
+
+	// ---------------------------------------------------------------
+
+	/**
+	 * @param name 
 	 * @param value 
-     */
+	 */
 	public void setUserDefinedAttribute(final String name, final String value) {
 		HasWritableUserDefinedAttributesImpl
 			.setUserDefinedAttributeCore(jwsdpPeer.getSplitSlots(),
@@ -503,10 +505,10 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		HasWritableUserDefinedAttributesImpl.cleanSlots(getJwsdpPeer().getSplitSlots());
 	}
 
-    // ---------------------------------------------------------------
+	// ---------------------------------------------------------------
 
-    @Override
-    public String toString() {
+	@Override
+	public String toString() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("GnuCashWritableTransactionSplitImpl [");
 
@@ -530,7 +532,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		buffer.append(", transaction-id=");
 		buffer.append(getTransaction().getID());
 
-		buffer.append(", accountID=");
+		buffer.append(", account-id=");
 		buffer.append(getAccountID());
 
 		buffer.append(", description='");
@@ -543,7 +545,8 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		buffer.append(getQuantity());
 
 		buffer.append("]");
+
 		return buffer.toString();
-    }
+	}
 
 }

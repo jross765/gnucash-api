@@ -1,6 +1,7 @@
 package org.gnucash.api.write;
 
 import java.time.LocalDate;
+import java.util.Currency;
 import java.util.List;
 
 import org.apache.commons.numbers.fraction.BigFraction;
@@ -9,6 +10,8 @@ import org.gnucash.api.write.aux.GCshWritableAccountLot;
 import org.gnucash.api.write.hlp.GnuCashWritableObject;
 import org.gnucash.api.write.hlp.HasWritableUserDefinedAttributes;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshCurrID;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
@@ -92,6 +95,14 @@ public interface GnuCashWritableAccount extends GnuCashAccount,
      * @see #getCmdtyID()
      */
     void setCmdtyID(GCshCmdtyID cmdtyID);
+
+    void setSecID(GCshSecID secID);
+
+    void setCurrID(GCshCurrID currID);
+
+    void setCurrency(Currency curr);
+
+    void setCurrency(String currCode);
 
     /**
      * @param newPrnt the new account or null to make it a top-level-account

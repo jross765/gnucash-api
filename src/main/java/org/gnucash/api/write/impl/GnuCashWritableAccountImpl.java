@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Currency;
 import java.util.HashSet;
 import java.util.List;
 
@@ -35,6 +36,8 @@ import org.gnucash.api.write.impl.hlp.GnuCashWritableObjectImpl;
 import org.gnucash.api.write.impl.hlp.HasWritableUserDefinedAttributesImpl;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
+import org.gnucash.base.basetypes.complex.GCshCurrID;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.complex.InvalidCmdtyTypeException;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshID;
@@ -92,12 +95,12 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 	public GnuCashWritableAccountImpl(final GnuCashAccountImpl acct, final boolean addSplits) {
 		super(constr_getPeer(acct), constr_getGCshFile(acct));
 
-    	if ( addSplits ) {
+		if ( addSplits ) {
 			if ( ! acct.isRootAccount() ) {
 				for ( GnuCashTransactionSplit splt : ((GnuCashFileImpl) acct.getGnuCashFile()).getTransactionSplits_readAfresh() ) {
 					if ( splt.getAccountID().equals(acct.getID()) ) {
 						super.addTransactionSplit(splt);
-						// NO:
+					// NO:
 //				    addTransactionSplit(new GnuCashTransactionSplitImpl(splt.getJwsdpPeer(), splt.getTransaction(), 
 //		                            false, false));
 					}
@@ -318,7 +321,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 
 		if ( getGnuCashFile().getTopAccountIDs().contains(getID()) ||
 			 getGnuCashFile().getRootAccountID().equals(getID()) ) {
-			LOGGER.error("Adding transaction split is forbidden for root and top-level accounts");
+			LOGGER.error("addTransactionSplit: Adding transaction split is forbidden for root and top-level accounts");
 			throw new UnsupportedOperationException("Adding transaction split is forbidden for root and top-level accounts");
 		}
 
@@ -342,7 +345,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 
 		if ( getGnuCashFile().getTopAccountIDs().contains(getID()) ||
 			 getGnuCashFile().getRootAccountID().equals(getID()) ) {
-			LOGGER.error("Removing transaction split is forbidden for root and top-level accounts");
+			LOGGER.error("removeTransactionSplit: Removing transaction split is forbidden for root and top-level accounts");
 			throw new UnsupportedOperationException("Removing transaction split is forbidden for root and top-level accounts");
 		}
 
@@ -478,7 +481,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 		if ( /* getGnuCashFile().getTopAccountIDs().contains(getID() ) || */
 			 getGnuCashFile().getRootAccountID().equals(getID()) ) {
 			// Sic, allowed for top-level accounts (as opposed to sister project)
-			LOGGER.error("Setting name is forbidden for root accounts");
+			LOGGER.error("setName: Setting name is forbidden for root accounts");
 			throw new UnsupportedOperationException("Setting name is forbidden for root accounts");
 		}
 
@@ -512,7 +515,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 
 		if ( getGnuCashFile().getTopAccountIDs().contains(getID()) ||
 			 getGnuCashFile().getRootAccountID().equals(getID()) ) {
-			LOGGER.error("Setting code is forbidden for root and top-level accounts");
+			LOGGER.error("setAccountCode: Setting code is forbidden for root and top-level accounts");
 			throw new UnsupportedOperationException("Setting code is forbidden for root and top-level accounts");
 		}
 
@@ -544,12 +547,12 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 
 		if ( getGnuCashFile().getTopAccountIDs().contains(getID())
 				|| getGnuCashFile().getRootAccountID().equals(getID()) ) {
-			LOGGER.error("Setting name is forbidden for root and top-level accounts");
+			LOGGER.error("setCmdtyNameSpace: Setting name is forbidden for root and top-level accounts");
 			throw new UnsupportedOperationException("Setting name is forbidden for root and top-level accounts");
 		}
 
 		String oldCmdtyNameSpace = getCmdtyID().getNameSpace();
-		if ( oldCmdtyNameSpace == cmdtyNameSpace ) {
+		if ( oldCmdtyNameSpace.equals(cmdtyNameSpace) ) {
 			return; // nothing has changed
 		}
 
@@ -560,6 +563,36 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 		PropertyChangeSupport propertyChangeFirer = helper.getPropertyChangeSupport();
 		if ( propertyChangeFirer != null ) {
 			propertyChangeFirer.firePropertyChange("commodityNameSpace", oldCmdtyNameSpace, cmdtyNameSpace);
+		}
+	}
+
+	private void setCmdtyCode(final String code) {
+		if ( code == null ) {
+			throw new IllegalArgumentException("argument <code> is null");
+		}
+
+		if ( code.isBlank() ) {
+			throw new IllegalArgumentException("argument <code> is blank");
+		}
+
+		if ( getGnuCashFile().getTopAccountIDs().contains(getID()) ||
+			 getGnuCashFile().getRootAccountID().equals(getID()) ) {
+			LOGGER.error("setCmdtyCode: Setting currency is forbidden for root and top-level accounts");
+			throw new UnsupportedOperationException("Setting name is forbidden for root and top-level accounts");
+		}
+
+		String oldCmdtyCode = getCmdtyID().getCode();
+		if ( oldCmdtyCode.equals(code) ) {
+			return; // nothing has changed
+		}
+
+		this.getJwsdpPeer().getActCommodity().setCmdtyId(code);
+		setIsModified();
+
+		// <<insert code to react further to this change here
+		PropertyChangeSupport propertyChangeFirer = helper.getPropertyChangeSupport();
+		if ( propertyChangeFirer != null ) {
+			propertyChangeFirer.firePropertyChange("commodityCode", oldCmdtyCode, code);
 		}
 	}
 
@@ -578,42 +611,72 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 
 //    	if ( getGnuCashFile().getTopAccountIDs().contains(getID()) ||
 //			 getGnuCashFile().getRootAccountID().equals(getID())) {
-//			LOGGER.error("Setting name is forbidden for root and top-level accounts");
+//			LOGGER.error("setCmdtyID: Setting security/currency is forbidden for root and top-level accounts");
 //			throw new UnsupportedOperationException("Setting name is forbidden for root and top-level accounts");
 //		}
 
 		setCmdtyNameSpace(cmdtyID.getNameSpace());
-		setCurrCode(cmdtyID.getCode());
+		setCmdtyCode(cmdtyID.getCode());
 	}
 
-	private void setCurrCode(final String currID) {
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setSecID(final GCshSecID secID) {
+		if ( secID == null ) {
+			throw new IllegalArgumentException("argument <secID> is null");
+		}
+
+		if ( ! secID.isSet() ) {
+			throw new IllegalArgumentException("argument <secID> is not set");
+		}
+
+		setCmdtyID(new GCshCmdtyID(secID));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setCurrID(final GCshCurrID currID) {
 		if ( currID == null ) {
 			throw new IllegalArgumentException("argument <currID> is null");
 		}
 
-		if ( currID.isBlank() ) {
-			throw new IllegalArgumentException("argument <currID> is null");
+		if ( ! currID.isSet() ) {
+			throw new IllegalArgumentException("argument <currID> is not set");
 		}
 
-		if ( getGnuCashFile().getTopAccountIDs().contains(getID()) ||
-			 getGnuCashFile().getRootAccountID().equals(getID()) ) {
-			LOGGER.error("Setting name is forbidden for root and top-level accounts");
-			throw new UnsupportedOperationException("Setting name is forbidden for root and top-level accounts");
+		setCmdtyID(new GCshCmdtyID(currID));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setCurrency(final Currency curr) {
+		if ( curr == null ) {
+			throw new IllegalArgumentException("argument <curr> is null");
+		}
+		
+		setCmdtyID(new GCshCurrID(curr));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setCurrency(final String currCode) {
+		if ( currCode == null ) {
+			throw new IllegalArgumentException("argument <currCode> is null");
 		}
 
-		String oldCurrId = getCmdtyID().getCode();
-		if ( oldCurrId == currID ) {
-			return; // nothing has changed
+		if ( currCode.isBlank() ) {
+			throw new IllegalArgumentException("argument <currCode> is blank");
 		}
 
-		this.getJwsdpPeer().getActCommodity().setCmdtyId(currID);
-		setIsModified();
-
-		// <<insert code to react further to this change here
-		PropertyChangeSupport propertyChangeFirer = helper.getPropertyChangeSupport();
-		if ( propertyChangeFirer != null ) {
-			propertyChangeFirer.firePropertyChange("currencyID", oldCurrId, currID);
-		}
+		setCurrency(Currency.getInstance(currCode));
 	}
 
 	// ----------------------------
@@ -641,12 +704,12 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 
 		if ( getGnuCashFile().getTopAccountIDs().contains(getID())
 				|| getGnuCashFile().getRootAccountID().equals(getID()) ) {
-			LOGGER.error("Setting description is forbidden for root and top-level accounts");
+			LOGGER.error("setDescription: Setting description is forbidden for root and top-level accounts");
 			throw new UnsupportedOperationException("Setting description is forbidden for root and top-level accounts");
 		}
 
 		String oldDescr = getDescription();
-		if ( oldDescr == descr ) {
+		if ( oldDescr.equals(descr) ) {
 			return; // nothing has changed
 		}
 
@@ -675,7 +738,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 
 		if ( getGnuCashFile().getTopAccountIDs().contains(getID()) ||
 			 getGnuCashFile().getRootAccountID().equals(getID()) ) {
-			LOGGER.error("Setting type is forbidden for root and top-level accounts");
+			LOGGER.error("setType: Setting type is forbidden for root and top-level accounts");
 			throw new UnsupportedOperationException("Setting type is forbidden for root and top-level accounts");
 		}
 
@@ -727,7 +790,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 
 		if ( getGnuCashFile().getTopAccountIDs().contains(getID()) ||
 			 getGnuCashFile().getRootAccountID().equals(getID()) ) {
-			LOGGER.error("Setting parent-account ID is forbidden for root and top-level accounts");
+			LOGGER.error("setParentAccountID: Setting parent-account ID is forbidden for root and top-level accounts");
 			throw new UnsupportedOperationException("Setting parent-account ID is forbidden for root and top-level accounts");
 		}
 
@@ -977,7 +1040,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 
 		if ( getGnuCashFile().getTopAccountIDs().contains(getID()) ||
 			 getGnuCashFile().getRootAccountID().equals(getID()) ) {
-			LOGGER.error("Adding user-defined attribute is forbidden for root and top-level accounts");
+			LOGGER.error("addUserDefinedAttribute: Adding user-defined attribute is forbidden for root and top-level accounts");
 			throw new UnsupportedOperationException("Adding user-defined attribute is forbidden for root and top-level accounts");
 		}
 
@@ -1007,7 +1070,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 
 		if ( getGnuCashFile().getTopAccountIDs().contains(getID()) ||
 			 getGnuCashFile().getRootAccountID().equals(getID()) ) {
-			LOGGER.error("Removing user-defined attribute is forbidden for root and top-level accounts");
+			LOGGER.error("removeUserDefinedAttribute: Removing user-defined attribute is forbidden for root and top-level accounts");
 			throw new UnsupportedOperationException("Removing user-defined attribute is forbidden for root and top-level accounts");
 		}
 
@@ -1035,7 +1098,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 
 		if ( getGnuCashFile().getTopAccountIDs().contains(getID()) ||
 			 getGnuCashFile().getRootAccountID().equals(getID()) ) {
-			LOGGER.error("Setting user-defined attribute is forbidden for root and top-level accounts");
+			LOGGER.error("setUserDefinedAttribute: Setting user-defined attribute is forbidden for root and top-level accounts");
 			throw new UnsupportedOperationException("Setting user-defined attribute is forbidden for root and top-level accounts");
 		}
 
