@@ -118,6 +118,10 @@
         <slot:key>Use a dedicated opening balance account identified by an 'equity-type' slot</slot:key>
         <slot:value type="string">Use a dedicated opening balance account identified by an 'equity-type' slot (requires at least Gnucash 4.3)</slot:value>
       </slot>
+      <slot>
+        <slot:key>Use natural signs in budget amounts</slot:key>
+        <slot:value type="string">Store budget amounts unreversed (i.e. natural) signs (requires at least Gnucash 3.8)</slot:value>
+      </slot>
     </slot:value>
   </slot>
   <slot>
@@ -216,6 +220,7 @@
 <gnc:count-data cd:type="commodity">7</gnc:count-data>
 <gnc:count-data cd:type="account">107</gnc:count-data>
 <gnc:count-data cd:type="transaction">17</gnc:count-data>
+<gnc:count-data cd:type="budget">1</gnc:count-data>
 <gnc:count-data cd:type="price">23</gnc:count-data>
 <gnc:count-data cd:type="gnc:GncBillTerm">3</gnc:count-data>
 <gnc:count-data cd:type="gnc:GncCustomer">3</gnc:count-data>
@@ -3039,6 +3044,202 @@
     </trn:split>
   </trn:splits>
 </gnc:transaction>
+<gnc:budget version="2.0.0">
+  <bgt:id type="guid">66d6d03d772f4825bab86986a54bf295</bgt:id>
+  <bgt:name>Budget 2026</bgt:name>
+  <bgt:description>Erstellt: 18.05.2026</bgt:description>
+  <bgt:num-periods>12</bgt:num-periods>
+  <bgt:recurrence version="1.0.0">
+    <recurrence:mult>1</recurrence:mult>
+    <recurrence:period_type>month</recurrence:period_type>
+    <recurrence:start>
+      <gdate>2026-01-01</gdate>
+    </recurrence:start>
+  </bgt:recurrence>
+  <bgt:slots>
+    <slot>
+      <slot:key>038dea402d134180a6a3ca748c9f6b4d</slot:key>
+      <slot:value type="frame">
+        <slot>
+          <slot:key>5</slot:key>
+          <slot:value type="numeric">100/1</slot:value>
+        </slot>
+      </slot:value>
+    </slot>
+    <slot>
+      <slot:key>22a7432b85844c88bd023ba3c3ba72aa</slot:key>
+      <slot:value type="frame">
+        <slot>
+          <slot:key>0</slot:key>
+          <slot:value type="numeric">1000/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>1</slot:key>
+          <slot:value type="numeric">1000/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>10</slot:key>
+          <slot:value type="numeric">1000/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>11</slot:key>
+          <slot:value type="numeric">1000/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>2</slot:key>
+          <slot:value type="numeric">1000/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>3</slot:key>
+          <slot:value type="numeric">1000/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>4</slot:key>
+          <slot:value type="numeric">1000/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>5</slot:key>
+          <slot:value type="numeric">1000/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>6</slot:key>
+          <slot:value type="numeric">1000/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>7</slot:key>
+          <slot:value type="numeric">1000/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>8</slot:key>
+          <slot:value type="numeric">1000/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>9</slot:key>
+          <slot:value type="numeric">1000/1</slot:value>
+        </slot>
+      </slot:value>
+    </slot>
+    <slot>
+      <slot:key>2b5f38b679e848ee8e397a3a43ed0eb2</slot:key>
+      <slot:value type="frame">
+        <slot>
+          <slot:key>2</slot:key>
+          <slot:value type="numeric">750/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>6</slot:key>
+          <slot:value type="numeric">1500/1</slot:value>
+        </slot>
+      </slot:value>
+    </slot>
+    <slot>
+      <slot:key>8a54850637cd4002be59eefc68a3ab80</slot:key>
+      <slot:value type="frame">
+        <slot>
+          <slot:key>0</slot:key>
+          <slot:value type="numeric">20000/100</slot:value>
+        </slot>
+        <slot>
+          <slot:key>1</slot:key>
+          <slot:value type="numeric">200/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>10</slot:key>
+          <slot:value type="numeric">200/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>11</slot:key>
+          <slot:value type="numeric">200/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>2</slot:key>
+          <slot:value type="numeric">200/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>3</slot:key>
+          <slot:value type="numeric">200/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>4</slot:key>
+          <slot:value type="numeric">200/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>5</slot:key>
+          <slot:value type="numeric">200/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>6</slot:key>
+          <slot:value type="numeric">200/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>7</slot:key>
+          <slot:value type="numeric">200/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>8</slot:key>
+          <slot:value type="numeric">200/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>9</slot:key>
+          <slot:value type="numeric">200/1</slot:value>
+        </slot>
+      </slot:value>
+    </slot>
+    <slot>
+      <slot:key>c258aa23358040a08fcfe1efad2a906c</slot:key>
+      <slot:value type="frame">
+        <slot>
+          <slot:key>0</slot:key>
+          <slot:value type="numeric">800/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>1</slot:key>
+          <slot:value type="numeric">800/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>10</slot:key>
+          <slot:value type="numeric">800/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>11</slot:key>
+          <slot:value type="numeric">800/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>2</slot:key>
+          <slot:value type="numeric">800/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>3</slot:key>
+          <slot:value type="numeric">800/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>4</slot:key>
+          <slot:value type="numeric">800/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>5</slot:key>
+          <slot:value type="numeric">800/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>6</slot:key>
+          <slot:value type="numeric">800/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>7</slot:key>
+          <slot:value type="numeric">800/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>8</slot:key>
+          <slot:value type="numeric">800/1</slot:value>
+        </slot>
+        <slot>
+          <slot:key>9</slot:key>
+          <slot:value type="numeric">800/1</slot:value>
+        </slot>
+      </slot:value>
+    </slot>
+  </bgt:slots>
+</gnc:budget>
 <gnc:GncBillTerm version="2.0.0">
   <billterm:guid type="guid">599bfe3ab5b84a73bf3acabc5abd5bc7</billterm:guid>
   <billterm:name>sofort</billterm:name>
