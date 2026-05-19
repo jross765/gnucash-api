@@ -8,6 +8,7 @@ public class Const {
   
   public static final String XML_DATA_TYPE_INTEGER  = "integer";
   public static final String XML_DATA_TYPE_STRING   = "string";
+  public static final String XML_DATA_TYPE_NUMERIC  = "numeric";
   public static final String XML_DATA_TYPE_TIMESPEC = "timespec";
   public static final String XML_DATA_TYPE_GDATE    = "gdate";
   public static final String XML_DATA_TYPE_GUID     = "guid";

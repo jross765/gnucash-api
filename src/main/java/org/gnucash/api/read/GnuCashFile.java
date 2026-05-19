@@ -7,6 +7,7 @@ import org.gnucash.api.pricedb.ComplexPriceTable;
 import org.gnucash.api.read.hlp.GnuCashObject;
 import org.gnucash.api.read.hlp.HasUserDefinedAttributes;
 import org.gnucash.api.read.hlp.fil.GnuCashFile_Acct;
+import org.gnucash.api.read.hlp.fil.GnuCashFile_Bdgt;
 import org.gnucash.api.read.hlp.fil.GnuCashFile_BllTrm;
 import org.gnucash.api.read.hlp.fil.GnuCashFile_Cmdty;
 import org.gnucash.api.read.hlp.fil.GnuCashFile_Cust;
@@ -37,6 +38,7 @@ public interface GnuCashFile extends GnuCashObject,
 									 GnuCashFile_Empl,
 									 GnuCashFile_Cmdty,
 									 GnuCashFile_Prc,
+									 GnuCashFile_Bdgt,
 									 GnuCashFile_BllTrm,
 									 GnuCashFile_TaxTab,
                                      HasUserDefinedAttributes 

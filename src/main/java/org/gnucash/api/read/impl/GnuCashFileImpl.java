@@ -41,6 +41,7 @@ import org.gnucash.api.generated.Price;
 import org.gnucash.api.pricedb.ComplexPriceTable;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashAccount.Type;
+import org.gnucash.api.read.GnuCashBudget;
 import org.gnucash.api.read.GnuCashCommodity;
 import org.gnucash.api.read.GnuCashCustomer;
 import org.gnucash.api.read.GnuCashEmployee;
@@ -61,6 +62,7 @@ import org.gnucash.api.read.impl.aux.GCshFileStats;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
 import org.gnucash.api.read.impl.hlp.fil.FileAccountManager;
 import org.gnucash.api.read.impl.hlp.fil.FileBillTermsManager;
+import org.gnucash.api.read.impl.hlp.fil.FileBudgetManager;
 import org.gnucash.api.read.impl.hlp.fil.FileCommodityManager;
 import org.gnucash.api.read.impl.hlp.fil.FileCustomerManager;
 import org.gnucash.api.read.impl.hlp.fil.FileEmployeeManager;
@@ -85,6 +87,7 @@ import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.complex.InvalidCmdtyIDException;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
+import org.gnucash.base.basetypes.simple.GCshBdgtID;
 import org.gnucash.base.basetypes.simple.GCshCustID;
 import org.gnucash.base.basetypes.simple.GCshEmplID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcEntrID;
@@ -156,6 +159,7 @@ public class GnuCashFileImpl implements GnuCashFile,
 	protected FileEmployeeManager emplMgr = null;
 	protected FileJobManager jobMgr = null;
 	protected FileCommodityManager cmdtyMgr = null;
+	protected FileBudgetManager bdgtMgr = null;
 
 	// ----------------------------
 
@@ -1116,6 +1120,38 @@ public class GnuCashFileImpl implements GnuCashFile,
 	}
 
 	// ---------------------------------------------------------------
+	
+	@Override
+	public GnuCashBudget getBudgetByID(GCshBdgtID bdgtID)
+	{
+		return bdgtMgr.getBudgetByID(bdgtID);
+	}
+
+	@Override
+	public Collection<GnuCashBudget> getBudgetsByName(String expr)
+	{
+		return bdgtMgr.getBudgetsByName(expr);
+	}
+
+	@Override
+	public Collection<GnuCashBudget> getBudgetsByName(String expr, boolean relaxed)
+	{
+		return bdgtMgr.getBudgetsByName(expr, relaxed);
+	}
+
+	@Override
+	public GnuCashBudget getBudgetByNameUniq(String expr) throws NoEntryFoundException, TooManyEntriesFoundException
+	{
+		return bdgtMgr.getBudgetByNameUniq(expr);
+	}
+
+	@Override
+	public Collection<GnuCashBudget> getBudgets()
+	{
+		return bdgtMgr.getBudgets();
+	}
+
+	// ---------------------------------------------------------------
 
 	/**
 	 * @param taxTabID ID of a tax table
@@ -1330,6 +1366,7 @@ public class GnuCashFileImpl implements GnuCashFile,
 		jobMgr      = new FileJobManager(this);
 		
 		cmdtyMgr    = new FileCommodityManager(this);
+		bdgtMgr     = new FileBudgetManager(this);
 		
 		taxTabMgr   = new FileTaxTableManager(this);
 		bllTrmMgr   = new FileBillTermsManager(this);

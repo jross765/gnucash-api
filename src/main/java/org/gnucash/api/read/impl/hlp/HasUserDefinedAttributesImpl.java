@@ -76,6 +76,7 @@ public class HasUserDefinedAttributesImpl // implements HasUserDefinedAttributes
 			if ( slot.getSlotKey().equals(nameFirst) ) {
 				if ( slot.getSlotValue().getType().equals(Const.XML_DATA_TYPE_STRING) || 
 					 slot.getSlotValue().getType().equals(Const.XML_DATA_TYPE_INTEGER) || 
+					 slot.getSlotValue().getType().equals(Const.XML_DATA_TYPE_NUMERIC) || 
 					 slot.getSlotValue().getType().equals(Const.XML_DATA_TYPE_GUID) ) {
 					List<Object> objList = slot.getSlotValue().getContent();
 					if ( objList == null || objList.size() == 0 )
