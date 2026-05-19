@@ -1148,18 +1148,14 @@
 						minOccurs="1">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="recurrence_mult"
-									type="xs:int">
+						<xs:element name="recurrence_mult" type="xs:int">
 						</xs:element>
-						<xs:element name="recurrence_period_type"
-									type="xs:string">
+						<xs:element name="recurrence_period_type" type="xs:string">
 						</xs:element>
 						<xs:element name="recurrence_start" type="recurrence_startType">
-
 						</xs:element>
 					</xs:sequence>
-					<xs:attribute name="version" type="xs:string"
-								  use="required">
+					<xs:attribute name="version" type="xs:string" use="required">
 					</xs:attribute>
 				</xs:complexType>
 			</xs:element>
