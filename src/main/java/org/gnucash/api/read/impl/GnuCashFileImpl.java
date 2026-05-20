@@ -1845,6 +1845,11 @@ public class GnuCashFileImpl implements GnuCashFile,
 	}
 
 	@SuppressWarnings("exports")
+	public FileBudgetManager getBdgtMgr() {
+		return bdgtMgr;
+	}
+
+	@SuppressWarnings("exports")
 	public FilePriceManager getPrcMgr() {
 		return prcMgr;
 	}
@@ -1900,6 +1905,7 @@ public class GnuCashFileImpl implements GnuCashFile,
 			strm.println("  No. of employees:                 " + stats.getNofEntriesEmployees(GCshFileStats.Type.RAW));
 			strm.println("  No. of (generic) jobs:            " + stats.getNofEntriesGenerJobs(GCshFileStats.Type.RAW));
 			strm.println("  No. of commodities:               " + stats.getNofEntriesCommodities(GCshFileStats.Type.RAW));
+			strm.println("  No. of budgets:                   " + stats.getNofEntriesBudgets(GCshFileStats.Type.RAW));
 			strm.println("  No. of tax tables:                " + stats.getNofEntriesTaxTables(GCshFileStats.Type.RAW));
 			strm.println("  No. of bill terms:                " + stats.getNofEntriesBillTerms(GCshFileStats.Type.RAW));
 			strm.println("  No. of prices:                    " + stats.getNofEntriesPrices(GCshFileStats.Type.RAW));
@@ -1960,11 +1966,16 @@ public class GnuCashFileImpl implements GnuCashFile,
     		strm.println(" - " + job.toString());
     	}
 
-
     	strm.println("");
     	strm.println("Commodities:");
     	for ( GnuCashCommodity cmdty : getCommodities() ) {
     		strm.println(" - " + cmdty.toString());
+    	}
+
+    	strm.println("");
+    	strm.println("Budgets:");
+    	for ( GnuCashBudget bdgt : getBudgets() ) {
+    		strm.println(" - " + bdgt.toString());
     	}
 
     	strm.println("");
@@ -2019,6 +2030,7 @@ public class GnuCashFileImpl implements GnuCashFile,
 			result += "    No. of employees:                 " + stats.getNofEntriesEmployees(GCshFileStats.Type.RAW) + "\n";
 			result += "    No. of (generic) jobs:            " + stats.getNofEntriesGenerJobs(GCshFileStats.Type.RAW) + "\n";
 			result += "    No. of commodities:               " + stats.getNofEntriesCommodities(GCshFileStats.Type.RAW) + "\n";
+			result += "    No. of budgets:                   " + stats.getNofEntriesBudgets(GCshFileStats.Type.RAW) + "\n";
 			result += "    No. of tax tables:                " + stats.getNofEntriesTaxTables(GCshFileStats.Type.RAW) + "\n";
 			result += "    No. of bill terms:                " + stats.getNofEntriesBillTerms(GCshFileStats.Type.RAW) + "\n";
 			result += "    No. of prices:                    " + stats.getNofEntriesPrices(GCshFileStats.Type.RAW) + "\n";

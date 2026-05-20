@@ -1,7 +1,6 @@
 package org.gnucash.api.read.impl.aux;
 
 import java.math.BigInteger;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,8 +23,6 @@ public class GCshBudgetPeriodImpl extends GnuCashObjectImpl
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(GCshBudgetPeriodImpl.class);
 
-    protected static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern(Const.STANDARD_DATE_FORMAT);
-    
     // -----------------------------------------------------------
 
     protected final Slot jwsdpPeer;
@@ -72,13 +69,15 @@ public class GCshBudgetPeriodImpl extends GnuCashObjectImpl
     // -----------------------------------------------------------------
 
 	@Override
-	public BigInteger getPeriodIndex() {
+	public BigInteger getIndex() {
 		if ( jwsdpPeer.getSlotKey() == null ) {
 			return null;
 		}
 		
 		return new BigInteger(jwsdpPeer.getSlotKey());
 	}
+
+    // ----------------------------
 
 	@Override
 	public BigFraction getAmount() {
@@ -100,14 +99,14 @@ public class GCshBudgetPeriodImpl extends GnuCashObjectImpl
 		Object valElt = objList.get(0);
 		if ( valElt == null )
 			return null;
-		LOGGER.debug("getAmount: User-defined attribute for key '" + getPeriodIndex() + "' may not be a String."
+		LOGGER.debug("getAmount: User-defined attribute for key '" + getIndex() + "' may not be a String."
 				+ " It is of type [" + valElt.getClass().getName() + "]");
 		if ( valElt instanceof String ) {
 			amtStr = (String) valElt;
 		} else if ( valElt instanceof JAXBElement ) {
 			amtStr = ((JAXBElement) valElt).getValue().toString();
 		} else {
-			LOGGER.error("getAmount: User-defined attribute for key '" + getPeriodIndex() + "' may not be a String."
+			LOGGER.error("getAmount: User-defined attribute for key '" + getIndex() + "' may not be a String."
 					+ " It is of UNKNOWN type [" + valElt.getClass().getName() + "]");
 			throw new IllegalStateException("Unknown type");
 		}
@@ -125,16 +124,16 @@ public class GCshBudgetPeriodImpl extends GnuCashObjectImpl
     	return AmountFormatter_BF.formatAmount( getGnuCashFile(),
     											getAmount(), acct.getCmdtyID(), lcl );	}
 
-    // ----------------------------
+    // -----------------------------------------------------------------
 
     @Override
     public String toString() {
 		String result = "GCshBudgetPeriodImpl [";
 
 		try {
-			result += "period-index=" + getPeriodIndex();
+			result += "index=" + getIndex();
 		} catch (Exception e) {
-			result += "period-index=" + "ERROR";
+			result += "index=" + "ERROR";
 		}
 
 		try {

@@ -1,6 +1,7 @@
 package org.gnucash.api.read.impl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -63,6 +64,7 @@ public class TestGnuCashBudgetImpl {
 	@Test
 	public void test01_1() throws Exception {
 		bdgt = gcshFile.getBudgetByID(BDGT_1_ID);
+		assertNotEquals(null, bdgt);
 
 		assertEquals(BDGT_1_ID, bdgt.getID());
 		assertEquals("Budget 2026", bdgt.getName());
@@ -90,55 +92,56 @@ public class TestGnuCashBudgetImpl {
 		GCshBudgetAccount bdgtAcct = bdgt.getAccounts().get(0);
 		assertEquals(1, bdgtAcct.getPeriods().size());
 		// .
-		assertEquals(5, bdgtAcct.getPeriods().get(0).getPeriodIndex().intValue());
+		assertEquals(5, bdgtAcct.getPeriods().get(0).getIndex().intValue());
 		assertEquals(100.0, bdgtAcct.getPeriods().get(0).getAmount().doubleValue(), ConstTest.DIFF_TOLERANCE);
 		assertEquals("100,00 €", bdgtAcct.getPeriods().get(0).getAmountFormatted());
 		// .
-		assertEquals(5, bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getPeriodIndex().intValue());
-		assertEquals(100.0, bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getAmount().doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals("100,00 €", bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getAmountFormatted());
+		// The rest is redundant, because there is only one period for this account:
+//		assertEquals(5, bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getPeriodIndex().intValue());
+//		assertEquals(100.0, bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getAmount().doubleValue(), ConstTest.DIFF_TOLERANCE);
+//		assertEquals("100,00 €", bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getAmountFormatted());
 		
 		bdgtAcct = bdgt.getAccounts().get(1);
 		assertEquals(12, bdgtAcct.getPeriods().size());
 		// .
-		assertEquals(0, bdgtAcct.getPeriods().get(0).getPeriodIndex().intValue());
+		assertEquals(0, bdgtAcct.getPeriods().get(0).getIndex().intValue());
 		assertEquals(1000.0, bdgtAcct.getPeriods().get(0).getAmount().doubleValue(), ConstTest.DIFF_TOLERANCE);
 		assertEquals("1.000,00 €", bdgtAcct.getPeriods().get(0).getAmountFormatted());
 		// .
-		assertEquals(9, bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getPeriodIndex().intValue());
+		assertEquals(9, bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getIndex().intValue());
 		assertEquals(1000.0, bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getAmount().doubleValue(), ConstTest.DIFF_TOLERANCE);
 		assertEquals("1.000,00 €", bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getAmountFormatted());
 		
 		bdgtAcct = bdgt.getAccounts().get(2);
 		assertEquals(2, bdgtAcct.getPeriods().size());
 		// .
-		assertEquals(2, bdgtAcct.getPeriods().get(0).getPeriodIndex().intValue());
+		assertEquals(2, bdgtAcct.getPeriods().get(0).getIndex().intValue());
 		assertEquals(750.0, bdgtAcct.getPeriods().get(0).getAmount().doubleValue(), ConstTest.DIFF_TOLERANCE);
 		assertEquals("750,00 €", bdgtAcct.getPeriods().get(0).getAmountFormatted());
 		// .
-		assertEquals(6, bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getPeriodIndex().intValue());
+		assertEquals(6, bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getIndex().intValue());
 		assertEquals(1500.0, bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getAmount().doubleValue(), ConstTest.DIFF_TOLERANCE);
 		assertEquals("1.500,00 €", bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getAmountFormatted());
 		
 		bdgtAcct = bdgt.getAccounts().get(3);
 		assertEquals(12, bdgtAcct.getPeriods().size());
 		// .
-		assertEquals(0, bdgtAcct.getPeriods().get(0).getPeriodIndex().intValue());
+		assertEquals(0, bdgtAcct.getPeriods().get(0).getIndex().intValue());
 		assertEquals(200.0, bdgtAcct.getPeriods().get(0).getAmount().doubleValue(), ConstTest.DIFF_TOLERANCE);
 		assertEquals("200,00 €", bdgtAcct.getPeriods().get(0).getAmountFormatted());
 		// .
-		assertEquals(9, bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getPeriodIndex().intValue());
+		assertEquals(9, bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getIndex().intValue());
 		assertEquals(200.0, bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getAmount().doubleValue(), ConstTest.DIFF_TOLERANCE);
 		assertEquals("200,00 €", bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getAmountFormatted());
 		
 		bdgtAcct = bdgt.getAccounts().get(4);
 		assertEquals(12, bdgtAcct.getPeriods().size());
 		// .
-		assertEquals(0, bdgtAcct.getPeriods().get(0).getPeriodIndex().intValue());
+		assertEquals(0, bdgtAcct.getPeriods().get(0).getIndex().intValue());
 		assertEquals(800.0, bdgtAcct.getPeriods().get(0).getAmount().doubleValue(), ConstTest.DIFF_TOLERANCE);
 		assertEquals("800,00 €", bdgtAcct.getPeriods().get(0).getAmountFormatted());
 		// .
-		assertEquals(9, bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getPeriodIndex().intValue());
+		assertEquals(9, bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getIndex().intValue());
 		assertEquals(800.0, bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getAmount().doubleValue(), ConstTest.DIFF_TOLERANCE);
 		assertEquals("800,00 €", bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1).getAmountFormatted());
 	}

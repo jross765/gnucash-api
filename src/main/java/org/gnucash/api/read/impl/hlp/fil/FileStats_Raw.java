@@ -1,6 +1,7 @@
 package org.gnucash.api.read.impl.hlp.fil;
 
 import org.gnucash.api.generated.GncAccount;
+import org.gnucash.api.generated.GncBudget;
 import org.gnucash.api.generated.GncCommodity;
 import org.gnucash.api.generated.GncGncBillTerm;
 import org.gnucash.api.generated.GncGncCustomer;
@@ -181,6 +182,19 @@ public class FileStats_Raw implements FileStats {
 
 		for ( Object bookElement : gcshFile.getRootElement().getGncBook().getBookElements() ) {
 			if ( bookElement instanceof GncCommodity ) {
+				result++;
+			}
+		}
+
+		return result;
+	}
+
+	@Override
+	public int getNofEntriesBudgets() {
+		int result = 0;
+
+		for ( Object bookElement : gcshFile.getRootElement().getGncBook().getBookElements() ) {
+			if ( bookElement instanceof GncBudget ) {
 				result++;
 			}
 		}

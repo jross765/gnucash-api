@@ -119,6 +119,15 @@ public class FileStats_Counters implements FileStats {
 	}
 
 	@Override
+	public int getNofEntriesBudgets() {
+		try {
+			return gcshFile.getCountDataFor("budget");
+		} catch ( IllegalArgumentException exc ) {
+			return ERROR;
+		}
+	}
+
+	@Override
 	public int getNofEntriesPrices() {
 		try {
 			return gcshFile.getCountDataFor("price");

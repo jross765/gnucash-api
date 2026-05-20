@@ -10,10 +10,12 @@ public interface GCshBudgetPeriod {
 
 	// ---------------------------------------------------------------
 
-    BigInteger  getPeriodIndex(); // sic, not month, just abstract index
+    BigInteger  getIndex(); // sic, not month, just abstract index
+
+    // ----------------------------
     
     BigFraction getAmount();
     
     String      getAmountFormatted();
-    
+
 }

@@ -177,6 +177,18 @@ public class GCshFileStats {
 		return FileStats.ERROR; // Compiler happy
     }
     
+    public int getNofEntriesBudgets(Type type) {
+		if ( type == Type.RAW ) {
+			return raw.getNofEntriesBudgets();
+		} else if ( type == Type.COUNTER ) {
+			return cnt.getNofEntriesBudgets();
+		} else if ( type == Type.CACHE ) {
+			return che.getNofEntriesBudgets();
+		}
+
+		return FileStats.ERROR; // Compiler happy
+    }
+    
     public int getNofEntriesPrices(Type type) {
 		if ( type == Type.RAW ) {
 			return raw.getNofEntriesPrices();

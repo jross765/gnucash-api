@@ -23,11 +23,11 @@ public interface GnuCashBudget extends GnuCashObject,
     int getNofPeriods();
     
     GCshBudgetRecurrence getRecurrence();
-    
+
     // ---------------------------------------------------------------
     
     List<GCshBudgetAccount> getAccounts();
 	
-    List<GCshBudgetPeriod>  getPeriods(GCshAcctID acttID);
+    List<GCshBudgetPeriod>  getPeriods(GCshAcctID acctID);
 	
 }

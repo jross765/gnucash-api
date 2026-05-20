@@ -23,6 +23,7 @@ public class FileStats_Cache implements FileStats {
 	private FileJobManager          jobMgr = null;
 
 	private FileCommodityManager    cmdtyMgr = null;
+	private FileBudgetManager       bdgtMgr = null;
 	private FilePriceManager        prcMgr = null;
 
 	private FileTaxTableManager     taxTabMgr = null;
@@ -30,11 +31,20 @@ public class FileStats_Cache implements FileStats {
 
 	// ---------------------------------------------------------------
 
-	public FileStats_Cache(final FileAccountManager acctMgr, final FileTransactionManager trxMgr,
-			final FileInvoiceManager invcMgr, final FileInvoiceEntryManager invcEntrMgr,
-			final FileCustomerManager custMgr, final FileVendorManager vendMgr, final FileEmployeeManager emplMgr,
-			final FileJobManager jobMgr, final FileCommodityManager cmdtyMgr, final FilePriceManager prcMgr,
-			final FileTaxTableManager taxTabMgr, final FileBillTermsManager bllTrmMgr) {
+	public FileStats_Cache(
+			final FileAccountManager acctMgr,
+			final FileTransactionManager trxMgr,
+			final FileInvoiceManager invcMgr,
+			final FileInvoiceEntryManager invcEntrMgr,
+			final FileCustomerManager custMgr,
+			final FileVendorManager vendMgr,
+			final FileEmployeeManager emplMgr,
+			final FileJobManager jobMgr,
+			final FileCommodityManager cmdtyMgr,
+			final FileBudgetManager bdgtMgr,
+			final FilePriceManager prcMgr,
+			final FileTaxTableManager taxTabMgr,
+			final FileBillTermsManager bllTrmMgr) {
 		this.acctMgr = acctMgr;
 		this.trxMgr = trxMgr;
 		this.invcMgr = invcMgr;
@@ -44,6 +54,7 @@ public class FileStats_Cache implements FileStats {
 		this.emplMgr = emplMgr;
 		this.jobMgr = jobMgr;
 		this.cmdtyMgr = cmdtyMgr;
+		this.bdgtMgr = bdgtMgr;
 		this.prcMgr = prcMgr;
 		this.taxTabMgr = taxTabMgr;
 		this.bllTrmMgr = bllTrmMgr;
@@ -59,6 +70,7 @@ public class FileStats_Cache implements FileStats {
 		this.emplMgr = gcshFile.getEmplMgr();
 		this.jobMgr = gcshFile.getJobMgr();
 		this.cmdtyMgr = gcshFile.getCmdtyMgr();
+		this.bdgtMgr = gcshFile.getBdgtMgr();
 		this.prcMgr = gcshFile.getPrcMgr();
 		this.taxTabMgr = gcshFile.getTaxTabMgr();
 		this.bllTrmMgr = gcshFile.getBllTrmMgr();
@@ -125,6 +137,11 @@ public class FileStats_Cache implements FileStats {
 	@Override
 	public int getNofEntriesCommodities() {
 		return cmdtyMgr.getNofEntriesCommodityMap();
+	}
+
+	@Override
+	public int getNofEntriesBudgets() {
+		return bdgtMgr.getNofEntriesBudgetMap();
 	}
 
 	@Override
