@@ -22,7 +22,6 @@ import jakarta.xml.bind.JAXBElement;
 public class GCshBudgetPeriodImpl extends GnuCashObjectImpl 
 							      implements GCshBudgetPeriod 
 {
-    @SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(GCshBudgetPeriodImpl.class);
 
     protected static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern(Const.STANDARD_DATE_FORMAT);
@@ -33,7 +32,7 @@ public class GCshBudgetPeriodImpl extends GnuCashObjectImpl
 
     // -----------------------------------------------------------
     
-    protected GCshBudgetAccount parent = null;
+    protected final GCshBudgetAccount parent;
 
     // -----------------------------------------------------------
 

@@ -3,11 +3,14 @@ package org.gnucash.api.read.impl;
 import static org.junit.Assert.assertEquals;
 
 import java.io.InputStream;
+import java.time.LocalDate;
 
 import org.gnucash.api.ConstTest;
 import org.gnucash.api.read.GnuCashBudget;
 import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.aux.GCshBudgetAccount;
+import org.gnucash.api.read.aux.GCshBudgetRecurrence;
+import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshBdgtID;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,6 +66,13 @@ public class TestGnuCashBudgetImpl {
 
 		assertEquals(BDGT_1_ID, bdgt.getID());
 		assertEquals("Budget 2026", bdgt.getName());
+		assertEquals("Erstellt: 18.05.2026", bdgt.getDescription());
+		
+		assertEquals(1, bdgt.getRecurrence().getMult());
+		assertEquals(GCshBudgetRecurrence.PeriodType.MONTH, bdgt.getRecurrence().getPeriodType());
+		assertEquals(LocalDate.of(2026, 1, 1), bdgt.getRecurrence().getStart());
+		
+		assertEquals(12, bdgt.getNofPeriods());
 		
 		assertEquals(5, bdgt.getAccounts().size());
 		assertEquals("038dea402d134180a6a3ca748c9f6b4d", bdgt.getAccounts().get(0).getAcctID().toString());
@@ -70,6 +80,12 @@ public class TestGnuCashBudgetImpl {
 		assertEquals("2b5f38b679e848ee8e397a3a43ed0eb2", bdgt.getAccounts().get(2).getAcctID().toString());
 		assertEquals("8a54850637cd4002be59eefc68a3ab80", bdgt.getAccounts().get(3).getAcctID().toString());
 		assertEquals("c258aa23358040a08fcfe1efad2a906c", bdgt.getAccounts().get(4).getAcctID().toString());
+		
+		assertEquals(1,  bdgt.getPeriods(new GCshAcctID("038dea402d134180a6a3ca748c9f6b4d")).size());
+		assertEquals(12, bdgt.getPeriods(new GCshAcctID("22a7432b85844c88bd023ba3c3ba72aa")).size());
+		assertEquals(2,  bdgt.getPeriods(new GCshAcctID("2b5f38b679e848ee8e397a3a43ed0eb2")).size());
+		assertEquals(12, bdgt.getPeriods(new GCshAcctID("8a54850637cd4002be59eefc68a3ab80")).size());
+		assertEquals(12, bdgt.getPeriods(new GCshAcctID("c258aa23358040a08fcfe1efad2a906c")).size());
 
 		GCshBudgetAccount bdgtAcct = bdgt.getAccounts().get(0);
 		assertEquals(1, bdgtAcct.getPeriods().size());

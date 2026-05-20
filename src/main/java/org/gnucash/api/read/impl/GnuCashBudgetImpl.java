@@ -9,9 +9,13 @@ import org.gnucash.api.generated.SlotsType;
 import org.gnucash.api.read.GnuCashBudget;
 import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.aux.GCshBudgetAccount;
+import org.gnucash.api.read.aux.GCshBudgetPeriod;
+import org.gnucash.api.read.aux.GCshBudgetRecurrence;
 import org.gnucash.api.read.impl.aux.GCshBudgetAccountImpl;
+import org.gnucash.api.read.impl.aux.GCshBudgetRecurrenceImpl;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
+import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshBdgtID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,6 +75,29 @@ public class GnuCashBudgetImpl extends GnuCashObjectImpl
     	return jwsdpPeer.getBgtName();
 	}
 
+	@Override
+	public String getDescription() {
+		if ( jwsdpPeer.getBgtDescription() == null ) {
+			return null;
+		}
+		
+		return jwsdpPeer.getBgtDescription().getValue().toString();
+	}
+
+	@Override
+	public int getNofPeriods() {
+		return jwsdpPeer.getBgtNumPeriods();
+	}
+
+	@Override
+	public GCshBudgetRecurrence getRecurrence() {
+		if ( jwsdpPeer.getBgtRecurrence() == null ) {
+			return null;
+		}
+		
+		return new GCshBudgetRecurrenceImpl(this, jwsdpPeer.getBgtRecurrence(), getGnuCashFile());
+	}
+
     // -----------------------------------------------------------
     
     @Override
@@ -91,11 +118,24 @@ public class GnuCashBudgetImpl extends GnuCashObjectImpl
 		return result;
     }
 
+    @Override
+    public List<GCshBudgetPeriod> getPeriods(final GCshAcctID acctID) {
+		// List<GCshBudgetPeriod> result = new ArrayList<GCshBudgetPeriod>();
+
+		for ( GCshBudgetAccount acct : getAccounts() ) {
+			if ( acct.getAcctID().equals( acctID ) ) {
+				return acct.getPeriods();
+			}
+		}
+		
+		return null;
+    }
+
     // -----------------------------------------------------------------
+	// ::CHECK
     
 	@Override
-	public String getUserDefinedAttribute(String name)
-	{
+	public String getUserDefinedAttribute(String name) {
 		if ( name == null ) {
 			throw new IllegalArgumentException("argument <name> is null");
 		}
@@ -113,8 +153,7 @@ public class GnuCashBudgetImpl extends GnuCashObjectImpl
 	}
 
 	@Override
-	public List<String> getUserDefinedAttributeKeys()
-	{
+	public List<String> getUserDefinedAttributeKeys() {
 		if ( jwsdpPeer.getBgtSlots() == null ) {
 			return null;
 		}
@@ -131,7 +170,10 @@ public class GnuCashBudgetImpl extends GnuCashObjectImpl
 
 		result += "id=" + getID() + ", ";
 		result += "name='" + getName() + "', ";
+		result += "descr='" + getDescription() + "', ";
+		result += "recurr=" + getRecurrence() + ", ";
 		
+		result += "nof-periods=" + getNofPeriods() + ", ";
 		result += "nof-accounts=" + getAccounts().size();
 		
 		result += "]";

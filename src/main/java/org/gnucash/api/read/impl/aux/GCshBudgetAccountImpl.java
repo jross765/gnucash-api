@@ -17,16 +17,15 @@ import org.slf4j.LoggerFactory;
 public class GCshBudgetAccountImpl extends GnuCashObjectImpl 
 							       implements GCshBudgetAccount 
 {
-    @SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(GCshBudgetAccountImpl.class);
 
     // -----------------------------------------------------------
 
-    protected final Slot jwsdpPeer;
+	protected final Slot jwsdpPeer;
 
     // -----------------------------------------------------------
     
-    protected GnuCashBudget parent = null;
+	protected final GnuCashBudget parent;
 
     // -----------------------------------------------------------
 
