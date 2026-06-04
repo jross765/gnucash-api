@@ -40,6 +40,7 @@ import org.gnucash.api.generated.ObjectFactory;
 import org.gnucash.api.generated.Price;
 import org.gnucash.api.generated.SlotsType;
 import org.gnucash.api.read.GnuCashAccount;
+import org.gnucash.api.read.GnuCashBudget;
 import org.gnucash.api.read.GnuCashCommodity;
 import org.gnucash.api.read.GnuCashCustomer;
 import org.gnucash.api.read.GnuCashEmployee;
@@ -55,6 +56,7 @@ import org.gnucash.api.read.TaxTableNotFoundException;
 import org.gnucash.api.read.aux.GCshBillTerms;
 import org.gnucash.api.read.aux.GCshTaxTable;
 import org.gnucash.api.read.impl.GnuCashAccountImpl;
+import org.gnucash.api.read.impl.GnuCashBudgetImpl;
 import org.gnucash.api.read.impl.GnuCashCommodityImpl;
 import org.gnucash.api.read.impl.GnuCashCustomerImpl;
 import org.gnucash.api.read.impl.GnuCashEmployeeImpl;
@@ -74,6 +76,7 @@ import org.gnucash.api.read.impl.spec.GnuCashVendorJobImpl;
 import org.gnucash.api.read.spec.GnuCashCustomerJob;
 import org.gnucash.api.read.spec.GnuCashVendorJob;
 import org.gnucash.api.write.GnuCashWritableAccount;
+import org.gnucash.api.write.GnuCashWritableBudget;
 import org.gnucash.api.write.GnuCashWritableCommodity;
 import org.gnucash.api.write.GnuCashWritableCustomer;
 import org.gnucash.api.write.GnuCashWritableEmployee;
@@ -120,6 +123,7 @@ import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
+import org.gnucash.base.basetypes.simple.GCshBdgtID;
 import org.gnucash.base.basetypes.simple.GCshCustID;
 import org.gnucash.base.basetypes.simple.GCshEmplID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcEntrID;
@@ -460,6 +464,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		int cntTaxTable = 0;
 		int cntBillTerm = 0;
 		int cntCommodity = 0;
+		int cntBudget = 0;
 		int cntPrice = 0;
 
 		/**
@@ -494,6 +499,8 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 				cntBillTerm++;
 			} else if ( element instanceof GncCommodity ) {
 				cntCommodity++;
+			} else if ( element instanceof GncBudget ) {
+				cntBudget++;
 			} else if ( element instanceof GncPricedb ) {
 				cntPrice += ((GncPricedb) element).getPrice().size();
 			} else if ( element instanceof GncTemplateTransactions ) {
@@ -527,7 +534,8 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		setCountDataFor("gnc:GncJob", cntJob);
 		setCountDataFor("gnc:GncTaxTable", cntTaxTable);
 		setCountDataFor("gnc:GncBillTerm", cntBillTerm);
-		setCountDataFor("commodity", cntCommodity);
+		setCountDataFor("gnc:commodity", cntCommodity);
+		setCountDataFor("gnc:Budget", cntBudget);
 		setCountDataFor("price", cntPrice);
 
 		// Make sure the correct sort-order of the entity-types is honored
@@ -584,6 +592,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		jobMgr      = new org.gnucash.api.write.impl.hlp.fil.FileJobManager(this);
 		
 		cmdtyMgr    = new org.gnucash.api.write.impl.hlp.fil.FileCommodityManager(this);
+		bdgtMgr     = new org.gnucash.api.write.impl.hlp.fil.FileBudgetManager(this);
 
 		taxTabMgr   = new org.gnucash.api.write.impl.hlp.fil.FileTaxTableManager(this);
 		bllTrmMgr   = new org.gnucash.api.write.impl.hlp.fil.FileBillTermsManager(this);
@@ -2165,6 +2174,55 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		}
 
 		return result;
+	}
+
+	// ---------------------------------------------------------------
+	
+	@Override
+	public GnuCashWritableBudget getWritableBudgetByID(GCshBdgtID bdgtID) {
+		GnuCashBudget bdgt = super.getBudgetByID(bdgtID);
+		return new GnuCashWritableBudgetImpl((GnuCashBudgetImpl) bdgt);
+	}
+
+	@Override
+	public List<GnuCashWritableBudget> getWritableBudgets()	{
+		ArrayList<GnuCashWritableBudget> result = new ArrayList<GnuCashWritableBudget>();
+
+		for ( GnuCashBudget bdgt : super.getBudgets() ) {
+			GnuCashWritableBudget newBdgt = new GnuCashWritableBudgetImpl((GnuCashBudgetImpl) bdgt);
+			result.add(newBdgt);
+		}
+
+		return result;
+	}
+
+	@Override
+	public GnuCashWritableBudget createWritableBudget(final String name) {
+		GnuCashWritableBudgetImpl bdgt = new GnuCashWritableBudgetImpl(this);
+		bdgt.setName(name);
+		((org.gnucash.api.write.impl.hlp.fil.FileBudgetManager) super.bdgtMgr)
+			.addBudget(bdgt);
+	
+		return bdgt;
+	}
+
+	@Override
+	public void removeBudget(GnuCashWritableBudget bdgt) throws ObjectCascadeException {
+		if ( bdgt == null ) {
+			throw new IllegalArgumentException("argument <impl> is null");
+		}
+
+		if ( bdgt.getAccounts().size() > 0 ) {
+			LOGGER.error("removeBudget: Budget with ID '" + bdgt.getID() + "' cannot be removed because "
+					+ "there are account entries (rows) that depend on it");
+			throw new ObjectCascadeException();
+		}
+
+		((org.gnucash.api.write.impl.hlp.fil.FileBudgetManager) super.bdgtMgr)
+			.removeBudget(bdgt);
+
+		getRootElement().getGncBook().getBookElements().remove(((GnuCashWritableBudgetImpl) bdgt).getJwsdpPeer());
+		setModified(true);
 	}
 
 	// ---------------------------------------------------------------

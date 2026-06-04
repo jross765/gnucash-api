@@ -172,8 +172,8 @@ public class GnuCashWritableEmployeeImpl extends GnuCashEmployeeImpl
     @Override
     public void remove() {
 		GncGncEmployee peer = getJwsdpPeer();
-		(getGnuCashFile()).getRootElement().getGncBook().getBookElements().remove(peer);
-		(getGnuCashFile()).removeEmployee(this);
+		getWritableGnuCashFile().getRootElement().getGncBook().getBookElements().remove(peer);
+		getWritableGnuCashFile().removeEmployee(this);
     }
 
     // ---------------------------------------------------------------
@@ -188,15 +188,15 @@ public class GnuCashWritableEmployeeImpl extends GnuCashEmployeeImpl
     	return (GnuCashWritableFileImpl) super.getGnuCashFile();
     }
 
-    /**
-     * The GnuCash file is the top-level class to contain everything.
-     *
-     * @return the file we are associated with
-     */
-    @Override
-    public GnuCashWritableFileImpl getGnuCashFile() {
-    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
-    }
+//    /**
+//     * The GnuCash file is the top-level class to contain everything.
+//     *
+//     * @return the file we are associated with
+//     */
+//    @Override
+//    public GnuCashWritableFileImpl getGnuCashFile() {
+//    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
+//    }
 
     // ---------------------------------------------------------------
 
@@ -215,7 +215,7 @@ public class GnuCashWritableEmployeeImpl extends GnuCashEmployeeImpl
 
 		String oldNumber = getNumber();
 		getJwsdpPeer().setEmployeeId(numStr);
-		getGnuCashFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
 
 		PropertyChangeSupport propertyChangeSupport = helper.getPropertyChangeSupport();
 		if ( propertyChangeSupport != null ) {
@@ -235,7 +235,7 @@ public class GnuCashWritableEmployeeImpl extends GnuCashEmployeeImpl
 
 		String oldUserName = getUserName();
 		getJwsdpPeer().setEmployeeUsername(userName);
-		getGnuCashFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
 
 		PropertyChangeSupport propertyChangeSupport = helper.getPropertyChangeSupport();
 		if ( propertyChangeSupport != null ) {
@@ -250,7 +250,7 @@ public class GnuCashWritableEmployeeImpl extends GnuCashEmployeeImpl
      */
     @Override
     public GCshWritableAddress getWritableAddress() {
-        return new GCshWritableAddressImpl(getJwsdpPeer().getEmployeeAddr(), getGnuCashFile());
+        return new GCshWritableAddressImpl(getJwsdpPeer().getEmployeeAddr(), getWritableGnuCashFile());
     }
 
     /**
@@ -277,7 +277,7 @@ public class GnuCashWritableEmployeeImpl extends GnuCashEmployeeImpl
 		{
 
 			if ( getJwsdpPeer().getEmployeeAddr() == null ) {
-				getJwsdpPeer().setEmployeeAddr(getGnuCashFile().getObjectFactory().createAddress());
+				getJwsdpPeer().setEmployeeAddr(getWritableGnuCashFile().getObjectFactory().createAddress());
 			}
 
 			getJwsdpPeer().getEmployeeAddr().setAddrAddr1(adr.getLine1());
@@ -290,7 +290,7 @@ public class GnuCashWritableEmployeeImpl extends GnuCashEmployeeImpl
 			getJwsdpPeer().getEmployeeAddr().setAddrPhone(adr.getTel());
 		}
 
-		getGnuCashFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
     }
 
     // -----------------------------------------------------------------
@@ -379,7 +379,7 @@ public class GnuCashWritableEmployeeImpl extends GnuCashEmployeeImpl
     @Override
 	public void addUserDefinedAttribute(final String type, final String name, final String value) {
 		if ( jwsdpPeer.getEmployeeSlots() == null ) {
-			ObjectFactory fact = getGnuCashFile().getObjectFactory();
+			ObjectFactory fact = getWritableGnuCashFile().getObjectFactory();
 			SlotsType newSlotsType = fact.createSlotsType();
 			jwsdpPeer.setEmployeeSlots(newSlotsType);
 		}

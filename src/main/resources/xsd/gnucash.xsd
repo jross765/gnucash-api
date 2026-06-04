@@ -1132,20 +1132,15 @@
 	<xs:complexType>
 		<xs:sequence>
 
-			<xs:element name="bgt_id" type="gnc_idType" maxOccurs="1"
-						minOccurs="1">
+			<xs:element name="bgt_id" type="gnc_idType" minOccurs="1" maxOccurs="1">
 			</xs:element>
-			<xs:element name="bgt_name" type="xs:string" maxOccurs="1"
-						minOccurs="1">
+			<xs:element name="bgt_name" type="xs:string" minOccurs="1" maxOccurs="1">
 			</xs:element>
-			<xs:element name="bgt_description" type="xs:string"
-						nillable="true" maxOccurs="1" minOccurs="0">
+			<xs:element name="bgt_description" type="xs:string" minOccurs="0" maxOccurs="1" >
 			</xs:element>
-			<xs:element name="bgt_num-periods" type="xs:int" minOccurs="1"
-						maxOccurs="1">
+			<xs:element name="bgt_num-periods" type="xs:int" minOccurs="1" maxOccurs="1">
 			</xs:element>
-			<xs:element name="bgt_recurrence" maxOccurs="1"
-						minOccurs="1">
+			<xs:element name="bgt_recurrence" minOccurs="1" maxOccurs="1">
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element name="recurrence_mult" type="xs:int">

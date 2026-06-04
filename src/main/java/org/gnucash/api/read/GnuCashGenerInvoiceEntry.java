@@ -94,7 +94,7 @@ public interface GnuCashGenerInvoiceEntry extends Comparable<GnuCashGenerInvoice
     		if ( code.isBlank() )
     			throw new IllegalArgumentException("argument <code> is blank");
     		
-    		this.code = code;
+    		this.code = code.trim();
     	}
 
     	// ---

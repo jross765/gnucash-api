@@ -5,6 +5,7 @@ import org.gnucash.api.generated.GncGncBillTerm;
 import org.gnucash.api.read.impl.aux.GCshBillTermsProximoImpl;
 import org.gnucash.api.write.GnuCashWritableFile;
 import org.gnucash.api.write.aux.GCshWritableBillTermsProximo;
+import org.gnucash.api.write.impl.GnuCashWritableFileImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +33,28 @@ public class GCshWritableBillTermsProximoImpl extends GCshBillTermsProximoImpl
     public GCshWritableBillTermsProximoImpl(final GCshBillTermsProximoImpl bllTrm) {
     	super(bllTrm.getJwsdpPeer(), bllTrm.getGnuCashFile());
     }
+
+    // ---------------------------------------------------------------
+
+    /**
+     * The GnuCash file is the top-level class to contain everything.
+     *
+     * @return the file we are associated with
+     */
+    @Override
+    public GnuCashWritableFileImpl getWritableGnuCashFile() {
+    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
+    }
+
+//    /**
+//     * The GnuCash file is the top-level class to contain everything.
+//     *
+//     * @return the file we are associated with
+//     */
+//    @Override
+//    public GnuCashWritableFileImpl getGnuCashFile() {
+//    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
+//    }
 
     // ---------------------------------------------------------------
 

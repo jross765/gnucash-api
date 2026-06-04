@@ -180,15 +180,15 @@ public class GCshWritableAccountLotImpl extends GCshAcctLotImpl
     	return (GnuCashWritableFileImpl) super.getGnuCashFile();
     }
 
-    /**
-     * The GnuCash file is the top-level class to contain everything.
-     *
-     * @return the file we are associated with
-     */
-    @Override
-    public GnuCashWritableFileImpl getGnuCashFile() {
-    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
-    }
+//    /**
+//     * The GnuCash file is the top-level class to contain everything.
+//     *
+//     * @return the file we are associated with
+//     */
+//    @Override
+//    public GnuCashWritableFileImpl getGnuCashFile() {
+//    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
+//    }
 
     // ---------------------------------------------------------------
 

@@ -112,6 +112,13 @@ public class GCshOwnerImpl implements GCshOwner {
 
 	// ---------------------------------------------------------------
     
+	@Override
+	public GnuCashFile getGnuCashFile() {
+		return myFile;
+	}
+
+	// ---------------------------------------------------------------
+    
     private void mapJIType_Var1(org.gnucash.api.generated.OwnerId ownerID) {
     	try {
     		job = myFile.getGenerJobByID(new GCshGenerJobID(ownerID.getValue()));
@@ -332,4 +339,5 @@ public class GCshOwnerImpl implements GCshOwner {
       		throw new UnsupportedOperationException("Owner ID does not belong to job or job owner is not a vendor");
     	}
     }
+
 }

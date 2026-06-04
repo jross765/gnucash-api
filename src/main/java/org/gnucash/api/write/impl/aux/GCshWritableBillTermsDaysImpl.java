@@ -5,6 +5,7 @@ import org.gnucash.api.generated.GncGncBillTerm;
 import org.gnucash.api.read.impl.aux.GCshBillTermsDaysImpl;
 import org.gnucash.api.write.GnuCashWritableFile;
 import org.gnucash.api.write.aux.GCshWritableBillTermsDays;
+import org.gnucash.api.write.impl.GnuCashWritableFileImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +33,28 @@ public class GCshWritableBillTermsDaysImpl extends GCshBillTermsDaysImpl
     public GCshWritableBillTermsDaysImpl(final GCshBillTermsDaysImpl bllTrm) {
     	super(bllTrm.getJwsdpPeer(), bllTrm.getGnuCashFile());
     }
+
+    // ---------------------------------------------------------------
+
+    /**
+     * The GnuCash file is the top-level class to contain everything.
+     *
+     * @return the file we are associated with
+     */
+    @Override
+    public GnuCashWritableFileImpl getWritableGnuCashFile() {
+    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
+    }
+
+//    /**
+//     * The GnuCash file is the top-level class to contain everything.
+//     *
+//     * @return the file we are associated with
+//     */
+//    @Override
+//    public GnuCashWritableFileImpl getGnuCashFile() {
+//    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
+//    }
 
     // ---------------------------------------------------------------
 
@@ -108,5 +131,5 @@ public class GCshWritableBillTermsDaysImpl extends GCshBillTermsDaysImpl
 
 		return buffer.toString();
     }
-    
+
 }

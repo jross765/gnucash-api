@@ -1403,13 +1403,13 @@ public class GnuCashFileImpl implements GnuCashFile,
 				continue;
 			} else if ( bookElement instanceof GncCommodity ) {
 				continue;
+			} else if ( bookElement instanceof GncBudget ) {
+				continue;
 			} else if ( bookElement instanceof GncGncTaxTable ) {
 				continue;
 			} else if ( bookElement instanceof GncGncBillTerm ) {
 				continue;
 			} else if ( bookElement instanceof GncPricedb ) {
-				continue;
-			} else if ( bookElement instanceof GncBudget ) {
 				continue;
 			}
 

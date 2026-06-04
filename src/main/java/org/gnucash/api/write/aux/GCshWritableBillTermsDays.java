@@ -2,13 +2,16 @@ package org.gnucash.api.write.aux;
 
 import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.aux.GCshBillTermsDays;
+import org.gnucash.api.write.hlp.GnuCashWritableObject;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 /**
  * @see GCshWritableBillTermsProximo
  */
-public interface GCshWritableBillTermsDays extends GCshBillTermsDays {
+public interface GCshWritableBillTermsDays extends GCshBillTermsDays,
+                                                   GnuCashWritableObject
+{
 
 	/**
 	 * 

@@ -81,7 +81,7 @@ public class GnuCashBudgetImpl extends GnuCashObjectImpl
 			return null;
 		}
 		
-		return jwsdpPeer.getBgtDescription().getValue().toString();
+		return jwsdpPeer.getBgtDescription();
 	}
 
 	@Override
@@ -100,10 +100,19 @@ public class GnuCashBudgetImpl extends GnuCashObjectImpl
 
     // -----------------------------------------------------------
     
+	@Override
+	public boolean hasAccounts() {
+		return ( getAccounts().size() > 0 );
+	}
+
     @Override
     public List<GCshBudgetAccount> getAccounts() {
 		List<GCshBudgetAccount> result = new ArrayList<GCshBudgetAccount>();
 
+		if ( jwsdpPeer.getBgtSlots() == null ) {
+			return result; 
+		}
+		
 		for ( Slot bdgtSlot : jwsdpPeer.getBgtSlots().getSlot() ) {
 			GCshBudgetAccount newBdgtAcct = new GCshBudgetAccountImpl(this, bdgtSlot, getGnuCashFile());
 			result.add(newBdgtAcct);
@@ -118,21 +127,53 @@ public class GnuCashBudgetImpl extends GnuCashObjectImpl
 		return result;
     }
 
-    @Override
-    public List<GCshBudgetPeriod> getPeriods(final GCshAcctID acctID) {
-		// List<GCshBudgetPeriod> result = new ArrayList<GCshBudgetPeriod>();
+	@Override
+	public GCshBudgetAccount getAccount(final GCshAcctID acctID) {
+		if ( acctID == null ) {
+			throw new IllegalArgumentException("argument <acctID> is null");
+		}
+
+		if ( ! acctID.isSet() ) {
+			throw new IllegalArgumentException("argument <acctID> is not set");
+		}
 
 		for ( GCshBudgetAccount acct : getAccounts() ) {
-			if ( acct.getAcctID().equals( acctID ) ) {
-				return acct.getPeriods();
+			if ( acct.getAcctID().equals(acctID) ) {
+				return acct;
 			}
 		}
 		
 		return null;
+	}
+
+    protected void addAccount(final GCshBudgetAccountImpl bdgtAcct) {
+    	if ( jwsdpPeer.getBgtSlots() == null ) {
+    		return;
+    	}
+
+    	if ( ! jwsdpPeer.getBgtSlots().getSlot().contains( bdgtAcct.getJwsdpPeer() ) ) {
+    		jwsdpPeer.getBgtSlots().getSlot().add( bdgtAcct.getJwsdpPeer() );
+    	}
     }
 
     // -----------------------------------------------------------------
-	// ::CHECK
+    
+	@Override
+	// Directly checks the periods that are actually there
+	// for the given account, not the field which actually 
+	// defines the *maximum* number of fields.
+	public boolean hasPeriods(final GCshAcctID acctID) {
+		return ( getPeriods(acctID).size() > 0 );
+	}
+
+    @Override
+    public List<GCshBudgetPeriod> getPeriods(final GCshAcctID acctID) {
+    	GCshBudgetAccount acct = getAccount(acctID);
+    	return acct.getPeriods();
+    }
+
+    // -----------------------------------------------------------------
+	// ::TODO ::CHECK
     
 	@Override
 	public String getUserDefinedAttribute(String name) {

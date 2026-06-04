@@ -4,11 +4,12 @@ import org.gnucash.api.read.GnuCashCustomer;
 import org.gnucash.api.read.GnuCashEmployee;
 import org.gnucash.api.read.GnuCashGenerJob;
 import org.gnucash.api.read.GnuCashVendor;
+import org.gnucash.api.read.hlp.GnuCashObject;
 import org.gnucash.api.read.spec.GnuCashCustomerJob;
 import org.gnucash.api.read.spec.GnuCashVendorJob;
 import org.gnucash.base.basetypes.simple.GCshID;
 
-public interface GCshOwner {
+public interface GCshOwner extends GnuCashObject {
 
     public enum JIType { // ::TODO in search of a better name...
 	      INVOICE,
@@ -39,7 +40,7 @@ public interface GCshOwner {
 	
 	Type(int index, String code) {
 	    this.index = index;
-	    this.code = code;
+	    this.code = code.trim();
 	}
 
 	// ---

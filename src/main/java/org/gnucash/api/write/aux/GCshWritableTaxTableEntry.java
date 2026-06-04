@@ -3,11 +3,14 @@ package org.gnucash.api.write.aux;
 import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.aux.GCshTaxTableEntry;
+import org.gnucash.api.write.hlp.GnuCashWritableObject;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
-public interface GCshWritableTaxTableEntry extends GCshTaxTableEntry {
+public interface GCshWritableTaxTableEntry extends GCshTaxTableEntry,
+                                                   GnuCashWritableObject
+{
 
 	/**
 	 * 

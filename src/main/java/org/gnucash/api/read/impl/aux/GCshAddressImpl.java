@@ -1,19 +1,21 @@
 package org.gnucash.api.read.impl.aux;
 
+import org.gnucash.api.generated.Address;
 import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.GnuCashVendor;
 import org.gnucash.api.read.aux.GCshAddress;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GCshAddressImpl implements GCshAddress {
 
-    /**
-     * The JWSDP-object we are wrapping.
-     */
-    private final org.gnucash.api.generated.Address jwsdpPeer;
+    @SuppressWarnings("unused")
+	private static final Logger LOGGER = LoggerFactory.getLogger(GCshAddressImpl.class);
 
-    /**
-     * the file we belong to.
-     */
+	// ---------------------------------------------------------------
+	// The JWSDP-object we are wrapping.
+    private final Address jwsdpPeer;
+
     protected final GnuCashFile myFile;
     
     // -----------------------------------------------------------
@@ -24,7 +26,7 @@ public class GCshAddressImpl implements GCshAddress {
      */
     @SuppressWarnings("exports")
     public GCshAddressImpl(
-	    final org.gnucash.api.generated.Address newPeer,
+	    final Address newPeer,
 	    final GnuCashFile gcshFile) {
 		super();
 
@@ -38,7 +40,7 @@ public class GCshAddressImpl implements GCshAddress {
      * @return The JWSDP-object we are wrapping.
      */
     @SuppressWarnings("exports")
-    public org.gnucash.api.generated.Address getJwsdpPeer() {
+    public Address getJwsdpPeer() {
     	return jwsdpPeer;
     }
 

@@ -403,7 +403,7 @@ public class GnuCashWritableVendorBillImpl extends GnuCashWritableGenerInvoiceIm
 	public void post(final GnuCashAccount expensesAcct, final GnuCashAccount payablAcct, final LocalDate postDate,
 			final LocalDate dueDate) throws WrongOwnerTypeException,
 			IllegalTransactionSplitActionException {
-		postVendorBill(getGnuCashFile(), this, getVendor(), expensesAcct, payablAcct, postDate, dueDate);
+		postVendorBill(getWritableGnuCashFile(), this, getVendor(), expensesAcct, payablAcct, postDate, dueDate);
 	}
 
 	// ---------------------------------------------------------------

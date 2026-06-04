@@ -52,13 +52,26 @@ public interface GnuCashTransaction extends Comparable<GnuCashTransaction>,
     	// ---
 
     	Type(String code) {
-    		this.code = code;
+    		if ( code == null )
+    			throw new IllegalArgumentException( "argument <code> is null" );
+
+    		// Sic, blank is valid!
+//    		if ( code.isBlank() )
+//    			throw new IllegalArgumentException( "argument <code> is blank" );
+
+    		this.code = code.trim();
     	}
 
     	// ---
 
     	public String getCode() {
-    		return code;
+	  		if ( code == null )
+				throw new IllegalArgumentException("argument <code> is null");
+			
+			if ( code.isBlank() )
+				throw new IllegalArgumentException("argument <code> is blank");
+			
+    		return code.trim();
     	}
 
     	// no typo!

@@ -433,7 +433,7 @@ public class GnuCashWritableJobInvoiceImpl extends GnuCashWritableGenerInvoiceIm
 	public void post(final GnuCashAccount incExpAcct, final GnuCashAccount recvblPayablAcct, final LocalDate postDate,
 			final LocalDate dueDate) throws WrongOwnerTypeException,
 			IllegalTransactionSplitActionException {
-		postJobInvoice(getGnuCashFile(), this, getJob(), incExpAcct, recvblPayablAcct, postDate, dueDate);
+		postJobInvoice(getWritableGnuCashFile(), this, getJob(), incExpAcct, recvblPayablAcct, postDate, dueDate);
 	}
 
 	// ---------------------------------------------------------------

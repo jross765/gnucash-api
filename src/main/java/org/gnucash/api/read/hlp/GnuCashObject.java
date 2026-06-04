@@ -7,6 +7,9 @@ import org.gnucash.api.read.GnuCashFile;
  */
 public interface GnuCashObject {
 
+    /**
+     * @return the file we belong to.
+     */
     GnuCashFile getGnuCashFile();
 
 }

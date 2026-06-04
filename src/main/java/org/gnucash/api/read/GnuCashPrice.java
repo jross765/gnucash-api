@@ -43,7 +43,7 @@ public interface GnuCashPrice extends Comparable<GnuCashPrice>,
     	// ---
 	      
     	Type(String code) {
-    		this.code = code;
+    		this.code = code.trim();
     	}
 	      
     	// ---
@@ -85,7 +85,13 @@ public interface GnuCashPrice extends Comparable<GnuCashPrice>,
     	// ---
 	      
     	Source(String code) {
-    		this.code = code;
+    		if ( code == null )
+    			throw new IllegalArgumentException( "argument <code> is null" );
+
+    		if ( code.isBlank() )
+    			throw new IllegalArgumentException( "argument <code> is blank" );
+
+    		this.code = code.trim();
     	}
 	      
     	// ---

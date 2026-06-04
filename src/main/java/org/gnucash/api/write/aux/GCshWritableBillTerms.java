@@ -1,9 +1,12 @@
 package org.gnucash.api.write.aux;
 
 import org.gnucash.api.read.aux.GCshBillTerms;
+import org.gnucash.api.write.hlp.GnuCashWritableObject;
 import org.gnucash.base.basetypes.simple.aux.GCshBllTrmID;
 
-public interface GCshWritableBillTerms extends GCshBillTerms {
+public interface GCshWritableBillTerms extends GCshBillTerms,
+                                               GnuCashWritableObject
+{
 
 	/**
 	 * 

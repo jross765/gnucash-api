@@ -11,7 +11,7 @@ import org.gnucash.base.basetypes.simple.GCshAcctID;
  * ::TOOD
  */
 public interface GCshAcctReconInfo extends GnuCashObject
-                                                  // HasUserDefinedAttributes
+                                           // HasUserDefinedAttributes
 {
 	public class LastInterval {
 		public int days;

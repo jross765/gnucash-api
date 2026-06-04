@@ -2,6 +2,7 @@ package org.gnucash.api.read.aux;
 
 import java.util.List;
 
+import org.gnucash.api.read.hlp.GnuCashObject;
 import org.gnucash.api.read.spec.GnuCashCustomerInvoice;
 import org.gnucash.api.read.spec.GnuCashVendorBill;
 import org.gnucash.base.basetypes.simple.aux.GCshTaxTabID;
@@ -16,7 +17,7 @@ import org.gnucash.base.basetypes.simple.aux.GCshTaxTabID;
  * @see GnuCashCustomerInvoice
  * @see GnuCashVendorBill
  */
-public interface GCshTaxTable {
+public interface GCshTaxTable extends GnuCashObject {
 
     /**
      * @return the unique-id to identify this object with across name- and

@@ -4,13 +4,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import java.io.InputStream;
+import java.util.Locale;
 
 import org.gnucash.api.ConstTest;
 import org.gnucash.api.read.GnuCashBudget;
 import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.aux.GCshBudgetAccount;
+import org.gnucash.api.read.aux.GCshBudgetPeriod;
 import org.gnucash.api.read.impl.GnuCashFileImpl;
 import org.gnucash.api.read.impl.TestGnuCashBudgetImpl;
+import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshBdgtID;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +22,9 @@ import junit.framework.JUnit4TestAdapter;
 
 public class TestGCshBudgetAccountImpl {
 	public static final GCshBdgtID BDGT_1_ID = TestGnuCashBudgetImpl.BDGT_1_ID;
-	// public static final GCshBdgtID BDGT_2_ID = new GCshBdgtID("xyz");
+
+	public static final GCshAcctID ACCT_1_ID = TestGnuCashBudgetImpl.ACCT_1_ID;
+	public static final GCshAcctID ACCT_2_ID = TestGnuCashBudgetImpl.ACCT_2_ID;
 
 	// -----------------------------------------------------------------
 
@@ -66,13 +71,24 @@ public class TestGCshBudgetAccountImpl {
 		assertNotEquals(null, bdgt);
 		assertEquals(BDGT_1_ID, bdgt.getID());
 		
-		GCshBudgetAccount bdgtAcct = bdgt.getAccounts().get(0);
+		GCshBudgetAccount bdgtAcct = bdgt.getAccounts().get(1); // sic, the second
 		assertNotEquals(null, bdgtAcct);
 		assertEquals(bdgt, bdgtAcct.getParent());
+		assertEquals(ACCT_2_ID, bdgtAcct.getAcctID());
 		
-		assertEquals("038dea402d134180a6a3ca748c9f6b4d", bdgtAcct.getAcctID().toString());
-		
-		assertEquals(1, bdgtAcct.getPeriods().size());
+		assertEquals(12, bdgtAcct.getPeriods().size());
+
+		GCshBudgetPeriod bdgtPrd = bdgtAcct.getPeriods().get(0);
+		assertEquals(0, bdgtPrd.getIndex().intValue());
+		assertEquals(1000.0, bdgtPrd.getAmount().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals("1.000,00 €", bdgtPrd.getAmountFormatted(Locale.GERMANY));
+		assertEquals("€1,000.00", bdgtPrd.getAmountFormatted(Locale.US));
+
+		bdgtPrd = bdgtAcct.getPeriods().get(bdgtAcct.getPeriods().size() - 1);
+		assertEquals(9, bdgtPrd.getIndex().intValue());
+		assertEquals(1000.0, bdgtPrd.getAmount().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals("1.000,00 €", bdgtPrd.getAmountFormatted(Locale.GERMANY));
+		assertEquals("€1,000.00", bdgtPrd.getAmountFormatted(Locale.US));
 	}
 
 }

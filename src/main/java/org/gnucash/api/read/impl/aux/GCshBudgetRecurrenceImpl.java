@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.gnucash.api.generated.GncBudget.BgtRecurrence;
+import org.gnucash.api.generated.GncBudget;
 import org.gnucash.api.read.GnuCashBudget;
 import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.api.read.aux.GCshBudgetRecurrence;
@@ -20,7 +20,7 @@ public class GCshBudgetRecurrenceImpl extends GnuCashObjectImpl
 
     // -----------------------------------------------------------
 
-    protected final BgtRecurrence jwsdpPeer;
+    protected final GncBudget.BgtRecurrence jwsdpPeer;
 
     // -----------------------------------------------------------
     
@@ -36,7 +36,7 @@ public class GCshBudgetRecurrenceImpl extends GnuCashObjectImpl
     @SuppressWarnings("exports")
     public GCshBudgetRecurrenceImpl(
     		final GnuCashBudget parent, 
-    		final BgtRecurrence newPeer, 
+    		final GncBudget.BgtRecurrence newPeer, 
     		final GnuCashFile gcshFile) {
     	super(gcshFile);
 		
@@ -50,7 +50,7 @@ public class GCshBudgetRecurrenceImpl extends GnuCashObjectImpl
      * @return the JWSDP-object we are wrapping.
      */
     @SuppressWarnings("exports")
-    public BgtRecurrence getJwsdpPeer() {
+    public GncBudget.BgtRecurrence getJwsdpPeer() {
     	return jwsdpPeer;
     }
 
@@ -68,22 +68,9 @@ public class GCshBudgetRecurrenceImpl extends GnuCashObjectImpl
 		return jwsdpPeer.getRecurrenceMult();
 	}
 
-	// ::TODO move that mapping into the enum type,
-	// analogously to the other enums.
 	@Override
 	public PeriodType getPeriodType() {
-		String typeStr = getPeriodTypeStr();
-		if ( typeStr.equals("day") ) {
-			return PeriodType.DAY;
-		} else if ( typeStr.equals("week") ) {
-			return PeriodType.WEEK;			
-		} else if ( typeStr.equals("month") ) {
-			return PeriodType.MONTH;			
-		} else if ( typeStr.equals("year") ) {
-			return PeriodType.YEAR;			
-		}
-		
-		return null; // Compiler happy
+		return PeriodType.valueOff( getPeriodTypeStr() );
 	}
 
 	@Override

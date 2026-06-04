@@ -57,6 +57,28 @@ public class GCshWritableBillTermsImpl extends GCshBillTermsImpl
     }
 
     // ---------------------------------------------------------------
+
+    /**
+     * The GnuCash file is the top-level class to contain everything.
+     *
+     * @return the file we are associated with
+     */
+    @Override
+    public GnuCashWritableFileImpl getWritableGnuCashFile() {
+    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
+    }
+
+//    /**
+//     * The GnuCash file is the top-level class to contain everything.
+//     *
+//     * @return the file we are associated with
+//     */
+//    @Override
+//    public GnuCashWritableFileImpl getGnuCashFile() {
+//    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
+//    }
+
+    // ---------------------------------------------------------------
     
     @Override
     public Type getType() {

@@ -106,8 +106,8 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
      */
     public void remove() throws ObjectCascadeException {
 		GncCommodity peer = getJwsdpPeer();
-		(getGnuCashFile()).getRootElement().getGncBook().getBookElements().remove(peer);
-		(getGnuCashFile()).removeCommodity(this);
+		getWritableGnuCashFile().getRootElement().getGncBook().getBookElements().remove(peer);
+		getWritableGnuCashFile().removeCommodity(this);
     }
 
     // ---------------------------------------------------------------
@@ -238,7 +238,7 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
 		getJwsdpPeer().setCmdtySpace(qualifId.getNameSpace());
 		getJwsdpPeer().setCmdtyId(qualifId.getCode());
 
-		getGnuCashFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
     }
 
     @Override
@@ -269,7 +269,7 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
 		}
 
 		getJwsdpPeer().setCmdtyXcode(xCode);
-		getGnuCashFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
     }
 
     @Override
@@ -288,7 +288,7 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
 		}
 		
 		getJwsdpPeer().setCmdtyName(name);
-		getGnuCashFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
 
 		PropertyChangeSupport propertyChangeSupport = helper.getPropertyChangeSupport();
 		if (propertyChangeSupport != null) {
@@ -303,7 +303,7 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
 		}
 
 		getJwsdpPeer().setCmdtyFraction(fract);
-		getGnuCashFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
     }
 
     // ---------------------------------------------------------------
@@ -317,29 +317,29 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
     	return (GnuCashWritableFileImpl) super.getGnuCashFile();
     }
 
-    /**
-     * The GnuCash file is the top-level class to contain everything.
-     *
-     * @return the file we are associated with
-     */
-    @Override
-    public GnuCashWritableFileImpl getGnuCashFile() {
-    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
-    }
+//    /**
+//     * The GnuCash file is the top-level class to contain everything.
+//     *
+//     * @return the file we are associated with
+//     */
+//    @Override
+//    public GnuCashWritableFileImpl getGnuCashFile() {
+//    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
+//    }
 
     // ---------------------------------------------------------------
 
     @Override
     public void addUserDefinedAttribute(final String type, final String name, final String value) {
 		if ( jwsdpPeer.getCmdtySlots() == null ) {
-			ObjectFactory fact = getGnuCashFile().getObjectFactory();
+			ObjectFactory fact = getWritableGnuCashFile().getObjectFactory();
 			SlotsType newSlotsType = fact.createSlotsType();
 			jwsdpPeer.setCmdtySlots(newSlotsType);
 		}
 		
     	HasWritableUserDefinedAttributesImpl
     		.addUserDefinedAttributeCore(jwsdpPeer.getCmdtySlots(), 
-    									 getGnuCashFile(), 
+    									 getWritableGnuCashFile(), 
     									 type, name, value);
     }
 
@@ -351,7 +351,7 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
 		
     	HasWritableUserDefinedAttributesImpl
     		.removeUserDefinedAttributeCore(jwsdpPeer.getCmdtySlots(), 
-    										getGnuCashFile(),
+    										getWritableGnuCashFile(),
     										name);
     }
 
@@ -363,7 +363,7 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
 		
     	HasWritableUserDefinedAttributesImpl
     		.setUserDefinedAttributeCore(jwsdpPeer.getCmdtySlots(), 
-    								 	 getGnuCashFile(), 
+    									 getWritableGnuCashFile(), 
     								 	 name, value);
     }
 

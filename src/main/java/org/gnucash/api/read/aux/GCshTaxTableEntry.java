@@ -2,11 +2,12 @@ package org.gnucash.api.read.aux;
 
 import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.GnuCashAccount;
+import org.gnucash.api.read.hlp.GnuCashObject;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
-public interface GCshTaxTableEntry {
+public interface GCshTaxTableEntry extends GnuCashObject {
 
     public enum Type {
 	VALUE,

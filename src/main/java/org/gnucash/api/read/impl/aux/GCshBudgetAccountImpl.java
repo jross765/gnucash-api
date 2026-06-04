@@ -69,10 +69,21 @@ public class GCshBudgetAccountImpl extends GnuCashObjectImpl
 		return new GCshAcctID(jwsdpPeer.getSlotKey());
 	}
 
+	// -----------------------------------------------------------------
+
+	@Override
+	public boolean hasPeriods() {
+		return ( getPeriods().size() > 0 );
+	}
+
 	@Override
 	public List<GCshBudgetPeriod> getPeriods() {
 		List<GCshBudgetPeriod> result = new ArrayList<GCshBudgetPeriod>();
 
+		if ( jwsdpPeer.getSlotValue() == null ) {
+			return result;
+		}
+		
 		// ::TODO: The following code is partially redundant to 
 		// HasUserDefinedAttributesImpl.getUserDefinedAttributeCore():
 		if ( jwsdpPeer.getSlotValue().getType().equals(Const.XML_DATA_TYPE_FRAME) ) {
@@ -99,6 +110,22 @@ public class GCshBudgetAccountImpl extends GnuCashObjectImpl
 
 		return result;
 	}
+
+    protected void addPeriod(final GCshBudgetPeriodImpl bdgtPrd) {
+		// ::TODO: The following code is partially redundant to 
+		// HasUserDefinedAttributesImpl.getUserDefinedAttributeCore():
+		if ( jwsdpPeer.getSlotValue().getType().equals(Const.XML_DATA_TYPE_FRAME) ) {
+			List<Object> objList = jwsdpPeer.getSlotValue().getContent();
+			if ( objList == null )
+				return;
+			if ( ! objList.contains( bdgtPrd.getJwsdpPeer() ) ) {
+				objList.add( bdgtPrd.getJwsdpPeer() );
+			}
+		} else {
+			LOGGER.error("getPeriods: JWSDP Peer is not of type '" + Const.XML_DATA_TYPE_FRAME + "'");
+			throw new IllegalStateException("Wrong slot type");
+		}
+    }
 
     // -----------------------------------------------------------------
 

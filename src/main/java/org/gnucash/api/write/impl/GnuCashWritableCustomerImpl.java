@@ -176,8 +176,8 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
     @Override
     public void remove() {
 		GncGncCustomer peer = getJwsdpPeer();
-		(getGnuCashFile()).getRootElement().getGncBook().getBookElements().remove(peer);
-		(getGnuCashFile()).removeCustomer(this);
+		getWritableGnuCashFile().getRootElement().getGncBook().getBookElements().remove(peer);
+		getWritableGnuCashFile().removeCustomer(this);
     }
 
     // ---------------------------------------------------------------
@@ -192,15 +192,15 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
     	return (GnuCashWritableFileImpl) super.getGnuCashFile();
     }
 
-    /**
-     * The GnuCash file is the top-level class to contain everything.
-     *
-     * @return the file we are associated with
-     */
-    @Override
-    public GnuCashWritableFileImpl getGnuCashFile() {
-    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
-    }
+//    /**
+//     * The GnuCash file is the top-level class to contain everything.
+//     *
+//     * @return the file we are associated with
+//     */
+//    @Override
+//    public GnuCashWritableFileImpl getGnuCashFile() {
+//    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
+//    }
 
     // ---------------------------------------------------------------
 
@@ -211,7 +211,7 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
     public void setNumber(final String number) {
 		String oldNumber = getNumber();
 		getJwsdpPeer().setCustId(number);
-		getGnuCashFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
 
 		PropertyChangeSupport propertyChangeSupport = helper.getPropertyChangeSupport();
 		if ( propertyChangeSupport != null ) {
@@ -234,7 +234,7 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
 
 		String oldName = getName();
 		getJwsdpPeer().setCustName(name);
-		getGnuCashFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
 
 		PropertyChangeSupport propertyChangeSupport = helper.getPropertyChangeSupport();
 		if ( propertyChangeSupport != null ) {
@@ -254,7 +254,7 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
 
 		FixedPointNumber oldDiscount = getDiscount();
 		getJwsdpPeer().setCustDiscount(dscnt.toGnuCashString());
-		getGnuCashFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
 
 		PropertyChangeSupport propertyChangeSupport = helper.getPropertyChangeSupport();
 		if ( propertyChangeSupport != null ) {
@@ -270,7 +270,7 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
 
 		BigFraction oldDiscount = getDiscountRat();
 		getJwsdpPeer().setCustDiscount(dscnt.toString());
-		getGnuCashFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
 
 		PropertyChangeSupport propertyChangeSupport = helper.getPropertyChangeSupport();
 		if ( propertyChangeSupport != null ) {
@@ -290,7 +290,7 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
 
 		FixedPointNumber oldCredit = getDiscount();
 		getJwsdpPeer().setCustCredit(cred.toGnuCashString());
-		getGnuCashFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
 
 		PropertyChangeSupport propertyChangeSupport = helper.getPropertyChangeSupport();
 		if ( propertyChangeSupport != null ) {
@@ -306,7 +306,7 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
 
 		BigFraction oldCredit = getDiscountRat();
 		getJwsdpPeer().setCustCredit(cred.toString());
-		getGnuCashFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
 
 		PropertyChangeSupport propertyChangeSupport = helper.getPropertyChangeSupport();
 		if ( propertyChangeSupport != null ) {
@@ -331,7 +331,7 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
 
 		String oldNotes = getNotes();
 		getJwsdpPeer().setCustNotes(nts);
-		getGnuCashFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
 
 		PropertyChangeSupport propertyChangeSupport = helper.getPropertyChangeSupport();
 		if ( propertyChangeSupport != null ) {
@@ -346,7 +346,7 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
      */
     @Override
     public GCshWritableAddress getWritableAddress() {
-        return new GCshWritableAddressImpl(getJwsdpPeer().getCustAddr(), getGnuCashFile());
+        return new GCshWritableAddressImpl(getJwsdpPeer().getCustAddr(), getWritableGnuCashFile());
     }
 
     /**
@@ -374,7 +374,7 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
 		{
 
 			if ( getJwsdpPeer().getCustAddr() == null ) {
-				getJwsdpPeer().setCustAddr(getGnuCashFile().getObjectFactory().createAddress());
+				getJwsdpPeer().setCustAddr(getWritableGnuCashFile().getObjectFactory().createAddress());
 			}
 
 			getJwsdpPeer().getCustAddr().setAddrAddr1(adr.getLine1());
@@ -387,7 +387,7 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
 			getJwsdpPeer().getCustAddr().setAddrPhone(adr.getTel());
 		}
 
-		getGnuCashFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
     }
     
     // ----------------------------
@@ -397,7 +397,7 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
      */
     @Override
     public GCshWritableAddress getWritableShippingAddress() {
-        return new GCshWritableAddressImpl(getJwsdpPeer().getCustShipaddr(), getGnuCashFile());
+        return new GCshWritableAddressImpl(getJwsdpPeer().getCustShipaddr(), getWritableGnuCashFile());
     }
 
     /**
@@ -425,7 +425,7 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
 		{
 
 			if ( getJwsdpPeer().getCustShipaddr() == null ) {
-				getJwsdpPeer().setCustShipaddr(getGnuCashFile().getObjectFactory().createAddress());
+				getJwsdpPeer().setCustShipaddr(getWritableGnuCashFile().getObjectFactory().createAddress());
 			}
 
 			getJwsdpPeer().getCustShipaddr().setAddrAddr1(adr.getLine1());
@@ -437,7 +437,7 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
 			getJwsdpPeer().getCustShipaddr().setAddrFax(adr.getFax());
 			getJwsdpPeer().getCustShipaddr().setAddrPhone(adr.getTel());
 		}
-		getGnuCashFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
     }
 
     // -----------------------------------------------------------------
@@ -565,7 +565,7 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
     @Override
 	public void addUserDefinedAttribute(final String type, final String name, final String value) {
 		if ( jwsdpPeer.getCustSlots() == null ) {
-			ObjectFactory fact = getGnuCashFile().getObjectFactory();
+			ObjectFactory fact = getWritableGnuCashFile().getObjectFactory();
 			SlotsType newSlotsType = fact.createSlotsType();
 			jwsdpPeer.setCustSlots(newSlotsType);
 		}

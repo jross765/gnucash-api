@@ -71,37 +71,4 @@ public interface GCshWritableAddress extends GCshAddress,
      */
     void setEmail(String eml);
     
-    // ---------------------------------------------------------------
-    // Old names
-    
-	/**
-	 * @see #setName(String)
-	 */
-    @Deprecated
-    void setAddressName(String name);
-
-    /**
-     * @see #setLine1(String)
-     */
-    @Deprecated
-    void setAddressLine1(String val);
-
-    /**
-     * @see #setLine2(String)
-     */
-    @Deprecated
-    void setAddressLine2(String val);
-
-    /**
-     * @see #setLine3(String)
-     */
-    @Deprecated
-    void setAddressLine3(String val);
-
-    /**
-     * @see #setLine4(String)
-     */
-    @Deprecated
-    void setAddressLine4(String val);
-
 }

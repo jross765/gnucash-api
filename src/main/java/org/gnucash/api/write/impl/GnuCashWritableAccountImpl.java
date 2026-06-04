@@ -265,13 +265,13 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 		return (GnuCashWritableFileImpl) super.getGnuCashFile();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public GnuCashWritableFileImpl getGnuCashFile() {
-		return (GnuCashWritableFileImpl) super.getGnuCashFile();
-	}
+//	/**
+//	 * {@inheritDoc}
+//	 */
+//	@Override
+//	public GnuCashWritableFileImpl getGnuCashFile() {
+//		return (GnuCashWritableFileImpl) super.getGnuCashFile();
+//	}
 
 	// ---------------------------------------------------------------
 
@@ -1045,7 +1045,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 		}
 
 		if ( jwsdpPeer.getActSlots() == null ) {
-			ObjectFactory fact = getGnuCashFile().getObjectFactory();
+			ObjectFactory fact = getWritableGnuCashFile().getObjectFactory();
 			SlotsType newSlotsType = fact.createSlotsType();
 			jwsdpPeer.setActSlots(newSlotsType);
 		}

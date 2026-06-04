@@ -555,7 +555,7 @@ public class TestGnuCashWritableCommodityImpl {
 		
 		assertEquals(ConstTest.Stats.NOF_CMDTY_ALL + 1 - 1, gcshOutFileStats.getNofEntriesCommodities(GCshFileStats.Type.RAW)); // sic +1 for template
 		// ::tODO: ::CHECK
-		assertEquals(ConstTest.Stats.NOF_CMDTY_ALL - 1 - 1, gcshOutFileStats.getNofEntriesCommodities(GCshFileStats.Type.COUNTER));
+		assertEquals(ConstTest.Stats.NOF_CMDTY_ALL     - 1, gcshOutFileStats.getNofEntriesCommodities(GCshFileStats.Type.COUNTER));
 		assertEquals(ConstTest.Stats.NOF_CMDTY_ALL     - 1, gcshOutFileStats.getNofEntriesCommodities(GCshFileStats.Type.CACHE));
 
 		// The transaction does not exist any more, just as you would expect.

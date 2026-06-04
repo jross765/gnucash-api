@@ -1,6 +1,8 @@
 package org.gnucash.api.read.aux;
 
-public interface GCshAddress {
+import org.gnucash.api.read.hlp.GnuCashObject;
+
+public interface GCshAddress extends GnuCashObject {
 
     /**
      *

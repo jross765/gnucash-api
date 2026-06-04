@@ -75,15 +75,15 @@ public abstract class GnuCashWritableGenerJobImpl extends GnuCashGenerJobImpl
     	return (GnuCashWritableFileImpl) super.getGnuCashFile();
     }
 
-    /**
-     * The GnuCash file is the top-level class to contain everything.
-     *
-     * @return the file we are associated with
-     */
-    @Override
-    public GnuCashWritableFileImpl getGnuCashFile() {
-    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
-    }
+//    /**
+//     * The GnuCash file is the top-level class to contain everything.
+//     *
+//     * @return the file we are associated with
+//     */
+//    @Override
+//    public GnuCashWritableFileImpl getGnuCashFile() {
+//    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
+//    }
 
     // ---------------------------------------------------------------
 
@@ -269,7 +269,7 @@ public abstract class GnuCashWritableGenerJobImpl extends GnuCashGenerJobImpl
     	try {
     		attemptChange();
 			getJwsdpPeer().getJobOwner().getOwnerId().setValue(ownID.get());
-	    	getGnuCashFile().setModified(true);
+	    	getWritableGnuCashFile().setModified(true);
 		} catch (GCshIDNotSetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

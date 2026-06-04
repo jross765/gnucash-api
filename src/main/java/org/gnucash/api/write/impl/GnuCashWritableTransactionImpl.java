@@ -106,24 +106,15 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 		return (GnuCashWritableFileImpl) super.getGnuCashFile();
 	}
 
-	/**
-	 * The GnuCash file is the top-level class to contain everything.
-	 *
-	 * @return the file we are associated with
-	 */
-	@Override
-	public GnuCashWritableFileImpl getGnuCashFile() {
-		return (GnuCashWritableFileImpl) super.getGnuCashFile();
-	}
-
-	/**
-	 * The GnuCash file is the top-level class to contain everything.
-	 *
-	 * @return the file we are associated with
-	 */
-	public GnuCashWritableFileImpl getWritableFile() {
-		return (GnuCashWritableFileImpl) getGnuCashFile();
-	}
+//	/**
+//	 * The GnuCash file is the top-level class to contain everything.
+//	 *
+//	 * @return the file we are associated with
+//	 */
+//	@Override
+//	public GnuCashWritableFileImpl getGnuCashFile() {
+//		return (GnuCashWritableFileImpl) super.getGnuCashFile();
+//	}
 
 	// -----------------------------------------------------------
 
@@ -228,7 +219,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 	 */
 	public void remove(final GnuCashWritableTransactionSplit impl) {
 		getJwsdpPeer().getTrnSplits().getTrnSplit().remove(((GnuCashWritableTransactionSplitImpl) impl).getJwsdpPeer());
-		getWritableFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
 
 		if ( mySplits == null ) {
 			// important!
@@ -251,7 +242,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 			account.removeTransactionSplit(impl);
 		}
 
-		getWritableFile().removeTransactionSplit(impl);
+		getWritableGnuCashFile().removeTransactionSplit(impl);
 		// there is no count for splits up to now
 		// getWritableFile().decrementCountDataFor()
 		if ( helper.getPropertyChangeSupport() != null ) {
@@ -292,7 +283,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 	 * @see GnuCashWritableTransaction#remove()
 	 */
 	public void remove() {
-		getWritableFile().removeTransaction(this);
+		getWritableGnuCashFile().removeTransaction(this);
 //		Collection<GnuCashWritableTransactionSplit> c = new ArrayList<GnuCashWritableTransactionSplit>();
 //		c.addAll(getWritableSplits());
 //		for (GnuCashWritableTransactionSplit element : c) {
@@ -314,7 +305,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 	
 	    String old = getJwsdpPeer().getTrnNum();
 	    getJwsdpPeer().setTrnNum(numStr);
-	    getWritableFile().setModified(true);
+	    getWritableGnuCashFile().setModified(true);
 	
 	    if (old == null || ! old.equals(numStr)) {
 	        if (helper.getPropertyChangeSupport() != null) {
@@ -330,7 +321,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 	public void setCmdtyID(final GCshCmdtyID cmdtyID) {
 		this.getJwsdpPeer().getTrnCurrency().setCmdtySpace(cmdtyID.getNameSpace());
 		this.getJwsdpPeer().getTrnCurrency().setCmdtyId(cmdtyID.getCode());
-		getWritableFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
 	}
 
 	/**
@@ -345,7 +336,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 		this.dateEntered = dateEntered;
 		String dateEnteredStr = this.dateEntered.format(DATE_ENTERED_FORMAT);
 		getJwsdpPeer().getTrnDateEntered().setTsDate(dateEnteredStr);
-		getWritableFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
 	}
 
 	@Override
@@ -361,7 +352,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 		this.datePosted = ZonedDateTime.of(datePosted, LocalTime.MIN, ZoneId.systemDefault());
 		String datePostedStr = this.datePosted.format(DATE_POSTED_FORMAT);
 		getJwsdpPeer().getTrnDatePosted().setTsDate(datePostedStr);
-		getWritableFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
 	}
 
 	public void setDescription(final String descr) {
@@ -376,7 +367,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 
 		String old = getJwsdpPeer().getTrnDescription();
 		getJwsdpPeer().setTrnDescription(descr);
-		getWritableFile().setModified(true);
+		getWritableGnuCashFile().setModified(true);
 
 		if ( old == null || ! old.equals(descr) ) {
 			if ( helper.getPropertyChangeSupport() != null ) {
@@ -401,14 +392,14 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 	@Override
 	public void addUserDefinedAttribute(final String type, final String name, final String value) {
 		if ( jwsdpPeer.getTrnSlots() == null ) {
-			ObjectFactory fact = getGnuCashFile().getObjectFactory();
+			ObjectFactory fact = getWritableGnuCashFile().getObjectFactory();
 			SlotsType newSlotsType = fact.createSlotsType();
 			jwsdpPeer.setTrnSlots(newSlotsType);
 		}
 		
 		HasWritableUserDefinedAttributesImpl
 			.addUserDefinedAttributeCore(jwsdpPeer.getTrnSlots(),
-										 getWritableFile(), 
+										 getWritableGnuCashFile(), 
 										 type, name, value);
 	}
 
@@ -420,7 +411,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 		
 		HasWritableUserDefinedAttributesImpl
 			.removeUserDefinedAttributeCore(jwsdpPeer.getTrnSlots(),
-										 	getWritableFile(), 
+											getWritableGnuCashFile(), 
 										 	name);
 	}
 
@@ -432,7 +423,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 		
 		HasWritableUserDefinedAttributesImpl
 			.setUserDefinedAttributeCore(jwsdpPeer.getTrnSlots(),
-										 getWritableFile(), 
+										 getWritableGnuCashFile(), 
 										 name, value);
 	}
 

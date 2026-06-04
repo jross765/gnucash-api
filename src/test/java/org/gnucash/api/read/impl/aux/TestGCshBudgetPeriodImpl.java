@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import java.io.InputStream;
+import java.util.Locale;
 
 import org.gnucash.api.ConstTest;
 import org.gnucash.api.read.GnuCashBudget;
@@ -71,13 +72,16 @@ public class TestGCshBudgetPeriodImpl {
 		assertNotEquals(null, bdgtAcct);
 		assertEquals(bdgt, bdgtAcct.getParent());
 		
+		assertEquals(1, bdgtAcct.getPeriods().size());
+		
 		GCshBudgetPeriod bdgtPrd = bdgtAcct.getPeriods().get(0);
 		assertNotEquals(null, bdgtPrd);
 		assertEquals(bdgt, bdgtAcct.getParent());
 		
 		assertEquals(5, bdgtPrd.getIndex().intValue());
 		assertEquals(100.0, bdgtPrd.getAmount().doubleValue(), ConstTest.DIFF_TOLERANCE);
-		assertEquals("100,00 €", bdgtPrd.getAmountFormatted());
+		assertEquals("100,00 €", bdgtPrd.getAmountFormatted(Locale.GERMANY));
+		assertEquals("€100.00", bdgtPrd.getAmountFormatted(Locale.US));
 	}
 
 }

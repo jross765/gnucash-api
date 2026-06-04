@@ -7,7 +7,6 @@ import org.gnucash.api.generated.ObjectFactory;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashTransactionSplit;
 import org.gnucash.api.read.impl.GnuCashTransactionSplitImpl;
-import org.gnucash.api.write.GnuCashWritableFile;
 import org.gnucash.api.write.GnuCashWritableTransaction;
 import org.gnucash.api.write.GnuCashWritableTransactionSplit;
 import org.gnucash.api.write.impl.hlp.GnuCashWritableObjectImpl;
@@ -130,7 +129,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		// the other is this object.
 		trx.getSplits();
 
-		GnuCashWritableFileImpl gnucashFileImpl = trx.getWritableFile();
+		GnuCashWritableFileImpl gnucashFileImpl = trx.getWritableGnuCashFile();
 		ObjectFactory factory = gnucashFileImpl.getObjectFactory();
 
 		GncTransaction.TrnSplits.TrnSplit jwsdpSplt = gnucashFileImpl.createGncTransactionSplitType();
@@ -421,7 +420,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		}
 
 		GnuCashWritableTransactionImpl trx = (GnuCashWritableTransactionImpl) getTransaction();
-		GnuCashWritableFileImpl writingFile = trx.getWritableFile();
+		GnuCashWritableFileImpl writingFile = trx.getWritableGnuCashFile();
 		ObjectFactory factory = writingFile.getObjectFactory();
 
 		if ( getJwsdpPeer().getSplitLot() == null ) {
@@ -478,15 +477,15 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		return (GnuCashWritableFileImpl) super.getGnuCashFile();
 	}
 
-	/**
-	 * The GnuCash file is the top-level class to contain everything.
-	 *
-	 * @return the file we are associated with
-	 */
-	@Override
-	public GnuCashWritableFileImpl getGnuCashFile() {
-		return (GnuCashWritableFileImpl) super.getGnuCashFile();
-	}
+//	/**
+//	 * The GnuCash file is the top-level class to contain everything.
+//	 *
+//	 * @return the file we are associated with
+//	 */
+//	@Override
+//	public GnuCashWritableFileImpl getGnuCashFile() {
+//		return (GnuCashWritableFileImpl) super.getGnuCashFile();
+//	}
 
 	// ---------------------------------------------------------------
 

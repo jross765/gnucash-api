@@ -2,9 +2,12 @@ package org.gnucash.api.write.aux;
 
 import org.gnucash.api.read.aux.GCshTaxTable;
 import org.gnucash.api.read.aux.GCshTaxTableEntry;
+import org.gnucash.api.write.hlp.GnuCashWritableObject;
 import org.gnucash.base.basetypes.simple.aux.GCshTaxTabID;
 
-public interface GCshWritableTaxTable extends GCshTaxTable {
+public interface GCshWritableTaxTable extends GCshTaxTable,
+                                              GnuCashWritableObject
+{
     
 	/**
 	 * 

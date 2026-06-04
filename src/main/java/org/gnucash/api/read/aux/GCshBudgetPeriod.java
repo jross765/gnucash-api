@@ -1,10 +1,12 @@
 package org.gnucash.api.read.aux;
 
 import java.math.BigInteger;
+import java.util.Locale;
 
 import org.apache.commons.numbers.fraction.BigFraction;
+import org.gnucash.api.read.hlp.GnuCashObject;
 
-public interface GCshBudgetPeriod {
+public interface GCshBudgetPeriod extends GnuCashObject {
 	
 	GCshBudgetAccount getParent();
 
@@ -17,5 +19,7 @@ public interface GCshBudgetPeriod {
     BigFraction getAmount();
     
     String      getAmountFormatted();
+
+    String      getAmountFormatted(Locale lcl);
 
 }

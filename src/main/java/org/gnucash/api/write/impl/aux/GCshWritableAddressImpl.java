@@ -42,15 +42,15 @@ public class GCshWritableAddressImpl extends GCshAddressImpl
     	return (GnuCashWritableFileImpl) super.getGnuCashFile();
     }
 
-    /**
-     * The GnuCash file is the top-level class to contain everything.
-     *
-     * @return the file we are associated with
-     */
-    @Override
-    public GnuCashWritableFileImpl getGnuCashFile() {
-    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
-    }
+//    /**
+//     * The GnuCash file is the top-level class to contain everything.
+//     *
+//     * @return the file we are associated with
+//     */
+//    @Override
+//    public GnuCashWritableFileImpl getGnuCashFile() {
+//    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
+//    }
 
     // ---------------------------------------------------------------
 
@@ -187,39 +187,6 @@ public class GCshWritableAddressImpl extends GCshAddressImpl
     	
     	getJwsdpPeer().setAddrEmail(eml);
     	getWritableGnuCashFile().setModified(true);
-    }
-
-    // ---------------------------------------------------------------
-    // Old names
-    
-    @Override
-    @Deprecated
-    public void setAddressName(String name) {
-    	setName(name);
-    }
-
-    @Override
-    @Deprecated
-    public void setAddressLine1(String val) {
-    	setLine1(val);
-    }
-
-    @Override
-    @Deprecated
-    public void setAddressLine2(String val) {
-    	setLine2(val);
-    }
-
-    @Override
-    @Deprecated
-    public void setAddressLine3(String val) {
-    	setLine3(val);
-    }
-
-    @Override
-    @Deprecated
-    public void setAddressLine4(String val) {
-    	setLine4(val);
     }
 
     // ---------------------------------------------------------------

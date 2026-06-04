@@ -34,15 +34,6 @@ public interface GnuCashWritableTransaction extends GnuCashTransaction,
     void setCmdtyID(GCshCmdtyID cmdtyID);
 
     /**
-     * The GnuCash file is the top-level class to contain everything.
-     * 
-     * @return the file we are associated with
-     * 
-     * @see #getGnuCashFile()
-     */
-    GnuCashWritableFile getWritableFile();
-
-    /**
      * @param dateEntered the day (time is ignored) that this transaction has been
      *                    entered into the system
      *              

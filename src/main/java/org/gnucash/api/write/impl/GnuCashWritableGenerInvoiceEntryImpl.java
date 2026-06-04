@@ -34,7 +34,6 @@ import org.gnucash.api.read.spec.GnuCashJobInvoice;
 import org.gnucash.api.read.spec.GnuCashVendorBill;
 import org.gnucash.api.read.spec.GnuCashVendorJob;
 import org.gnucash.api.read.spec.WrongInvoiceTypeException;
-import org.gnucash.api.write.GnuCashWritableFile;
 import org.gnucash.api.write.GnuCashWritableGenerInvoice;
 import org.gnucash.api.write.GnuCashWritableGenerInvoiceEntry;
 import org.gnucash.api.write.impl.hlp.GnuCashWritableObjectImpl;
@@ -175,8 +174,8 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
 		entry.setEntryQty(qtyStr);
 		entry.setVersion(Const.XML_FORMAT_VERSION);
 
-		invc.getGnuCashFile().getRootElement().getGncBook().getBookElements().add(entry);
-		invc.getGnuCashFile().setModified(true);
+		invc.getWritableGnuCashFile().getRootElement().getGncBook().getBookElements().add(entry);
+		invc.getWritableGnuCashFile().setModified(true);
 
 		LOGGER.debug("createCustInvoiceEntry_int: Created new customer invoice entry (core): "
 				+ entry.getEntryGuid().getValue());
@@ -288,8 +287,8 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
 		entry.setEntryQty(qtyStr);
 		entry.setVersion(Const.XML_FORMAT_VERSION);
 
-		invc.getGnuCashFile().getRootElement().getGncBook().getBookElements().add(entry);
-		invc.getGnuCashFile().setModified(true);
+		invc.getWritableGnuCashFile().getRootElement().getGncBook().getBookElements().add(entry);
+		invc.getWritableGnuCashFile().setModified(true);
 
 		LOGGER.debug(
 				"createVendBillEntry_int: Created new customer bill entry (core): " + entry.getEntryGuid().getValue());
@@ -391,8 +390,8 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
     		entry.setEntryQty(qtyStr);
     		entry.setVersion(Const.XML_FORMAT_VERSION);
 
-    		invc.getGnuCashFile().getRootElement().getGncBook().getBookElements().add(entry);
-    		invc.getGnuCashFile().setModified(true);
+    		invc.getWritableGnuCashFile().getRootElement().getGncBook().getBookElements().add(entry);
+    		invc.getWritableGnuCashFile().setModified(true);
 
     		LOGGER.debug("createEmplVchEntry_int: Created new employee voucher entry (core): "
     				+ entry.getEntryGuid().getValue());
@@ -578,7 +577,7 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
     @Override
 	public void addUserDefinedAttribute(final String type, final String name, final String value) {
 		if ( jwsdpPeer.getEntrySlots() == null ) {
-			ObjectFactory fact = getGnuCashFile().getObjectFactory();
+			ObjectFactory fact = getWritableGnuCashFile().getObjectFactory();
 			SlotsType newSlotsType = fact.createSlotsType();
 			jwsdpPeer.setEntrySlots(newSlotsType);
 		}
@@ -1267,13 +1266,13 @@ public class GnuCashWritableGenerInvoiceEntryImpl extends GnuCashGenerInvoiceEnt
     	return (GnuCashWritableFileImpl) super.getGnuCashFile();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public GnuCashWritableFileImpl getGnuCashFile() {
-    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
-    }
+//    /**
+//     * {@inheritDoc}
+//     */
+//    @Override
+//    public GnuCashWritableFileImpl getGnuCashFile() {
+//    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
+//    }
     
     // ---------------------------------------------------------------
 

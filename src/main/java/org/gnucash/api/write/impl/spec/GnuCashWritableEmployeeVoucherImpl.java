@@ -392,7 +392,7 @@ public class GnuCashWritableEmployeeVoucherImpl extends GnuCashWritableGenerInvo
 	public void post(final GnuCashAccount expensesAcct, final GnuCashAccount payablAcct, final LocalDate postDate,
 			final LocalDate dueDate) throws WrongOwnerTypeException,
 			IllegalTransactionSplitActionException {
-		postEmployeeVoucher(getGnuCashFile(), this, getEmployee(), expensesAcct, payablAcct, postDate, dueDate);
+		postEmployeeVoucher(getWritableGnuCashFile(), this, getEmployee(), expensesAcct, payablAcct, postDate, dueDate);
 	}
 
 	// ---------------------------------------------------------------

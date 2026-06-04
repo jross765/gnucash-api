@@ -7,6 +7,7 @@ import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.impl.aux.GCshTaxTableEntryImpl;
 import org.gnucash.api.write.GnuCashWritableFile;
 import org.gnucash.api.write.aux.GCshWritableTaxTableEntry;
+import org.gnucash.api.write.impl.GnuCashWritableFileImpl;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,28 @@ public class GCshWritableTaxTableEntryImpl extends GCshTaxTableEntryImpl
     public GCshWritableTaxTableEntryImpl(final GCshTaxTableEntryImpl entr) {
     	super(entr.getJwsdpPeer(), entr.getGnuCashFile());
     }
+
+    // ---------------------------------------------------------------
+
+    /**
+     * The GnuCash file is the top-level class to contain everything.
+     *
+     * @return the file we are associated with
+     */
+    @Override
+    public GnuCashWritableFileImpl getWritableGnuCashFile() {
+    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
+    }
+
+//    /**
+//     * The GnuCash file is the top-level class to contain everything.
+//     *
+//     * @return the file we are associated with
+//     */
+//    @Override
+//    public GnuCashWritableFileImpl getGnuCashFile() {
+//    	return (GnuCashWritableFileImpl) super.getGnuCashFile();
+//    }
 
     // ---------------------------------------------------------------
 
