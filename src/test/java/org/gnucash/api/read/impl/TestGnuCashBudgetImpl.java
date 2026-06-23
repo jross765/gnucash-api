@@ -75,6 +75,7 @@ public class TestGnuCashBudgetImpl {
 		assertEquals(BDGT_1_ID, bdgt.getID());
 		assertEquals("Budget 2026", bdgt.getName());
 		assertEquals("Erstellt: 18.05.2026", bdgt.getDescription());
+		assertEquals(12, bdgt.getNofPeriods());
 		
 		assertEquals(1, bdgt.getRecurrence().getMult());
 		assertEquals(GCshBudgetRecurrence.PeriodType.MONTH, bdgt.getRecurrence().getPeriodType());

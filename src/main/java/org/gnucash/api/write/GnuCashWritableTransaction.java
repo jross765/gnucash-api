@@ -10,12 +10,11 @@ import org.gnucash.api.write.hlp.GnuCashWritableObject;
 import org.gnucash.api.write.hlp.HasWritableAttachment;
 import org.gnucash.api.write.hlp.HasWritableUserDefinedAttributes;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
 
 /**
  * Transaction that can be modified.<br/>
- * For PropertyChange-Listeners we support the properties:
- * "description" and "splits".
  * 
  * @see GnuCashTransaction
  */
@@ -75,6 +74,8 @@ public interface GnuCashWritableTransaction extends GnuCashTransaction,
      */
     GnuCashWritableTransactionSplit getWritableSplitByID(GCshSpltID spltID);
 
+    GnuCashWritableTransactionSplit getWritableSplitByAccountID(GCshAcctID acctID);
+
     /**
      *  
      * @return
@@ -96,13 +97,11 @@ public interface GnuCashWritableTransaction extends GnuCashTransaction,
      * Removes the given split from this transaction.
      * 
      * @param impl the split to be removed from this transaction
-     *  
      */
     void remove(GnuCashWritableTransactionSplit impl);
 
     /**
      * remove this transaction.
-     *  
      */
     void remove();
 

@@ -269,7 +269,7 @@ public class GnuCashWritableBudgetImpl extends GnuCashBudgetImpl
     // ---------------------------------------------------------------
 
     /**
-     * @see GnuCashWritableBudget#setName(java.lang.String)
+     * {@inheritDoc}
      */
     @Override
     public void setName(final String name) {
@@ -291,6 +291,28 @@ public class GnuCashWritableBudgetImpl extends GnuCashBudgetImpl
     	}
     }
 
+    /**
+     * {@inheritDoc}
+     */
+	@Override
+	public void setNofPeriods(int nofPrd) {
+    	if ( nofPrd <= 0 ) {
+    		throw new IllegalArgumentException("argument <nofPrd> is <= 0");
+    	}
+
+    	int oldNofPrd = getNofPeriods();
+    	jwsdpPeer.setBgtNumPeriods(nofPrd);
+    	getWritableGnuCashFile().setModified(true);
+
+    	PropertyChangeSupport propertyChangeSupport = helper.getPropertyChangeSupport();
+    	if ( propertyChangeSupport != null) {
+    		propertyChangeSupport.firePropertyChange("num-periods", oldNofPrd, nofPrd);
+    	}
+	}
+
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public void setDescription(String descr) {
     	if ( descr == null ) {
@@ -312,11 +334,17 @@ public class GnuCashWritableBudgetImpl extends GnuCashBudgetImpl
     	}
 	}
 
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public GCshWritableBudgetRecurrence getWritableRecurrence() {
 		return new GCshWritableBudgetRecurrenceImpl( (GCshBudgetRecurrenceImpl) getRecurrence() );
 	}
 
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public void setRecurrence(GCshWritableBudgetRecurrence bdgtRecurr) {
 		if ( bdgtRecurr == null ) {
@@ -337,6 +365,9 @@ public class GnuCashWritableBudgetImpl extends GnuCashBudgetImpl
 
     // ---------------------------------------------------------------
 
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public void clearAccounts() {
 		if ( getAccounts() == null )
@@ -361,6 +392,9 @@ public class GnuCashWritableBudgetImpl extends GnuCashBudgetImpl
 		}
 	}
 
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public void removeAccount(final GCshBudgetAccount bdgtAcct) {
 		if ( bdgtAcct == null ) {
@@ -399,6 +433,9 @@ public class GnuCashWritableBudgetImpl extends GnuCashBudgetImpl
 		super.addAccount(bdgtAcct);		
 	}
 
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public List<GCshWritableBudgetAccount> getWritableAccounts() {
 		List<GCshWritableBudgetAccount> result = new ArrayList<GCshWritableBudgetAccount>();
@@ -411,6 +448,9 @@ public class GnuCashWritableBudgetImpl extends GnuCashBudgetImpl
 		return result;
 	}
 
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public GCshWritableBudgetAccount getWritableAccount(GCshAcctID acctID) {
 		if ( acctID == null ) {
@@ -426,6 +466,9 @@ public class GnuCashWritableBudgetImpl extends GnuCashBudgetImpl
 
     // ----------------------------
 
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public void clearPeriods(GCshAcctID acctID) {
 		List<GCshBudgetPeriod> oldPrds = getPeriods(acctID);
@@ -442,6 +485,9 @@ public class GnuCashWritableBudgetImpl extends GnuCashBudgetImpl
 		}
 	}
 
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public List<GCshWritableBudgetPeriod> getWritablePeriods(final GCshAcctID acctID) {
 		List<GCshWritableBudgetPeriod> result = new ArrayList<GCshWritableBudgetPeriod>();
@@ -456,6 +502,9 @@ public class GnuCashWritableBudgetImpl extends GnuCashBudgetImpl
 
     // ---------------------------------------------------------------
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
 		String result = "GCshWritableBudgetImpl [";

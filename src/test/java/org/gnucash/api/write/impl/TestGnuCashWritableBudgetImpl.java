@@ -163,8 +163,11 @@ public class TestGnuCashWritableBudgetImpl {
 		// Modify the object
 
 		bdgt.setName("Improved Budget 3000");
+		bdgt.setDescription("Tralala!");
+		bdgt.setNofPeriods(13);
+		
 		GCshWritableBudgetRecurrence recurr = bdgt.getWritableRecurrence();
-		recurr.setMult(12);
+		recurr.setMult(2);
 		recurr.setPeriodType(GCshBudgetRecurrence.PeriodType.MONTH);
 		recurr.setStart(LocalDate.of(2026, 1, 1));
 		bdgt.setRecurrence(recurr);
@@ -205,9 +208,11 @@ public class TestGnuCashWritableBudgetImpl {
 
 		assertEquals(BDGT_1_ID, bdgt.getID()); // unchanged
 		assertEquals("Improved Budget 3000", bdgt.getName()); // changed
+		assertEquals("Tralala!", bdgt.getDescription()); // changed
+		assertEquals(13, bdgt.getNofPeriods()); // changed
 		
 		assertEquals(bdgt, bdgt.getRecurrence().getParent()); // changed
-		assertEquals(12, bdgt.getRecurrence().getMult()); // changed
+		assertEquals(2, bdgt.getRecurrence().getMult()); // changed
 		assertEquals(GCshBudgetRecurrence.PeriodType.MONTH, bdgt.getRecurrence().getPeriodType()); // changed
 		assertEquals(LocalDate.of(2026, 1, 1), bdgt.getRecurrence().getStart()); // changed
 		
@@ -257,9 +262,11 @@ public class TestGnuCashWritableBudgetImpl {
 
 		assertEquals(BDGT_1_ID, bdgt.getID()); // unchanged
 		assertEquals("Improved Budget 3000", bdgt.getName()); // changed
+		assertEquals("Tralala!", bdgt.getDescription()); // changed
+		assertEquals(13, bdgt.getNofPeriods()); // changed
 		
 		assertEquals(bdgt, bdgt.getRecurrence().getParent()); // changed
-		assertEquals(12, bdgt.getRecurrence().getMult()); // changed
+		assertEquals(2, bdgt.getRecurrence().getMult()); // changed
 		assertEquals(GCshBudgetRecurrence.PeriodType.MONTH, bdgt.getRecurrence().getPeriodType()); // changed
 		assertEquals(LocalDate.of(2026, 1, 1), bdgt.getRecurrence().getStart()); // changed
 		
@@ -322,9 +329,12 @@ public class TestGnuCashWritableBudgetImpl {
 
 		// ----------------------------
 		// Modify the object
+		
+		bdgt.setDescription("My big fat budget");
+		bdgt.setNofPeriods(12);
 
 		GCshWritableBudgetRecurrence recurr = bdgt.getWritableRecurrence();
-		recurr.setMult(12);
+		recurr.setMult(1);
 		recurr.setPeriodType(GCshBudgetRecurrence.PeriodType.MONTH);
 		recurr.setStart(LocalDate.of(2026, 1, 1));
 		bdgt.setRecurrence(recurr);
@@ -372,7 +382,7 @@ public class TestGnuCashWritableBudgetImpl {
 		assertEquals("The ultimate budget -- once and for all", bdgt.getName());
 		
 		assertEquals(bdgt, bdgt.getRecurrence().getParent()); // changed
-		assertEquals(12, bdgt.getRecurrence().getMult()); // changed
+		assertEquals(1, bdgt.getRecurrence().getMult()); // changed
 		assertEquals(GCshBudgetRecurrence.PeriodType.MONTH, bdgt.getRecurrence().getPeriodType()); // changed
 		assertEquals(null, bdgt.getRecurrence().getStart()); // changed ::CHECK
 		
@@ -412,7 +422,7 @@ public class TestGnuCashWritableBudgetImpl {
 		assertEquals("The ultimate budget -- once and for all", bdgt.getName());
 		
 		assertEquals(bdgt, bdgt.getRecurrence().getParent());
-		assertEquals(12, bdgt.getRecurrence().getMult());
+		assertEquals(1, bdgt.getRecurrence().getMult());
 		assertEquals(GCshBudgetRecurrence.PeriodType.MONTH, bdgt.getRecurrence().getPeriodType());
 		assertEquals(null, bdgt.getRecurrence().getStart());
 		

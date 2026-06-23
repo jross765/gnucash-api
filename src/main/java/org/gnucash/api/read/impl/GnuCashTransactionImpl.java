@@ -23,6 +23,7 @@ import org.gnucash.api.read.impl.hlp.AmountFormatter_FP;
 import org.gnucash.api.read.impl.hlp.GnuCashObjectImpl;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
 import org.gnucash.base.basetypes.simple.GCshTrxID;
@@ -44,16 +45,9 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     
     // ---------------------------------------------------------------
 
-    /**
-     * the JWSDP-object we are facading.
-     */
+    // the JWSDP-object we are facading.
     protected final GncTransaction jwsdpPeer;
 
-    // ---------------------------------------------------------------
-    
-    /**
-     * @see #getSplits()
-     */
     protected List<GnuCashTransactionSplit> mySplits = null;
 
     // ---------------------------------------------------------------
@@ -95,11 +89,11 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 //	   	 peer.setTrnSlots(jwsdpPeer.getTrnSlots());
 //		}
 
-    	if (peer == null) {
+    	if ( peer == null ) {
     		throw new IllegalArgumentException("argument <peer> is null");
     	}
 
-    	if (gcshFile == null) {
+    	if ( gcshFile == null ) {
     		throw new IllegalArgumentException("argument <gcshFile> is null");
     	}
 
@@ -120,11 +114,11 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 //	   	 trx.getJwsdpPeer().setTrnSlots(jwsdpPeer.getTrnSlots());
 //		}
 
-    	if (trx.getJwsdpPeer() == null) {
+    	if ( trx.getJwsdpPeer() == null ) {
     		throw new IllegalArgumentException("Transaction not correctly initialized: null jwsdpPeer given");
     	}
 
-    	if (trx.getGnuCashFile() == null) {
+    	if ( trx.getGnuCashFile() == null ) {
     		throw new IllegalArgumentException("Transaction not correctly initialized: null file given");
     	}
 
@@ -206,6 +200,9 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 		return fp;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public BigFraction getBalanceRat() {
 		BigFraction fp = BigFraction.ZERO;
 
@@ -235,6 +232,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     /**
      * {@inheritDoc}
      */
+    @Override
     @Deprecated
     public FixedPointNumber getNegatedBalance() {
     	return getBalance().copy().negate();
@@ -243,6 +241,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     /**
      * {@inheritDoc}
      */
+    @Override
     public BigFraction getNegatedBalanceRat() {
     	return getBalanceRat().negate();
     }
@@ -333,6 +332,10 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 		return retval;
     }
 
+    public String getNumber() {
+    	return getJwsdpPeer().getTrnNum();
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -350,6 +353,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 			jwsdpPeer.getTrnSplits().getTrnSplit().add(impl.getJwsdpPeer());
 		}
 
+    	// ::TODO ::CHECK: The following code is useless, isn't it?
 		List<GnuCashTransactionSplit> splits = getSplits();
 		if ( ! splits.contains(impl) ) {
 			splits.add(impl);
@@ -367,6 +371,14 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
      * {@inheritDoc}
      */
     public GnuCashTransactionSplit getSplitByID(final GCshSpltID spltID) {
+		if ( spltID == null ) {
+			throw new IllegalArgumentException("argument <splitID> is null");
+		}
+
+		if ( ! spltID.isSet() ) {
+			throw new IllegalArgumentException("argument <splitID> is not set");
+		}
+
 		for ( GnuCashTransactionSplit split : getSplits() ) {
 			if ( split.getID().equals(spltID) ) {
 				return split;
@@ -376,6 +388,29 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 		
 		return null;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+	@Override
+	public GnuCashTransactionSplit getSplitByAccountID(GCshAcctID acctID) {
+		if ( acctID == null ) {
+			throw new IllegalArgumentException("argument <acctID> is null");
+		}
+
+		if ( ! acctID.isSet() ) {
+			throw new IllegalArgumentException("argument <acctID> is not set");
+		}
+
+		for ( GnuCashTransactionSplit split : getSplits() ) {
+			if (split.getAccountID().equals(acctID)) {
+				return split;
+			}
+
+		}
+		
+		return null;
+	}
 
     /**
      * {@inheritDoc}
@@ -413,7 +448,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
      */
     protected GnuCashTransactionSplitImpl createSplit(
 	    final GncTransaction.TrnSplits.TrnSplit jwsdpSplt,
-	    final boolean addToAcct, 
+	    final boolean addToAcct,
 	    final boolean addToInvc) {
     	return new GnuCashTransactionSplitImpl(jwsdpSplt, this, 
     										   addToAcct, addToInvc);
@@ -471,9 +506,8 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 			try {
 				// "2001-09-18 00:00:00 +0200"
 				datePosted = ZonedDateTime.parse(s, DATE_POSTED_FORMAT);
-			} catch (Exception e) {
-				IllegalStateException ex = new IllegalStateException(
-						"unparsable date '" + s + "' in transaction with id='" + getID() + "'");
+			} catch ( Exception e ) {
+				IllegalStateException ex = new IllegalStateException("unparsable date '" + s + "' in transaction with id='" + getID() + "'");
 				ex.initCause(e);
 				throw ex;
 			}
@@ -483,7 +517,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     }
 
 	// -----------------------------------------------------------
-    
+
     /**
      * {@inheritDoc}
      */
@@ -499,6 +533,14 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
      */
 	@Override
 	public String getUserDefinedAttribute(String name) {
+		if ( name == null ) {
+			throw new IllegalArgumentException("argument <name> is null");
+		}
+
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
+		}
+
 		return HasUserDefinedAttributesImpl
 				.getUserDefinedAttributeCore(jwsdpPeer.getTrnSlots(), name);
 	}
@@ -508,6 +550,10 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
      */
 	@Override
 	public List<String> getUserDefinedAttributeKeys() {
+		if ( jwsdpPeer.getTrnSlots() == null) {
+			return null;
+		}
+		
 		return HasUserDefinedAttributesImpl
 				.getUserDefinedAttributeKeysCore(jwsdpPeer.getTrnSlots());
 	}
@@ -568,14 +614,11 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 			}
 
 			return otherTrx.getDateEntered().compareTo(getDateEntered());
-		} catch (Exception e) {
+		} catch ( Exception e ) {
+			// ::TODO
 			e.printStackTrace();
 			return 0;
 		}
-    }
-
-    public String getNumber() {
-    	return getJwsdpPeer().getTrnNum();
     }
 
 }

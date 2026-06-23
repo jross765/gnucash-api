@@ -25,6 +25,7 @@ import org.gnucash.api.write.impl.hlp.GnuCashWritableObjectImpl;
 import org.gnucash.api.write.impl.hlp.HasWritableUserDefinedAttributesImpl;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
+import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
 import org.gnucash.base.basetypes.simple.GCshTrxID;
@@ -49,22 +50,17 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 	// -----------------------------------------------------------
 
 	/**
-	 * @param file      the file we belong to
+	 * @param gcshFile  the file we belong to
 	 * @param jwsdpPeer the JWSDP-object we are facading.
 	 */
 	@SuppressWarnings("exports")
-	public GnuCashWritableTransactionImpl(final GncTransaction jwsdpPeer, final GnuCashFileImpl file) {
-		super(jwsdpPeer, file, true);
+	public GnuCashWritableTransactionImpl(final GncTransaction jwsdpPeer, final GnuCashFileImpl gcshFile) {
+		super(jwsdpPeer, gcshFile, true);
 
 		// repair a broken file
-		if (jwsdpPeer.getTrnDatePosted() == null) {
-			LOGGER.warn("Repairing broken transaction " + jwsdpPeer.getTrnId() + " with no date-posted");
+		if ( jwsdpPeer.getTrnDatePosted() == null ) {
+			LOGGER.warn("Repairing broken transaction " + jwsdpPeer.getTrnId() + " with no post-date");
 			// We use our own ObjectFactory because: Exception in thread "AWT-EventQueue-0"
-			// java.lang.IllegalAccessError: tried to access
-			// method org.gnucash.write.jwsdpimpl.GnuCashFileImpl.getObjectFactory()
-			// Lbiz/wolschon/fileformats/gnucash/jwsdpimpl/generated/ObjectFactory; from
-			// class org.gnucash.write.jwsdpimpl
-			// .GnuCashWritableTransactionImpl
 			// ObjectFactory factory = file.getObjectFactory();
 			ObjectFactory factory = new ObjectFactory();
 			GncTransaction.TrnDatePosted datePosted = factory.createGncTransactionTrnDatePosted();
@@ -86,7 +82,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 	public GnuCashWritableTransactionImpl(final GnuCashTransaction trx) {
 		super(trx.getJwsdpPeer(), trx.getGnuCashFile(), false);
 
-		// ::TODO
+		// ::TODO / ::CHECK
 //		System.err.println("NOT IMPLEMENTED YET");
 //		for ( GnuCashTransactionSplit splt : trx.getSplits() )  {
 //	   	addSplit(new GnuCashTransactionSplitImpl(splt.getJwsdpPeer(), trx,
@@ -119,8 +115,47 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 	// -----------------------------------------------------------
 
 	/**
-	 * Creates a new Transaction and add's it to the given GnuCash file Don't modify
-	 * the ID of the new transaction!
+	 * Create a new split for a split found in the jaxb-data.
+	 *
+	 * @param jwsdpSplt the jaxb-data
+	 * @return the new split-instance
+	 */
+	@Override
+	protected GnuCashTransactionSplitImpl createSplit(
+			final GncTransaction.TrnSplits.TrnSplit jwsdpSplt,
+			final boolean addToAcct,
+			final boolean addToInvc) {
+		GnuCashWritableTransactionSplitImpl splt = 
+				new GnuCashWritableTransactionSplitImpl(jwsdpSplt, this,
+														addToAcct, addToInvc);
+		if ( helper.getPropertyChangeSupport() != null ) {
+			helper.getPropertyChangeSupport().firePropertyChange("splits", null, getWritableSplits());
+		}
+
+		return splt;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GnuCashWritableTransactionSplit createWritableSplit(final GnuCashAccount acct) {
+		if ( acct == null ) {
+			throw new IllegalArgumentException("argument <acct> is null");
+		}
+
+		GnuCashWritableTransactionSplitImpl splt = new GnuCashWritableTransactionSplitImpl(this, acct);
+		addSplit(splt);
+		if ( helper.getPropertyChangeSupport() != null ) {
+			helper.getPropertyChangeSupport().firePropertyChange("splits", null, getWritableSplits());
+		}
+		
+		return splt;
+	}
+
+	/**
+	 * Creates a new transaction and adds it to the given GnuCash file.
+	 * Don't modify the ID of the new transaction!
 	 */
 	protected static GncTransaction createTransaction_int(
 	        final GnuCashWritableFileImpl file, 
@@ -132,7 +167,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 		if ( ! newID.isSet() ) {
 			throw new IllegalArgumentException("argument <newID> is not set");
 		}
-	
+
 	    ObjectFactory factory = file.getObjectFactory();
 	    
 	    GncTransaction jwsdpTrx = file.createGncTransactionType();
@@ -158,7 +193,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 	
 	    {
 	        GncTransaction.TrnCurrency currency = factory.createGncTransactionTrnCurrency();
-	        currency.setCmdtyId(file.getDefaultCurrencyIDStr());
+	        currency.setCmdtyId(file.getDefaultCurrencyID().toString());
 	        currency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
 	        jwsdpTrx.setTrnCurrency(currency);
 	    }
@@ -177,48 +212,11 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 	}
 
 	/**
-	 * Create a new split for a split found in the jaxb-data.
-	 *
-	 * @param jwsdpSplt the jaxb-data
-	 * @return the new split-instance
-	 */
-	@Override
-	protected GnuCashTransactionSplitImpl createSplit(
-			final GncTransaction.TrnSplits.TrnSplit jwsdpSplt,
-			final boolean addToAcct,
-			final boolean addToInvc) {
-		GnuCashWritableTransactionSplitImpl gcshTrxSplt = 
-				new GnuCashWritableTransactionSplitImpl(jwsdpSplt, this,
-														addToAcct, addToInvc);
-		if (helper.getPropertyChangeSupport() != null) {
-			helper.getPropertyChangeSupport().firePropertyChange("splits", null, getWritableSplits());
-		}
-
-		return gcshTrxSplt;
-	}
-
-	/**
-	 * @see GnuCashWritableTransaction#createWritableSplit(GnuCashAccount)
-	 */
-	public GnuCashWritableTransactionSplit createWritableSplit(final GnuCashAccount acct) {
-		if ( acct == null ) {
-			throw new IllegalArgumentException("argument <acct> is null");
-		}
-
-		GnuCashWritableTransactionSplitImpl splt = new GnuCashWritableTransactionSplitImpl(this, acct);
-		addSplit(splt);
-		if ( helper.getPropertyChangeSupport() != null ) {
-			helper.getPropertyChangeSupport().firePropertyChange("splits", null, getWritableSplits());
-		}
-		
-		return splt;
-	}
-
-	/**
 	 * @param impl the split to remove from this transaction
 	 */
-	public void remove(final GnuCashWritableTransactionSplit impl) {
-		getJwsdpPeer().getTrnSplits().getTrnSplit().remove(((GnuCashWritableTransactionSplitImpl) impl).getJwsdpPeer());
+	public void remove(final GnuCashWritableTransactionSplit splt) {
+		getJwsdpPeer().getTrnSplits().getTrnSplit()
+			.remove(((GnuCashWritableTransactionSplitImpl) splt).getJwsdpPeer());
 		getWritableGnuCashFile().setModified(true);
 
 		if ( mySplits == null ) {
@@ -230,19 +228,19 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 			// mySplits.remove(impl);
 			// Instead:
 			for ( int i = 0; i < mySplits.size(); i++ ) {
-				if ( mySplits.get(i).getID().equals(impl.getID()) ) {
+				if ( mySplits.get(i).getID().equals(splt.getID()) ) {
 					mySplits.remove(i);
 					i--;
 				}
 			}
 		}
 
-		GnuCashWritableAccountImpl account = (GnuCashWritableAccountImpl) impl.getAccount();
+		GnuCashWritableAccountImpl account = (GnuCashWritableAccountImpl) splt.getAccount();
 		if ( account != null ) {
-			account.removeTransactionSplit(impl);
+			account.removeTransactionSplit(splt);
 		}
 
-		getWritableGnuCashFile().removeTransactionSplit(impl);
+		getWritableGnuCashFile().removeTransactionSplit(splt);
 		// there is no count for splits up to now
 		// getWritableFile().decrementCountDataFor()
 		if ( helper.getPropertyChangeSupport() != null ) {
@@ -253,13 +251,49 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public GnuCashWritableTransactionSplit getWritableSplitByID(final GCshSpltID spltID) {
-		return (GnuCashWritableTransactionSplit) super.getSplitByID(spltID);
+		// alt:
+		// return (GnuCashWritableTransactionSplit) super.getSplitByID(spltID);
+		if ( spltID == null ) {
+			throw new IllegalArgumentException("argument <spltID> is null");
+		}
+
+		if ( ! spltID.isSet() ) {
+			throw new IllegalArgumentException("argument <spltID> is not set");
+		}
+
+		GnuCashTransactionSplit splt = super.getSplitByID(spltID);
+		// ::TODO
+		// !!! Diese nicht-triviale Aenderung nochmal ganz genau abtesten !!!
+		return new GnuCashWritableTransactionSplitImpl((GnuCashTransactionSplitImpl) splt, 
+													   false, false);
 	}
 
 	/**
-	 * @see #getSplits()
+	 * {@inheritDoc}
 	 */
+	@Override
+	public GnuCashWritableTransactionSplit getWritableSplitByAccountID(GCshAcctID acctID) {
+		if ( acctID == null ) {
+			throw new IllegalArgumentException("argument <acctID> is null");
+		}
+
+		if ( ! acctID.isSet() ) {
+			throw new IllegalArgumentException("argument <acctID> is not set");
+		}
+
+		GnuCashTransactionSplit splt = super.getSplitByAccountID(acctID);
+		// ::TODO
+		// !!! Diese nicht-triviale Aenderung nochmal ganz genau abtesten !!!
+		return new GnuCashWritableTransactionSplitImpl((GnuCashTransactionSplitImpl) splt, 
+													   false, false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<GnuCashWritableTransactionSplit> getWritableSplits() {
 		List<GnuCashWritableTransactionSplit> result = new ArrayList<GnuCashWritableTransactionSplit>();
 	
@@ -280,14 +314,15 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 	}
 
 	/**
-	 * @see GnuCashWritableTransaction#remove()
+	 * {@inheritDoc}
 	 */
+	@Override
 	public void remove() {
 		getWritableGnuCashFile().removeTransaction(this);
 //		Collection<GnuCashWritableTransactionSplit> c = new ArrayList<GnuCashWritableTransactionSplit>();
 //		c.addAll(getWritableSplits());
-//		for (GnuCashWritableTransactionSplit element : c) {
-//	   	 element.remove();
+//		for ( KMyMoneyWritableTransactionSplit element : c ) {
+//			element.remove();
 //		}
 	}
 
@@ -308,7 +343,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 	    getWritableGnuCashFile().setModified(true);
 	
 	    if (old == null || ! old.equals(numStr)) {
-	        if (helper.getPropertyChangeSupport() != null) {
+	        if ( helper.getPropertyChangeSupport() != null ) {
 	        	helper.getPropertyChangeSupport().firePropertyChange("transactionNumber", old, numStr);
 	        }
 	    }
@@ -344,6 +379,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 		setDateEntered(dateEntered.atZone(ZoneId.systemDefault()));
 	}
 	
+	@Override
 	public void setDatePosted(final LocalDate datePosted) {
 		if ( datePosted == null ) {
 			throw new IllegalArgumentException("argument <datePosted> is null");
@@ -391,6 +427,22 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 
 	@Override
 	public void addUserDefinedAttribute(final String type, final String name, final String value) {
+		if ( name == null ) {
+			throw new IllegalArgumentException("argument <name> is null");
+		}
+		
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is emptys");
+		}
+
+		if ( value == null ) {
+			throw new IllegalArgumentException("argument <value> is null");
+		}
+		
+		if ( value.isBlank() ) {
+			throw new IllegalArgumentException("argument <value> is blank");
+		}
+
 		if ( jwsdpPeer.getTrnSlots() == null ) {
 			ObjectFactory fact = getWritableGnuCashFile().getObjectFactory();
 			SlotsType newSlotsType = fact.createSlotsType();
@@ -405,6 +457,14 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 
 	@Override
 	public void removeUserDefinedAttribute(final String name) {
+		if ( name == null ) {
+			throw new IllegalArgumentException("argument <name> is null");
+		}
+		
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
+		}
+
 		if ( jwsdpPeer.getTrnSlots() == null ) {
 			throw new SlotListDoesNotContainKeyException();
 		}
@@ -417,6 +477,22 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 
 	@Override
 	public void setUserDefinedAttribute(final String name, final String value) {
+		if ( name == null ) {
+			throw new IllegalArgumentException("argument <name> is null");
+		}
+		
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
+		}
+
+		if ( value == null ) {
+			throw new IllegalArgumentException("argument <value> is null");
+		}
+		
+		if ( value.isBlank() ) {
+			throw new IllegalArgumentException("argument <value> is blank");
+		}
+
 		if ( jwsdpPeer.getTrnSlots() == null ) {
 			throw new SlotListDoesNotContainKeyException();
 		}

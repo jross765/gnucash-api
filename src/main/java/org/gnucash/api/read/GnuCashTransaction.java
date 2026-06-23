@@ -10,6 +10,7 @@ import org.gnucash.api.read.hlp.GnuCashObject;
 import org.gnucash.api.read.hlp.HasAttachment;
 import org.gnucash.api.read.hlp.HasUserDefinedAttributes;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
 import org.gnucash.base.basetypes.simple.GCshTrxID;
 
@@ -86,53 +87,33 @@ public interface GnuCashTransaction extends Comparable<GnuCashTransaction>,
     	}
     }
 
-    // -----------------------------------------------------------------
+    // ---------------------------------------------------------------
+
+    @SuppressWarnings("exports")
+    GncTransaction getJwsdpPeer();
+
+    // ----------------------------------------------------------------
 
     /**
      *
-     * @return the unique-id to identify this object with across name- and hirarchy-changes
+     * @return the unique-id to identify this object with across name- and 
+     *         hierarchy-changes
      */
     GCshTrxID getID();
 
-    /**
-     * @return the user-defined description for this object (may contain multiple lines and non-ascii-characters)
-     */
-    String getDescription();
-    
     /**
      * 
      * @return the transaction-number.
      */
     String getNumber();
 
-    // ----------------------------
-
-    @SuppressWarnings("exports")
-    GncTransaction getJwsdpPeer();
-
-    // ----------------------------
-
     /**
-     * Do not modify the returned collection!
-     * @return all splits of this transaction.
-     *  
+     * @return the user-defined description for this object (may contain multiple
+     *         lines and non-ascii-characters)
      */
-    List<GnuCashTransactionSplit> getSplits();
+    String getDescription();
 
-    /**
-     * Get a split of this transaction it's id.
-     * 
-     * @param spltID the id to look for
-     * @return null if not found
-     *  
-     */
-    GnuCashTransactionSplit getSplitByID(GCshSpltID spltID);
-
-    /**
-     *
-     * @return the number of splits in this transaction.
-     */
-    int getSplitsCount();
+    // ----------------------------------------------------------------
 
     /**
      *
@@ -148,25 +129,54 @@ public interface GnuCashTransaction extends Comparable<GnuCashTransaction>,
      * @return the date the transaction was entered into the system
      * 
      * @see #getDateEntered()
+     */
+	String getDateEnteredFormatted();
+
+   /**
+    *
+    * @return the date the transaction happened
+    * 
+    * @see #getDatePostedFormatted()
+    * @see #getDateEntered()
     */
-   String getDateEnteredFormatted();
+	ZonedDateTime getDatePosted();
+
+	/**
+	 *
+	 * @return date the transaction happened
+	 * 
+	 * @see #getDatePosted()
+	 */
+	String getDatePostedFormatted();
+
+    // ----------------------------------------------------------------
+
+    /**
+     * Do not modify the returned collection!
+     * 
+     * @return all splits of this transaction.
+     * 
+     * @see #getSplitByID(KMMSpltID)
+     */
+    List<GnuCashTransactionSplit> getSplits();
+
+    /**
+     * Get a split of this transaction it's id.
+     * 
+     * @param spltID the id to look for
+     * @return null if not found
+     * 
+     * @see #getSplits()
+     */
+    GnuCashTransactionSplit getSplitByID(GCshSpltID spltID);
+
+    GnuCashTransactionSplit getSplitByAccountID(GCshAcctID acctID);
 
     /**
      *
-     * @return the date the transaction happened
-     * 
-     * @see #getDatePostedFormatted()
-     * @see #getDateEntered()
+     * @return the number of splits in this transaction.
      */
-    ZonedDateTime getDatePosted();
-
-    /**
-     *
-     * @return date the transaction happened
-     * 
-     * @see #getDatePosted()
-     */
-    String getDatePostedFormatted();
+    int getSplitsCount();
 
     /**
      *
@@ -195,7 +205,7 @@ public interface GnuCashTransaction extends Comparable<GnuCashTransaction>,
      */
     @Deprecated
     FixedPointNumber getBalance();
-    
+
     BigFraction      getBalanceRat();
     
     /**
@@ -206,7 +216,7 @@ public interface GnuCashTransaction extends Comparable<GnuCashTransaction>,
      * @see #getBalanceFormatted(Locale)
      */
     String getBalanceFormatted();
-    
+
     /**
      * The result is in the currency of the transaction.
      * @param lcl 
@@ -227,7 +237,7 @@ public interface GnuCashTransaction extends Comparable<GnuCashTransaction>,
      * @see #getNegatedBalanceFormatted(Locale)
      * @see #isBalanced()
      */
-    @Deprecated
+	@Deprecated
     FixedPointNumber getNegatedBalance();
 
     BigFraction      getNegatedBalanceRat();

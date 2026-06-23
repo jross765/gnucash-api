@@ -29,6 +29,13 @@ public interface GnuCashWritableBudget extends GnuCashBudget,
     
     void setDescription(String descr);
     
+    /**
+     * Sets the <b>maximum</b> number of periods for <b>all</b> accounts.
+     * 
+     * @param nofPrd 
+     */
+    void setNofPeriods(int nofPrd);
+    
     GCshWritableBudgetRecurrence getWritableRecurrence();
 
     void setRecurrence(GCshWritableBudgetRecurrence recurr);
