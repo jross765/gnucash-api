@@ -193,7 +193,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 	
 	    {
 	        GncTransaction.TrnCurrency currency = factory.createGncTransactionTrnCurrency();
-	        currency.setCmdtyId(file.getDefaultCurrencyID().toString());
+	        currency.setCmdtyId(file.getDefaultCurrencyID().getCode());
 	        currency.setCmdtySpace(GCshCmdtyNameSpace.CURRENCY);
 	        jwsdpTrx.setTrnCurrency(currency);
 	    }
