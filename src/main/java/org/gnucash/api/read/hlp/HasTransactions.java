@@ -10,11 +10,18 @@ import org.gnucash.base.basetypes.simple.GCshSpltID;
 public interface HasTransactions
 {
 	
+    /**
+     * The returned list is sorted by the natural order of the Transaction-Splits.
+     *
+     * @return all splits
+     */
     List<GnuCashTransactionSplit> getTransactionSplits();
 
-    GnuCashTransactionSplit getTransactionSplitByID(final GCshSpltID spltID);
-
-    void addTransactionSplit(final GnuCashTransactionSplit splt);
+    /**
+     * @param spltID the split-id to look for
+     * @return the identified split or null
+     */
+    GnuCashTransactionSplit getTransactionSplitByID(GCshSpltID spltID);
 
     // ----------------------------
 
