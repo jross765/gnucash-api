@@ -1,4 +1,4 @@
-package org.gnucash.api.read.impl.hlp;
+package org.gnucash.api.write.impl.hlp.fil;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -8,7 +8,7 @@ import java.util.Collection;
 
 import org.gnucash.api.ConstTest;
 import org.gnucash.api.read.GnuCashCommodity;
-import org.gnucash.api.read.impl.hlp.fil.FileCommodityManager;
+import org.gnucash.api.write.GnuCashWritableCommodity;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,9 +19,9 @@ public class TestFileCommodityManager {
 
 	// ---------------------------------------------------------------
 
-	private GnuCashFileImplTestHelper gcshFile = null;
+	private GnuCashWritableFileImplTestHelper gcshInFile = null;
 
-	private FileCommodityManager mgr = null;
+	private org.gnucash.api.write.impl.hlp.fil.FileCommodityManager mgr = null;
 
 	// -----------------------------------------------------------------
 
@@ -47,7 +47,7 @@ public class TestFileCommodityManager {
 		}
 
 		try {
-			gcshFile = new GnuCashFileImplTestHelper(gcshInFileStream);
+			gcshInFile = new GnuCashWritableFileImplTestHelper(gcshInFileStream);
 		} catch (Exception exc) {
 			System.err.println("Cannot parse GnuCash in-file");
 			exc.printStackTrace();
@@ -58,7 +58,7 @@ public class TestFileCommodityManager {
 	
 	@Test
 	public void test01() throws Exception {
-		mgr = gcshFile.getCommodityManager();
+		mgr = gcshInFile.getCommodityManager();
 		
 		assertEquals(ConstTest.Stats.NOF_CMDTY_ALL, mgr.getNofEntriesCommodityMap());
 		assertEquals(ConstTest.Stats.NOF_CMDTY_ALL, mgr.getCommodities().size());
@@ -66,12 +66,35 @@ public class TestFileCommodityManager {
 
 	@Test
 	public void test02() throws Exception {
-		mgr = gcshFile.getCommodityManager();
+		mgr = gcshInFile.getCommodityManager();
 		
-		Collection<GnuCashCommodity> secColl = mgr.getCommodities();
+		Collection<GnuCashCommodity> cmdtyColl = mgr.getCommodities();
 		GCshCmdtyID qualifID = new GCshCmdtyID("ISIN", "DE000BASF111");
-		GnuCashCommodity sec = mgr.getCommodityByQualifID(qualifID);
-		assertTrue(secColl.contains(sec));
+		GnuCashCommodity cmdty = mgr.getCommodityByQualifID(qualifID);
+		assertTrue(cmdtyColl.contains(cmdty));
+	}
+
+	@Test
+	public void test03() throws Exception {
+		mgr = gcshInFile.getCommodityManager();
+		
+		// has no splits:
+		GCshCmdtyID cmdtyID = GCshCmdtyID.parse("ISIN:GB0009895292");
+		assertEquals(ConstTest.Stats.NOF_CMDTY_ALL, mgr.getCommodities().size());
+		GnuCashWritableCommodity cmdty = gcshInFile.getWritableCommodityByQualifID(cmdtyID);
+		gcshInFile.removeCommodity(cmdty);
+		assertEquals(ConstTest.Stats.NOF_CMDTY_ALL - 1, mgr.getCommodities().size());
+
+		// has splits:
+		cmdtyID = GCshCmdtyID.parse("ISIN:DE000BASF111");
+		cmdty = gcshInFile.getWritableCommodityByQualifID(cmdtyID);
+		try {
+			gcshInFile.removeCommodity(cmdty);
+			assertEquals(1, 0);
+		} catch ( Exception exc ) {
+			assertEquals(0, 0);
+		}
+		assertEquals(ConstTest.Stats.NOF_CMDTY_ALL - 1, mgr.getCommodities().size());
 	}
 
 }

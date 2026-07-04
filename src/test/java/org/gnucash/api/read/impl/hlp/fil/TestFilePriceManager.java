@@ -1,4 +1,4 @@
-package org.gnucash.api.read.impl.hlp;
+package org.gnucash.api.read.impl.hlp.fil;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

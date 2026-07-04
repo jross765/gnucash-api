@@ -1,4 +1,4 @@
-package org.gnucash.api.write.impl.hlp;
+package org.gnucash.api.write.impl.hlp.fil;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +20,14 @@ public class GnuCashWritableFileImplTestHelper extends GnuCashWritableFileImpl
 
 	// ---------------------------------------------------------------
 	// For test purposes only
+
+	public org.gnucash.api.write.impl.hlp.fil.FileAccountManager getAccountManager() {
+		return (org.gnucash.api.write.impl.hlp.fil.FileAccountManager) acctMgr;
+	}
+
+	public org.gnucash.api.write.impl.hlp.fil.FileTransactionManager getTransactionManager() {
+		return (org.gnucash.api.write.impl.hlp.fil.FileTransactionManager) trxMgr;
+	}
 
 	public org.gnucash.api.write.impl.hlp.fil.FileCommodityManager getCommodityManager() {
 		return (org.gnucash.api.write.impl.hlp.fil.FileCommodityManager) cmdtyMgr;

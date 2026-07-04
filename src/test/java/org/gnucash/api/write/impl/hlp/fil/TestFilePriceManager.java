@@ -1,4 +1,4 @@
-package org.gnucash.api.write.impl.hlp;
+package org.gnucash.api.write.impl.hlp.fil;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -20,8 +20,8 @@ import junit.framework.JUnit4TestAdapter;
 
 public class TestFilePriceManager {
 	
-	private final static GCshPrcID PRC_1_ID = org.gnucash.api.read.impl.hlp.TestFilePriceManager.PRC_1_ID;
-	private final static GCshPrcID PRC_2_ID = org.gnucash.api.read.impl.hlp.TestFilePriceManager.PRC_2_ID;
+	private final static GCshPrcID PRC_1_ID = org.gnucash.api.read.impl.hlp.fil.TestFilePriceManager.PRC_1_ID;
+	private final static GCshPrcID PRC_2_ID = org.gnucash.api.read.impl.hlp.fil.TestFilePriceManager.PRC_2_ID;
 
 	// ---------------------------------------------------------------
 

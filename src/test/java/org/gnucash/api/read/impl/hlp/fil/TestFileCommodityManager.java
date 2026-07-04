@@ -1,4 +1,4 @@
-package org.gnucash.api.write.impl.hlp;
+package org.gnucash.api.read.impl.hlp.fil;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -8,6 +8,7 @@ import java.util.Collection;
 
 import org.gnucash.api.ConstTest;
 import org.gnucash.api.read.GnuCashCommodity;
+import org.gnucash.api.read.impl.hlp.fil.FileCommodityManager;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,9 +19,9 @@ public class TestFileCommodityManager {
 
 	// ---------------------------------------------------------------
 
-	private GnuCashWritableFileImplTestHelper gcshInFile = null;
+	private GnuCashFileImplTestHelper gcshFile = null;
 
-	private org.gnucash.api.write.impl.hlp.fil.FileCommodityManager mgr = null;
+	private FileCommodityManager mgr = null;
 
 	// -----------------------------------------------------------------
 
@@ -46,7 +47,7 @@ public class TestFileCommodityManager {
 		}
 
 		try {
-			gcshInFile = new GnuCashWritableFileImplTestHelper(gcshInFileStream);
+			gcshFile = new GnuCashFileImplTestHelper(gcshInFileStream);
 		} catch (Exception exc) {
 			System.err.println("Cannot parse GnuCash in-file");
 			exc.printStackTrace();
@@ -57,7 +58,7 @@ public class TestFileCommodityManager {
 	
 	@Test
 	public void test01() throws Exception {
-		mgr = gcshInFile.getCommodityManager();
+		mgr = gcshFile.getCommodityManager();
 		
 		assertEquals(ConstTest.Stats.NOF_CMDTY_ALL, mgr.getNofEntriesCommodityMap());
 		assertEquals(ConstTest.Stats.NOF_CMDTY_ALL, mgr.getCommodities().size());
@@ -65,12 +66,12 @@ public class TestFileCommodityManager {
 
 	@Test
 	public void test02() throws Exception {
-		mgr = gcshInFile.getCommodityManager();
+		mgr = gcshFile.getCommodityManager();
 		
-		Collection<GnuCashCommodity> cmdtyColl = mgr.getCommodities();
+		Collection<GnuCashCommodity> secColl = mgr.getCommodities();
 		GCshCmdtyID qualifID = new GCshCmdtyID("ISIN", "DE000BASF111");
-		GnuCashCommodity cmdty = mgr.getCommodityByQualifID(qualifID);
-		assertTrue(cmdtyColl.contains(cmdty));
+		GnuCashCommodity sec = mgr.getCommodityByQualifID(qualifID);
+		assertTrue(secColl.contains(sec));
 	}
 
 }
