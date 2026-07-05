@@ -36,7 +36,7 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 	protected final GncTransaction.TrnSplits.TrnSplit jwsdpPeer;
 
 	// the transaction this split belongs to.
-	private final GnuCashTransaction myTrx;
+	protected final GnuCashTransaction myTrx;
 
 	// ---------------------------------------------------------------
 
@@ -61,10 +61,10 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 			GnuCashAccount acct = getAccount();
 			if ( acct == null ) {
 				LOGGER.error("No such Account id='" + getAccountID() + "' for Transactions-Split with id '" + getID()
-						+ "' description '" + getDescription() + "' in transaction with id '" + getTransaction().getID()
-						+ "' description '" + getTransaction().getDescription() + "'");
+					+ "' description '" + getDescription() + "' in transaction with id '" + getTransaction().getID()
+					+ "' description '" + getTransaction().getDescription() + "'");
 			} else {
-				acct.addTransactionSplit(this);
+				((GnuCashAccountImpl) acct).addTransactionSplit(this);
 			}
 		}
 
@@ -214,7 +214,7 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 	}
 
 	/**
-	 * @see GnuCashTransactionSplit#getValueFormatted()
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getValueFormatted() {
@@ -222,7 +222,7 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 	}
 
 	/**
-	 * @see GnuCashTransactionSplit#getValueFormatted(java.util.Locale)
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getValueFormatted(final Locale lcl) {
@@ -233,20 +233,23 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 	// ---------------------------------------------------------------
 
 	/**
-	 * @see GnuCashTransactionSplit#getQuantity()
+	 * {@inheritDoc}
 	 */
 	@Deprecated
 	public FixedPointNumber getQuantity() {
 		return new FixedPointNumber(jwsdpPeer.getSplitQuantity());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public BigFraction getQuantityRat() {
 		return BigFraction.parse(jwsdpPeer.getSplitQuantity());
 	}
 
 	/**
-	 * The value is in the currency of the account!
+	 * {@inheritDoc}
 	 */
 	public String getQuantityFormatted() {
 		return getQuantityFormatted(Locale.getDefault());
@@ -265,8 +268,6 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 
 	/**
 	 * {@inheritDoc}
-	 *
-	 * @see GnuCashTransactionSplit#getDescription()
 	 */
 	public String getDescription() {
 		if ( jwsdpPeer.getSplitMemo() == null ) {
@@ -295,13 +296,12 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 	public int compareTo(final GnuCashTransactionSplit otherSplt) {
 		try {
 			GnuCashTransaction otherTrans = otherSplt.getTransaction();
-			int c = otherTrans.compareTo(getTransaction());
+			int c = otherTrans.compareTo( getTransaction() );
 			if ( c != 0 ) {
 				return c;
 			}
 
-			c = otherSplt.getID().toString().compareTo(getID().toString());
-			if ( c != 0 ) {
+			if ( ! otherSplt.getID().toString().equals( getID().toString() ) ) {
 				return c;
 			}
 

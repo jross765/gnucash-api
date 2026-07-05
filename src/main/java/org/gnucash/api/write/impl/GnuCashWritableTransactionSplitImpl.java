@@ -4,9 +4,11 @@ import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.Const;
 import org.gnucash.api.generated.GncTransaction;
 import org.gnucash.api.generated.ObjectFactory;
+import org.gnucash.api.generated.SlotsType;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashTransactionSplit;
 import org.gnucash.api.read.impl.GnuCashTransactionSplitImpl;
+import org.gnucash.api.read.impl.hlp.SlotListDoesNotContainKeyException;
 import org.gnucash.api.write.GnuCashWritableTransaction;
 import org.gnucash.api.write.GnuCashWritableTransactionSplit;
 import org.gnucash.api.write.impl.hlp.GnuCashWritableObjectImpl;
@@ -27,7 +29,7 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  * Transaction-Split that can be newly created or removed from its transaction.
  */
 public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplitImpl 
-	                                             implements GnuCashWritableTransactionSplit 
+                                                 implements GnuCashWritableTransactionSplit
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(GnuCashWritableTransactionSplitImpl.class);
 
@@ -173,7 +175,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 	 */
 	@Override
 	public void remove() {
-		getTransaction().remove(this);
+		getTransaction().removeSplit(this);
 	}
 
 	/**
@@ -260,6 +262,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		if ( acctCmdtyID == null ) {
 			throw new IllegalStateException("account's security/currency is null");
 		}
+
 		if ( ! acctCmdtyID.isSet() ) {
 			throw new IllegalStateException("account's security/currency is not set");
 		}
@@ -320,7 +323,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 	@Override
 	@Deprecated
 	public void setValue(final FixedPointNumber val) {
-		if (val == null) {
+		if ( val == null ) {
 			throw new IllegalArgumentException("argument <val> is null");
 		}
 		
@@ -352,6 +355,8 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		}
 	}
 	
+	// ---------------------------------------------------------------
+
 	/**
 	 * Set the description-text.
 	 *
@@ -360,10 +365,10 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 	@Override
 	public void setDescription(final String descr) {
 		if ( descr == null ) {
-			throw new IllegalArgumentException("argument <descr> is null");
+			throw new IllegalArgumentException("argument <descr> is null. Please use the empty string instead of null for an empty description");
 		}
 
-		// Caution: empty string allowed here
+		// Yes, empty descr is valid
 //		if ( descr.isBlank() ) {
 //			throw new IllegalArgumentException("argument <descr> is blank");
 //		}
@@ -409,6 +414,8 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 			}
 		}
 	}
+
+	// ---------------------------------------------------------------
 
 	public void setLotID(final GCshLotID lotID) {
 		if ( lotID == null ) {
@@ -490,10 +497,84 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 	// ---------------------------------------------------------------
 
 	/**
-	 * @param name 
-	 * @param value 
+	 * {@inheritDoc}
 	 */
+	@Override
+	public void addUserDefinedAttribute(String type, String name, String value) {
+		if ( name == null ) {
+			throw new IllegalArgumentException("argument <name> is null");
+		}
+		
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is emptys");
+		}
+
+		if ( value == null ) {
+			throw new IllegalArgumentException("argument <value> is null");
+		}
+		
+		if ( value.isBlank() ) {
+			throw new IllegalArgumentException("argument <value> is blank");
+		}
+
+		if ( jwsdpPeer.getSplitSlots() == null ) {
+			ObjectFactory fact = getWritableGnuCashFile().getObjectFactory();
+			SlotsType newSlotsType = fact.createSlotsType();
+			jwsdpPeer.setSplitSlots(newSlotsType);
+		}
+		
+		HasWritableUserDefinedAttributesImpl
+			.addUserDefinedAttributeCore(jwsdpPeer.getSplitSlots(), getWritableGnuCashFile(), 
+			                             type, name, value);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeUserDefinedAttribute(final String name) {
+		if ( name == null ) {
+			throw new IllegalArgumentException("argument <name> is null");
+		}
+		
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
+		}
+
+		if ( jwsdpPeer.getSplitSlots() == null ) {
+			throw new SlotListDoesNotContainKeyException();
+		}
+		
+		HasWritableUserDefinedAttributesImpl
+			.removeUserDefinedAttributeCore(jwsdpPeer.getSplitSlots(), getWritableGnuCashFile(), 
+											name);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void setUserDefinedAttribute(final String name, final String value) {
+		if ( name == null ) {
+			throw new IllegalArgumentException("argument <name> is null");
+		}
+		
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
+		}
+
+		if ( value == null ) {
+			throw new IllegalArgumentException("argument <value> is null");
+		}
+		
+		if ( value.isBlank() ) {
+			throw new IllegalArgumentException("argument <value> is blank");
+		}
+
+		if ( jwsdpPeer.getSplitSlots() == null ) {
+			throw new SlotListDoesNotContainKeyException();
+		}
+		
 		HasWritableUserDefinedAttributesImpl
 			.setUserDefinedAttributeCore(jwsdpPeer.getSplitSlots(),
 										 getWritableGnuCashFile(),

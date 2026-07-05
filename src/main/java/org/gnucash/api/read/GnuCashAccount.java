@@ -35,8 +35,8 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  * Cf. <a href="https://lists.gnucash.org/docs/C/gnucash-manual/acct-types.html">GnuCash manual</a>
  */
 public interface GnuCashAccount extends Comparable<GnuCashAccount>,
-										HasTransactions,
-										HasUserDefinedAttributes
+                                        HasTransactions,
+                                        HasUserDefinedAttributes
 {
 
     // For the following types cf.:
@@ -265,8 +265,6 @@ public interface GnuCashAccount extends Comparable<GnuCashAccount>,
     FixedPointNumber getBalance(LocalDate date, List<GnuCashTransactionSplit> after);
 
     BigFraction      getBalanceRat(LocalDate date, List<GnuCashTransactionSplit> after);
-    
-    // ----------------------------
 
     @Deprecated
     FixedPointNumber getBalance(LocalDate date, GCshCmdtyID cmdtyID);

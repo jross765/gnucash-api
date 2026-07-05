@@ -30,7 +30,7 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  * interface with its extensive number of convenience-methods.
  */
 public abstract class SimpleAccount extends GnuCashObjectImpl 
-									implements GnuCashAccount 
+                                    implements GnuCashAccount 
 {
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(SimpleAccount.class);
@@ -61,6 +61,18 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 
 	@Override
 	public List<GnuCashTransaction> getTransactions(final LocalDate fromDate, final LocalDate toDate) {
+		if ( fromDate == null ) {
+			throw new IllegalArgumentException("argument <fromDate> is null");
+		}
+		
+		if ( toDate == null ) {
+			throw new IllegalArgumentException("argument <toDate> is null");
+		}
+		
+		if ( fromDate.isAfter(toDate) ) {
+			throw new IllegalArgumentException("argument <fromDate> is after <toDate>");
+		}
+		
 		List<GnuCashTransaction> retval = new ArrayList<GnuCashTransaction>();
 
 		for ( GnuCashTransaction trx : getTransactions() ) {
@@ -127,6 +139,10 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 
 		GCshAcctID parentID = getParentAccountID();
 		if ( parentID == null ) {
+			return null;
+		} else if ( parentID.toString().isEmpty() || 
+				    parentID.toString().equals("(unset)") || 
+				    parentID.toString().equals("(unknown)") ) {
 			return null;
 		}
 
@@ -259,6 +275,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	// ---------------------------------------------------------------
 
 	@Override
+	@Deprecated
 	public FixedPointNumber getBalanceRecursive() {
 		return AccountBalanceHelper_FP.getBalanceRecursive(this);
 	}
@@ -358,7 +375,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 		for ( GnuCashTransactionSplit split : getTransactionSplits() ) {
 			if ( date == null || 
 				 split.getTransaction().getDatePosted()
-				 	.isBefore(ChronoZonedDateTime.from(date.atStartOfDay())) ) {
+				 	.isBefore( ChronoZonedDateTime.from(date.atStartOfDay()) ) ) {
 				if ( lastSplit == null ||
 					 split.getTransaction().getDatePosted()
 						.isAfter(lastSplit.getTransaction().getDatePosted()) ) {
@@ -445,11 +462,10 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 			throw new IllegalArgumentException("argument <spltID> is not set");
 		}
 
-		for ( GnuCashTransactionSplit split : getTransactionSplits() ) {
-			if ( spltID.equals(split.getID()) ) {
-				return split;
+		for ( GnuCashTransactionSplit splt : getTransactionSplits() ) {
+			if ( spltID.equals(splt.getID()) ) {
+				return splt;
 			}
-
 		}
 
 		return null;
@@ -517,17 +533,17 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 	 * number.
 	 */
 	@SuppressWarnings("unused")
-	private Long startsWithNumber(final String s) {
-		if ( s == null ) {
-			throw new IllegalArgumentException("null string given");
+	private Long startsWithNumber(final String str) {
+		if ( str == null ) {
+			throw new IllegalArgumentException("argument <str> is null");
 		}
 
-//		if ( s.isBlank() ) {
-//			throw new IllegalArgumentException("empty string given");
+//		if ( str.isBlank() ) {
+//			throw new IllegalArgumentException("argument <str> is blank");
 //		}
 
 		int digitCount = 0;
-		for ( int i = 0; i < s.length() && Character.isDigit(s.charAt(i)); i++ ) {
+		for ( int i = 0; i < str.length() && Character.isDigit(str.charAt(i)); i++ ) {
 			digitCount++;
 		}
 		
@@ -535,7 +551,7 @@ public abstract class SimpleAccount extends GnuCashObjectImpl
 			return null;
 		}
 		
-		return Long.valueOf(s.substring(0, digitCount));
+		return Long.valueOf(str.substring(0, digitCount));
 	}
 
 }

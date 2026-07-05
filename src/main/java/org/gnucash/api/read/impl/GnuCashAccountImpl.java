@@ -19,6 +19,7 @@ import org.gnucash.api.read.aux.GCshAcctLot;
 import org.gnucash.api.read.aux.GCshAcctReconInfo;
 import org.gnucash.api.read.impl.aux.GCshAcctLotImpl;
 import org.gnucash.api.read.impl.aux.GCshAcctReconInfoImpl;
+import org.gnucash.api.read.impl.hlp.HasTransactionsImplSpec;
 import org.gnucash.api.read.impl.hlp.HasUserDefinedAttributesImpl;
 import org.gnucash.api.read.impl.hlp.acct.AccountBalanceHelper_BF;
 import org.gnucash.api.read.impl.hlp.acct.AccountBalanceHelper_FP;
@@ -38,6 +39,7 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  * jwsdp-generated backend.
  */
 public class GnuCashAccountImpl extends SimpleAccount 
+                                implements HasTransactionsImplSpec
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(GnuCashAccountImpl.class);
 
@@ -56,7 +58,7 @@ public class GnuCashAccountImpl extends SimpleAccount
 	 * The splits of this transaction. May not be fully initialized during loading
 	 * of the GnuCash file.
 	 */
-	private final List<GnuCashTransactionSplit> mySplits = new ArrayList<GnuCashTransactionSplit>();
+	protected final List<GnuCashTransactionSplit> mySplits = new ArrayList<GnuCashTransactionSplit>();
 
 	/*
 	 * If {@link #mySplits} needs to be sorted because it was modified. Sorting is
@@ -66,7 +68,7 @@ public class GnuCashAccountImpl extends SimpleAccount
 	
 	// ----------------------------
 	
-	protected /* final */ List<GCshAcctLot> myLots = null; // sic, null, i.Ggs. zu oben
+	protected List<GCshAcctLot> myLots = null; // sic, null, i.Ggs. zu oben
 
 	// ---------------------------------------------------------------
 
@@ -136,13 +138,16 @@ public class GnuCashAccountImpl extends SimpleAccount
 	}
 
 	/**
-	 * @see GnuCashAccount#getChildren()
+	 * {@inheritDoc}
 	 */
 	@Override
 	public List<GnuCashAccount> getChildren() {
 		return getGnuCashFile().getAccountsByParentID(getID());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<GnuCashAccount> getChildrenRecursive() {
 		return getChildrenRecursiveCore(getChildren());
@@ -244,9 +249,6 @@ public class GnuCashAccountImpl extends SimpleAccount
 		return mySplits;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void addTransactionSplit(final GnuCashTransactionSplit splt) {
 		if ( splt == null ) {
@@ -267,8 +269,8 @@ public class GnuCashAccountImpl extends SimpleAccount
 						"addTransactionSplit: New Transaction Split object with same ID, needs to be replaced: " +
 								splt.getID() + " [" + splt.getClass().getName() + "] and " +
 								old.getID() + " [" + old.getClass().getName() + "]\n" +
-								"new=" + splt.toString() + "\n" +
-								"old=" + old.toString());
+								"new = " + splt.toString() + "\n" +
+								"old = " + old.toString());
 				IllegalStateException exc = new IllegalStateException("DEBUG");
 				exc.printStackTrace();
 				replaceTransactionSplit(old, (GnuCashTransactionSplitImpl) splt);
@@ -279,6 +281,57 @@ public class GnuCashAccountImpl extends SimpleAccount
 			mySplitsNeedSorting = true;
 		}
 	}
+
+	@Override
+    public void removeTransactionSplit(final GnuCashTransactionSplit splt) {
+    	removeTransactionSplit(splt, true);
+    }
+    
+	@Override
+    public void removeTransactionSplit(final GnuCashTransactionSplit splt, boolean strict) {
+		if ( splt == null ) {
+			throw new IllegalArgumentException("argument <splt> is null");
+		}
+		
+		if ( ! splt.getAccountID().equals( getID() ) ) {
+			throw new IllegalArgumentException("argument <splt> is not assigned to account " + getID() + ", thus cannot be removed from it");
+		}
+
+		if ( strict )
+		{
+			// Does not work:
+			// if ( ! mySplits.contains(splt) ) {
+			// ...
+			// Instead:
+			boolean intListContainsSplt = false;
+			for ( GnuCashTransactionSplit elt : mySplits ) {
+				if ( elt.getID().equals( splt.getID() ) ) {
+					intListContainsSplt = true;
+					break;
+				}
+			}
+			if ( ! intListContainsSplt ) {
+				throw new IllegalStateException("internal list of splits does not contain split " + splt.getID() + ", thus this split cannot be removed from the list");
+			}
+		}
+		
+//		int listSize = mySplits.size();
+		// Does not work:
+		// mySplits.remove(splt);
+		// Instead:
+		for ( int i = mySplits.size() - 1; i >= 0; i-- ) {
+			if ( mySplits.get(i).getID().equals( splt.getID() ) ) {
+				mySplits.remove(i);
+				break;
+			}
+		}
+//		assert( mySplits.size() == listSize - 1 );
+		
+		// Additionally, this account's ID will have to be removed
+		// from the given split. But this will happen in the 
+		// calling function (if at all; not if the split is
+		// deleted entirely, of course).
+    }
 
 	/**
 	 * For internal use only.
@@ -488,7 +541,7 @@ public class GnuCashAccountImpl extends SimpleAccount
 		}
 
 		buffer.append("]");
-	
+
 		return buffer.toString();
 	}
 
@@ -517,7 +570,7 @@ public class GnuCashAccountImpl extends SimpleAccount
 		// 2) Children
 	    for ( Iterator<GnuCashAccount> it = getChildren().iterator(); it.hasNext(); ) {
 	    	GnuCashAccountImpl next = (GnuCashAccountImpl) it.next();
-	    	
+
 	    	hasChildrenMatchingRecurs = false;
 	    	if ( acctType != null ) {
 	    		hasChildrenMatchingRecurs = hasChildrenMatchingRecursive(next, acctType);

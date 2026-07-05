@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * read-only access.
  */
 public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl 
-	                                        implements GnuCashWritableTransaction 
+                                            implements GnuCashWritableTransaction 
 {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(GnuCashWritableTransactionImpl.class);
@@ -47,7 +47,7 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 	// Our helper to implement the GnuCashWritableObject-interface.
 	private final GnuCashWritableObjectImpl helper = new GnuCashWritableObjectImpl(getWritableGnuCashFile(), this);
 
-	// -----------------------------------------------------------
+	// ---------------------------------------------------------------
 
 	/**
 	 * @param gcshFile  the file we belong to
@@ -212,9 +212,10 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 	}
 
 	/**
-	 * @param impl the split to remove from this transaction
+	 * @param splt the split to remove from this transaction
 	 */
-	public void remove(final GnuCashWritableTransactionSplit splt) {
+	@Override
+	public void removeSplit(final GnuCashWritableTransactionSplit splt) {
 		getJwsdpPeer().getTrnSplits().getTrnSplit()
 			.remove(((GnuCashWritableTransactionSplitImpl) splt).getJwsdpPeer());
 		getWritableGnuCashFile().setModified(true);
@@ -230,22 +231,35 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 			for ( int i = 0; i < mySplits.size(); i++ ) {
 				if ( mySplits.get(i).getID().equals(splt.getID()) ) {
 					mySplits.remove(i);
-					i--;
+					break;
 				}
 			}
 		}
 
-		GnuCashWritableAccountImpl account = (GnuCashWritableAccountImpl) splt.getAccount();
-		if ( account != null ) {
-			account.removeTransactionSplit(splt);
-		}
+		// NO, this is now done inside the following function call:
+//		GnuCashWritableAccountImpl account = (GnuCashWritableAccountImpl) splt.getAccount();
+//		if ( account != null ) {
+//			account.removeTransactionSplit(splt);
+//		}
 
-		getWritableGnuCashFile().removeTransactionSplit(splt);
+		getWritableGnuCashFile().removeTransactionSplit(splt, false); // <-- variant important
 		// there is no count for splits up to now
 		// getWritableFile().decrementCountDataFor()
 		if ( helper.getPropertyChangeSupport() != null ) {
 			helper.getPropertyChangeSupport().firePropertyChange("splits", null, getWritableSplits());
 		}
+	}
+
+	@Override
+	@Deprecated
+	public void remove(final GnuCashWritableTransactionSplit splt) {
+		removeSplit(splt);
+	}
+
+	@Override
+	public void removeSplit(final GCshSpltID spltID) {
+		GnuCashWritableTransactionSplit splt = getWritableGnuCashFile().getWritableTransactionSplitByID(spltID);
+		removeSplit(splt);
 	}
 
 	/**
@@ -310,7 +324,6 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 	 */
 	protected void addSplit(final GnuCashWritableTransactionSplitImpl impl) {
 		super.addSplit(impl);
-		// ((GnuCashFileImpl) getGnuCashFile()).getTransactionManager().addTransactionSplit(impl, false);
 	}
 
 	/**
@@ -358,6 +371,8 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 		this.getJwsdpPeer().getTrnCurrency().setCmdtyId(cmdtyID.getCode());
 		getWritableGnuCashFile().setModified(true);
 	}
+
+	// ---------------------------------------------------------------
 
 	/**
 	 * @param dateEntered 

@@ -20,6 +20,7 @@ import org.gnucash.api.generated.SlotValue;
 import org.gnucash.api.generated.SlotsType;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashFile;
+import org.gnucash.api.read.GnuCashTransaction;
 import org.gnucash.api.read.GnuCashTransactionSplit;
 import org.gnucash.api.read.aux.GCshAcctLot;
 import org.gnucash.api.read.impl.GnuCashAccountImpl;
@@ -297,6 +298,46 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 
 		return result;
 	}
+
+	// ----------------------------
+
+	@Override
+	public List<GnuCashWritableTransaction> getWritableTransactions() {
+		List<GnuCashWritableTransaction> result = new ArrayList<GnuCashWritableTransaction>();
+
+		for ( GnuCashTransaction trx : super.getTransactions() ) {
+			GnuCashWritableTransaction newTrx = new GnuCashWritableTransactionImpl(trx);
+			result.add(newTrx);
+		}
+
+		return result;
+	}
+
+	@Override
+	public List<GnuCashWritableTransaction> getWritableTransactions(LocalDate fromDate, LocalDate toDate) {
+		if ( fromDate == null ) {
+			throw new IllegalArgumentException("argument <fromDate> is null");
+		}
+		
+		if ( toDate == null ) {
+			throw new IllegalArgumentException("argument <toDate> is null");
+		}
+		
+		if ( fromDate.isAfter(toDate) ) {
+			throw new IllegalArgumentException("argument <fromDate> is after <toDate>");
+		}
+		
+		List<GnuCashWritableTransaction> result = new ArrayList<GnuCashWritableTransaction>();
+
+		for ( GnuCashTransaction trx : super.getTransactions(fromDate, toDate) ) {
+			GnuCashWritableTransactionImpl newTrx = new GnuCashWritableTransactionImpl(trx);
+			result.add(newTrx);
+		}
+
+		return result;
+	}
+
+	// ---------------------------------------------------------------
 
 	/**
 	 * @param impl the split to add to mySplits

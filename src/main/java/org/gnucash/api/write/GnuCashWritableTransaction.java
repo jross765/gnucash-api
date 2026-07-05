@@ -19,90 +19,91 @@ import org.gnucash.base.basetypes.simple.GCshSpltID;
  * @see GnuCashTransaction
  */
 public interface GnuCashWritableTransaction extends GnuCashTransaction,
-													GnuCashWritableObject,
-													HasWritableAttachment,
-													HasWritableUserDefinedAttributes
+                                                    GnuCashWritableObject,
+                                                    HasWritableAttachment,
+                                                    HasWritableUserDefinedAttributes
 {
 
-    /**
-     * @param cmdtyID 
-     * @param id the new currency
+	/**
+	 * @param cmdtyID the new currency
+	 * 
+	 * @see #getCmdtyID()
+	 */
+	void setCmdtyID(GCshCmdtyID cmdtyID);
 
-     * @see #getCmdtyID()
-     */
-    void setCmdtyID(GCshCmdtyID cmdtyID);
+	/**
+	 * @param dateEntered the day (time is ignored) that this transaction has been
+	 *                    entered into the system
+	 * 
+	 * @see #getDateEntered()
+	 * @see #setDatePosted(LocalDate)
+	 */
+	void setDateEntered(LocalDateTime dateEntered); // sic, not LocalDate
 
-    /**
-     * @param dateEntered the day (time is ignored) that this transaction has been
-     *                    entered into the system
-     *              
-     * @see #getDateEntered()
-     * @see #setDatePosted(LocalDate)
-     */
-    void setDateEntered(LocalDateTime dateEntered); // sic, not LocalDate
+	/**
+	 * @param datePosted the day (time is ignored) that the money was transfered
+	 * 
+	 * @see #getDatePosted()
+	 * @see #setDateEntered(LocalDateTime)
+	 */
+	void setDatePosted(LocalDate datePosted);
 
-    /**
-     * @param datePosted the day (time is ignored) that the money was transfered
-     * 
-     * @see #getDatePosted()
-     * @see #setDateEntered(LocalDateTime)
-     */
-    void setDatePosted(LocalDate datePosted);
+	/**
+	 * 
+	 * @param desc
+	 * 
+	 * @see #getDescription()
+	 */
+	void setDescription(String desc);
 
-    /**
-     * 
-     * @param desc
-     * 
-     * @see #getDescription()
-     */
-    void setDescription(String desc);
+	/**
+	 * 
+	 * @param string
+	 * 
+	 * @see #getNumber()
+	 */
+	void setNumber(String string);
 
-    /**
-     * 
-     * @param string
-     * 
-     * @see #getNumber()
-     */
-    void setNumber(String string);
+	/**
+	 * @param spltID
+	 * @return
+	 * 
+	 * @see #getSplitByID(GCshSpltID)
+	 */
+	GnuCashWritableTransactionSplit getWritableSplitByID(GCshSpltID spltID);
 
-    /**
-     *  
-     * @param spltID 
-     * @return
-     * 
-     * @see #getSplitByID(GCshSpltID)
-     */
-    GnuCashWritableTransactionSplit getWritableSplitByID(GCshSpltID spltID);
+	GnuCashWritableTransactionSplit getWritableSplitByAccountID(GCshAcctID acctID);
 
-    GnuCashWritableTransactionSplit getWritableSplitByAccountID(GCshAcctID acctID);
+	/**
+	 * @return
+	 * 
+	 * @see GnuCashTransaction#getSplits()
+	 */
+	List<GnuCashWritableTransactionSplit> getWritableSplits();
 
-    /**
-     *  
-     * @return
-     *  
-     * @see #getSplits()
-     */
-    List<GnuCashWritableTransactionSplit> getWritableSplits();
+	/**
+	 * Create a new split, already attached to this transaction.
+	 * 
+	 * @param account the account for the new split
+	 * @return a new split, already attached to this transaction
+	 */
+	GnuCashWritableTransactionSplit createWritableSplit(GnuCashAccount account);
 
-    /**
-     * Create a new split, already attached to this transaction.
-     * 
-     * @param account the account for the new split
-     * @return a new split, already attached to this transaction
-     *  
-     */
-    GnuCashWritableTransactionSplit createWritableSplit(GnuCashAccount account);
+	/**
+	 * Removes the given split from this transaction.
+	 * 
+	 * @param splt the split to be removed from this transaction
+	 */
+	void removeSplit(GnuCashWritableTransactionSplit splt);
 
-    /**
-     * Removes the given split from this transaction.
-     * 
-     * @param impl the split to be removed from this transaction
-     */
-    void remove(GnuCashWritableTransactionSplit impl);
+	@Deprecated
+	void remove(GnuCashWritableTransactionSplit splt);
 
-    /**
-     * remove this transaction.
-     */
-    void remove();
+	void removeSplit(GCshSpltID spltID);
+
+	/**
+	 * remove this transaction.
+	 */
+	void remove();
 
 }
