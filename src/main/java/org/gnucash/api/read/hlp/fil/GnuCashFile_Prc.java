@@ -13,68 +13,71 @@ import org.gnucash.base.basetypes.simple.GCshPrcID;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
-public interface GnuCashFile_Prc {
-	
+public interface GnuCashFile_Prc
+{
+
 	// ::EMPTY
 
 	// ---------------------------------------------------------------
 
-    /**
-     * @param prcID id of a price
-     * @return the identified price or null
-     */
-    GnuCashPrice getPriceByID(GCshPrcID prcID);
+	/**
+	 * @param prcID id of a price
+	 * @return the identified price or null
+	 */
+	GnuCashPrice getPriceByID(GCshPrcID prcID);
 
 	// ---
-	
+
 	GnuCashPrice getPriceBySecIDDate(GCshSecID secID, LocalDate date);
-	
+
 	// ---
-	
+
 	GnuCashPrice getPriceByCurrIDDate(GCshCurrID currID, LocalDate date);
-	
+
 	GnuCashPrice getPriceByCurrDate(Currency curr, LocalDate date);
-	
+
 	// ---
-	
-    GnuCashPrice getPriceByCmdtyIDDate(GCshCmdtyID cmdtyID, LocalDate date);
 
-    // ---------------------------------------------------------------
-    
-    /**
-     * @return all prices defined in the book
-     * @link GCshPrice
-     */
-    List<GnuCashPrice> getPrices();
+	GnuCashPrice getPriceByCmdtyIDDate(GCshCmdtyID cmdtyID, LocalDate date);
 
-    // sic: List, not Collection
+	// ---------------------------------------------------------------
+
+	/**
+	 * @return all prices defined in the book
+	 */
+	List<GnuCashPrice> getPrices();
+
+	// sic: List, not Collection
 	List<GnuCashPrice> getPricesBySecID(GCshSecID cmdtyID);
-	
+
 	// ---
-	
+
 	List<GnuCashPrice> getPricesByCurrID(GCshCurrID currID);
-	
+
 	List<GnuCashPrice> getPricesByCurr(Currency curr);
-	
+
 	// ---
-	
+
 	List<GnuCashPrice> getPricesByCmdtyID(GCshCmdtyID cmdtyID);
-	
-    /**
-     * @param cmdtyID 
-     * @param pCmdtySpace the name space for pCmdtyId
-     * @param pCmdtyId    the currency-name
-     * @return the latest price-quote in the GnuCash file in EURO
-     */
+
+	// ---------------------------------------------------------------
+
+	/**
+	 * @param cmdtyID
+	 * @param pCmdtySpace the name space for pCmdtyId
+	 * @param pCmdtyId    the currency-name
+	 * 
+	 * @return the latest price-quote in the GnuCash file in EURO
+	 */
 	@Deprecated
-    FixedPointNumber getLatestPrice(GCshCmdtyID cmdtyID);
+	FixedPointNumber getLatestPrice(GCshCmdtyID cmdtyID);
 
-    BigFraction      getLatestPriceRat(GCshCmdtyID cmdtyID);
+	BigFraction      getLatestPriceRat(GCshCmdtyID cmdtyID);
 
-    @Deprecated
-    FixedPointNumber getLatestPrice(String nameSpace, String code);
-    
-    @Deprecated // sic!
-    BigFraction      getLatestPriceRat(String nameSpace, String code);
-    
+	@Deprecated
+	FixedPointNumber getLatestPrice(String nameSpace, String code);
+
+	@Deprecated // sic!
+	BigFraction      getLatestPriceRat(String nameSpace, String code);
+
 }
