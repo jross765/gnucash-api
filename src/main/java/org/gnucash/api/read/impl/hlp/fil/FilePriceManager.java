@@ -89,25 +89,28 @@ public class FilePriceManager {
 	public GncPricedb getPriceDB() {
 		return priceDB;
 	}
+	
+	// ----------------------------
 
-	public GnuCashPrice getPriceByID(GCshPrcID prcID) {
+	public GnuCashPrice getPriceByID(final GCshPrcID prcID) {
 		if ( prcID == null ) {
 			throw new IllegalArgumentException("argument <prcID> is null");
 		}
-		
+
 		if ( ! prcID.isSet() ) {
 			throw new IllegalArgumentException("argument <prcID> is not set");
 		}
-		
+
 		if ( prcMap == null ) {
 			throw new IllegalStateException("no root-element loaded");
 		}
 
 		GnuCashPrice retval = prcMap.get(prcID);
 		if ( retval == null ) {
-			LOGGER.error("getPriceByID: No Price with ID '" + prcID + "'. " + "We know " + prcMap.size() + " prices.");
+			LOGGER.error("getPriceByID: No Price with ID '" + prcID + "'. " + 
+				"We know " + prcMap.size() + " prices.");
 		}
-		
+
 		return retval;
 	}
 
@@ -164,7 +167,7 @@ public class FilePriceManager {
 		
 		return Collections.unmodifiableList(temp);
 	}
-	
+
 	public List<GnuCashPrice> getPricesBySecID(final GCshSecID secID) {
 		if ( secID == null ) {
 			throw new IllegalArgumentException("argument <secID> is null");
@@ -176,7 +179,7 @@ public class FilePriceManager {
 		
 		return getPricesByCmdtyID(secID);
 	}
-	
+
 	public List<GnuCashPrice> getPricesByCurrID(final GCshCurrID currID) {
 		if ( currID == null ) {
 			throw new IllegalArgumentException("argument <currID> is null");
@@ -197,7 +200,7 @@ public class FilePriceManager {
 		GCshCurrID currID = new GCshCurrID(curr);
 		return getPricesByCurrID(currID);
 	}
-	
+
 	public List<GnuCashPrice> getPricesByCmdtyID(final GCshCmdtyID cmdtyID) {
 		if ( cmdtyID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyID> is null");

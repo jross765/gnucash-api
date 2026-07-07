@@ -78,7 +78,7 @@ public class FileAccountManager {
 //		System.err.println("init2: ignoring illegal Account entry with ID: " + acct.getID());
 //		System.err.println("  " + e.getMessage());
 			}
-		} // for acct
+		} // for
 
 		LOGGER.debug("init2: No. of entries in account lot map: " + acctLotMap.size());
 	}

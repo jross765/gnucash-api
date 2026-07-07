@@ -71,44 +71,44 @@ public class FileBudgetManager {
 		if ( bdgtID == null ) {
 			throw new IllegalArgumentException("argument <bdgtID> is null");
 		}
-		
+
 		if ( ! bdgtID.isSet() ) {
 			throw new IllegalArgumentException("argument <bdgtID> is not set");
 		}
-		
+
 		if ( bdgtMap == null ) {
 			throw new IllegalStateException("no root-element loaded");
 		}
 
 		GnuCashBudget retval = bdgtMap.get(bdgtID);
 		if ( retval == null ) {
-			LOGGER.warn("getBudgetByID: No Budget with id '" + bdgtID + "'. We know " + bdgtMap.size() + " budgets.");
+			LOGGER.warn("getBudgetByID: No Budget with ID '" + bdgtID + "'. We know " + bdgtMap.size() + " budgets.");
 		}
-		
+
 		return retval;
 	}
 
-	public List<GnuCashBudget> getBudgetsByName(final String name) {
-		if ( name == null ) {
-			throw new IllegalArgumentException("argument <name> is null");
+	public List<GnuCashBudget> getBudgetsByName(final String expr) {
+		if ( expr == null ) {
+			throw new IllegalArgumentException("argument <expr> is null");
 		}
-		
-		if ( name.isBlank() ) {
-			throw new IllegalArgumentException("argument <name> is blank");
+
+		if ( expr.isBlank() ) {
+			throw new IllegalArgumentException("argument <expr> is blank");
 		}
-		
-		return getBudgetsByName(name, true);
+
+		return getBudgetsByName(expr, true);
 	}
 
 	public List<GnuCashBudget> getBudgetsByName(final String expr, boolean relaxed) {
 		if ( expr == null ) {
 			throw new IllegalArgumentException("argument <expr> is null");
 		}
-		
+
 		if ( expr.isBlank() ) {
 			throw new IllegalArgumentException("argument <expr> is blank");
 		}
-		
+
 		if ( bdgtMap == null ) {
 			throw new IllegalStateException("no root-element loaded");
 		}
@@ -117,7 +117,7 @@ public class FileBudgetManager {
 
 		for ( GnuCashBudget bdgt : getBudgets() ) {
 			if ( relaxed ) {
-				if ( bdgt.getName().trim().toLowerCase().contains(expr.trim().toLowerCase()) ) {
+				if ( bdgt.getName().toLowerCase().contains(expr.trim().toLowerCase()) ) {
 					result.add(bdgt);
 				}
 			} else {
@@ -130,17 +130,17 @@ public class FileBudgetManager {
 		return result;
 	}
 
-	public GnuCashBudget getBudgetByNameUniq(final String name)
+	public GnuCashBudget getBudgetByNameUniq(final String expr)
 			throws NoEntryFoundException, TooManyEntriesFoundException {
-		if ( name == null ) {
-			throw new IllegalArgumentException("argument <name> is null");
+		if ( expr == null ) {
+			throw new IllegalArgumentException("argument <expr> is null");
 		}
-		
-		if ( name.isBlank() ) {
-			throw new IllegalArgumentException("argument <name> is blank");
+
+		if ( expr.isBlank() ) {
+			throw new IllegalArgumentException("argument <expr> is blank");
 		}
-		
-		List<GnuCashBudget> bdgtList = getBudgetsByName(name);
+
+		List<GnuCashBudget> bdgtList = getBudgetsByName(expr, false);
 		if ( bdgtList.size() == 0 )
 			throw new NoEntryFoundException();
 		else if ( bdgtList.size() > 1 )
@@ -157,7 +157,6 @@ public class FileBudgetManager {
 		}
 
 		return Collections.unmodifiableCollection(bdgtMap.values());
-		// return bdgtMap.values().stream().collect( Collectors.toUnmodifiableList() );
 	}
 
 	// ---------------------------------------------------------------

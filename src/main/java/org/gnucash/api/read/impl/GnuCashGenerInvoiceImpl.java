@@ -54,7 +54,7 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  * Implementation of GnuCashInvoice that uses JWSDP.
  */
 public class GnuCashGenerInvoiceImpl extends GnuCashObjectImpl
-									 implements GnuCashGenerInvoice 
+									 implements GnuCashGenerInvoice
 {
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(GnuCashGenerInvoiceImpl.class);

@@ -4,6 +4,7 @@ import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashTransactionSplit;
 import org.gnucash.api.write.hlp.GnuCashWritableObject;
+import org.gnucash.api.write.hlp.HasWritableUserDefinedAttributes;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.aux.GCshLotID;
 
@@ -16,7 +17,8 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
  * @see GnuCashTransactionSplit
  */
 public interface GnuCashWritableTransactionSplit extends GnuCashTransactionSplit, 
-                                                         GnuCashWritableObject
+                                                         GnuCashWritableObject,
+                                                         HasWritableUserDefinedAttributes
 {
 
 	/**

@@ -155,7 +155,7 @@ public class FileTransactionManager {
 		}
 
 		if ( ! trxID.isSet() ) {
-			throw new IllegalArgumentException("argument <trxID> is null");
+			throw new IllegalArgumentException("argument <trxID> is not set");
 		}
 
 		if ( trxMap == null ) {
@@ -331,6 +331,14 @@ public class FileTransactionManager {
 	}
 
 	public List<GnuCashTransactionSplitImpl> getTransactionSplits_readAfresh(final GCshTrxID trxID) {
+		if ( trxID == null ) {
+			throw new IllegalArgumentException("argument <trxID> is null");
+		}
+
+		if ( ! trxID.isSet() ) {
+			throw new IllegalArgumentException("argument <trxID> is not set");
+		}
+
 		List<GnuCashTransactionSplitImpl> result = new ArrayList<GnuCashTransactionSplitImpl>();
 
 		for ( GnuCashTransaction trx : getTransactions_readAfresh() ) {
@@ -366,6 +374,14 @@ public class FileTransactionManager {
 	}
 
 	private List<GncTransaction.TrnSplits.TrnSplit> getTransactionSplits_raw(final GCshTrxID trxID) {
+		if ( trxID == null ) {
+			throw new IllegalArgumentException("argument <trxID> is null");
+		}
+
+		if ( ! trxID.isSet() ) {
+			throw new IllegalArgumentException("argument <trxID> is not set");
+		}
+
 		List<GncTransaction.TrnSplits.TrnSplit> result = new ArrayList<GncTransaction.TrnSplits.TrnSplit>();
 
 		for ( GncTransaction jwsdpTrx : getTransactions_raw() ) {

@@ -1122,32 +1122,27 @@ public class GnuCashFileImpl implements GnuCashFile,
 	// ---------------------------------------------------------------
 	
 	@Override
-	public GnuCashBudget getBudgetByID(GCshBdgtID bdgtID)
-	{
+	public GnuCashBudget getBudgetByID(GCshBdgtID bdgtID) {
 		return bdgtMgr.getBudgetByID(bdgtID);
 	}
 
 	@Override
-	public Collection<GnuCashBudget> getBudgetsByName(String expr)
-	{
+	public Collection<GnuCashBudget> getBudgetsByName(String expr) {
 		return bdgtMgr.getBudgetsByName(expr);
 	}
 
 	@Override
-	public Collection<GnuCashBudget> getBudgetsByName(String expr, boolean relaxed)
-	{
+	public Collection<GnuCashBudget> getBudgetsByName(String expr, boolean relaxed) {
 		return bdgtMgr.getBudgetsByName(expr, relaxed);
 	}
 
 	@Override
-	public GnuCashBudget getBudgetByNameUniq(String expr) throws NoEntryFoundException, TooManyEntriesFoundException
-	{
+	public GnuCashBudget getBudgetByNameUniq(String expr) throws NoEntryFoundException, TooManyEntriesFoundException {
 		return bdgtMgr.getBudgetByNameUniq(expr);
 	}
 
 	@Override
-	public Collection<GnuCashBudget> getBudgets()
-	{
+	public Collection<GnuCashBudget> getBudgets() {
 		return bdgtMgr.getBudgets();
 	}
 
