@@ -46,6 +46,7 @@ public class SimpleSecurityQuoteTable implements SimplePriceTable,
      * @return a factor {@link FixedPointNumber} that is to be multiplied with an
      *         amount of that currency to get the value in the base-currency.
      */
+    @Deprecated
     public FixedPointNumber getConversionFactor(final GCshSecID secID) {
 		if ( secID == null ) {
 			throw new IllegalArgumentException("argument <secID> is null");
@@ -78,6 +79,7 @@ public class SimpleSecurityQuoteTable implements SimplePriceTable,
      *                            multiplied with an amount of that currency to get
      *                            the value in the base-currency.
      */
+    @Deprecated
     public void setConversionFactor(final GCshSecID secID, final FixedPointNumber factor) {
 		if ( secID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyID> is null");
@@ -119,6 +121,7 @@ public class SimpleSecurityQuoteTable implements SimplePriceTable,
      * @param secID the currency to convert to
      * @return false if the conversion is not possible
      */
+    @Deprecated
     public FixedPointNumber convertFromBaseCurrency(final FixedPointNumber value, final GCshSecID secID) {
 		if ( value == null ) {
 			throw new IllegalArgumentException("argument <value> is null");
@@ -176,6 +179,7 @@ public class SimpleSecurityQuoteTable implements SimplePriceTable,
      * @param secID the security's ID
      * @return false if the conversion is not possible
      */
+    @Deprecated
     public FixedPointNumber convertToBaseCurrency(final FixedPointNumber value, final GCshSecID secID) {
 		if ( value == null ) {
 			throw new IllegalArgumentException("argument <value> is null");

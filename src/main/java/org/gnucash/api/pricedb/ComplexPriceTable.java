@@ -26,6 +26,7 @@ public class ComplexPriceTable implements Serializable {
 	// ---------------------------------------------------------------
 
 	public interface ComplexPriceTableChangeListener {
+	    @Deprecated
 		void conversionFactorChanged(final String cmdtyIDStr, final FixedPointNumber factor);
 		void conversionFactorChanged(final String cmdtyIDStr, final BigFraction factor);
 	}
@@ -51,7 +52,7 @@ public class ComplexPriceTable implements Serializable {
 
 	public void addComplexPriceTableChangeListener(final ComplexPriceTableChangeListener listener) {
 		if ( listeners == null ) {
-			listeners = new ArrayList<>();
+			listeners = new ArrayList<ComplexPriceTableChangeListener>();
 		}
 		
 		listeners.add(listener);
@@ -272,6 +273,7 @@ public class ComplexPriceTable implements Serializable {
 		}
 	}
 
+	@Deprecated
 	public FixedPointNumber getConversionFactor(final GCshCmdtyID cmdtyID) {
 		if ( cmdtyID == null ) {
 			throw new IllegalArgumentException("argument <cmdtyCurrID> is null");
@@ -298,6 +300,7 @@ public class ComplexPriceTable implements Serializable {
 		return null; // Compiler happy
 	}
 
+	@Deprecated
 	public FixedPointNumber getConversionFactor(final Currency curr) {
 		if ( curr == null ) {
 			throw new IllegalArgumentException("argument <curr> is null");
@@ -417,6 +420,7 @@ public class ComplexPriceTable implements Serializable {
 		setConversionFactor(cmdtyID, factor);
 	}
 
+	@Deprecated
 	public void setConversionFactor(final GCshCmdtyID cmdtyID, final FixedPointNumber factor) {
 		if ( cmdtyID == null ) {
 		    throw new IllegalArgumentException("argument <cmdtyID> is null");
@@ -437,6 +441,7 @@ public class ComplexPriceTable implements Serializable {
 		firePriceTableChanged(cmdtyID.toString(), factor);
 	}
 	
+	@Deprecated
 	public void setConversionFactor(final GCshSecID secID, final FixedPointNumber factor) {
 		if ( secID == null ) {
 		    throw new IllegalArgumentException("argument <secID> is null");
@@ -449,7 +454,7 @@ public class ComplexPriceTable implements Serializable {
 		if ( factor == null ) {
 		    throw new IllegalArgumentException("argument <factor> is null");
 		}
-	
+
 		// ::TODO ::CHECK
 		// In the sister project, we had to remove this check (cf. comment there).
 		// What about GnuCash?
@@ -469,6 +474,7 @@ public class ComplexPriceTable implements Serializable {
 		firePriceTableChanged(secID.toString(), factor);
 	}
 	
+	@Deprecated
 	public void setConversionFactor(final GCshCurrID currID, final FixedPointNumber factor) {
 		if ( currID == null ) {
 		    throw new IllegalArgumentException("argument <currID> is null");
@@ -501,6 +507,7 @@ public class ComplexPriceTable implements Serializable {
 		firePriceTableChanged(currID.toString(), factor);
 	}
 	
+	@Deprecated
 	public void setConversionFactor(final Currency curr, final FixedPointNumber factor) {
 		if ( curr == null ) {
 		    throw new IllegalArgumentException("argument <curr> is null");
@@ -635,7 +642,7 @@ public class ComplexPriceTable implements Serializable {
 
 		firePriceTableChanged(currID.toString(), factor);
 	}
-	
+
 	public void setConversionFactorRat(final Currency curr, final BigFraction factor) {
 		if ( curr == null ) {
 		    throw new IllegalArgumentException("argument <curr> is null");
@@ -658,6 +665,7 @@ public class ComplexPriceTable implements Serializable {
 	 * @see SimplePriceTable#convertFromBaseCurrency(FixedPointNumber,
 	 *      java.lang.String)
 	 */
+	@Deprecated
 	public FixedPointNumber convertFromBaseCurrency(final FixedPointNumber pValue,  final GCshCmdtyID cmdtyID) {
 		if ( pValue == null )
 			throw new IllegalArgumentException("argument <pValue> is null");
@@ -687,6 +695,7 @@ public class ComplexPriceTable implements Serializable {
 		return null; // Compiler happy
 	}
 
+	@Deprecated
 	public FixedPointNumber convertFromBaseCurrency(final FixedPointNumber pValue,  final Currency curr) {
 		if ( pValue == null )
 			throw new IllegalArgumentException("argument <pValue> is null");
@@ -744,6 +753,7 @@ public class ComplexPriceTable implements Serializable {
 
 	// ----------------------------
 
+	@Deprecated
 	public FixedPointNumber convertToBaseCurrency(final FixedPointNumber pValue, final GCshCmdtyID cmdtyID) {
 		if ( pValue == null ) {
 			throw new IllegalArgumentException("argument <pValue> is null");
@@ -774,6 +784,7 @@ public class ComplexPriceTable implements Serializable {
 		return null; // Compiler happy
 	}
 
+	@Deprecated
 	public FixedPointNumber convertToBaseCurrency(final FixedPointNumber pValue, final Currency curr) {
 		if ( pValue == null )
 			throw new IllegalArgumentException("argument <pValue> is null");
@@ -834,7 +845,7 @@ public class ComplexPriceTable implements Serializable {
 
 	/**
 	 * @param type
-	 * @return list of currencies in the given name space
+	 * @return list of codes in the given name space
 	 */
 	public List<String> getCodes(final GCshCmdtyID.Type type) {
 		SimplePriceTable table = getTabByType(type);
