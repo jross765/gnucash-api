@@ -171,6 +171,8 @@ public class GnuCashWritableEmployeeImpl extends GnuCashEmployeeImpl
      */
     @Override
     public void remove() {
+    	// ::TODO: Checks
+    	
 		GncGncEmployee peer = getJwsdpPeer();
 		getWritableGnuCashFile().getRootElement().getGncBook().getBookElements().remove(peer);
 		getWritableGnuCashFile().removeEmployee(this);

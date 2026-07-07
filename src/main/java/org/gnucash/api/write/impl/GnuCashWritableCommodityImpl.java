@@ -105,6 +105,16 @@ public class GnuCashWritableCommodityImpl extends GnuCashCommodityImpl
      * @see GnuCashWritableCommodity#remove()
      */
     public void remove() throws ObjectCascadeException {
+		if ( getStockAccounts() != null ) {
+			if ( getStockAccounts().size() > 0 )
+				throw new IllegalStateException("Cannot remove commodity while stock accounts refer to it!");
+		}
+		
+		if ( getQuotes() != null ) {
+			if ( getQuotes().size() > 0 )
+				throw new IllegalStateException("Cannot remove commodity while there are quotes (prices) that refer to it!");
+		}
+		
 		GncCommodity peer = getJwsdpPeer();
 		getWritableGnuCashFile().getRootElement().getGncBook().getBookElements().remove(peer);
 		getWritableGnuCashFile().removeCommodity(this);

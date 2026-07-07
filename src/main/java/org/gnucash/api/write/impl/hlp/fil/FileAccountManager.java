@@ -87,7 +87,6 @@ public class FileAccountManager extends org.gnucash.api.read.impl.hlp.fil.FileAc
 		}
 
 		acctMap.remove(acct.getID());
-
 		LOGGER.debug("removeAccount: Removed account from cache: " + acct.getID());
 	}
 	
@@ -123,6 +122,7 @@ public class FileAccountManager extends org.gnucash.api.read.impl.hlp.fil.FileAc
 		}
 
 		acctLotMap.remove(lot.getID());
+		LOGGER.debug("removeAccountLot: Removed account lot from cache: " + lot.getID());
 	}
 
 }

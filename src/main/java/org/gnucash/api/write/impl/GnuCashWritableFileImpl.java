@@ -890,6 +890,10 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 	// By purpose, this method has not been defined in the interface
 	// @Override
 	public void removeTransactionSplit(final GnuCashWritableTransactionSplit splt) {
+		removeTransactionSplit(splt, true);
+	}
+	
+	public void removeTransactionSplit(final GnuCashWritableTransactionSplit splt, boolean strict) {
 		// 1) remove avatar in transaction manager
 		((org.gnucash.api.write.impl.hlp.fil.FileTransactionManager) super.trxMgr)
 			.removeTransactionSplit(splt, false);
@@ -908,6 +912,14 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		// Instead:
 		((org.gnucash.api.write.impl.hlp.fil.FileTransactionManager) trxMgr)
 			.removeTransactionSplit_raw(splt.getTransactionID(), splt.getID());
+		
+		// Update internal split-lists of entities associated to the split:
+		// - account (one)
+		// - ::TODO: invoice (paying transaction)
+		if ( splt.getAccountID() != null ) {
+			GnuCashAccount dummyAcct = getGnuCashFile().getAccountByID( splt.getAccountID() );
+			((GnuCashAccountImpl) dummyAcct).removeTransactionSplit(splt);
+		}
 		
 		// 3) remove transaction, if no splits left
 		// ::TODO / ::CHECK
@@ -2096,8 +2108,8 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
     }
 
     @Override
-	public Collection<GnuCashWritablePrice> getWritablePrices() {
-		Collection<GnuCashWritablePrice> result = new ArrayList<GnuCashWritablePrice>();
+	public List<GnuCashWritablePrice> getWritablePrices() {
+    	ArrayList<GnuCashWritablePrice> result = new ArrayList<GnuCashWritablePrice>();
 
 		for ( GnuCashPrice prc : super.getPrices() ) {
 			GnuCashWritablePrice newPrc = new GnuCashWritablePriceImpl((GnuCashPriceImpl) prc);
@@ -2184,6 +2196,139 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		return new GnuCashWritableBudgetImpl((GnuCashBudgetImpl) bdgt);
 	}
 
+	@Override
+	public List<GnuCashWritablePrice> getWritablePricesBySecID(GCshSecID secID) {
+		if ( secID == null ) {
+			throw new IllegalArgumentException("argument <secID> is null");
+		}
+
+		if ( ! secID.isSet() ) {
+			throw new IllegalArgumentException("argument <secID> is not set");
+		}
+
+		ArrayList<GnuCashWritablePrice> result = new ArrayList<GnuCashWritablePrice>();
+
+		for ( GnuCashPrice prc : super.getPricesBySecID(secID) ) {
+			GnuCashWritablePrice newPrc = new GnuCashWritablePriceImpl((GnuCashPriceImpl) prc);
+			result.add(newPrc);
+		}
+
+		return result;
+	}
+
+	@Override
+	public List<GnuCashWritablePrice> getWritablePricesByCurrID(GCshCurrID currID) {
+		if ( currID == null ) {
+			throw new IllegalArgumentException("argument <currID> is null");
+		}
+
+		if ( ! currID.isSet() ) {
+			throw new IllegalArgumentException("argument <currID> is not set");
+		}
+
+		ArrayList<GnuCashWritablePrice> result = new ArrayList<GnuCashWritablePrice>();
+
+		for ( GnuCashPrice prc : super.getPricesByCurrID(currID) ) {
+			GnuCashWritablePrice newPrc = new GnuCashWritablePriceImpl((GnuCashPriceImpl) prc);
+			result.add(newPrc);
+		}
+
+		return result;
+	}
+
+	@Override
+	public List<GnuCashWritablePrice> getWritablePricesByCurr(Currency curr) {
+		if ( curr == null ) {
+			throw new IllegalArgumentException("argument <curr> is null");
+		}
+
+		ArrayList<GnuCashWritablePrice> result = new ArrayList<GnuCashWritablePrice>();
+
+		for ( GnuCashPrice prc : super.getPricesByCurr(curr) ) {
+			GnuCashWritablePrice newPrc = new GnuCashWritablePriceImpl((GnuCashPriceImpl) prc);
+			result.add(newPrc);
+		}
+
+		return result;
+	}
+
+	@Override
+	public List<GnuCashWritablePrice> getWritablePricesByCmdtyID(GCshCmdtyID cmdtyID) {
+		if ( cmdtyID == null ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is null");
+		}
+
+		if ( ! cmdtyID.isSet() ) {
+			throw new IllegalArgumentException("argument <cmdtyID> is not set");
+		}
+
+		ArrayList<GnuCashWritablePrice> result = new ArrayList<GnuCashWritablePrice>();
+
+		for ( GnuCashPrice prc : super.getPricesByCmdtyID(cmdtyID) ) {
+			GnuCashWritablePrice newPrc = new GnuCashWritablePriceImpl((GnuCashPriceImpl) prc);
+			result.add(newPrc);
+		}
+
+		return result;
+	}
+
+	// ---------------------------------------------------------------
+	
+	@Override
+	public Collection<GnuCashWritableBudget> getWritableBudgetsByName(String expr) {
+		if ( expr == null ) {
+			throw new IllegalArgumentException("argument <expr> is null");
+		}
+
+		if ( expr.isBlank() ) {
+			throw new IllegalArgumentException("argument <expr> is blank");
+		}
+
+		ArrayList<GnuCashWritableBudget> result = new ArrayList<GnuCashWritableBudget>();
+
+		for ( GnuCashBudget bdgt : super.getBudgetsByName(expr) ) {
+			GnuCashWritableBudget newBdgt = new GnuCashWritableBudgetImpl((GnuCashBudgetImpl) bdgt);
+			result.add(newBdgt);
+		}
+
+		return result;
+	}
+
+	@Override
+	public Collection<GnuCashWritableBudget> getWritableBudgetsByName(String expr, boolean relaxed) {
+		if ( expr == null ) {
+			throw new IllegalArgumentException("argument <expr> is null");
+		}
+
+		if ( expr.isBlank() ) {
+			throw new IllegalArgumentException("argument <expr> is blank");
+		}
+
+		ArrayList<GnuCashWritableBudget> result = new ArrayList<GnuCashWritableBudget>();
+
+		for ( GnuCashBudget bdgt : super.getBudgetsByName(expr, relaxed) ) {
+			GnuCashWritableBudget newBdgt = new GnuCashWritableBudgetImpl((GnuCashBudgetImpl) bdgt);
+			result.add(newBdgt);
+		}
+
+		return result;
+	}
+
+	@Override
+	public GnuCashWritableBudget getWritableBudgetByNameUniq(String expr)
+			throws NoEntryFoundException, TooManyEntriesFoundException {
+		if ( expr == null ) {
+			throw new IllegalArgumentException("argument <expr> is null");
+		}
+
+		if ( expr.isBlank() ) {
+			throw new IllegalArgumentException("argument <expr> is blank");
+		}
+
+		GnuCashBudget bdgt = super.getBudgetByNameUniq(expr);
+		return new GnuCashWritableBudgetImpl((GnuCashBudgetImpl) bdgt);
+	}
+	
 	@Override
 	public List<GnuCashWritableBudget> getWritableBudgets()	{
 		ArrayList<GnuCashWritableBudget> result = new ArrayList<GnuCashWritableBudget>();

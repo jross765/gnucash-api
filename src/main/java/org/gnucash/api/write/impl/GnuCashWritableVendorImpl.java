@@ -153,6 +153,8 @@ public class GnuCashWritableVendorImpl extends GnuCashVendorImpl
      */
     @Override
     public void remove() {
+    	// ::TODO: Checks
+    	
 		GncGncVendor peer = getJwsdpPeer();
 		getWritableGnuCashFile().getRootElement().getGncBook().getBookElements().remove(peer);
 		getWritableGnuCashFile().removeVendor(this);

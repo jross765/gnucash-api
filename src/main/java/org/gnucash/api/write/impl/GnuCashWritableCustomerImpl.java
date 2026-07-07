@@ -175,6 +175,8 @@ public class GnuCashWritableCustomerImpl extends GnuCashCustomerImpl
      */
     @Override
     public void remove() {
+    	// ::TODO: Checks
+    	
 		GncGncCustomer peer = getJwsdpPeer();
 		getWritableGnuCashFile().getRootElement().getGncBook().getBookElements().remove(peer);
 		getWritableGnuCashFile().removeCustomer(this);
