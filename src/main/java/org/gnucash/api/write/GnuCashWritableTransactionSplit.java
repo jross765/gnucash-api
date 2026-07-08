@@ -154,5 +154,6 @@ public interface GnuCashWritableTransactionSplit extends GnuCashTransactionSplit
 	 */
 	void setActionStr(String act) throws IllegalTransactionSplitActionException;
 
+	void setReconState(ReconState stat);
+	
 }
-

@@ -25,6 +25,7 @@ import org.gnucash.api.read.GnuCashTransactionSplit;
 import org.gnucash.api.read.aux.GCshAcctLot;
 import org.gnucash.api.read.impl.GnuCashAccountImpl;
 import org.gnucash.api.read.impl.GnuCashFileImpl;
+import org.gnucash.api.read.impl.GnuCashTransactionSplitImpl;
 import org.gnucash.api.read.impl.aux.GCshAcctLotImpl;
 import org.gnucash.api.read.impl.hlp.SlotListDoesNotContainKeyException;
 import org.gnucash.api.write.GnuCashWritableAccount;
@@ -292,7 +293,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 		List<GnuCashWritableTransactionSplit> result = new ArrayList<GnuCashWritableTransactionSplit>();
 
 		for ( GnuCashTransactionSplit splt : super.getTransactionSplits() ) {
-			GnuCashWritableTransactionSplitImpl newSplt = new GnuCashWritableTransactionSplitImpl(splt);
+			GnuCashWritableTransactionSplitImpl newSplt = new GnuCashWritableTransactionSplitImpl((GnuCashTransactionSplitImpl) splt);
 			result.add(newSplt);
 		}
 

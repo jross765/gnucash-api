@@ -119,7 +119,7 @@ public class TestGnuCashWritableTransactionSplitImpl {
 		assertEquals(1,        splt.getQuantityRat().getDenominator().intValue());
 		
 		assertEquals("-2.253,00 €", splt.getQuantityFormatted()); // ::TODO: locale-specific!
-		
+
 		assertEquals("", splt.getDescription());
 		assertEquals(null, splt.getLotID());
 		assertEquals(null, splt.getUserDefinedAttributeKeys());
@@ -146,7 +146,7 @@ public class TestGnuCashWritableTransactionSplitImpl {
 		assertEquals(1,     splt.getQuantityRat().getDenominator().intValue());
 		
 		assertEquals("15 DE0007164600", splt.getQuantityFormatted());
-		
+
 		assertEquals("", splt.getDescription());
 		assertEquals(ACCTLOT_1_ID, splt.getLotID());
 		assertEquals(null, splt.getUserDefinedAttributeKeys());
@@ -208,6 +208,11 @@ public class TestGnuCashWritableTransactionSplitImpl {
 		test02_1_check_persisted(outFile);
 	}
 
+	@Test
+	public void test02_2() throws Exception {
+		// ::TODO
+	}
+	
 	// ---------------------------------------------------------------
 
 	private void test02_1_check_memory(GnuCashWritableTransactionSplit splt) throws Exception {
@@ -329,8 +334,7 @@ public class TestGnuCashWritableTransactionSplitImpl {
 		// and the GnuCash file writer does not like that.
 		gcshInFile.writeFile(outFile);
 
-		test04_2_check_persisted(outFile,
-								 trx1, trx2);
+		test04_2_check_persisted(outFile);
 	}
 	
 	// ---------------------------------------------------------------
@@ -391,9 +395,7 @@ public class TestGnuCashWritableTransactionSplitImpl {
 		assertEquals("ffdc46ece30042baa3657af57eabe6ee", trx2.getSplits().get(2).getID().toString());
 	}
 
-	private void test04_2_check_persisted(File outFile,
-										  GnuCashTransaction trx1,
-										  GnuCashTransaction trx2) throws Exception {
+	private void test04_2_check_persisted(File outFile) throws Exception {
 		gcshOutFile = new GnuCashFileImpl(outFile);
 		gcshOutFileStats = new GCshFileStats(gcshOutFile);
 
@@ -406,6 +408,9 @@ public class TestGnuCashWritableTransactionSplitImpl {
 		
 		GnuCashTransactionSplit splt1 = gcshOutFile.getTransactionSplitByID(TRXSPLT_1_ID);
 		assertEquals(null, splt1); // sic
+		
+		GnuCashTransaction trx1 = gcshOutFile.getTransactionByID(TRX_4_ID);
+		assertNotEquals(null, trx1);
 
 		assertEquals(TRX_4_ID, trx1.getID()); // unchanged
 		assertEquals(2, trx1.getSplitsCount()); // changed
@@ -417,6 +422,9 @@ public class TestGnuCashWritableTransactionSplitImpl {
 		
 		GnuCashTransactionSplit splt2 = gcshOutFile.getTransactionSplitByID(TRXSPLT_2_ID);
 		assertEquals(null, splt2); // sic
+
+		GnuCashTransaction trx2 = gcshOutFile.getTransactionByID(TRX_5_ID);
+		assertNotEquals(null, trx2);
 
 		assertEquals(TRX_5_ID, trx2.getID()); // unchanged
 		assertEquals(3, trx2.getSplitsCount()); // changed

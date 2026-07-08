@@ -96,6 +96,13 @@ public class TestGnuCashWritableAccountImpl {
 		GnuCashWritableAccount acct = gcshInFile.getWritableAccountByID(ACCT_1_ID);
 		assertNotEquals(null, acct);
 
+		// ---
+		
+		assertEquals(10, acct.getTransactionSplits().size());
+		assertEquals(10, acct.getWritableTransactionSplits().size());
+		
+		// ---
+		
 		assertEquals(ACCT_1_ID, acct.getID());
 		assertEquals(GnuCashAccount.Type.BANK, acct.getType());
 		assertEquals("Giro RaiBa", acct.getName());
@@ -105,14 +112,14 @@ public class TestGnuCashWritableAccountImpl {
 
 		assertEquals("fdffaa52f5b04754901dfb1cf9221494", acct.getParentAccountID().toString());
 
-    	assertEquals(9175.31, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
-    	assertEquals(917531, acct.getBalanceRat().getNumerator().longValue());
-    	assertEquals(100, acct.getBalanceRat().getDenominator().longValue());
+		assertEquals(9175.31, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(917531, acct.getBalanceRat().getNumerator().longValue());
+		assertEquals(100, acct.getBalanceRat().getDenominator().longValue());
 		assertEquals("9.175,31 €", acct.getBalanceFormatted()); // ::TODO: locale-specific!
-    	
-    	assertEquals(9175.31, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
-    	assertEquals(917531, acct.getBalanceRecursiveRat().getNumerator().longValue());
-    	assertEquals(100, acct.getBalanceRecursiveRat().getDenominator().longValue());
+
+		assertEquals(9175.31, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(917531, acct.getBalanceRecursiveRat().getNumerator().longValue());
+		assertEquals(100, acct.getBalanceRecursiveRat().getDenominator().longValue());
 		assertEquals("9.175,31 €", acct.getBalanceRecursiveFormatted()); // ::TODO: locale-specific!
 
 		assertEquals(10, acct.getTransactions().size());
@@ -123,11 +130,11 @@ public class TestGnuCashWritableAccountImpl {
 		assertEquals("67796d4f7c924c1da38f7813dbc3a99d", acct.getTransactions().get(4).getID().toString());
 		assertEquals("18a45dfc8a6868c470438e27d6fe10b2", acct.getTransactions().get(5).getID().toString());
 
-    	List<GCshAcctLot> lotList = acct.getLots();
-    	// Collections.sort(trxList, Comparator.reverseOrder()); // not necessary
-    	assertEquals(null, lotList);
-    	// assertEquals(1, lotList.size());
-    	// assertEquals("xyz", lotList.get(0).getID().toString());
+    		List<GCshAcctLot> lotList = acct.getLots();
+    		// Collections.sort(trxList, Comparator.reverseOrder()); // not necessary
+    		assertEquals(null, lotList);
+	    	// assertEquals(1, lotList.size());
+	    	// assertEquals("xyz", lotList.get(0).getID().toString());
 	}
 
 	@Test
@@ -135,6 +142,13 @@ public class TestGnuCashWritableAccountImpl {
 		GnuCashWritableAccount acct = gcshInFile.getWritableAccountByID(ACCT_2_ID);
 		assertNotEquals(null, acct);
 
+		// ---
+		
+		assertEquals(0, acct.getTransactionSplits().size());
+		assertEquals(0, acct.getWritableTransactionSplits().size());
+		
+		// ---
+		
 		assertEquals(ACCT_2_ID, acct.getID());
 		assertEquals(GnuCashAccount.Type.ASSET, acct.getType());
 		assertEquals("Depot RaiBa", acct.getName());
@@ -143,15 +157,15 @@ public class TestGnuCashWritableAccountImpl {
 		assertEquals("CURRENCY:EUR", acct.getCmdtyID().toString());
 
 		assertEquals("7ee6fe4de6db46fd957f3513c9c6f983", acct.getParentAccountID().toString());
-		
-    	assertEquals(0.0, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
-    	assertEquals(0, acct.getBalanceRat().getNumerator().longValue());
-    	assertEquals(1, acct.getBalanceRat().getDenominator().longValue());
+
+		assertEquals(0.0, acct.getBalance().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(0, acct.getBalanceRat().getNumerator().longValue());
+		assertEquals(1, acct.getBalanceRat().getDenominator().longValue());
 		assertEquals("0,00 €", acct.getBalanceFormatted()); // ::TODO: locale-specific!
-    	
-    	assertEquals(2978.0, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
-    	assertEquals(2978, acct.getBalanceRecursiveRat().getNumerator().longValue());
-    	assertEquals(1, acct.getBalanceRecursiveRat().getDenominator().longValue());
+
+		assertEquals(2978.0, acct.getBalanceRecursive().doubleValue(), ConstTest.DIFF_TOLERANCE);
+		assertEquals(2978, acct.getBalanceRecursiveRat().getNumerator().longValue());
+		assertEquals(1, acct.getBalanceRecursiveRat().getDenominator().longValue());
 		assertEquals("2.978,00 €", acct.getBalanceRecursiveFormatted()); // ::TODO: locale-specific!
 
 		// ::TODO
@@ -159,7 +173,7 @@ public class TestGnuCashWritableAccountImpl {
 		//    assertEquals("568864bfb0954897ab8578db4d27372f", acct.getTransactions().get(0).getID());
 		//    assertEquals("18a45dfc8a6868c470438e27d6fe10b2", acct.getTransactions().get(1).getID());
 
-    	assertEquals(null, acct.getLots());
+		assertEquals(null, acct.getLots());
 	}
 
 	// -----------------------------------------------------------------
@@ -244,7 +258,7 @@ public class TestGnuCashWritableAccountImpl {
 		assertEquals("67796d4f7c924c1da38f7813dbc3a99d", acct.getTransactions().get(4).getID().toString());
 		assertEquals("18a45dfc8a6868c470438e27d6fe10b2", acct.getTransactions().get(5).getID().toString());
 
-    	assertEquals(null, acct.getLots());
+		assertEquals(null, acct.getLots());
 	}
 
 	private void test02_1_check_persisted(File outFile) throws Exception {
@@ -445,7 +459,6 @@ public class TestGnuCashWritableAccountImpl {
 		// Check if modifiable
 		assertEquals(false, acct.hasTransactions()); // there are transactions/trx splits
 
-
 		// Core (variant-specific):
 		gcshInFile.removeAccount(acct);
 
@@ -521,9 +534,9 @@ public class TestGnuCashWritableAccountImpl {
 		// Don't know what to do about this oddity right now,
 		// but it needs to be addressed at some point.
 		assertEquals(ACCT_9_ID, acct.getID());
-    	assertEquals(GnuCashAccount.Type.EXPENSE, acct.getType());
-    	assertEquals("Gas", acct.getName());
-    	// usw.
+		assertEquals(GnuCashAccount.Type.EXPENSE, acct.getType());
+		assertEquals("Gas", acct.getName());
+		// usw.
 		
 		// However, the account cannot newly be instantiated any more,
 		// just as you would expect.

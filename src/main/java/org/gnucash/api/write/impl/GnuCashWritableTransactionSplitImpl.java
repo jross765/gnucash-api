@@ -58,17 +58,17 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 
 	/**
 	 * create a new split and and add it to the given transaction.
-	 *
-	 * @param trx  transaction the transaction we will belong to
-	 * @param acct the account we take money (or other things) from or give it to
+	 * 
+	 * @param trx transaction the transaction we will belong to
+	 * @param acct the account the split will be assigned to
 	 */
 	public GnuCashWritableTransactionSplitImpl(
-			final GnuCashWritableTransactionImpl trx, 
+			final GnuCashWritableTransactionImpl trx,
 			final GnuCashAccount acct) {
 		super(createTransactionSplit_int(trx, acct,
 										new GCshSpltID( GCshID.getNew()) ), 
-			  trx, 
-				true, true);
+			  trx,
+			  true, false);
 
 		// ::TODO ::CHECK
 		// this is a workaround.
@@ -84,9 +84,9 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		trx.addSplit(this);
 	}
 
-	public GnuCashWritableTransactionSplitImpl(final GnuCashTransactionSplit splt) {
+	public GnuCashWritableTransactionSplitImpl(final GnuCashTransactionSplitImpl splt) {
 		super(splt.getJwsdpPeer(), splt.getTransaction(), 
-			  true, true);
+			  false, false);
 	}
 
 	public GnuCashWritableTransactionSplitImpl(
@@ -411,6 +411,23 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		if ( oldActStr == null || ! oldActStr.equals(actStr) ) {
 			if ( helper.getPropertyChangeSupport() != null ) {
 				helper.getPropertyChangeSupport().firePropertyChange("splitAction", oldActStr, actStr);
+			}
+		}
+	}
+
+	@Override
+	public void setReconState(ReconState stat) {
+		if ( stat == null ) {
+			throw new IllegalArgumentException("argument <stat> is null");
+		}
+
+		ReconState oldStat = getReconState();
+		getJwsdpPeer().setSplitReconciledState( stat.getCode() );
+		getWritableGnuCashFile().setModified(true);
+
+		if ( oldStat == null || ! oldStat.equals(stat) ) {
+			if ( helper.getPropertyChangeSupport() != null ) {
+				helper.getPropertyChangeSupport().firePropertyChange("reconState", oldStat, stat);
 			}
 		}
 	}
