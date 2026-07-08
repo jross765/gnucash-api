@@ -8,6 +8,10 @@
 
 * Partially (but not fully) changed implementations so that `BigFraction` is used internally instead of `FixedPointNumber`.
 
+* `GnuCashWritableFile(Impl)`: Added methods, now fully symmetrical to the read-only-variant.
+
+* `GnuCash(Writable)Transaction(Impl)`: New method 'get(Writable)SplitByAccountID()`.
+
 * Usual maintenance: Fixed small bugs, small improvements, low-level code-cleaning.
 
 ## V. 1.7.1 &rarr; 1.8
