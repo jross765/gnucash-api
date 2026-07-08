@@ -52,14 +52,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 
     // ---------------------------------------------------------------
 
-    /**
-     * @see GnuCashTransaction#getDateEntered()
-     */
     protected ZonedDateTime dateEntered;
-
-    /**
-     * @see GnuCashTransaction#getDatePosted()
-     */
     protected ZonedDateTime datePosted;
 
     // ---------------------------------------------------------------

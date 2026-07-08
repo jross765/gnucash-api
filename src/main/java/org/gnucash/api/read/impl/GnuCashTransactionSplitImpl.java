@@ -285,6 +285,18 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 					.getUserDefinedAttributeCore(jwsdpPeer.getSplitSlots(), name);
 	}
 
+	/**
+	 * For special cases.
+	 * Intentionally not publshed in interface.
+	 * 
+	 * @param name
+	 * @return
+	 */
+    public String getUserDefinedAttributeType(final String name) {
+		return HasUserDefinedAttributesImpl
+				.getUserDefinedAttributeTypeCore(jwsdpPeer.getSplitSlots(), name);
+    }
+    
 	@Override
 	public List<String> getUserDefinedAttributeKeys() {
 		return HasUserDefinedAttributesImpl

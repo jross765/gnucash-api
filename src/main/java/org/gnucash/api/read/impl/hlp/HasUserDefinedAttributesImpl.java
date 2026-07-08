@@ -28,6 +28,13 @@ public class HasUserDefinedAttributesImpl // implements HasUserDefinedAttributes
 		return getUserDefinedAttributeCore(slots.getSlot(), name);
 	}
 	
+	public static String getUserDefinedAttributeTypeCore(final SlotsType slots, final String name) {
+		if ( slots == null )
+			return null;
+		
+		return getUserDefinedAttributeTypeCore(slots.getSlot(), name);
+	}
+	
 	public static List<String> getUserDefinedAttributeKeysCore(final SlotsType slots) {
 		if ( slots == null )
 			return null;
@@ -138,6 +145,47 @@ public class HasUserDefinedAttributesImpl // implements HasUserDefinedAttributes
 				}
 			} // if slot-key
 		} // for slot
+
+		return null;
+	}
+
+	private static String getUserDefinedAttributeTypeCore(final List<Slot> slotList, final String name)
+	{
+		if ( slotList == null )
+			return null;
+
+		if ( name.isBlank() )
+			return null;
+
+		// NO:
+		//if ( ! getUserDefinedAttributeKeysCore(slotList).contains(name) ) {
+		//throw new SlotListDoesNotContainKeyException();
+		//}
+
+		// ---
+
+		String nameFirst = "";
+		if ( name.contains( HIERARCHY_SEPARATOR ) )
+		{
+			String[] nameParts = name.split( HIERARCHY_SEPARATOR.replace( ".", "\\." ) );
+			nameFirst = nameParts[0];
+		}
+		else
+		{
+			nameFirst = name;
+		}
+		//System.err.println("np1: '" + nameFirst + "'");
+		//System.err.println("np2: '" + nameRest + "'");
+
+		// ---
+
+		for ( Slot slot : slotList )
+		{
+			if ( slot.getSlotKey().equals( nameFirst ) )
+			{
+				return slot.getSlotValue().getType();
+			}
+		}
 
 		return null;
 	}
