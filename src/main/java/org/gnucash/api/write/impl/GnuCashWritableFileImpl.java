@@ -130,7 +130,6 @@ import org.gnucash.base.basetypes.simple.GCshGenerInvcEntrID;
 import org.gnucash.base.basetypes.simple.GCshGenerInvcID;
 import org.gnucash.base.basetypes.simple.GCshGenerJobID;
 import org.gnucash.base.basetypes.simple.GCshID;
-import org.gnucash.base.basetypes.simple.GCshIDNotSetException;
 import org.gnucash.base.basetypes.simple.GCshPrcID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
 import org.gnucash.base.basetypes.simple.GCshTrxID;
@@ -899,13 +898,13 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 			.removeTransactionSplit(splt, false);
 		
 		// 2) remove transaction split
-		GCshTrxID trxID = splt.getTransactionID();
-		String trxIDStr = null;
-		try {
-			trxIDStr = trxID.get();
-		} catch (GCshIDNotSetException e) {
-			throw new IllegalStateException("Transaction-split " + splt + " does not seem to have a correct transaction (ID)");
-		}
+//		GCshTrxID trxID = splt.getTransactionID();
+//		String trxIDStr = null;
+//		try {
+//			trxIDStr = trxID.get();
+//		} catch (GCshIDNotSetException e) {
+//			throw new IllegalStateException("Transaction-split " + splt + " does not seem to have a correct transaction (ID)");
+//		}
 		
 		// Does not work like that, as splits are embedded in transactions:
 		// getRootElement().getGncBook().getBookElements().remove(((GnuCashWritableTransactionSplitImpl) splt).getJwsdpPeer());
@@ -918,7 +917,7 @@ public class GnuCashWritableFileImpl extends GnuCashFileImpl
 		// - ::TODO: invoice (paying transaction)
 		if ( splt.getAccountID() != null ) {
 			GnuCashAccount dummyAcct = getGnuCashFile().getAccountByID( splt.getAccountID() );
-			((GnuCashAccountImpl) dummyAcct).removeTransactionSplit(splt);
+			((GnuCashAccountImpl) dummyAcct).removeTransactionSplit(splt, false); // <-- 2nd arg. important; do not really understand why
 		}
 		
 		// 3) remove transaction, if no splits left

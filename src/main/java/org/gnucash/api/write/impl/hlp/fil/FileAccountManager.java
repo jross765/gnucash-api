@@ -36,9 +36,9 @@ public class FileAccountManager extends org.gnucash.api.read.impl.hlp.fil.FileAc
 		// - GnuCashAccount acct from GnuCashWritableFile.getAccountByID() -> acct.getBalance() will *not* work
 		// The following code fixes this problem by first calling super.createAccount() and then 
 		// converting the read-only-object into a writable one by calling the other constructor.
-		// NOT this:
-		// GnuCashWritableAccountImpl wrtblAcct = new GnuCashWritableAccountImpl(jwsdpAcct, (GnuCashWritableFileImpl) gcshFile);
-		// Instead:
+		// YES, this:
+//		GnuCashWritableAccountImpl wrtblAcct = new GnuCashWritableAccountImpl(jwsdpAcct, (GnuCashWritableFileImpl) gcshFile);
+		// NO; NOT THIS:
 		GnuCashAccountImpl roAcct = super.createAccount(jwsdpAcct);
 		GnuCashWritableAccountImpl wrtblAcct = new GnuCashWritableAccountImpl((GnuCashAccountImpl) roAcct, true);
 		LOGGER.debug("createAccount: Generated new writable account: " + wrtblAcct.getID());

@@ -10,8 +10,8 @@ import java.util.Currency;
 import org.gnucash.api.ConstTest;
 import org.gnucash.api.read.GnuCashPrice;
 import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
-import org.gnucash.base.basetypes.complex.GCshSecID_Exchange;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
+import org.gnucash.base.basetypes.complex.GCshSecID_Exchange;
 import org.gnucash.base.basetypes.simple.GCshPrcID;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,7 +42,7 @@ public class TestFilePriceManager {
 	@Before
 	public void initialize() throws Exception {
 		ClassLoader classLoader = getClass().getClassLoader();
-		// URL gcshFileURL = classLoader.getResource(Const.GCsh_FILENAME);
+		// URL gcshFileURL = classLoader.getResource(Const.GCSH_FILENAME);
 		// System.err.println("GnuCash test file resource: '" + gcshFileURL + "'");
 		InputStream gcshInFileStream = null;
 		try {

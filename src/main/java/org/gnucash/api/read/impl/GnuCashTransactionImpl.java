@@ -181,6 +181,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 	/**
      * {@inheritDoc}
      */
+	@Override
     @Deprecated
     public FixedPointNumber getBalance() {
 		FixedPointNumber fp = new FixedPointNumber();
@@ -196,6 +197,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     /**
      * {@inheritDoc}
      */
+	@Override
     public BigFraction getBalanceRat() {
 		BigFraction fp = BigFraction.ZERO;
 
@@ -210,6 +212,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     /**
      * {@inheritDoc}
      */
+	@Override
     public String getBalanceFormatted() {
     	return getBalanceFormatted(Locale.getDefault());
     }
@@ -217,6 +220,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     /**
      * {@inheritDoc}
      */
+	@Override
     public String getBalanceFormatted(final Locale lcl) {
     	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
     											getBalance(), getCmdtyID(), lcl );
@@ -242,6 +246,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getNegatedBalanceFormatted() {
     	return getNegatedBalanceFormatted(Locale.getDefault());
     }
@@ -249,6 +254,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getNegatedBalanceFormatted(final Locale lcl) {
     	return AmountFormatter_FP.formatAmount( getGnuCashFile(),
     											getNegatedBalance(), getCmdtyID(), lcl );
@@ -257,6 +263,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     /**
      * {@inheritDoc}
      */
+    @Override
     public GCshTrxID getID() {
     	return new GCshTrxID( jwsdpPeer.getTrnId().getValue() );
     }
@@ -325,6 +332,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 		return retval;
     }
 
+    @Override
     public String getNumber() {
     	return getJwsdpPeer().getTrnNum();
     }
@@ -332,7 +340,14 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getDescription() {
+		if ( jwsdpPeer.getTrnDescription() == null )
+			return null;
+		
+		if ( jwsdpPeer.getTrnDescription().isBlank() )
+			return null;
+		
     	return jwsdpPeer.getTrnDescription();
     }
 
@@ -450,6 +465,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     /**
      * {@inheritDoc}
      */
+    @Override
     public ZonedDateTime getDateEntered() {
 		if ( dateEntered == null ) {
 			String s = jwsdpPeer.getTrnDateEntered().getTsDate();
@@ -469,6 +485,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getDateEnteredFormatted() {
 		try {
 	    	DateTimeFormatter fmt = DateTimeFormatter.ofPattern(Const.REDUCED_DATE_FORMAT_BOOK);
@@ -481,6 +498,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getDatePostedFormatted() {
 		try {
 	    	DateTimeFormatter fmt = DateTimeFormatter.ofPattern(Const.REDUCED_DATE_FORMAT_BOOK);
@@ -493,6 +511,7 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     /**
      * {@inheritDoc}
      */
+    @Override
     public ZonedDateTime getDatePosted() {
 		if ( datePosted == null ) {
 			String s = jwsdpPeer.getTrnDatePosted().getTsDate();
@@ -519,8 +538,8 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
     	return getUserDefinedAttribute(Const.SLOT_KEY_ASSOC_URI);
     }
 
-	// -----------------------------------------------------------
-    
+    // ---------------------------------------------------------------
+
     /**
      * {@inheritDoc}
      */
@@ -534,6 +553,10 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 			throw new IllegalArgumentException("argument <name> is blank");
 		}
 
+		if ( jwsdpPeer.getTrnSlots() == null) {
+			return null;
+		}
+		
 		return HasUserDefinedAttributesImpl
 				.getUserDefinedAttributeCore(jwsdpPeer.getTrnSlots(), name);
 	}
@@ -564,9 +587,6 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 		buffer.append(", balance=");
 		buffer.append(getBalanceFormatted());
 
-		buffer.append(", description='");
-		buffer.append(getDescription() + "'");
-
 		buffer.append(", #splits=");
 		try {
 			buffer.append(getSplitsCount());
@@ -587,6 +607,9 @@ public class GnuCashTransactionImpl extends GnuCashObjectImpl
 		} catch (Exception e) {
 			buffer.append(getDateEntered().toString());
 		}
+
+		buffer.append(", description='");
+		buffer.append(getDescription() + "'");
 
 		buffer.append("]");
 

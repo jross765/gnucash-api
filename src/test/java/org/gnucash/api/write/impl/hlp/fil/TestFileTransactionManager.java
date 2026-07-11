@@ -39,7 +39,7 @@ public class TestFileTransactionManager {
 	@Before
 	public void initialize() throws Exception {
 		ClassLoader classLoader = getClass().getClassLoader();
-		// URL gcshFileURL = classLoader.getResource(Const.GCsh_FILENAME);
+		// URL gcshFileURL = classLoader.getResource(Const.GCSH_FILENAME);
 		// System.err.println("GnuCash test file resource: '" + gcshFileURL + "'");
 		InputStream gcshInFileStream = null;
 		try {

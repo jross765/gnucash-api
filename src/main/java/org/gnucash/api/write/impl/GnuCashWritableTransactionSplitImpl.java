@@ -9,6 +9,7 @@ import org.gnucash.api.read.GnuCashAccount;
 import org.gnucash.api.read.GnuCashTransactionSplit;
 import org.gnucash.api.read.impl.GnuCashTransactionSplitImpl;
 import org.gnucash.api.read.impl.hlp.SlotListDoesNotContainKeyException;
+import org.gnucash.api.write.GnuCashWritableAccount;
 import org.gnucash.api.write.GnuCashWritableTransaction;
 import org.gnucash.api.write.GnuCashWritableTransactionSplit;
 import org.gnucash.api.write.impl.hlp.GnuCashWritableObjectImpl;
@@ -125,7 +126,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 
 		// This is needed because transaction.addSplit() later
 		// must have an already built list of splits.
-		// Otherwise, it will create the list from the JAXB-Data
+		// Otherwise, it will create the list from the JAXB-Data.
 		// Thus, 2 instances of this GnuCashWritableTransactionSplitImpl
 		// will exist: One created in getSplits() from this JAXB-Data
 		// the other is this object.
@@ -178,6 +179,8 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		getTransaction().removeSplit(this);
 	}
 
+	// ---------------------------------------------------------------
+
 	/**
 	 * @see GnuCashWritableTransactionSplit#setAccount(GnuCashAccount)
 	 */
@@ -191,22 +194,22 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 			throw new IllegalArgumentException("argument <acctID> is not set");
 		}
 		
-		String oldAcctID = (getJwsdpPeer().getSplitAccount() == null ? null : getJwsdpPeer().getSplitAccount().getValue());
+		GCshAcctID oldAcctID = getAccountID();
+		if ( oldAcctID == null ||
+			 ! oldAcctID.equals(acctID) ) {
+			GnuCashWritableAccount acct = getWritableGnuCashFile().getWritableAccountByID(oldAcctID);
+			((GnuCashWritableAccountImpl) acct).removeTransactionSplit(this, false);
+		}
+
 		jwsdpPeer.getSplitAccount().setType(Const.XML_DATA_TYPE_GUID);
 		jwsdpPeer.getSplitAccount().setValue(acctID.toString());
-
-		// No, the following is nonsense:
-//		if ( ! isCurrencyMatching() ) {
-//			LOGGER.error("setAccountID: Transaction Split: " + getID() + ": New account's security/currency is not the same as transaction's security/currency");
-//			LOGGER.error("Reverting change");
-//			jwsdpPeer.getSplitAccount().setValue(oldAcctID);
-//			throw new IllegalStateException("Transaction Split: " + getID() + ": New account's security/currency is not the same as transaction's security/currency");
-//		}
-		
 		getWritableGnuCashFile().setModified(true);
 
 		if ( oldAcctID == null || 
-			 ! oldAcctID.equals(acctID.toString()) ) {
+			 ! oldAcctID.equals(acctID) ) {
+			GnuCashWritableAccount acct = getWritableGnuCashFile().getWritableAccountByID(acctID);
+			((GnuCashWritableAccountImpl) acct).addTransactionSplit(this, false);
+			
 			if ( helper.getPropertyChangeSupport() != null ) {
 				helper.getPropertyChangeSupport().firePropertyChange("accountID", oldAcctID, acctID.toString());
 			}
@@ -318,7 +321,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 	}
 
 	/**
-	 * @see GnuCashWritableTransactionSplit#setValue(FixedPointNumber)
+	 * {@inheritDoc}
 	 */
 	@Override
 	@Deprecated
@@ -338,6 +341,9 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setValue(final BigFraction val) {
 		if ( val == null ) {
@@ -358,9 +364,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 	// ---------------------------------------------------------------
 
 	/**
-	 * Set the description-text.
-	 *
-	 * @param descr the new description
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setDescription(final String descr) {
@@ -415,6 +419,25 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void unsetAction() {
+		String oldActStr = getActionStr();
+		getJwsdpPeer().setSplitAction("");
+		getWritableGnuCashFile().setModified(true);
+
+		if ( oldActStr == null || ! oldActStr.equals("") ) {
+			if ( helper.getPropertyChangeSupport() != null ) {
+				helper.getPropertyChangeSupport().firePropertyChange("splitAction", oldActStr, "");
+			}
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setReconState(ReconState stat) {
 		if ( stat == null ) {
@@ -483,7 +506,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 
 	public void unsetLotID() {
 		if ( getLotID() == null ) {
-			throw new IllegalStateException("no lot ID in this transaction split");
+			throw new IllegalStateException("no lot ID in this transaction split: " + getID());
 		}
 
 		getJwsdpPeer().setSplitLot(null);
@@ -517,7 +540,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addUserDefinedAttribute(String type, String name, String value) {
+	public void addUserDefinedAttribute(final String type, final String name, final String value) {
 		if ( name == null ) {
 			throw new IllegalArgumentException("argument <name> is null");
 		}
@@ -579,7 +602,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		if ( name.isBlank() ) {
 			throw new IllegalArgumentException("argument <name> is blank");
 		}
-
+		
 		if ( value == null ) {
 			throw new IllegalArgumentException("argument <value> is null");
 		}
@@ -632,14 +655,14 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		buffer.append(", account-id=");
 		buffer.append(getAccountID());
 
-		buffer.append(", description='");
-		buffer.append(getDescription() + "'");
-
 		buffer.append(", value=");
 		buffer.append(getValue());
 
 		buffer.append(", quantity=");
 		buffer.append(getQuantity());
+
+		buffer.append(", description='");
+		buffer.append(getDescription() + "'");
 
 		buffer.append("]");
 

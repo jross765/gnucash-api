@@ -8,6 +8,7 @@ import java.util.Collection;
 
 import org.gnucash.api.ConstTest;
 import org.gnucash.api.read.GnuCashAccount;
+import org.gnucash.api.read.impl.TestGnuCashAccountImpl;
 import org.gnucash.api.write.GnuCashWritableAccount;
 import org.gnucash.api.write.GnuCashWritableTransactionSplit;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
@@ -38,7 +39,7 @@ public class TestFileAccountManager {
 	@Before
 	public void initialize() throws Exception {
 		ClassLoader classLoader = getClass().getClassLoader();
-		// URL gcshFileURL = classLoader.getResource(Const.GCsh_FILENAME);
+		// URL gcshFileURL = classLoader.getResource(Const.GCSH_FILENAME);
 		// System.err.println("GnuCash test file resource: '" + gcshFileURL + "'");
 		InputStream gcshInFileStream = null;
 		try {
@@ -88,7 +89,7 @@ public class TestFileAccountManager {
 		assertEquals(ConstTest.Stats.NOF_ACCT - 1, mgr.getAccounts().size());
 		
 		// has splits:
-		acctID = new GCshAcctID("bbf77a599bd24a3dbfec3dd1d0bb9f5c");
+		acctID = TestGnuCashAccountImpl.ACCT_1_ID;
 		acct = gcshInFile.getWritableAccountByID(acctID);
 		try {
 			gcshInFile.removeAccount(acct);
@@ -103,7 +104,7 @@ public class TestFileAccountManager {
 	public void test04() throws Exception {
 		mgr = gcshInFile.getAccountManager();
 		
-		GCshAcctID acctID = new GCshAcctID("bbf77a599bd24a3dbfec3dd1d0bb9f5c");
+		GCshAcctID acctID = TestGnuCashAccountImpl.ACCT_1_ID;
 		GnuCashAccount acct = mgr.getAccountByID(acctID);
 		
 		assertEquals(ConstTest.Stats.NOF_TRX_SPLT, gcshInFile.getTransactionSplits().size());

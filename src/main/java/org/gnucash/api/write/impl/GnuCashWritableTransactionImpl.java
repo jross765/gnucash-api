@@ -90,6 +90,10 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 //		}
 	}
 
+	public GnuCashWritableTransactionImpl(final GnuCashTransaction trx, boolean addTrxToInvc) {
+		super(trx.getJwsdpPeer(), trx.getGnuCashFile(), addTrxToInvc);
+	}
+
 	// ---------------------------------------------------------------
 
 	/**
@@ -389,11 +393,17 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 		getWritableGnuCashFile().setModified(true);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setDateEntered(LocalDateTime dateEntered) {
 		setDateEntered(dateEntered.atZone(ZoneId.systemDefault()));
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setDatePosted(final LocalDate datePosted) {
 		if ( datePosted == null ) {
@@ -406,6 +416,10 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 		getWritableGnuCashFile().setModified(true);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void setDescription(final String descr) {
 		if ( descr == null ) {
 			throw new IllegalArgumentException("argument <descr> is null");
@@ -440,6 +454,9 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 
 	// ---------------------------------------------------------------
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void addUserDefinedAttribute(final String type, final String name, final String value) {
 		if ( name == null ) {
@@ -470,6 +487,9 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 										 type, name, value);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void removeUserDefinedAttribute(final String name) {
 		if ( name == null ) {
@@ -490,6 +510,9 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 										 	name);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setUserDefinedAttribute(final String name, final String value) {
 		if ( name == null ) {
@@ -535,9 +558,6 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 		buffer.append(", balance=");
 		buffer.append(getBalanceFormatted());
 
-		buffer.append(", description='");
-		buffer.append(getDescription() + "'");
-
 		buffer.append(", #splits=");
 		buffer.append(getSplitsCount());
 
@@ -554,6 +574,9 @@ public class GnuCashWritableTransactionImpl extends GnuCashTransactionImpl
 		} catch (Exception e) {
 			buffer.append(getDateEntered().toString());
 		}
+
+		buffer.append(", description='");
+		buffer.append(getDescription() + "'");
 
 		buffer.append("]");
 

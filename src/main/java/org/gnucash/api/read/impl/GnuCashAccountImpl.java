@@ -26,7 +26,6 @@ import org.gnucash.api.read.impl.hlp.acct.AccountBalanceHelper_FP;
 import org.gnucash.api.read.impl.hlp.acct.SimpleAccount;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
-import org.gnucash.base.basetypes.complex.InvalidCmdtyTypeException;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -220,7 +219,7 @@ public class GnuCashAccountImpl extends SimpleAccount
 		}
 	
 		GCshCmdtyID result = new GCshCmdtyID(jwsdpPeer.getActCommodity().getCmdtySpace(),
-													 jwsdpPeer.getActCommodity().getCmdtyId()); 
+											 jwsdpPeer.getActCommodity().getCmdtyId()); 
 	
 		return result;
 	}
@@ -251,35 +250,60 @@ public class GnuCashAccountImpl extends SimpleAccount
 
 	@Override
 	public void addTransactionSplit(final GnuCashTransactionSplit splt) {
+		addTransactionSplit(splt, true);
+	}
+	
+	@Override
+	public void addTransactionSplit(final GnuCashTransactionSplit splt, boolean withCheck) {
 		if ( splt == null ) {
 			throw new IllegalArgumentException("argument <splt> is null");
 		}
 
-		GnuCashTransactionSplit old = getTransactionSplitByID(splt.getID());
-		if ( old != null ) {
-			// There already is a split with that ID
-			if ( ! old.equals(splt) ) {
-				System.err.println(
-						"addTransactionSplit: New Transaction Split object with same ID, needs to be replaced: " +
-								splt.getID() + " [" + splt.getClass().getName() + "] and " +
-								old.getID() + " [" + old.getClass().getName() + "]\n" +
-								"new = " + splt.toString() + "\n" +
-								"old = " + old.toString());
-				LOGGER.error(
-						"addTransactionSplit: New Transaction Split object with same ID, needs to be replaced: " +
-								splt.getID() + " [" + splt.getClass().getName() + "] and " +
-								old.getID() + " [" + old.getClass().getName() + "]\n" +
-								"new = " + splt.toString() + "\n" +
-								"old = " + old.toString());
-				IllegalStateException exc = new IllegalStateException("DEBUG");
-				exc.printStackTrace();
-				replaceTransactionSplit(old, (GnuCashTransactionSplitImpl) splt);
-			}
-		} else {
-			// There is no split with that ID yet
-			mySplits.add(splt);
-			mySplitsNeedSorting = true;
+		if ( ! splt.getAccountID().equals( getID() ) ) {
+			LOGGER.error("addTransactionSplit: Split " + splt.getID() + " does not belong to account " + getID());
+			throw new IllegalArgumentException("Split " + splt.getID() + " does not belong to account " + getID());
 		}
+		
+		// CAUTION: As opposed to sister project, this check may
+		// not be inserted here, as it will lead to funny errors
+		// in write-branch.
+		// Cf. test data file:
+		// "Anfangsbestand", "Ausgleichskonto-EUR", "Unverknuepfte Gewinne".
+		// Besides, there is a *heavy* performance fee on this check
+		// (as currently implemented in the FileAccountManager).
+//		if ( getGnuCashFile().getTopAccountIDs().contains( getID() ) ) {
+//			LOGGER.error("addTransactionSplit: Adding transaction split is forbidden for top-level accounts");
+//			throw new UnsupportedOperationException("Adding transaction split is forbidden for top-level accounts");
+//		}
+
+		// ---
+
+		if ( withCheck ) {
+			GnuCashTransactionSplit old = getTransactionSplitByID(splt.getID());
+			if ( old != null ) {
+				// There already is a split with that ID
+				if ( ! old.equals(splt) ) {
+					System.err.println(
+							"addTransactionSplit: New Transaction Split object with same ID, needs to be replaced: " +
+									splt.getID() + " [" + splt.getClass().getName() + "] and " +
+									old.getID() + " [" + old.getClass().getName() + "]\n" +
+									"new = " + splt.toString() + "\n" +
+									"old = " + old.toString());
+					LOGGER.error(
+							"addTransactionSplit: New Transaction Split object with same ID, needs to be replaced: " +
+									splt.getID() + " [" + splt.getClass().getName() + "] and " +
+									old.getID() + " [" + old.getClass().getName() + "]\n" +
+									"new = " + splt.toString() + "\n" +
+									"old = " + old.toString());
+					IllegalStateException exc = new IllegalStateException("DEBUG");
+					exc.printStackTrace();
+					replaceTransactionSplit(old, (GnuCashTransactionSplitImpl) splt);
+				}
+			}
+		}
+		
+		mySplits.add(splt);
+		mySplitsNeedSorting = true;
 	}
 
 	@Override
@@ -294,8 +318,17 @@ public class GnuCashAccountImpl extends SimpleAccount
 		}
 		
 		if ( ! splt.getAccountID().equals( getID() ) ) {
-			throw new IllegalArgumentException("argument <splt> is not assigned to account " + getID() + ", thus cannot be removed from it");
+			LOGGER.error("removeTransactionSplit: Split " + splt.getID() + " does not belong to account " + getID());
+			throw new IllegalArgumentException("Split " + splt.getID() + " does not belong to account " + getID());
 		}
+
+		// Cf. addTransactionSplit()
+//		if ( getGnuCashFile().getTopAccountIDs().contains( getID() ) ) {
+//			LOGGER.error("removeTransactionSplit: Removing transaction split is forbidden for top-level accounts");
+//			throw new UnsupportedOperationException("Removing transaction split is forbidden for top-level accounts");
+//		}
+		
+		// ---
 
 		if ( strict )
 		{
@@ -336,17 +369,33 @@ public class GnuCashAccountImpl extends SimpleAccount
 	/**
 	 * For internal use only.
 	 *
-	 * @param splt
-	 * @param impl 
+	 * @param oldSplt
+	 * @param newSplt 
 	 */
 	public void replaceTransactionSplit(
-			final GnuCashTransactionSplit splt,
-			final GnuCashTransactionSplitImpl impl) {
-		if ( ! mySplits.remove(splt) ) {
-			throw new IllegalArgumentException("Could not remove split from local list");
+			final GnuCashTransactionSplit oldSplt,
+			final GnuCashTransactionSplitImpl newSplt) {
+		if ( oldSplt == null ) {
+			throw new IllegalArgumentException("argument <oldSplt> is null");
+		}
+		
+		if ( newSplt == null ) {
+			throw new IllegalArgumentException("argument <newSplt> is null");
+		}
+		
+		if ( mySplits.contains(oldSplt) ) {
+			throw new IllegalStateException("internal list of splits does not contain old split " + oldSplt.getID() + " from account " + getID());
+		}
+		
+		// ---
+		
+		if ( ! mySplits.remove(oldSplt) ) {
+			LOGGER.error("replaceTransactionSplit: Could not remove old split " + oldSplt.getID() + " from local list (account " + getID() + ")");
+			throw new IllegalStateException("Could not remove old split " + oldSplt.getID() + " from local list (account " + getID() + ")");
 		}
 
-		mySplits.add(impl);
+		mySplits.add(newSplt);
+    	mySplitsNeedSorting = true;
 	}
 
 	// ---------------------------------------------------------------
@@ -536,7 +585,7 @@ public class GnuCashAccountImpl extends SimpleAccount
 		buffer.append(", security/currency='");
 		try {
 			buffer.append(getCmdtyID() + "'");
-		} catch (InvalidCmdtyTypeException e) {
+		} catch (Exception e) {
 			buffer.append("ERROR");
 		}
 
@@ -584,7 +633,7 @@ public class GnuCashAccountImpl extends SimpleAccount
 	    					       acctType);
 	            } else {
 	            	next.printTree(buffer, childrenPrefix + "└── ", childrenPrefix + "    ",
-	            					  acctType);
+	            				   acctType);
 	        	}
 	    	}
 	    }

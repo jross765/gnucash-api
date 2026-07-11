@@ -9,6 +9,8 @@ public interface HasTransactionsImplSpec
 	
     void addTransactionSplit(GnuCashTransactionSplit splt);
 
+    void addTransactionSplit(GnuCashTransactionSplit splt, boolean withCheck);
+
     void removeTransactionSplit(GnuCashTransactionSplit splt);
 
     void removeTransactionSplit(GnuCashTransactionSplit splt, boolean strict);

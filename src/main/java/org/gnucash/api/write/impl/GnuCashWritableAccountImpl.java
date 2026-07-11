@@ -40,7 +40,6 @@ import org.gnucash.base.basetypes.complex.GCshCmdtyID;
 import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
 import org.gnucash.base.basetypes.complex.GCshCurrID;
 import org.gnucash.base.basetypes.complex.GCshSecID;
-import org.gnucash.base.basetypes.complex.InvalidCmdtyTypeException;
 import org.gnucash.base.basetypes.simple.GCshAcctID;
 import org.gnucash.base.basetypes.simple.GCshID;
 import org.gnucash.base.basetypes.simple.GCshSpltID;
@@ -100,7 +99,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 		if ( addSplits ) {
 			if ( ! acct.isRootAccount() ) {
 				for ( GnuCashTransactionSplit splt : ((GnuCashFileImpl) acct.getGnuCashFile()).getTransactionSplits_readAfresh() ) {
-					if ( splt.getAccountID().equals(acct.getID()) ) {
+					if ( splt.getAccountID().equals( acct.getID() ) ) {
 						super.addTransactionSplit(splt);
 					// NO:
 //				    addTransactionSplit(new GnuCashTransactionSplitImpl(splt.getJwsdpPeer(), splt.getTransaction(), 
@@ -254,6 +253,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 			throw new IllegalStateException("Cannot remove account while it contains child-accounts");
 		}
 
+		// ::TODO: remove low-level JWSDP peer
 		getWritableGnuCashFile().removeAccount(this);
 	}
 
@@ -282,6 +282,14 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 	 */
 	@Override
 	public GnuCashWritableTransactionSplit getWritableTransactionSplitByID(final GCshSpltID spltID) {
+		if ( spltID == null ) {
+			throw new IllegalArgumentException("argument <spltID> is null");
+		}
+
+		if ( ! spltID.isSet() ) {
+			throw new IllegalArgumentException("argument <spltID> is not set");
+		}
+
 		return (GnuCashWritableTransactionSplit) super.getTransactionSplitByID(spltID);
 	}
 
@@ -344,36 +352,19 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 	 * @param impl the split to add to mySplits
 	 */
 	protected void addTransactionSplit(final GnuCashWritableTransactionSplitImpl impl) {
-		super.addTransactionSplit(impl);
-		// ((GnuCashFileImpl) getGnuCashFile()).getAccountManager().addTransactionSplit(impl, false);
+		addTransactionSplit(impl, true);
 	}
 
-	/**
-	 * @see GnuCashAccount#addTransactionSplit(GnuCashTransactionSplit)
-	 */
-	@Override
-	public void addTransactionSplit(final GnuCashTransactionSplit splt) {
-		if ( splt == null ) {
-			throw new IllegalArgumentException("argument <splt> is null");
-		}
-
-		if ( ! splt.getAccountID().equals(getID()) ) {
-			throw new IllegalArgumentException("split " + splt.getID() + " does not belong to account " + getID());
-		}
-
-		if ( getGnuCashFile().getTopAccountIDs().contains(getID()) ||
-			 getGnuCashFile().getRootAccountID().equals(getID()) ) {
-			LOGGER.error("addTransactionSplit: Adding transaction split is forbidden for root and top-level accounts");
-			throw new UnsupportedOperationException("Adding transaction split is forbidden for root and top-level accounts");
-		}
-
-		super.addTransactionSplit(splt);
+	protected void addTransactionSplit(final GnuCashWritableTransactionSplitImpl splt, boolean withCheck) {
+		List<GnuCashTransactionSplit> oldSplts = getTransactionSplits();
+		
+		super.addTransactionSplit(splt, withCheck);
 
 		setIsModified();
 		// <<insert code to react further to this change here
 		PropertyChangeSupport propertyChangeFirer = helper.getPropertyChangeSupport();
 		if ( propertyChangeFirer != null ) {
-			propertyChangeFirer.firePropertyChange("transactionSplits", null, getTransactionSplits());
+			propertyChangeFirer.firePropertyChange("transactionSplits", oldSplts, getTransactionSplits());
 		}
 	}
 
@@ -381,32 +372,19 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 	 * @param splt the split to remove
 	 */
 	protected void removeTransactionSplit(final GnuCashWritableTransactionSplit splt) {
-		if ( splt == null ) {
-			throw new IllegalArgumentException("argument <splt> is null");
-		}
-
-		if ( getGnuCashFile().getTopAccountIDs().contains(getID()) ||
-			 getGnuCashFile().getRootAccountID().equals(getID()) ) {
-			LOGGER.error("removeTransactionSplit: Removing transaction split is forbidden for root and top-level accounts");
-			throw new UnsupportedOperationException("Removing transaction split is forbidden for root and top-level accounts");
-		}
-
-		List<GnuCashTransactionSplit> transactionSplits = getTransactionSplits();
-		// That does not work with writable splits:
-		// transactionSplits.remove(splt);
-		// Instead:
-		for ( int i = 0; i < transactionSplits.size(); i++ ) {
-			if ( transactionSplits.get(i).getID().equals(splt.getID()) ) {
-				transactionSplits.remove(i);
-				i--;
-			}
-		}
+		removeTransactionSplit(splt, true);
+	}
+	
+	protected void removeTransactionSplit(final GnuCashWritableTransactionSplit splt, boolean strict) {
+		List<GnuCashTransactionSplit> oldSplts = getTransactionSplits();
+		
+		super.removeTransactionSplit(splt, strict);
 
 		setIsModified();
 		// <<insert code to react further to this change here
 		PropertyChangeSupport propertyChangeFirer = helper.getPropertyChangeSupport();
 		if ( propertyChangeFirer != null ) {
-			propertyChangeFirer.firePropertyChange("transactionSplits", null, transactionSplits);
+			propertyChangeFirer.firePropertyChange("transactionSplits", oldSplts, getTransactionSplits());
 		}
 	}
 
@@ -528,17 +506,17 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 		}
 
 		String oldName = getName();
-		if ( oldName.equals(name) ) {
+		if ( oldName.equals(name.trim()) ) {
 			return; // nothing has changed
 		}
 
-		this.getJwsdpPeer().setActName(name);
+		this.getJwsdpPeer().setActName(name.trim());
 		setIsModified();
 
 		// <<insert code to react further to this change here
 		PropertyChangeSupport propertyChangeFirer = helper.getPropertyChangeSupport();
 		if ( propertyChangeFirer != null ) {
-			propertyChangeFirer.firePropertyChange("name", oldName, name);
+			propertyChangeFirer.firePropertyChange("name", oldName, name.trim());
 		}
 	}
 
@@ -594,17 +572,17 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 		}
 
 		String oldCmdtyNameSpace = getCmdtyID().getNameSpace();
-		if ( oldCmdtyNameSpace.equals(cmdtyNameSpace) ) {
+		if ( oldCmdtyNameSpace.equals(cmdtyNameSpace.trim()) ) {
 			return; // nothing has changed
 		}
 
-		this.getJwsdpPeer().getActCommodity().setCmdtySpace(cmdtyNameSpace);
+		this.getJwsdpPeer().getActCommodity().setCmdtySpace(cmdtyNameSpace.trim());
 		setIsModified();
 
 		// <<insert code to react further to this change here
 		PropertyChangeSupport propertyChangeFirer = helper.getPropertyChangeSupport();
 		if ( propertyChangeFirer != null ) {
-			propertyChangeFirer.firePropertyChange("commodityNameSpace", oldCmdtyNameSpace, cmdtyNameSpace);
+			propertyChangeFirer.firePropertyChange("commodityNameSpace", oldCmdtyNameSpace, cmdtyNameSpace.trim());
 		}
 	}
 
@@ -751,17 +729,17 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 		}
 
 		String oldDescr = getDescription();
-		if ( oldDescr.equals(descr) ) {
+		if ( oldDescr.equals(descr.trim()) ) {
 			return; // nothing has changed
 		}
 
-		getJwsdpPeer().setActDescription(descr);
+		getJwsdpPeer().setActDescription(descr.trim());
 		setIsModified();
 
 		// <<insert code to react further to this change here
 		PropertyChangeSupport propertyChangeFirer = helper.getPropertyChangeSupport();
 		if ( propertyChangeFirer != null ) {
-			propertyChangeFirer.firePropertyChange("description", oldDescr, descr);
+			propertyChangeFirer.firePropertyChange("description", oldDescr, descr.trim());
 		}
 	}
 
@@ -1210,7 +1188,7 @@ public class GnuCashWritableAccountImpl extends GnuCashAccountImpl
 		buffer.append(", security/currency='");
 		try {
 			buffer.append(getCmdtyID() + "'");
-		} catch (InvalidCmdtyTypeException e) {
+		} catch (Exception e) {
 			buffer.append("ERROR");
 		}
 

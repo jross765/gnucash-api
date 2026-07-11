@@ -1,6 +1,7 @@
 package org.gnucash.api.read.impl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.io.InputStream;
 import java.util.Locale;
@@ -72,6 +73,7 @@ public class TestGnuCashTransactionSplitImpl {
 	@Test
 	public void test01() throws Exception {
 		splt = gcshFile.getTransactionSplitByID(TRXSPLT_1_ID);
+		assertNotEquals(null, splt);
 
 		assertEquals(TRXSPLT_1_ID, splt.getID());
 		assertEquals(TRX_4_ID, splt.getTransactionID());
@@ -89,7 +91,7 @@ public class TestGnuCashTransactionSplitImpl {
 		assertEquals(1, splt.getQuantityRat().getDenominator().longValue());
 		assertEquals("-2.253,00 €", splt.getQuantityFormatted()); // ::TODO: locale-specific!
 		
-		assertEquals("", splt.getDescription());
+		assertEquals(null, splt.getDescription());
 		assertEquals(null, splt.getLotID());
 		assertEquals(null, splt.getUserDefinedAttributeKeys());
 	}
@@ -97,6 +99,7 @@ public class TestGnuCashTransactionSplitImpl {
 	@Test
 	public void test02() throws Exception {
 		splt = gcshFile.getTransactionSplitByID(TRXSPLT_2_ID);
+		assertNotEquals(null, splt);
 
 		assertEquals(TRXSPLT_2_ID, splt.getID());
 		assertEquals(TRX_5_ID, splt.getTransactionID());
@@ -114,7 +117,7 @@ public class TestGnuCashTransactionSplitImpl {
 		assertEquals(1, splt.getQuantityRat().getDenominator().longValue());
 		assertEquals("15 DE0007164600", splt.getQuantityFormatted());
 		
-		assertEquals("", splt.getDescription());
+		assertEquals(null, splt.getDescription());
 		assertEquals(ACCTLOT_1_ID, splt.getLotID());
 		assertEquals(null, splt.getUserDefinedAttributeKeys());
 	}

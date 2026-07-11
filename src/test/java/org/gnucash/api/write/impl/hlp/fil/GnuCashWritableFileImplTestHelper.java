@@ -37,4 +37,8 @@ public class GnuCashWritableFileImplTestHelper extends GnuCashWritableFileImpl
 		return (org.gnucash.api.write.impl.hlp.fil.FilePriceManager) prcMgr;
 	}
 
+	public FileInvoiceManager getInvoiceManager() {
+		return (org.gnucash.api.write.impl.hlp.fil.FileInvoiceManager) invcMgr;
+	}
+
 }

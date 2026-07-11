@@ -110,11 +110,11 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 	 *         with that lot-id.
 	 */
 	public GCshLotID getLotID() {
-		if ( getJwsdpPeer().getSplitLot() == null ) {
+		if ( jwsdpPeer.getSplitLot() == null ) {
 			return null;
 		}
 
-		return new GCshLotID(getJwsdpPeer().getSplitLot().getValue());
+		return new GCshLotID(jwsdpPeer.getSplitLot().getValue());
 	}
 	
 	// ---------------------------------------------------------------
@@ -137,9 +137,11 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 	 * {@inheritDoc}
 	 */
 	public String getActionStr() {
-		return getJwsdpPeer().getSplitAction();
+		return jwsdpPeer.getSplitAction();
 	}
 
+	// ----------------------------
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -163,16 +165,28 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 	 * @return 'c','y', 'f', 'n', 'v'.
 	 */
 	public String getReconStateStr() {
-		return getJwsdpPeer().getSplitReconciledState();
+		return jwsdpPeer.getSplitReconciledState();
 	}
 
 	/**
 	 * @see GnuCashTransactionSplit#getAccountID()
 	 */
 	public GCshAcctID getAccountID() {
-		assert jwsdpPeer.getSplitAccount().getType().equals(Const.XML_DATA_TYPE_GUID);
+		if ( jwsdpPeer.getSplitAccount() == null ) {
+			return null;
+		}
+		
+		if ( ! jwsdpPeer.getSplitAccount().getType().equals(Const.XML_DATA_TYPE_GUID) ) {
+			throw new IllegalStateException("JWSDP peer's attribute is of wrong type: " + jwsdpPeer.getSplitAccount().getType());
+		}
+		
 		String acctID = jwsdpPeer.getSplitAccount().getValue();
-		assert acctID != null;
+		if ( acctID == null )
+			return null;
+		
+		if ( acctID.isBlank() )
+			return null;
+
 		return new GCshAcctID(acctID);
 	}
 
@@ -235,6 +249,7 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	@Deprecated
 	public FixedPointNumber getQuantity() {
 		return new FixedPointNumber(jwsdpPeer.getSplitQuantity());
@@ -251,6 +266,7 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public String getQuantityFormatted() {
 		return getQuantityFormatted(Locale.getDefault());
 	}
@@ -266,39 +282,71 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 												getQuantity(), getAccount().getCmdtyID(), lcl );
 	}
 
+	// ---------------------------------------------------------------
+	
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public String getDescription() {
-		if ( jwsdpPeer.getSplitMemo() == null ) {
-			return "";
-		}
+		if ( jwsdpPeer.getSplitMemo() == null )
+			return null;
+		
+		if ( jwsdpPeer.getSplitMemo().isBlank() )
+			return null;
 		
 		return jwsdpPeer.getSplitMemo();
 	}
 
 	// ---------------------------------------------------------------
-	
+
+    /**
+     * {@inheritDoc}
+     */
 	@Override
-	public String getUserDefinedAttribute(String name) {
+	public String getUserDefinedAttribute(final String name) {
+		if ( name == null ) {
+			throw new IllegalArgumentException("argument <name> is null");
+		}
+
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
+		}
+
 		return HasUserDefinedAttributesImpl
 					.getUserDefinedAttributeCore(jwsdpPeer.getSplitSlots(), name);
 	}
 
-	/**
-	 * For special cases.
-	 * Intentionally not publshed in interface.
-	 * 
-	 * @param name
-	 * @return
-	 */
+    /**
+     * For special case.
+     * Intentionally not published in interface.
+     */
     public String getUserDefinedAttributeType(final String name) {
+		if ( name == null ) {
+			throw new IllegalArgumentException("argument <name> is null");
+		}
+
+		if ( name.isBlank() ) {
+			throw new IllegalArgumentException("argument <name> is blank");
+		}
+
+		if ( jwsdpPeer.getSplitSlots() == null) {
+			return null;
+		}
+		
 		return HasUserDefinedAttributesImpl
 				.getUserDefinedAttributeTypeCore(jwsdpPeer.getSplitSlots(), name);
     }
     
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public List<String> getUserDefinedAttributeKeys() {
+		if ( jwsdpPeer.getSplitSlots() == null) {
+			return null;
+		}
+		
 		return HasUserDefinedAttributesImpl
 					.getUserDefinedAttributeKeysCore(jwsdpPeer.getSplitSlots());
 	}
@@ -313,8 +361,8 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 				return c;
 			}
 
-			if ( ! otherSplt.getID().toString().equals( getID().toString() ) ) {
-				return c;
+			if ( ! otherSplt.getID().equals( getID() ) ) {
+				return otherSplt.getID().toString().compareTo( getID().toString() );
 			}
 
 			if ( otherSplt != this ) {
@@ -363,14 +411,14 @@ public class GnuCashTransactionSplitImpl extends GnuCashObjectImpl
 		buffer.append(", account-id=");
 		buffer.append(getAccountID());
 
-		buffer.append(", description='");
-		buffer.append(getDescription() + "'");
-
 		buffer.append(", value=");
 		buffer.append(getValue());
 
 		buffer.append(", quantity=");
 		buffer.append(getQuantity());
+
+		buffer.append(", description='");
+		buffer.append(getDescription() + "'");
 
 		buffer.append("]");
 		return buffer.toString();

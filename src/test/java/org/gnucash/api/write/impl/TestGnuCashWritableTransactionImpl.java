@@ -770,7 +770,7 @@ public class TestGnuCashWritableTransactionImpl {
 		assertEquals(TRX_1_SPLT_1_ACCT_ID, splt1.getAccountID()); // unchanged
 		assertEquals(BigFraction.of(11), splt1.getValueRat()); // changed
 		assertEquals(BigFraction.of(11), splt1.getQuantityRat()); // changed
-		assertEquals("", splt1.getDescription()); // unchanged
+		assertEquals(null, splt1.getDescription()); // unchanged
 		
 		// However, the transaction split cannot newly be instantiated any more,
 		// just as you would expect.
@@ -803,7 +803,7 @@ public class TestGnuCashWritableTransactionImpl {
 		assertEquals(TRX_2_SPLT_1_ACCT_ID, splt2.getAccountID()); // unchanged
 		assertEquals(BigFraction.of(6638, 5), splt2.getValueRat()); // changed
 		assertEquals(BigFraction.of(6638, 5), splt2.getQuantityRat()); // changed
-		assertEquals("", splt2.getDescription()); // unchanged
+		assertEquals(null, splt2.getDescription()); // unchanged
 		
 		// Cf. above.
 		try {

@@ -93,8 +93,10 @@ public class FileTransactionManager extends org.gnucash.api.read.impl.hlp.fil.Fi
 		}
 		
 		if ( withSplt ) {
-			for ( GnuCashTransactionSplit splt : trx.getSplits() ) {
-				removeTransactionSplit(splt, false);
+			if ( trx.getSplits() != null ) {
+				for ( GnuCashTransactionSplit splt : trx.getSplits() ) {
+					removeTransactionSplit(splt, false);
+				}
 			}
 		}
 
@@ -118,7 +120,7 @@ public class FileTransactionManager extends org.gnucash.api.read.impl.hlp.fil.Fi
 			GncTransaction jwsdpTrx = (GncTransaction) bookElement;
 			if ( jwsdpTrx.getTrnId().getValue().equals(trxID.toString())) {
 				pRootElement.getGncBook().getBookElements().remove(i);
-				i--;
+				break;
 			}
 		}
 	}
@@ -172,7 +174,7 @@ public class FileTransactionManager extends org.gnucash.api.read.impl.hlp.fil.Fi
 			GncTransaction.TrnSplits.TrnSplit jwsdpTrxSplt = (GncTransaction.TrnSplits.TrnSplit) bookElement;
 			if ( jwsdpTrxSplt.getSplitId().getValue().equals(spltID.toString())) {
 				trxRaw.getTrnSplits().getTrnSplit().remove(i);
-				i--;
+				break;
 			}
 		}
 	}

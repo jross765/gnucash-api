@@ -120,7 +120,7 @@ public class TestGnuCashWritableTransactionSplitImpl {
 		
 		assertEquals("-2.253,00 €", splt.getQuantityFormatted()); // ::TODO: locale-specific!
 
-		assertEquals("", splt.getDescription());
+		assertEquals(null, splt.getDescription());
 		assertEquals(null, splt.getLotID());
 		assertEquals(null, splt.getUserDefinedAttributeKeys());
 	}
@@ -147,7 +147,7 @@ public class TestGnuCashWritableTransactionSplitImpl {
 		
 		assertEquals("15 DE0007164600", splt.getQuantityFormatted());
 
-		assertEquals("", splt.getDescription());
+		assertEquals(null, splt.getDescription());
 		assertEquals(ACCTLOT_1_ID, splt.getLotID());
 		assertEquals(null, splt.getUserDefinedAttributeKeys());
 	}
@@ -307,7 +307,7 @@ public class TestGnuCashWritableTransactionSplitImpl {
 		GnuCashWritableTransactionSplit splt1 = gcshInFile.getWritableTransactionSplitByID(TRXSPLT_1_ID);
 		assertNotEquals(null, trx1);
 		assertNotEquals(null, splt1);
-		trx1.remove(splt1);
+		trx1.removeSplit(splt1);
 
 		// Variant 2
 		GnuCashWritableTransaction trx2 = gcshInFile.getWritableTransactionByID(TRX_5_ID);

@@ -193,6 +193,8 @@ public class FileTransactionManager {
 		return retval;
 	}
 
+	// ---------------------------------------------------------------
+
 	public List<GnuCashTransactionSplit> getTransactionSplitsByAccountLotID(final GCshLotID acctLotID) {
 		if ( acctLotID == null ) {
 			throw new IllegalArgumentException("argument <acctLotID> is null");
