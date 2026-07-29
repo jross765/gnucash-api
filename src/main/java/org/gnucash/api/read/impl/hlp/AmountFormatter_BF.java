@@ -8,6 +8,9 @@ import org.apache.commons.numbers.fraction.BigFraction;
 import org.gnucash.api.read.GnuCashCommodity;
 import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshCmdtyNameSpace;
+import org.gnucash.base.basetypes.complex.GCshCurrID;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +36,18 @@ public class AmountFormatter_BF
 							amt, cmdtyID, lcl);
 	}
 	
+	public static String formatAmount(GnuCashFile gcshFile,
+									  BigFraction amt, GCshSecID secID) {
+		GCshCmdtyID cmdtyID = new GCshCmdtyID( secID.getNameSpace(), secID.getCode() );
+		return formatAmount(gcshFile, amt, cmdtyID);
+	}
+
+	public static String formatAmount(GnuCashFile gcshFile,
+									  BigFraction amt, GCshCurrID currID) {
+		GCshCmdtyID cmdtyID = new GCshCmdtyID( GCshCmdtyNameSpace.CURRENCY, currID.getCode() );
+		return formatAmount(gcshFile, amt, cmdtyID);
+	}
+
 	public static String formatAmount(GnuCashFile gcshFile,
 									  BigFraction amt, GCshCmdtyID cmdtyID, Locale lcl) {
 		if ( amt == null ) {

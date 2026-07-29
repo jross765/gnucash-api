@@ -7,6 +7,8 @@ import java.util.Locale;
 import org.gnucash.api.read.GnuCashCommodity;
 import org.gnucash.api.read.GnuCashFile;
 import org.gnucash.base.basetypes.complex.GCshCmdtyID;
+import org.gnucash.base.basetypes.complex.GCshCurrID;
+import org.gnucash.base.basetypes.complex.GCshSecID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +38,20 @@ public class AmountFormatter_FP
 							amt, cmdtyID, lcl);
 	}
 	
+	@Deprecated
+	public static String formatAmount(GnuCashFile gcshFile,
+									  FixedPointNumber amt, GCshSecID secID) {
+		GCshCmdtyID cmdtyID = new GCshCmdtyID( secID.getNameSpace(), secID.getCode() );
+		return formatAmount(gcshFile, amt, cmdtyID);
+	}
+
+	@Deprecated
+	public static String formatAmount(GnuCashFile gcshFile,
+									  FixedPointNumber amt, GCshCurrID currID) {
+		GCshCmdtyID cmdtyID = new GCshCmdtyID( currID.getNameSpace(), currID.getCode() );
+		return formatAmount(gcshFile, amt, cmdtyID);
+	}
+
 	@Deprecated
 	public static String formatAmount(GnuCashFile gcshFile,
 									  FixedPointNumber amt, GCshCmdtyID cmdtyID, Locale lcl) {
