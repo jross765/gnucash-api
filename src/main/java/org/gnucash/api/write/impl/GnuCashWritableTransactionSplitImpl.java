@@ -656,10 +656,10 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		buffer.append(getAccountID());
 
 		buffer.append(", value=");
-		buffer.append(getValue());
+		buffer.append(getValueFormatted());
 
 		buffer.append(", quantity=");
-		buffer.append(getQuantity());
+		buffer.append(getQuantityFormatted());
 
 		buffer.append(", description='");
 		buffer.append(getDescription() + "'");
