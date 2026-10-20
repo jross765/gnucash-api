@@ -195,7 +195,7 @@ public class GnuCashWritableTransactionSplitImpl extends GnuCashTransactionSplit
 		}
 		
 		GCshAcctID oldAcctID = getAccountID();
-		if ( oldAcctID == null ||
+		if ( oldAcctID != null &&
 			 ! oldAcctID.equals(acctID) ) {
 			GnuCashWritableAccount acct = getWritableGnuCashFile().getWritableAccountByID(oldAcctID);
 			((GnuCashWritableAccountImpl) acct).removeTransactionSplit(this, false);
