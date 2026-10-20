@@ -128,6 +128,7 @@ public class GnuCashFileImpl implements GnuCashFile,
     // ::MAGIC
 	
 	// Cf. https://en.wikipedia.org/wiki/List_of_file_signatures
+	private static final int GZIP_HEADER_LENGTH = 2;
 	private static final int GZIP_HEADER_BYTE_1 = 31;
     private static final int GZIP_HEADER_BYTE_2 = -117;
 
@@ -254,7 +255,7 @@ public class GnuCashFileImpl implements GnuCashFile,
 			in = new GZIPInputStream(in);
 		} else {
 			// determine if it's gzipped by the magic bytes
-			byte[] magic = new byte[2];
+			byte[] magic = new byte[GZIP_HEADER_LENGTH];
 			in.read(magic);
 			in.close();
 
