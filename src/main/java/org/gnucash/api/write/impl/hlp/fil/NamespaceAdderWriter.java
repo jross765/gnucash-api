@@ -59,13 +59,12 @@ public class NamespaceAdderWriter extends Writer {
 			} else if ( cbuf[i] == '_' && 
 					    isInTag && 
 					    ! isInQuotation ) {
-
-				// do NOT replace the second "_" in but everywhere else inside tag-names
-				// cmdty:quote_source
-				// cmdty:get_quotes
-				// fs:ui_type
-				// invoice:billing_id
-				// recurrence:period_type
+				// do NOT replace the second "_", but everywhere else inside tag names:
+				// - cmdty:quote_source
+				// - cmdty:get_quotes
+				// - fs:ui_type
+				// - invoice:billing_id
+				// - recurrence:period_type
 
 				if ( i <= "fs:ui".length() || 
 					 ! (new String(cbuf, i - "fs:ui".length(), "fs:ui".length()).equals("fs:ui")) ) {

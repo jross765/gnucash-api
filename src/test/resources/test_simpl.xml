@@ -1,0 +1,4100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<gnc-v2
+     xmlns_gnc="http://www.gnucash.org/XML/gnc"
+     xmlns_act="http://www.gnucash.org/XML/act"
+     xmlns_book="http://www.gnucash.org/XML/book"
+     xmlns_cd="http://www.gnucash.org/XML/cd"
+     xmlns_cmdty="http://www.gnucash.org/XML/cmdty"
+     xmlns_price="http://www.gnucash.org/XML/price"
+     xmlns_slot="http://www.gnucash.org/XML/slot"
+     xmlns_split="http://www.gnucash.org/XML/split"
+     xmlns_sx="http://www.gnucash.org/XML/sx"
+     xmlns_trn="http://www.gnucash.org/XML/trn"
+     xmlns_ts="http://www.gnucash.org/XML/ts"
+     xmlns_fs="http://www.gnucash.org/XML/fs"
+     xmlns_bgt="http://www.gnucash.org/XML/bgt"
+     xmlns_recurrence="http://www.gnucash.org/XML/recurrence"
+     xmlns_lot="http://www.gnucash.org/XML/lot"
+     xmlns_addr="http://www.gnucash.org/XML/addr"
+     xmlns_billterm="http://www.gnucash.org/XML/billterm"
+     xmlns_bt-days="http://www.gnucash.org/XML/bt-days"
+     xmlns_bt-prox="http://www.gnucash.org/XML/bt-prox"
+     xmlns_cust="http://www.gnucash.org/XML/cust"
+     xmlns_employee="http://www.gnucash.org/XML/employee"
+     xmlns_entry="http://www.gnucash.org/XML/entry"
+     xmlns_invoice="http://www.gnucash.org/XML/invoice"
+     xmlns_job="http://www.gnucash.org/XML/job"
+     xmlns_order="http://www.gnucash.org/XML/order"
+     xmlns_owner="http://www.gnucash.org/XML/owner"
+     xmlns_taxtable="http://www.gnucash.org/XML/taxtable"
+     xmlns_tte="http://www.gnucash.org/XML/tte"
+     xmlns_vendor="http://www.gnucash.org/XML/vendor">
+<gnc_count-data cd_type="book">1</gnc_count-data>
+<gnc_book version="2.0.0">
+<book_id type="guid">2960a21054bb4edda7eecbf4dbe4c2aa</book_id>
+<book_slots>
+  <slot>
+    <slot_key>counter_formats</slot_key>
+    <slot_value type="frame">
+      <slot>
+        <slot_key>gncBill</slot_key>
+        <slot_value type="string"></slot_value>
+      </slot>
+      <slot>
+        <slot_key>gncCustomer</slot_key>
+        <slot_value type="string"></slot_value>
+      </slot>
+      <slot>
+        <slot_key>gncEmployee</slot_key>
+        <slot_value type="string"></slot_value>
+      </slot>
+      <slot>
+        <slot_key>gncExpVoucher</slot_key>
+        <slot_value type="string"></slot_value>
+      </slot>
+      <slot>
+        <slot_key>gncInvoice</slot_key>
+        <slot_value type="string"></slot_value>
+      </slot>
+      <slot>
+        <slot_key>gncJob</slot_key>
+        <slot_value type="string"></slot_value>
+      </slot>
+      <slot>
+        <slot_key>gncOrder</slot_key>
+        <slot_value type="string"></slot_value>
+      </slot>
+      <slot>
+        <slot_key>gncVendor</slot_key>
+        <slot_value type="string"></slot_value>
+      </slot>
+    </slot_value>
+  </slot>
+  <slot>
+    <slot_key>counters</slot_key>
+    <slot_value type="frame">
+      <slot>
+        <slot_key>gncBill</slot_key>
+        <slot_value type="integer">1</slot_value>
+      </slot>
+      <slot>
+        <slot_key>gncCustomer</slot_key>
+        <slot_value type="integer">3</slot_value>
+      </slot>
+      <slot>
+        <slot_key>gncEmployee</slot_key>
+        <slot_value type="integer">2</slot_value>
+      </slot>
+      <slot>
+        <slot_key>gncExpVoucher</slot_key>
+        <slot_value type="integer">1</slot_value>
+      </slot>
+      <slot>
+        <slot_key>gncInvoice</slot_key>
+        <slot_value type="integer">0</slot_value>
+      </slot>
+      <slot>
+        <slot_key>gncJob</slot_key>
+        <slot_value type="integer">4</slot_value>
+      </slot>
+      <slot>
+        <slot_key>gncOrder</slot_key>
+        <slot_value type="integer">0</slot_value>
+      </slot>
+      <slot>
+        <slot_key>gncVendor</slot_key>
+        <slot_value type="integer">3</slot_value>
+      </slot>
+    </slot_value>
+  </slot>
+  <slot>
+    <slot_key>features</slot_key>
+    <slot_value type="frame">
+      <slot>
+        <slot_key>Register sort and filter settings stored in .gcm file</slot_key>
+        <slot_value type="string">Store the register sort and filter settings in .gcm metadata file (requires at least GnuCash 3.3)</slot_value>
+      </slot>
+      <slot>
+        <slot_key>Use a dedicated opening balance account identified by an 'equity-type' slot</slot_key>
+        <slot_value type="string">Use a dedicated opening balance account identified by an 'equity-type' slot (requires at least Gnucash 4.3)</slot_value>
+      </slot>
+      <slot>
+        <slot_key>Use natural signs in budget amounts</slot_key>
+        <slot_value type="string">Store budget amounts unreversed (i.e. natural) signs (requires at least Gnucash 3.8)</slot_value>
+      </slot>
+    </slot_value>
+  </slot>
+  <slot>
+    <slot_key>options</slot_key>
+    <slot_value type="frame">
+      <slot>
+        <slot_key>Accounts</slot_key>
+        <slot_value type="frame">
+          <slot>
+            <slot_key>Day Threshold for Read-Only Transactions (red line)</slot_key>
+            <slot_value type="double">0</slot_value>
+          </slot>
+          <slot>
+            <slot_key>Use Split Action Field for Number</slot_key>
+            <slot_value type="string">f</slot_value>
+          </slot>
+          <slot>
+            <slot_key>Use Trading Accounts</slot_key>
+            <slot_value type="string">f</slot_value>
+          </slot>
+        </slot_value>
+      </slot>
+      <slot>
+        <slot_key>Business</slot_key>
+        <slot_value type="frame">
+          <slot>
+            <slot_key>Company Address</slot_key>
+            <slot_value type="string"></slot_value>
+          </slot>
+          <slot>
+            <slot_key>Company Contact Person</slot_key>
+            <slot_value type="string"></slot_value>
+          </slot>
+          <slot>
+            <slot_key>Company Email Address</slot_key>
+            <slot_value type="string"></slot_value>
+          </slot>
+          <slot>
+            <slot_key>Company Fax Number</slot_key>
+            <slot_value type="string"></slot_value>
+          </slot>
+          <slot>
+            <slot_key>Company ID</slot_key>
+            <slot_value type="string"></slot_value>
+          </slot>
+          <slot>
+            <slot_key>Company Name</slot_key>
+            <slot_value type="string"></slot_value>
+          </slot>
+          <slot>
+            <slot_key>Company Phone Number</slot_key>
+            <slot_value type="string"></slot_value>
+          </slot>
+          <slot>
+            <slot_key>Company Website URL</slot_key>
+            <slot_value type="string"></slot_value>
+          </slot>
+          <slot>
+            <slot_key>Default Customer TaxTable</slot_key>
+            <slot_value type="guid">83b1859fd415421cb24f8c72eb755fcc</slot_value>
+          </slot>
+          <slot>
+            <slot_key>Default Invoice Report</slot_key>
+            <slot_value type="string">5123a759ceb9483abf2182d01c140e8d/Printable Invoice</slot_value>
+          </slot>
+          <slot>
+            <slot_key>Default Invoice Report Timeout</slot_key>
+            <slot_value type="double">0</slot_value>
+          </slot>
+          <slot>
+            <slot_key>Default Vendor TaxTable</slot_key>
+            <slot_value type="guid">2f43eee4235e450aaa4460864269444c</slot_value>
+          </slot>
+          <slot>
+            <slot_key>Fancy Date Format</slot_key>
+            <slot_value type="string">%d.%m.%Y</slot_value>
+          </slot>
+        </slot_value>
+      </slot>
+      <slot>
+        <slot_key>Tax</slot_key>
+        <slot_value type="frame">
+          <slot>
+            <slot_key>Tax Number</slot_key>
+            <slot_value type="string"></slot_value>
+          </slot>
+        </slot_value>
+      </slot>
+    </slot_value>
+  </slot>
+  <slot>
+    <slot_key>remove-color-not-set-slots</slot_key>
+    <slot_value type="string">true</slot_value>
+  </slot>
+</book_slots>
+<gnc_count-data cd_type="commodity">7</gnc_count-data>
+<gnc_count-data cd_type="account">107</gnc_count-data>
+<gnc_count-data cd_type="transaction">17</gnc_count-data>
+<gnc_count-data cd_type="budget">1</gnc_count-data>
+<gnc_count-data cd_type="price">23</gnc_count-data>
+<gnc_count-data cd_type="gnc:GncBillTerm">3</gnc_count-data>
+<gnc_count-data cd_type="gnc:GncCustomer">3</gnc_count-data>
+<gnc_count-data cd_type="gnc:GncEmployee">2</gnc_count-data>
+<gnc_count-data cd_type="gnc:GncEntry">15</gnc_count-data>
+<gnc_count-data cd_type="gnc:GncInvoice">9</gnc_count-data>
+<gnc_count-data cd_type="gnc:GncJob">4</gnc_count-data>
+<gnc_count-data cd_type="gnc:GncTaxTable">7</gnc_count-data>
+<gnc_count-data cd_type="gnc:GncVendor">3</gnc_count-data>
+<gnc_commodity version="2.0.0">
+  <cmdty_space>CURRENCY</cmdty_space>
+  <cmdty_id>EUR</cmdty_id>
+  <cmdty_get_quotes/>
+  <cmdty_quote_source>currency</cmdty_quote_source>
+  <cmdty_quote_tz/>
+</gnc_commodity>
+<gnc_commodity version="2.0.0">
+  <cmdty_space>CURRENCY</cmdty_space>
+  <cmdty_id>USD</cmdty_id>
+  <cmdty_get_quotes/>
+  <cmdty_quote_source>currency</cmdty_quote_source>
+  <cmdty_quote_tz/>
+</gnc_commodity>
+<gnc_commodity version="2.0.0">
+  <cmdty_space>EURONEXT</cmdty_space>
+  <cmdty_id>MBG</cmdty_id>
+  <cmdty_name>Mercedes-Benz Group AG</cmdty_name>
+  <cmdty_xcode>DE0007100000</cmdty_xcode>
+  <cmdty_fraction>10000</cmdty_fraction>
+</gnc_commodity>
+<gnc_commodity version="2.0.0">
+  <cmdty_space>EURONEXT</cmdty_space>
+  <cmdty_id>SAP</cmdty_id>
+  <cmdty_name>SAP SE</cmdty_name>
+  <cmdty_xcode>DE0007164600</cmdty_xcode>
+  <cmdty_fraction>10000</cmdty_fraction>
+</gnc_commodity>
+<gnc_commodity version="2.0.0">
+  <cmdty_space>ISIN</cmdty_space>
+  <cmdty_id>DE000BASF111</cmdty_id>
+  <cmdty_name>BASF SE</cmdty_name>
+  <cmdty_xcode>DE000BASF111</cmdty_xcode>
+  <cmdty_fraction>10000</cmdty_fraction>
+  <cmdty_slots>
+    <slot>
+      <slot_key>user_symbol</slot_key>
+      <slot_value type="string">BAS</slot_value>
+    </slot>
+  </cmdty_slots>
+</gnc_commodity>
+<gnc_commodity version="2.0.0">
+  <cmdty_space>ISIN</cmdty_space>
+  <cmdty_id>FR0000120644</cmdty_id>
+  <cmdty_name>Danone</cmdty_name>
+  <cmdty_xcode>FR0000120644</cmdty_xcode>
+  <cmdty_fraction>10000</cmdty_fraction>
+  <cmdty_slots>
+    <slot>
+      <slot_key>user_symbol</slot_key>
+      <slot_value type="string">BN</slot_value>
+    </slot>
+  </cmdty_slots>
+</gnc_commodity>
+<gnc_commodity version="2.0.0">
+  <cmdty_space>ISIN</cmdty_space>
+  <cmdty_id>GB0009895292</cmdty_id>
+  <cmdty_name>AstraZeneca Plc</cmdty_name>
+  <cmdty_xcode>GB0009895292</cmdty_xcode>
+  <cmdty_fraction>10000</cmdty_fraction>
+  <cmdty_slots>
+    <slot>
+      <slot_key>user_symbol</slot_key>
+      <slot_value type="string">AZN</slot_value>
+    </slot>
+  </cmdty_slots>
+</gnc_commodity>
+<gnc_commodity version="2.0.0">
+  <cmdty_space>ISIN</cmdty_space>
+  <cmdty_id>US1912161007</cmdty_id>
+  <cmdty_name>The Coca-Cola Co.</cmdty_name>
+  <cmdty_xcode>US1912161007</cmdty_xcode>
+  <cmdty_fraction>10000</cmdty_fraction>
+  <cmdty_slots>
+    <slot>
+      <slot_key>user_symbol</slot_key>
+      <slot_value type="string">KO</slot_value>
+    </slot>
+  </cmdty_slots>
+</gnc_commodity>
+<gnc_commodity version="2.0.0">
+  <cmdty_space>template</cmdty_space>
+  <cmdty_id>template</cmdty_id>
+  <cmdty_name>template</cmdty_name>
+  <cmdty_xcode>template</cmdty_xcode>
+  <cmdty_fraction>1</cmdty_fraction>
+</gnc_commodity>
+<gnc_pricedb version="1">
+  <price>
+    <price_id type="guid">f011f1d79cb844d88aa21a622ecebba8</price_id>
+    <price_commodity>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>USD</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2024-01-01 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:price-editor</price_source>
+    <price_type>unknown</price_type>
+    <price_value>93/100</price_value>
+  </price>
+  <price>
+    <price_id type="guid">861b7b820a644f48a9ebc32577ce9720</price_id>
+    <price_commodity>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>USD</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2023-12-01 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:price-editor</price_source>
+    <price_type>unknown</price_type>
+    <price_value>23/25</price_value>
+  </price>
+  <price>
+    <price_id type="guid">7c6ab10fde9943ccbfb1623d58a9448a</price_id>
+    <price_commodity>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>USD</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2023-11-01 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:price-editor</price_source>
+    <price_type>unknown</price_type>
+    <price_value>91/100</price_value>
+  </price>
+  <price>
+    <price_id type="guid">037c268b47fb46d385360b1c9788a459</price_id>
+    <price_commodity>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>USD</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2023-10-01 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:price</price_source>
+    <price_value>100/93</price_value>
+  </price>
+  <price>
+    <price_id type="guid">3206bcc27c4242b88f7570788646c13a</price_id>
+    <price_commodity>
+      <cmdty_space>EURONEXT</cmdty_space>
+      <cmdty_id>MBG</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2024-06-01 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:split-register</price_source>
+    <price_type>unknown</price_type>
+    <price_value>2253/200</price_value>
+  </price>
+  <price>
+    <price_id type="guid">b7fe7eb916164f1d9d43f41262530381</price_id>
+    <price_commodity>
+      <cmdty_space>EURONEXT</cmdty_space>
+      <cmdty_id>MBG</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2023-07-01 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:split-register</price_source>
+    <price_type>transaction</price_type>
+    <price_value>22530000/1000000</price_value>
+  </price>
+  <price>
+    <price_id type="guid">6311202714c54fe889ee7aa616cf4715</price_id>
+    <price_commodity>
+      <cmdty_space>EURONEXT</cmdty_space>
+      <cmdty_id>SAP</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2025-02-19 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:split-register</price_source>
+    <price_type>transaction</price_type>
+    <price_value>145000000/1000000</price_value>
+  </price>
+  <price>
+    <price_id type="guid">8f2d1e3263aa4efba4a8e0e892c166b3</price_id>
+    <price_commodity>
+      <cmdty_space>EURONEXT</cmdty_space>
+      <cmdty_id>SAP</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2023-07-20 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:price-editor</price_source>
+    <price_type>unknown</price_type>
+    <price_value>145/1</price_value>
+  </price>
+  <price>
+    <price_id type="guid">d2db5e4108b9413aa678045ca66b205f</price_id>
+    <price_commodity>
+      <cmdty_space>EURONEXT</cmdty_space>
+      <cmdty_id>SAP</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2023-07-18 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:split-register</price_source>
+    <price_type>transaction</price_type>
+    <price_value>125000000/1000000</price_value>
+  </price>
+  <price>
+    <price_id type="guid">232625da7b4b4f55ba5e0e81b6ab4cac</price_id>
+    <price_commodity>
+      <cmdty_space>EURONEXT</cmdty_space>
+      <cmdty_id>SAP</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2012-03-05 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:price</price_source>
+    <price_type>last</price_type>
+    <price_value>51390000000000/1000000</price_value>
+  </price>
+  <price>
+    <price_id type="guid">f2806739b34a4f55a86d9c83f2061606</price_id>
+    <price_commodity>
+      <cmdty_space>EURONEXT</cmdty_space>
+      <cmdty_id>SAP</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2012-03-02 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:price</price_source>
+    <price_type>last</price_type>
+    <price_value>51200000000000/1000000</price_value>
+  </price>
+  <price>
+    <price_id type="guid">0f9b0c306c1f490c92f3fb96d03f40c3</price_id>
+    <price_commodity>
+      <cmdty_space>EURONEXT</cmdty_space>
+      <cmdty_id>SAP</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2012-03-01 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:price</price_source>
+    <price_type>last</price_type>
+    <price_value>51080000000000/1000000</price_value>
+  </price>
+  <price>
+    <price_id type="guid">e733aaa5b2cb448e8402900e607e09cf</price_id>
+    <price_commodity>
+      <cmdty_space>ISIN</cmdty_space>
+      <cmdty_id>DE000BASF111</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2023-12-01 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:price-editor</price_source>
+    <price_type>unknown</price_type>
+    <price_value>463/10</price_value>
+  </price>
+  <price>
+    <price_id type="guid">06b42741d045462f9857feea6695f21d</price_id>
+    <price_commodity>
+      <cmdty_space>ISIN</cmdty_space>
+      <cmdty_id>DE000BASF111</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2023-11-01 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:price-editor</price_source>
+    <price_type>unknown</price_type>
+    <price_value>231/5</price_value>
+  </price>
+  <price>
+    <price_id type="guid">6e651c2d5a934a7998efa3ea0a94f1ee</price_id>
+    <price_commodity>
+      <cmdty_space>ISIN</cmdty_space>
+      <cmdty_id>DE000BASF111</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2023-10-01 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:price-editor</price_source>
+    <price_type>unknown</price_type>
+    <price_value>461/10</price_value>
+  </price>
+  <price>
+    <price_id type="guid">14933eaab93d494393ffc92e99f7f7c8</price_id>
+    <price_commodity>
+      <cmdty_space>ISIN</cmdty_space>
+      <cmdty_id>DE000BASF111</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2023-09-01 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:price-editor</price_source>
+    <price_type>unknown</price_type>
+    <price_value>46/1</price_value>
+  </price>
+  <price>
+    <price_id type="guid">1bed09012a2745208490b2cf6a108443</price_id>
+    <price_commodity>
+      <cmdty_space>ISIN</cmdty_space>
+      <cmdty_id>DE000BASF111</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2023-08-10 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:price-editor</price_source>
+    <price_type>unknown</price_type>
+    <price_value>459/10</price_value>
+  </price>
+  <price>
+    <price_id type="guid">d9204b5e5b724562b99ae6d24ac06883</price_id>
+    <price_commodity>
+      <cmdty_space>ISIN</cmdty_space>
+      <cmdty_id>DE000BASF111</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2023-07-01 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:price-editor</price_source>
+    <price_type>unknown</price_type>
+    <price_value>453/10</price_value>
+  </price>
+  <price>
+    <price_id type="guid">796203664c844ad1a57fcf98aff386df</price_id>
+    <price_commodity>
+      <cmdty_space>ISIN</cmdty_space>
+      <cmdty_id>DE000BASF111</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2023-06-01 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:price-editor</price_source>
+    <price_type>unknown</price_type>
+    <price_value>226/5</price_value>
+  </price>
+  <price>
+    <price_id type="guid">10c5b1ebc8694378876a1fbe45ab49a9</price_id>
+    <price_commodity>
+      <cmdty_space>ISIN</cmdty_space>
+      <cmdty_id>DE000BASF111</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2023-05-01 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:price-editor</price_source>
+    <price_type>unknown</price_type>
+    <price_value>451/10</price_value>
+  </price>
+  <price>
+    <price_id type="guid">3d7b1c6ca678483985cda54863f62ef5</price_id>
+    <price_commodity>
+      <cmdty_space>ISIN</cmdty_space>
+      <cmdty_id>DE000BASF111</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2023-04-01 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:price-editor</price_source>
+    <price_type>unknown</price_type>
+    <price_value>45/1</price_value>
+  </price>
+  <price>
+    <price_id type="guid">dcc5dab9e36d4a9cb2ca4013a897ecb7</price_id>
+    <price_commodity>
+      <cmdty_space>ISIN</cmdty_space>
+      <cmdty_id>DE000BASF111</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2023-03-06 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:price-editor</price_source>
+    <price_type>unknown</price_type>
+    <price_value>8651/200</price_value>
+  </price>
+  <price>
+    <price_id type="guid">144582489ce24f3d934699b77d634977</price_id>
+    <price_commodity>
+      <cmdty_space>ISIN</cmdty_space>
+      <cmdty_id>FR0000120644</cmdty_id>
+    </price_commodity>
+    <price_currency>
+      <cmdty_space>CURRENCY</cmdty_space>
+      <cmdty_id>EUR</cmdty_id>
+    </price_currency>
+    <price_time>
+      <ts_date>2023-03-02 10:59:00 +0000</ts_date>
+    </price_time>
+    <price_source>user:price-editor</price_source>
+    <price_type>unknown</price_type>
+    <price_value>2679/50</price_value>
+  </price>
+</gnc_pricedb>
+<gnc_account version="2.0.0">
+  <act_name>Root Account</act_name>
+  <act_id type="guid">14305dc80e034834b3f531696d81b493</act_id>
+  <act_type>ROOT</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Aktiva</act_name>
+  <act_id type="guid">3b0e56552514420da0e2cec300f64ce6</act_id>
+  <act_type>ASSET</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Aktiva</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">14305dc80e034834b3f531696d81b493</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Depots</act_name>
+  <act_id type="guid">7ee6fe4de6db46fd957f3513c9c6f983</act_id>
+  <act_type>ASSET</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Geldanlagen</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">3b0e56552514420da0e2cec300f64ce6</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Depot RaiBa</act_name>
+  <act_id type="guid">cc2c4709633943c39293bfd73de88c9b</act_id>
+  <act_type>ASSET</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Aktiendepot 1</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">7ee6fe4de6db46fd957f3513c9c6f983</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>DE0007100000 Mercedes-Benz</act_name>
+  <act_id type="guid">d49554f33a0340bdb6611a1ab5575998</act_id>
+  <act_type>STOCK</act_type>
+  <act_commodity>
+    <cmdty_space>EURONEXT</cmdty_space>
+    <cmdty_id>MBG</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>10000</act_commodity-scu>
+  <act_description>Mercedes-Benz Group AG</act_description>
+  <act_parent type="guid">cc2c4709633943c39293bfd73de88c9b</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>DE0007164600 SAP</act_name>
+  <act_id type="guid">b3741e92e3b9475b9d5a2dc8254a8111</act_id>
+  <act_type>STOCK</act_type>
+  <act_commodity>
+    <cmdty_space>EURONEXT</cmdty_space>
+    <cmdty_id>SAP</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>10000</act_commodity-scu>
+  <act_description>SAP SE</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>lot-mgmt</slot_key>
+      <slot_value type="frame">
+        <slot>
+          <slot_key>gains-acct</slot_key>
+          <slot_value type="frame">
+            <slot>
+              <slot_key>CURRENCY::EUR</slot_key>
+              <slot_value type="guid">52f6de2021ca4accb4358a62f8df225f</slot_value>
+            </slot>
+          </slot_value>
+        </slot>
+        <slot>
+          <slot_key>next-id</slot_key>
+          <slot_value type="integer">1</slot_value>
+        </slot>
+      </slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">cc2c4709633943c39293bfd73de88c9b</act_parent>
+  <act_lots>
+    <gnc_lot version="2.0.0">
+      <lot_id type="guid">ef15827f413a4eeeaf8a7b492252b443</lot_id>
+      <lot_slots>
+        <slot>
+          <slot_key>notes</slot_key>
+          <slot_value type="string">Zur korrekten Vorbereitung des Jahresabschlusses ist ein vollständiges Abbilden der Posten-Logik notwendig.</slot_value>
+        </slot>
+        <slot>
+          <slot_key>title</slot_key>
+          <slot_value type="string">Charge 0</slot_value>
+        </slot>
+      </lot_slots>
+    </gnc_lot>
+  </act_lots>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Depot SocGen</act_name>
+  <act_id type="guid">7b6e48d2a3f14aa5b0d81b3d3296ff8c</act_id>
+  <act_type>ASSET</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Aktiendepot 2</act_description>
+  <act_parent type="guid">7ee6fe4de6db46fd957f3513c9c6f983</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Sichteinlagen</act_name>
+  <act_id type="guid">3cf39ca12d414c7289a90ef76ee88c27</act_id>
+  <act_type>ASSET</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Barvermögen</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">3b0e56552514420da0e2cec300f64ce6</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>KK</act_name>
+  <act_id type="guid">fdffaa52f5b04754901dfb1cf9221494</act_id>
+  <act_type>ASSET</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">3cf39ca12d414c7289a90ef76ee88c27</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Giro RaiBa</act_name>
+  <act_id type="guid">bbf77a599bd24a3dbfec3dd1d0bb9f5c</act_id>
+  <act_type>BANK</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Girokonto 1</act_description>
+  <act_parent type="guid">fdffaa52f5b04754901dfb1cf9221494</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Giro SocGen</act_name>
+  <act_id type="guid">aa0f8f2a0e8b4b8cb940918710145088</act_id>
+  <act_type>ASSET</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Girokonto 2</act_description>
+  <act_parent type="guid">fdffaa52f5b04754901dfb1cf9221494</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Konto DB alt</act_name>
+  <act_id type="guid">6f5dec7f6f424595a984cd167a9873cc</act_id>
+  <act_type>ASSET</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Altes, geschlossenes Konto</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>balance-limit</slot_key>
+      <slot_value type="frame"/>
+    </slot>
+    <slot>
+      <slot_key>hidden</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">fdffaa52f5b04754901dfb1cf9221494</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>nicht-KK</act_name>
+  <act_id type="guid">06d05a9c302b44a8b5a16e91fed31b95</act_id>
+  <act_type>ASSET</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">3cf39ca12d414c7289a90ef76ee88c27</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Sparkonto</act_name>
+  <act_id type="guid">b88e9eca9c73411b947b882d0bf8ec6f</act_id>
+  <act_type>BANK</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Sparkonto</act_description>
+  <act_parent type="guid">06d05a9c302b44a8b5a16e91fed31b95</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Tagesgeld RaiBa</act_name>
+  <act_id type="guid">87b7dc076d684bb78044795a89d665c8</act_id>
+  <act_type>BANK</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">06d05a9c302b44a8b5a16e91fed31b95</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Tagesgeld RaiBa USD</act_name>
+  <act_id type="guid">cc85104b83b74099bbdbdf69497e7696</act_id>
+  <act_type>BANK</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>USD</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">06d05a9c302b44a8b5a16e91fed31b95</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Sonstige</act_name>
+  <act_id type="guid">97588a9049df44a5bfb93b3efed9f501</act_id>
+  <act_type>ASSET</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">3b0e56552514420da0e2cec300f64ce6</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Forderungen</act_name>
+  <act_id type="guid">74401ce4880c4f4487c4301027a71bde</act_id>
+  <act_type>ASSET</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">3b0e56552514420da0e2cec300f64ce6</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Unfug_Quatsch</act_name>
+  <act_id type="guid">7e223ee2260d4ba28e8e9e19ce291f43</act_id>
+  <act_type>RECEIVABLE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">74401ce4880c4f4487c4301027a71bde</act_parent>
+  <act_lots>
+    <gnc_lot version="2.0.0">
+      <lot_id type="guid">c183bc9303484e75945af1324d18e8cc</lot_id>
+      <lot_slots>
+        <slot>
+          <slot_key>gncInvoice</slot_key>
+          <slot_value type="frame">
+            <slot>
+              <slot_key>invoice-guid</slot_key>
+              <slot_value type="guid">d9967c10fdf1465e9394a3e4b1e7bd79</slot_value>
+            </slot>
+          </slot_value>
+        </slot>
+        <slot>
+          <slot_key>title</slot_key>
+          <slot_value type="string">Rechnung R1730</slot_value>
+        </slot>
+      </lot_slots>
+    </gnc_lot>
+    <gnc_lot version="2.0.0">
+      <lot_id type="guid">c9a34ac416b8456ea84d7f19cca341d6</lot_id>
+      <lot_slots>
+        <slot>
+          <slot_key>gncInvoice</slot_key>
+          <slot_value type="frame">
+            <slot>
+              <slot_key>invoice-guid</slot_key>
+              <slot_value type="guid">6588f1757b9e4e24b62ad5b37b8d8e07</slot_value>
+            </slot>
+          </slot_value>
+        </slot>
+        <slot>
+          <slot_key>title</slot_key>
+          <slot_value type="string">Rechnung R1731</slot_value>
+        </slot>
+      </lot_slots>
+    </gnc_lot>
+  </act_lots>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Kunde_2</act_name>
+  <act_id type="guid">293e37c21e6b4b46b486597c1cf99a86</act_id>
+  <act_type>RECEIVABLE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">74401ce4880c4f4487c4301027a71bde</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>sonstige</act_name>
+  <act_id type="guid">ee7561449e61448fb8fefdc27a35d559</act_id>
+  <act_type>RECEIVABLE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">74401ce4880c4f4487c4301027a71bde</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Kassen</act_name>
+  <act_id type="guid">3f32b1e5c5154bb9ac408bb0f749e970</act_id>
+  <act_type>ASSET</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">3b0e56552514420da0e2cec300f64ce6</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Kasse Bodo</act_name>
+  <act_id type="guid">3df08e60391d4fc3888a5fe5f91e7252</act_id>
+  <act_type>ASSET</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">3f32b1e5c5154bb9ac408bb0f749e970</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Kasse Ada</act_name>
+  <act_id type="guid">e617cfd1317b4e318caf5dfba51b172e</act_id>
+  <act_type>ASSET</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">3f32b1e5c5154bb9ac408bb0f749e970</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Erträge</act_name>
+  <act_id type="guid">a4cd5c75d9f44370bce02592fda63ae2</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Erträge</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">14305dc80e034834b3f531696d81b493</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Gehalt</act_name>
+  <act_id type="guid">9cf1e0386cb14cd19f66ea90ad7856ba</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Gehalt und Zulagen</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">a4cd5c75d9f44370bce02592fda63ae2</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Gehalt</act_name>
+  <act_id type="guid">79dc5683ff7440bda747c21d9b73e7d0</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Gehalt</act_description>
+  <act_parent type="guid">9cf1e0386cb14cd19f66ea90ad7856ba</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Zulagen</act_name>
+  <act_id type="guid">5bf9465931fc4536bc9737602b200c79</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Zulagen und Bonus zum Gehalt</act_description>
+  <act_parent type="guid">9cf1e0386cb14cd19f66ea90ad7856ba</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Geschenke</act_name>
+  <act_id type="guid">ee77765f229542b1843e358df89a4e2b</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Empfangene Geschenke</act_description>
+  <act_parent type="guid">a4cd5c75d9f44370bce02592fda63ae2</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Sonstiges</act_name>
+  <act_id type="guid">fed745c4da5c49ebb0fde0f47222b35b</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Sonstige Erträge</act_description>
+  <act_parent type="guid">a4cd5c75d9f44370bce02592fda63ae2</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Honorar</act_name>
+  <act_id type="guid">690f25c6ef0649cba836529ba6724f78</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">a4cd5c75d9f44370bce02592fda63ae2</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Kapitalertraege</act_name>
+  <act_id type="guid">d81fd0a20c01452aa009db11647d6477</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">a4cd5c75d9f44370bce02592fda63ae2</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Zinsen</act_name>
+  <act_id type="guid">5c19955b95f44d9a9ba7aa5eb4b02c9a</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Zinseinkommen</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">d81fd0a20c01452aa009db11647d6477</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Bausparvertrag</act_name>
+  <act_id type="guid">985e3b28568343f4a72a384126b7eae3</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Bausparvertrag Zinsen</act_description>
+  <act_parent type="guid">5c19955b95f44d9a9ba7aa5eb4b02c9a</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Festgeld</act_name>
+  <act_id type="guid">5cfb19456b3d44c9950e48cacfb3bd3b</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Festgeld Zinsen</act_description>
+  <act_parent type="guid">5c19955b95f44d9a9ba7aa5eb4b02c9a</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Investmentfonds</act_name>
+  <act_id type="guid">150957ac8a984d8e89dce93b2cf5ea52</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Investmentfonds Zinsen</act_description>
+  <act_parent type="guid">5c19955b95f44d9a9ba7aa5eb4b02c9a</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Girokonto</act_name>
+  <act_id type="guid">e2bad3d8d83b4fa3a38ae9f8d1beba5a</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Girokonto Zinsen</act_description>
+  <act_parent type="guid">5c19955b95f44d9a9ba7aa5eb4b02c9a</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Sonstige</act_name>
+  <act_id type="guid">407c68ed3767415cbb9377e490450542</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Sonstige Zinsen</act_description>
+  <act_parent type="guid">5c19955b95f44d9a9ba7aa5eb4b02c9a</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Sparkonto</act_name>
+  <act_id type="guid">5105420aab3d44618523c7566194c679</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Sparkonto Zinsen</act_description>
+  <act_parent type="guid">5c19955b95f44d9a9ba7aa5eb4b02c9a</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Dividenden</act_name>
+  <act_id type="guid">da2b964bc1b044719c598bd41f404c71</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">d81fd0a20c01452aa009db11647d6477</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Inland</act_name>
+  <act_id type="guid">d7c384bfc136464490965f3f254313b1</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Dividenden</act_description>
+  <act_parent type="guid">da2b964bc1b044719c598bd41f404c71</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Ausland</act_name>
+  <act_id type="guid">c41ca0148f9048968c66c2d392e2cebc</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">da2b964bc1b044719c598bd41f404c71</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Gewinne</act_name>
+  <act_id type="guid">04c305488604443ea7c668f9f30cf8dd</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_slots>
+    <slot>
+      <slot_key>balance-limit</slot_key>
+      <slot_value type="frame"/>
+    </slot>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">d81fd0a20c01452aa009db11647d6477</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>real</act_name>
+  <act_id type="guid">9dbad1fda79644b0916154b404f84763</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>realisierte Gewinne</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>balance-limit</slot_key>
+      <slot_value type="frame"/>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">04c305488604443ea7c668f9f30cf8dd</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Aufwendungen</act_name>
+  <act_id type="guid">23aa4227ddda457592998d18f888a662</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Aufwendungen</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">14305dc80e034834b3f531696d81b493</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Versicherungen</act_name>
+  <act_id type="guid">e92313af9d344c939a084f8b6aa452b9</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Versicherungen</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">23aa4227ddda457592998d18f888a662</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Lebensversicherung</act_name>
+  <act_id type="guid">576aeb698e524b9a88e548efec097c48</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Lebensversicherung</act_description>
+  <act_parent type="guid">e92313af9d344c939a084f8b6aa452b9</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Haftpflicht</act_name>
+  <act_id type="guid">038dea402d134180a6a3ca748c9f6b4d</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Haftpflichtversicherung</act_description>
+  <act_parent type="guid">e92313af9d344c939a084f8b6aa452b9</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Krankenversicherung</act_name>
+  <act_id type="guid">c258aa23358040a08fcfe1efad2a906c</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Krankenversicherung</act_description>
+  <act_parent type="guid">e92313af9d344c939a084f8b6aa452b9</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Bildung</act_name>
+  <act_id type="guid">e7884c844e19475cb907d88939d90af0</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Bildung</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">23aa4227ddda457592998d18f888a662</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Abonnements</act_name>
+  <act_id type="guid">259f5cc9b6f4411a80e32697938f8c4e</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Abonnements</act_description>
+  <act_parent type="guid">e7884c844e19475cb907d88939d90af0</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Bücher</act_name>
+  <act_id type="guid">01efa7d55a4b4ac8958c0e4f43193072</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Bücher</act_description>
+  <act_parent type="guid">e7884c844e19475cb907d88939d90af0</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Büroartikel</act_name>
+  <act_id type="guid">7baa658d697e4dfc8a4bf19f8cdd9fee</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Büroartikel</act_description>
+  <act_parent type="guid">e7884c844e19475cb907d88939d90af0</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Zeitungen</act_name>
+  <act_id type="guid">0c405f3669a14606be3c1a62ac5455a9</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Zeitungen</act_description>
+  <act_parent type="guid">e7884c844e19475cb907d88939d90af0</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Computer</act_name>
+  <act_id type="guid">16305960bddc463aa18212dd4f230d4d</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Computer</act_description>
+  <act_parent type="guid">23aa4227ddda457592998d18f888a662</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Fahrtkosten</act_name>
+  <act_id type="guid">de925f1e498f4fe7be8a9fc3f7904d4f</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Fahrtkosten</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">23aa4227ddda457592998d18f888a662</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Fahrkarten</act_name>
+  <act_id type="guid">6eecbc4eda71495982a0710bd14dccef</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Fahrkarten Bus, Bahn, Flugzeug</act_description>
+  <act_parent type="guid">de925f1e498f4fe7be8a9fc3f7904d4f</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Geschenke</act_name>
+  <act_id type="guid">e93bd8a244c94de9bb4d5c3cb6749bf1</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Geschenke</act_description>
+  <act_parent type="guid">23aa4227ddda457592998d18f888a662</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Hobbies</act_name>
+  <act_id type="guid">1910dacc276e4dff8cb378db008175e6</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Hobbies</act_description>
+  <act_parent type="guid">23aa4227ddda457592998d18f888a662</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Kleidung</act_name>
+  <act_id type="guid">6ee78c2b61ff4bc2bf79c1f390823bc3</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Kleidung</act_description>
+  <act_parent type="guid">23aa4227ddda457592998d18f888a662</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Lebensmittel</act_name>
+  <act_id type="guid">6cab02f92c144dbba1656dca1517f461</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Lebensmittel</act_description>
+  <act_parent type="guid">23aa4227ddda457592998d18f888a662</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Medikamente</act_name>
+  <act_id type="guid">dc79d08ecbcb4a6c8cdb933af964a1ce</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Medikamente</act_description>
+  <act_parent type="guid">23aa4227ddda457592998d18f888a662</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Sonstiges</act_name>
+  <act_id type="guid">7d4c7bf08901493ab346cc24595fdb97</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Sonstiges</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">23aa4227ddda457592998d18f888a662</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Bankgebühren</act_name>
+  <act_id type="guid">d3f947fdfbf54240b0cfb09fea4963ca</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Konto- und Bankgebühren</act_description>
+  <act_parent type="guid">7d4c7bf08901493ab346cc24595fdb97</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Sonstiges</act_name>
+  <act_id type="guid">a11c860ad3c54a07a25020941685f970</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>nicht aufgegliederte Ausgaben</act_description>
+  <act_parent type="guid">7d4c7bf08901493ab346cc24595fdb97</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Komissionen</act_name>
+  <act_id type="guid">2e1273453a4d4cbba016379287964104</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Komissionen im Aktienhandel</act_description>
+  <act_parent type="guid">7d4c7bf08901493ab346cc24595fdb97</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Spenden</act_name>
+  <act_id type="guid">6c69d149ad5946fcad59cddeef67d8a0</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Wohltätige Spenden</act_description>
+  <act_parent type="guid">23aa4227ddda457592998d18f888a662</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Steuern</act_name>
+  <act_id type="guid">4681684348c64a10bac7f6e82a07f7d6</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Steuern und Sozialabgaben</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">23aa4227ddda457592998d18f888a662</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Einkommensteuer</act_name>
+  <act_id type="guid">9a21167546e6423e8f310b18b8b9c113</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Einkommensteuer</act_description>
+  <act_parent type="guid">4681684348c64a10bac7f6e82a07f7d6</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Pflegeversicherung</act_name>
+  <act_id type="guid">dfca94d707d44891ae08667267efaecd</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Pflegeversicherung</act_description>
+  <act_parent type="guid">4681684348c64a10bac7f6e82a07f7d6</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Rentenversicherung</act_name>
+  <act_id type="guid">b42dd58dc4774514b19a81f1066a0453</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Rentenversicherung</act_description>
+  <act_parent type="guid">4681684348c64a10bac7f6e82a07f7d6</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Solidaritätszuschlag</act_name>
+  <act_id type="guid">41e998de2af144c7a9db5049fb677f8a</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Solidaritätszuschlag</act_description>
+  <act_parent type="guid">4681684348c64a10bac7f6e82a07f7d6</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Sonstige</act_name>
+  <act_id type="guid">dce93b2f38df47ceb6ae343a9d16f73b</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Sonstige Steuern</act_description>
+  <act_parent type="guid">4681684348c64a10bac7f6e82a07f7d6</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Sozialabgaben</act_name>
+  <act_id type="guid">7b88cc67d2a1482c8a91c6ec34803455</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Sonstige Sozialabgaben</act_description>
+  <act_parent type="guid">4681684348c64a10bac7f6e82a07f7d6</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Kapitalertrag</act_name>
+  <act_id type="guid">2a195872e24048a0a6228107ca8b6a52</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">4681684348c64a10bac7f6e82a07f7d6</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Telekommunikation</act_name>
+  <act_id type="guid">f3cef83e70a84066ba91719df5a40884</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Telekommunikation</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">23aa4227ddda457592998d18f888a662</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Fernsehen</act_name>
+  <act_id type="guid">aa8e4dac1bd141468c1eca045598a52b</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>GEZ und Kabelfernsehen</act_description>
+  <act_parent type="guid">f3cef83e70a84066ba91719df5a40884</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Online-Dienste</act_name>
+  <act_id type="guid">dc74d3fb6de84c4bad17f847c6a91f30</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Online-Dienste</act_description>
+  <act_parent type="guid">f3cef83e70a84066ba91719df5a40884</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Telefon</act_name>
+  <act_id type="guid">598eb8acb1834752ab503c3fe9ed6c99</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Telefon</act_description>
+  <act_parent type="guid">f3cef83e70a84066ba91719df5a40884</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Unterhaltung</act_name>
+  <act_id type="guid">caab27f7ee73491596b8fa76972555bb</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Unterhaltung</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">23aa4227ddda457592998d18f888a662</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Ausgehen</act_name>
+  <act_id type="guid">684ae656c0cb44d68b34128156aef18a</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Auswärts Essen</act_description>
+  <act_parent type="guid">caab27f7ee73491596b8fa76972555bb</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Musik/Kino</act_name>
+  <act_id type="guid">da3d63bc020846d69eddc3b0ccbc3d47</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Musik/Kino</act_description>
+  <act_parent type="guid">caab27f7ee73491596b8fa76972555bb</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Reisen</act_name>
+  <act_id type="guid">2b5f38b679e848ee8e397a3a43ed0eb2</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Reisen</act_description>
+  <act_parent type="guid">caab27f7ee73491596b8fa76972555bb</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Sport</act_name>
+  <act_id type="guid">7425f95d8e4842b68b9682bfaf45c4eb</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Sport</act_description>
+  <act_parent type="guid">caab27f7ee73491596b8fa76972555bb</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Wohnen</act_name>
+  <act_id type="guid">0dc81059cae942ed87f4bb00683bde72</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Ausgaben für Wohnung/Haus</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">23aa4227ddda457592998d18f888a662</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Miete</act_name>
+  <act_id type="guid">22a7432b85844c88bd023ba3c3ba72aa</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Miete</act_description>
+  <act_parent type="guid">0dc81059cae942ed87f4bb00683bde72</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Nebenkosten</act_name>
+  <act_id type="guid">8a54850637cd4002be59eefc68a3ab80</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Wohnnebenkosten</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">0dc81059cae942ed87f4bb00683bde72</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Abfall</act_name>
+  <act_id type="guid">6a5db2c70fc04b4fa2e455d374c103cf</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Abfallentsorgung</act_description>
+  <act_parent type="guid">8a54850637cd4002be59eefc68a3ab80</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Gas</act_name>
+  <act_id type="guid">a30550e282814ee499f956626d69fb97</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Gas</act_description>
+  <act_parent type="guid">8a54850637cd4002be59eefc68a3ab80</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Strom</act_name>
+  <act_id type="guid">faba09b2115b40fea720d448d38acf95</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Strom</act_description>
+  <act_parent type="guid">8a54850637cd4002be59eefc68a3ab80</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Wasser</act_name>
+  <act_id type="guid">714995684aa34753acad6f6c40ecc517</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Wasser</act_description>
+  <act_parent type="guid">8a54850637cd4002be59eefc68a3ab80</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Material</act_name>
+  <act_id type="guid">3a4fe87c83ac4a1ba8c4d851ccd4d940</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">23aa4227ddda457592998d18f888a662</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Spesen</act_name>
+  <act_id type="guid">626aa7a18ea840a69844ad612c28fe29</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">23aa4227ddda457592998d18f888a662</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Bank</act_name>
+  <act_id type="guid">9bfa65815cdc4c0a99bb412dd590ee5b</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">23aa4227ddda457592998d18f888a662</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Provision</act_name>
+  <act_id type="guid">7d4b851a3f704c4695d5d466b28cdc55</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">9bfa65815cdc4c0a99bb412dd590ee5b</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Maklergebühren</act_name>
+  <act_id type="guid">14df609c748e453a8a08b5ad93793ddc</act_id>
+  <act_type>EXPENSE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">9bfa65815cdc4c0a99bb412dd590ee5b</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Fremdkapital</act_name>
+  <act_id type="guid">5008258df86243ee86d37dee64327c27</act_id>
+  <act_type>LIABILITY</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>alle Verbindlichkeiten</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">14305dc80e034834b3f531696d81b493</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Barverbindlichkeiten</act_name>
+  <act_id type="guid">e5523198bef94e2c89f0a42fa1e27e42</act_id>
+  <act_type>LIABILITY</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Barverbindlichkeiten (noch offenstehende Rechnungen)</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>placeholder</slot_key>
+      <slot_value type="string">true</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">5008258df86243ee86d37dee64327c27</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Kreditkarte</act_name>
+  <act_id type="guid">ab7ed186812c475284100a8757a9b89e</act_id>
+  <act_type>CREDIT</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Kreditkarte</act_description>
+  <act_parent type="guid">e5523198bef94e2c89f0a42fa1e27e42</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Steuerverbindl</act_name>
+  <act_id type="guid">1a5b06dada56466197edbd15e64fd425</act_id>
+  <act_type>LIABILITY</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">5008258df86243ee86d37dee64327c27</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Lieferanten</act_name>
+  <act_id type="guid">a6d76c8d72764905adecd78d955d25c0</act_id>
+  <act_type>LIABILITY</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">5008258df86243ee86d37dee64327c27</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Lieferfanto</act_name>
+  <act_id type="guid">68a4c19f9a8c48909fc69d0dc18c37a6</act_id>
+  <act_type>PAYABLE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">a6d76c8d72764905adecd78d955d25c0</act_parent>
+  <act_lots>
+    <gnc_lot version="2.0.0">
+      <lot_id type="guid">ae4de9f6ba2941af94595a6b161795c7</lot_id>
+      <lot_slots>
+        <slot>
+          <slot_key>gncInvoice</slot_key>
+          <slot_value type="frame">
+            <slot>
+              <slot_key>invoice-guid</slot_key>
+              <slot_value type="guid">286fc2651a7848038a23bb7d065c8b67</slot_value>
+            </slot>
+          </slot_value>
+        </slot>
+        <slot>
+          <slot_key>title</slot_key>
+          <slot_value type="string">Lieferantenrechnung 2740921</slot_value>
+        </slot>
+      </lot_slots>
+    </gnc_lot>
+  </act_lots>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Lieferant_2</act_name>
+  <act_id type="guid">b0fb46481b8b427d9293a34c69095d44</act_id>
+  <act_type>PAYABLE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">a6d76c8d72764905adecd78d955d25c0</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>sonstige</act_name>
+  <act_id type="guid">55711b4e6f564709bf880f292448237a</act_id>
+  <act_type>PAYABLE</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">a6d76c8d72764905adecd78d955d25c0</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Anfangsbestand</act_name>
+  <act_id type="guid">ebc834e7f20e4be38f445d655142d6b1</act_id>
+  <act_type>EQUITY</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Anfangsbestand</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>equity-type</slot_key>
+      <slot_value type="string">opening-balance</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">14305dc80e034834b3f531696d81b493</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Ausgleichskonto-EUR</act_name>
+  <act_id type="guid">97fe299fade74af1857573ab5b48262b</act_id>
+  <act_type>BANK</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_parent type="guid">14305dc80e034834b3f531696d81b493</act_parent>
+</gnc_account>
+<gnc_account version="2.0.0">
+  <act_name>Unverknüpfte Gewinne-EUR</act_name>
+  <act_id type="guid">52f6de2021ca4accb4358a62f8df225f</act_id>
+  <act_type>INCOME</act_type>
+  <act_commodity>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </act_commodity>
+  <act_commodity-scu>100</act_commodity-scu>
+  <act_description>Realisierter Gewinn/Verlust</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>notes</slot_key>
+      <slot_value type="string">Realisierter Gewinn/Verlust von Aktienkonten, die nicht woanders gespeichert worden sind.</slot_value>
+    </slot>
+  </act_slots>
+  <act_parent type="guid">14305dc80e034834b3f531696d81b493</act_parent>
+</gnc_account>
+<gnc_transaction version="2.0.0">
+  <trn_id type="guid">cc9fe6a245df45ba9b494660732a7755</trn_id>
+  <trn_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </trn_currency>
+  <trn_date-posted>
+    <ts_date>2023-07-01 10:59:00 +0000</ts_date>
+  </trn_date-posted>
+  <trn_date-entered>
+    <ts_date>2023-07-20 09:56:39 +0000</ts_date>
+  </trn_date-entered>
+  <trn_description>Kauf MBG</trn_description>
+  <trn_slots>
+    <slot>
+      <slot_key>date-posted</slot_key>
+      <slot_value type="gdate">
+        <gdate>2023-07-01</gdate>
+      </slot_value>
+    </slot>
+  </trn_slots>
+  <trn_splits>
+    <trn_split>
+      <split_id type="guid">980706f1ead64460b8205f093472c855</split_id>
+      <split_action>Kauf</split_action>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>225300/100</split_value>
+      <split_quantity>1000000/10000</split_quantity>
+      <split_account type="guid">d49554f33a0340bdb6611a1ab5575998</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">22e449ac0a864d4fae7c58171bdcfcfc</split_id>
+      <split_memo>Leere Buchung absichtlich drinbehalten (so etwas passiert dann und wann einmal, ist nicht schlimm)</split_memo>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>0/100</split_value>
+      <split_quantity>0/100</split_quantity>
+      <split_account type="guid">97fe299fade74af1857573ab5b48262b</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">b6a88c1d918e465892488c561e02831a</split_id>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>-225300/100</split_value>
+      <split_quantity>-225300/100</split_quantity>
+      <split_account type="guid">bbf77a599bd24a3dbfec3dd1d0bb9f5c</split_account>
+    </trn_split>
+  </trn_splits>
+</gnc_transaction>
+<gnc_transaction version="2.0.0">
+  <trn_id type="guid">ab25b1f4035344b395764d2aa6e2d864</trn_id>
+  <trn_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </trn_currency>
+  <trn_date-posted>
+    <ts_date>2024-06-01 10:59:00 +0000</ts_date>
+  </trn_date-posted>
+  <trn_date-entered>
+    <ts_date>2024-06-01 09:09:44 +0000</ts_date>
+  </trn_date-entered>
+  <trn_description>Aktienteilung</trn_description>
+  <trn_slots>
+    <slot>
+      <slot_key>date-posted</slot_key>
+      <slot_value type="gdate">
+        <gdate>2024-06-01</gdate>
+      </slot_value>
+    </slot>
+  </trn_slots>
+  <trn_splits>
+    <trn_split>
+      <split_id type="guid">eb16c2887bfe4e53b8508142ba8fac7a</split_id>
+      <split_action>Aktienteilung</split_action>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>0/100</split_value>
+      <split_quantity>1000000/10000</split_quantity>
+      <split_account type="guid">d49554f33a0340bdb6611a1ab5575998</split_account>
+      <split_slots>
+        <slot>
+          <slot_key>split-type</slot_key>
+          <slot_value type="string">stock-split</slot_value>
+        </slot>
+      </split_slots>
+    </trn_split>
+  </trn_splits>
+</gnc_transaction>
+<gnc_transaction version="2.0.0">
+  <trn_id type="guid">4307689faade47d8aab4db87c8ce3aaf</trn_id>
+  <trn_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </trn_currency>
+  <trn_date-posted>
+    <ts_date>2023-07-18 10:59:00 +0000</ts_date>
+  </trn_date-posted>
+  <trn_date-entered>
+    <ts_date>2023-07-20 10:04:18 +0000</ts_date>
+  </trn_date-entered>
+  <trn_description>Kauf SAP</trn_description>
+  <trn_slots>
+    <slot>
+      <slot_key>date-posted</slot_key>
+      <slot_value type="gdate">
+        <gdate>2023-07-18</gdate>
+      </slot_value>
+    </slot>
+  </trn_slots>
+  <trn_splits>
+    <trn_split>
+      <split_id type="guid">c3ae14400ec843f9bf63f5ef69a31528</split_id>
+      <split_action>Kauf</split_action>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>187500/100</split_value>
+      <split_quantity>150000/10000</split_quantity>
+      <split_account type="guid">b3741e92e3b9475b9d5a2dc8254a8111</split_account>
+      <split_lot type="guid">ef15827f413a4eeeaf8a7b492252b443</split_lot>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">65539ddefc34439d80925275226e7849</split_id>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>250/100</split_value>
+      <split_quantity>250/100</split_quantity>
+      <split_account type="guid">7d4b851a3f704c4695d5d466b28cdc55</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">4cd194156b014823ab4fea16c3947fcb</split_id>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>165/100</split_value>
+      <split_quantity>165/100</split_quantity>
+      <split_account type="guid">14df609c748e453a8a08b5ad93793ddc</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">ffdc46ece30042baa3657af57eabe6ee</split_id>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>-187915/100</split_value>
+      <split_quantity>-187915/100</split_quantity>
+      <split_account type="guid">bbf77a599bd24a3dbfec3dd1d0bb9f5c</split_account>
+    </trn_split>
+  </trn_splits>
+</gnc_transaction>
+<gnc_transaction version="2.0.0">
+  <trn_id type="guid">32b216aa73a44137aa5b041ab8739058</trn_id>
+  <trn_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </trn_currency>
+  <trn_date-posted>
+    <ts_date>2023-08-06 10:59:00 +0000</ts_date>
+  </trn_date-posted>
+  <trn_date-entered>
+    <ts_date>2023-08-06 08:21:44 +0000</ts_date>
+  </trn_date-entered>
+  <trn_description>Dividenderl</trn_description>
+  <trn_slots>
+    <slot>
+      <slot_key>date-posted</slot_key>
+      <slot_value type="gdate">
+        <gdate>2023-08-06</gdate>
+      </slot_value>
+    </slot>
+  </trn_slots>
+  <trn_splits>
+    <trn_split>
+      <split_id type="guid">7abf90fe15124254ac3eb7ec33f798e7</split_id>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>1100/100</split_value>
+      <split_quantity>1100/100</split_quantity>
+      <split_account type="guid">87b7dc076d684bb78044795a89d665c8</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">ea08a144322146cea38b39d134ca6fc1</split_id>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>0/100</split_value>
+      <split_quantity>0/10000</split_quantity>
+      <split_account type="guid">b3741e92e3b9475b9d5a2dc8254a8111</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">5c5fa881869843d090a932f8e6b15af2</split_id>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>-1100/100</split_value>
+      <split_quantity>-1100/100</split_quantity>
+      <split_account type="guid">d7c384bfc136464490965f3f254313b1</split_account>
+    </trn_split>
+  </trn_splits>
+</gnc_transaction>
+<gnc_transaction version="2.0.0">
+  <trn_id type="guid">ae0dff27500e440293267a9c7db061f5</trn_id>
+  <trn_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </trn_currency>
+  <trn_date-posted>
+    <ts_date>2025-02-19 10:59:00 +0000</ts_date>
+  </trn_date-posted>
+  <trn_date-entered>
+    <ts_date>2025-02-19 16:34:30 +0000</ts_date>
+  </trn_date-entered>
+  <trn_description>Verkauf SAP</trn_description>
+  <trn_slots>
+    <slot>
+      <slot_key>date-posted</slot_key>
+      <slot_value type="gdate">
+        <gdate>2025-02-19</gdate>
+      </slot_value>
+    </slot>
+  </trn_slots>
+  <trn_splits>
+    <trn_split>
+      <split_id type="guid">99ba6ded10c54e34a8c5c5fd33a964d5</split_id>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>139700/100</split_value>
+      <split_quantity>139700/100</split_quantity>
+      <split_account type="guid">bbf77a599bd24a3dbfec3dd1d0bb9f5c</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">6b9149b937ea484b8e920f793e138d31</split_id>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>5000/100</split_value>
+      <split_quantity>5000/100</split_quantity>
+      <split_account type="guid">2a195872e24048a0a6228107ca8b6a52</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">ce99718854bc4416b25ff030fff487a4</split_id>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>300/100</split_value>
+      <split_quantity>300/100</split_quantity>
+      <split_account type="guid">41e998de2af144c7a9db5049fb677f8a</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">37eb9775e0644ee68e9414f28eef9cdb</split_id>
+      <split_action>Verkauf</split_action>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>-145000/100</split_value>
+      <split_quantity>-100000/10000</split_quantity>
+      <split_account type="guid">b3741e92e3b9475b9d5a2dc8254a8111</split_account>
+      <split_lot type="guid">ef15827f413a4eeeaf8a7b492252b443</split_lot>
+      <split_slots>
+        <slot>
+          <slot_key>gains-split</slot_key>
+          <slot_value type="guid">e2cc9ce07b6f40e0a49c68f7e41d3fd0</slot_value>
+        </slot>
+      </split_slots>
+    </trn_split>
+  </trn_splits>
+</gnc_transaction>
+<gnc_transaction version="2.0.0">
+  <trn_id type="guid">c26d5c05c72e4412a87eee5ba49d4cce</trn_id>
+  <trn_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </trn_currency>
+  <trn_date-posted>
+    <ts_date>2025-02-19 10:59:00 +0000</ts_date>
+  </trn_date-posted>
+  <trn_date-entered>
+    <ts_date>2025-02-19 16:56:05 +0000</ts_date>
+  </trn_date-entered>
+  <trn_description>Realisierter Gewinn/Verlust</trn_description>
+  <trn_splits>
+    <trn_split>
+      <split_id type="guid">e2cc9ce07b6f40e0a49c68f7e41d3fd0</split_id>
+      <split_memo>Realisierter Gewinn/Verlust</split_memo>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>20000/100</split_value>
+      <split_quantity>0/10000</split_quantity>
+      <split_account type="guid">b3741e92e3b9475b9d5a2dc8254a8111</split_account>
+      <split_lot type="guid">ef15827f413a4eeeaf8a7b492252b443</split_lot>
+      <split_slots>
+        <slot>
+          <slot_key>gains-source</slot_key>
+          <slot_value type="guid">37eb9775e0644ee68e9414f28eef9cdb</slot_value>
+        </slot>
+      </split_slots>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">3cf5a146df4c47e7ae812cde20a47a1d</split_id>
+      <split_memo>Realisierter Gewinn/Verlust</split_memo>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>-20000/100</split_value>
+      <split_quantity>-20000/100</split_quantity>
+      <split_account type="guid">9dbad1fda79644b0916154b404f84763</split_account>
+    </trn_split>
+  </trn_splits>
+</gnc_transaction>
+<gnc_transaction version="2.0.0">
+  <trn_id type="guid">568864bfb0954897ab8578db4d27372f</trn_id>
+  <trn_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </trn_currency>
+  <trn_date-posted>
+    <ts_date>2020-01-01 10:59:00 +0000</ts_date>
+  </trn_date-posted>
+  <trn_date-entered>
+    <ts_date>2023-08-28 08:50:04 +0000</ts_date>
+  </trn_date-entered>
+  <trn_description>Anfangsbestand</trn_description>
+  <trn_slots>
+    <slot>
+      <slot_key>date-posted</slot_key>
+      <slot_value type="gdate">
+        <gdate>2020-01-01</gdate>
+      </slot_value>
+    </slot>
+  </trn_slots>
+  <trn_splits>
+    <trn_split>
+      <split_id type="guid">2d662bf8877a41f69c69276f2770b140</split_id>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>1025065/100</split_value>
+      <split_quantity>1025065/100</split_quantity>
+      <split_account type="guid">bbf77a599bd24a3dbfec3dd1d0bb9f5c</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">6d08eca07d2b457a8f13539249313db8</split_id>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>-1025065/100</split_value>
+      <split_quantity>-1025065/100</split_quantity>
+      <split_account type="guid">97fe299fade74af1857573ab5b48262b</split_account>
+    </trn_split>
+  </trn_splits>
+</gnc_transaction>
+<gnc_transaction version="2.0.0">
+  <trn_id type="guid">29557cfdf4594eb68b1a1b710722f991</trn_id>
+  <trn_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </trn_currency>
+  <trn_date-posted>
+    <ts_date>2023-08-03 10:59:00 +0000</ts_date>
+  </trn_date-posted>
+  <trn_date-entered>
+    <ts_date>2023-09-13 08:37:10 +0000</ts_date>
+  </trn_date-entered>
+  <trn_description>Unfug und Quatsch GmbH</trn_description>
+  <trn_slots>
+    <slot>
+      <slot_key>date-posted</slot_key>
+      <slot_value type="gdate">
+        <gdate>2023-08-03</gdate>
+      </slot_value>
+    </slot>
+    <slot>
+      <slot_key>trans-txn-type</slot_key>
+      <slot_value type="string">P</slot_value>
+    </slot>
+  </trn_slots>
+  <trn_splits>
+    <trn_split>
+      <split_id type="guid">77181aa79034417b855d9ea138345541</split_id>
+      <split_action>Zahlung</split_action>
+      <split_reconciled-state>y</split_reconciled-state>
+      <split_value>132760/100</split_value>
+      <split_quantity>132760/100</split_quantity>
+      <split_account type="guid">bbf77a599bd24a3dbfec3dd1d0bb9f5c</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">60733646faa2416fa33fae9e9dd3206b</split_id>
+      <split_action>Zahlung</split_action>
+      <split_reconciled-state>y</split_reconciled-state>
+      <split_value>-132760/100</split_value>
+      <split_quantity>-132760/100</split_quantity>
+      <split_account type="guid">7e223ee2260d4ba28e8e9e19ce291f43</split_account>
+      <split_lot type="guid">c183bc9303484e75945af1324d18e8cc</split_lot>
+    </trn_split>
+  </trn_splits>
+</gnc_transaction>
+<gnc_transaction version="2.0.0">
+  <trn_id type="guid">67796d4f7c924c1da38f7813dbc3a99d</trn_id>
+  <trn_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </trn_currency>
+  <trn_date-posted>
+    <ts_date>2023-08-17 10:59:00 +0000</ts_date>
+  </trn_date-posted>
+  <trn_date-entered>
+    <ts_date>2023-09-13 09:00:17 +0000</ts_date>
+  </trn_date-entered>
+  <trn_description>Unfug und Quatsch GmbH</trn_description>
+  <trn_slots>
+    <slot>
+      <slot_key>trans-txn-type</slot_key>
+      <slot_value type="string">P</slot_value>
+    </slot>
+  </trn_slots>
+  <trn_splits>
+    <trn_split>
+      <split_id type="guid">f559e1da04fd40258a1d21cd6efab6ae</split_id>
+      <split_action>Zahlung</split_action>
+      <split_reconciled-state>y</split_reconciled-state>
+      <split_value>120000/100</split_value>
+      <split_quantity>120000/100</split_quantity>
+      <split_account type="guid">bbf77a599bd24a3dbfec3dd1d0bb9f5c</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">7eb91a40eb81407e96d880758b43ece4</split_id>
+      <split_action>Zahlung</split_action>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>-120000/100</split_value>
+      <split_quantity>-120000/100</split_quantity>
+      <split_account type="guid">7e223ee2260d4ba28e8e9e19ce291f43</split_account>
+      <split_lot type="guid">c9a34ac416b8456ea84d7f19cca341d6</split_lot>
+    </trn_split>
+  </trn_splits>
+</gnc_transaction>
+<gnc_transaction version="2.0.0">
+  <trn_id type="guid">18a45dfc8a6868c470438e27d6fe10b2</trn_id>
+  <trn_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </trn_currency>
+  <trn_date-posted>
+    <ts_date>2023-08-30 09:56:48 +0000</ts_date>
+  </trn_date-posted>
+  <trn_date-entered>
+    <ts_date>2022-03-11 23:00:00 +0000</ts_date>
+  </trn_date-entered>
+  <trn_description>Generated by GenTrx</trn_description>
+  <trn_splits>
+    <trn_split>
+      <split_id type="guid">18a45dfc8a725676b33ce7645ca53199</split_id>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>12365/100</split_value>
+      <split_quantity>12365/100</split_quantity>
+      <split_account type="guid">598eb8acb1834752ab503c3fe9ed6c99</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">18a45dfc8a64152db59dab669b115bf0</split_id>
+      <split_reconciled-state>c</split_reconciled-state>
+      <split_value>-12365/100</split_value>
+      <split_quantity>-12365/100</split_quantity>
+      <split_account type="guid">bbf77a599bd24a3dbfec3dd1d0bb9f5c</split_account>
+    </trn_split>
+  </trn_splits>
+</gnc_transaction>
+<gnc_transaction version="2.0.0">
+  <trn_id type="guid">ccff780b18294435bf03c6cb1ac325c1</trn_id>
+  <trn_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </trn_currency>
+  <trn_date-posted>
+    <ts_date>2023-09-13 10:59:00 +0000</ts_date>
+  </trn_date-posted>
+  <trn_date-entered>
+    <ts_date>2023-09-13 08:30:05 +0000</ts_date>
+  </trn_date-entered>
+  <trn_description>Lieferfanto AG</trn_description>
+  <trn_slots>
+    <slot>
+      <slot_key>trans-txn-type</slot_key>
+      <slot_value type="string">P</slot_value>
+    </slot>
+  </trn_slots>
+  <trn_splits>
+    <trn_split>
+      <split_id type="guid">7771000764af4d0d8830ab48d5d28952</split_id>
+      <split_action>Zahlung</split_action>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>9414/100</split_value>
+      <split_quantity>9414/100</split_quantity>
+      <split_account type="guid">68a4c19f9a8c48909fc69d0dc18c37a6</split_account>
+      <split_lot type="guid">ae4de9f6ba2941af94595a6b161795c7</split_lot>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">78cf66cd5f9f4e0db364dca5148703a0</split_id>
+      <split_action>Zahlung</split_action>
+      <split_reconciled-state>c</split_reconciled-state>
+      <split_value>-9414/100</split_value>
+      <split_quantity>-9414/100</split_quantity>
+      <split_account type="guid">bbf77a599bd24a3dbfec3dd1d0bb9f5c</split_account>
+    </trn_split>
+  </trn_splits>
+</gnc_transaction>
+<gnc_transaction version="2.0.0">
+  <trn_id type="guid">d465b802d5c940c9bba04b87b63ba23f</trn_id>
+  <trn_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </trn_currency>
+  <trn_date-posted>
+    <ts_date>2023-10-01 10:59:00 +0000</ts_date>
+  </trn_date-posted>
+  <trn_date-entered>
+    <ts_date>2023-10-24 07:02:44 +0000</ts_date>
+  </trn_date-entered>
+  <trn_description>Liqu-Mgt</trn_description>
+  <trn_slots>
+    <slot>
+      <slot_key>assoc_uri</slot_key>
+      <slot_value type="string">https://my.transaction.link.01</slot_value>
+    </slot>
+    <slot>
+      <slot_key>date-posted</slot_key>
+      <slot_value type="gdate">
+        <gdate>2023-10-01</gdate>
+      </slot_value>
+    </slot>
+  </trn_slots>
+  <trn_splits>
+    <trn_split>
+      <split_id type="guid">70f9e015ad9f456caac92181bacc8914</split_id>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>50000/100</split_value>
+      <split_quantity>46500/100</split_quantity>
+      <split_account type="guid">cc85104b83b74099bbdbdf69497e7696</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">ae7fb71ec3d44589b56fb3a7b72beb33</split_id>
+      <split_reconciled-state>c</split_reconciled-state>
+      <split_value>-50000/100</split_value>
+      <split_quantity>-50000/100</split_quantity>
+      <split_account type="guid">bbf77a599bd24a3dbfec3dd1d0bb9f5c</split_account>
+    </trn_split>
+  </trn_splits>
+</gnc_transaction>
+<gnc_transaction version="2.0.0">
+  <trn_id type="guid">71979c2d99104919899fa249e616bcaa</trn_id>
+  <trn_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </trn_currency>
+  <trn_date-posted>
+    <ts_date>2023-10-14 10:59:00 +0000</ts_date>
+  </trn_date-posted>
+  <trn_date-entered>
+    <ts_date>2024-02-19 15:49:10 +0000</ts_date>
+  </trn_date-entered>
+  <trn_description>Geldautomat</trn_description>
+  <trn_slots>
+    <slot>
+      <slot_key>date-posted</slot_key>
+      <slot_value type="gdate">
+        <gdate>2023-10-14</gdate>
+      </slot_value>
+    </slot>
+  </trn_slots>
+  <trn_splits>
+    <trn_split>
+      <split_id type="guid">b65f76a37e5643b1ac2ea2ad9cdf381d</split_id>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>15000/100</split_value>
+      <split_quantity>15000/100</split_quantity>
+      <split_account type="guid">3df08e60391d4fc3888a5fe5f91e7252</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">48657aca121b4500baef4078a3982c03</split_id>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>-15000/100</split_value>
+      <split_quantity>-15000/100</split_quantity>
+      <split_account type="guid">bbf77a599bd24a3dbfec3dd1d0bb9f5c</split_account>
+    </trn_split>
+  </trn_splits>
+</gnc_transaction>
+<gnc_transaction version="2.0.0">
+  <trn_id type="guid">c97032ba41684b2bb5d1391c9d7547e9</trn_id>
+  <trn_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </trn_currency>
+  <trn_num>R1730</trn_num>
+  <trn_date-posted>
+    <ts_date>2023-07-29 10:59:00 +0000</ts_date>
+  </trn_date-posted>
+  <trn_date-entered>
+    <ts_date>2023-09-13 08:36:54 +0000</ts_date>
+  </trn_date-entered>
+  <trn_description>Unfug und Quatsch GmbH</trn_description>
+  <trn_slots>
+    <slot>
+      <slot_key>date-posted</slot_key>
+      <slot_value type="gdate">
+        <gdate>2023-07-29</gdate>
+      </slot_value>
+    </slot>
+    <slot>
+      <slot_key>gncInvoice</slot_key>
+      <slot_value type="frame">
+        <slot>
+          <slot_key>invoice-guid</slot_key>
+          <slot_value type="guid">d9967c10fdf1465e9394a3e4b1e7bd79</slot_value>
+        </slot>
+      </slot_value>
+    </slot>
+    <slot>
+      <slot_key>trans-date-due</slot_key>
+      <slot_value type="timespec">
+        <ts_date>2023-07-29 10:59:00 +0000</ts_date>
+      </slot_value>
+    </slot>
+    <slot>
+      <slot_key>trans-read-only</slot_key>
+      <slot_value type="string">Aus einer Rechnung erzeugt. Für Änderungen müssen Sie die Buchung der Rechnung löschen.</slot_value>
+    </slot>
+    <slot>
+      <slot_key>trans-txn-type</slot_key>
+      <slot_value type="string">I</slot_value>
+    </slot>
+  </trn_slots>
+  <trn_splits>
+    <trn_split>
+      <split_id type="guid">f2a67737458d4af4ade616a23db32c2e</split_id>
+      <split_action>Rechnung</split_action>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>132760/100</split_value>
+      <split_quantity>132760/100</split_quantity>
+      <split_account type="guid">7e223ee2260d4ba28e8e9e19ce291f43</split_account>
+      <split_lot type="guid">c183bc9303484e75945af1324d18e8cc</split_lot>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">d17361e4c5a14e84be4553b262839a7b</split_id>
+      <split_action>Rechnung</split_action>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>-132760/100</split_value>
+      <split_quantity>-132760/100</split_quantity>
+      <split_account type="guid">fed745c4da5c49ebb0fde0f47222b35b</split_account>
+    </trn_split>
+  </trn_splits>
+</gnc_transaction>
+<gnc_transaction version="2.0.0">
+  <trn_id type="guid">9e066e5f3081485ab08539e41bf85495</trn_id>
+  <trn_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </trn_currency>
+  <trn_num>R1731</trn_num>
+  <trn_date-posted>
+    <ts_date>2023-08-13 10:59:00 +0000</ts_date>
+  </trn_date-posted>
+  <trn_date-entered>
+    <ts_date>2023-09-13 08:58:46 +0000</ts_date>
+  </trn_date-entered>
+  <trn_description>Unfug und Quatsch GmbH</trn_description>
+  <trn_slots>
+    <slot>
+      <slot_key>date-posted</slot_key>
+      <slot_value type="gdate">
+        <gdate>2023-08-13</gdate>
+      </slot_value>
+    </slot>
+    <slot>
+      <slot_key>gncInvoice</slot_key>
+      <slot_value type="frame">
+        <slot>
+          <slot_key>invoice-guid</slot_key>
+          <slot_value type="guid">6588f1757b9e4e24b62ad5b37b8d8e07</slot_value>
+        </slot>
+      </slot_value>
+    </slot>
+    <slot>
+      <slot_key>trans-date-due</slot_key>
+      <slot_value type="timespec">
+        <ts_date>2023-08-23 10:59:00 +0000</ts_date>
+      </slot_value>
+    </slot>
+    <slot>
+      <slot_key>trans-read-only</slot_key>
+      <slot_value type="string">Aus einer Rechnung erzeugt. Für Änderungen müssen Sie die Buchung der Rechnung löschen.</slot_value>
+    </slot>
+    <slot>
+      <slot_key>trans-txn-type</slot_key>
+      <slot_value type="string">I</slot_value>
+    </slot>
+  </trn_slots>
+  <trn_splits>
+    <trn_split>
+      <split_id type="guid">69cbc8eb0b6c47e58b33dfe9c53dbda8</split_id>
+      <split_action>Rechnung</split_action>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>190995/100</split_value>
+      <split_quantity>190995/100</split_quantity>
+      <split_account type="guid">7e223ee2260d4ba28e8e9e19ce291f43</split_account>
+      <split_lot type="guid">c9a34ac416b8456ea84d7f19cca341d6</split_lot>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">4f3b3db272b8423b863ed0c6e322f3ff</split_id>
+      <split_action>Rechnung</split_action>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>-30495/100</split_value>
+      <split_quantity>-30495/100</split_quantity>
+      <split_account type="guid">1a5b06dada56466197edbd15e64fd425</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">ab5c66b02d744cfb97bc3474cbd37102</split_id>
+      <split_action>Rechnung</split_action>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>-120000/100</split_value>
+      <split_quantity>-120000/100</split_quantity>
+      <split_account type="guid">3a4fe87c83ac4a1ba8c4d851ccd4d940</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">921597b9a650479290b50b5f2dcb11bd</split_id>
+      <split_action>Rechnung</split_action>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>-40500/100</split_value>
+      <split_quantity>-40500/100</split_quantity>
+      <split_account type="guid">690f25c6ef0649cba836529ba6724f78</split_account>
+    </trn_split>
+  </trn_splits>
+</gnc_transaction>
+<gnc_transaction version="2.0.0">
+  <trn_id type="guid">c12f632c86064e55b84ae1062463308d</trn_id>
+  <trn_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </trn_currency>
+  <trn_date-posted>
+    <ts_date>2023-10-14 10:59:00 +0000</ts_date>
+  </trn_date-posted>
+  <trn_date-entered>
+    <ts_date>2024-02-19 15:50:06 +0000</ts_date>
+  </trn_date-entered>
+  <trn_description>Haushaltsgeld</trn_description>
+  <trn_slots>
+    <slot>
+      <slot_key>date-posted</slot_key>
+      <slot_value type="gdate">
+        <gdate>2023-10-14</gdate>
+      </slot_value>
+    </slot>
+  </trn_slots>
+  <trn_splits>
+    <trn_split>
+      <split_id type="guid">be81de0c0a0b4905a8b8b55c41879314</split_id>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>9500/100</split_value>
+      <split_quantity>9500/100</split_quantity>
+      <split_account type="guid">e617cfd1317b4e318caf5dfba51b172e</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">f4186004b89b46f985cf768b138da78a</split_id>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>-9500/100</split_value>
+      <split_quantity>-9500/100</split_quantity>
+      <split_account type="guid">3df08e60391d4fc3888a5fe5f91e7252</split_account>
+    </trn_split>
+  </trn_splits>
+</gnc_transaction>
+<gnc_transaction version="2.0.0">
+  <trn_id type="guid">aa64d862bb5e4d749eb41f198b28d73d</trn_id>
+  <trn_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </trn_currency>
+  <trn_num>2740921</trn_num>
+  <trn_date-posted>
+    <ts_date>2023-08-30 10:59:00 +0000</ts_date>
+  </trn_date-posted>
+  <trn_date-entered>
+    <ts_date>2023-09-13 08:28:46 +0000</ts_date>
+  </trn_date-entered>
+  <trn_description>Lieferfanto AG</trn_description>
+  <trn_slots>
+    <slot>
+      <slot_key>date-posted</slot_key>
+      <slot_value type="gdate">
+        <gdate>2023-08-30</gdate>
+      </slot_value>
+    </slot>
+    <slot>
+      <slot_key>gncInvoice</slot_key>
+      <slot_value type="frame">
+        <slot>
+          <slot_key>invoice-guid</slot_key>
+          <slot_value type="guid">286fc2651a7848038a23bb7d065c8b67</slot_value>
+        </slot>
+      </slot_value>
+    </slot>
+    <slot>
+      <slot_key>trans-date-due</slot_key>
+      <slot_value type="timespec">
+        <ts_date>2023-08-30 10:59:00 +0000</ts_date>
+      </slot_value>
+    </slot>
+    <slot>
+      <slot_key>trans-read-only</slot_key>
+      <slot_value type="string">Aus einer Rechnung erzeugt. Für Änderungen müssen Sie die Buchung der Rechnung löschen.</slot_value>
+    </slot>
+    <slot>
+      <slot_key>trans-txn-type</slot_key>
+      <slot_value type="string">I</slot_value>
+    </slot>
+  </trn_slots>
+  <trn_splits>
+    <trn_split>
+      <split_id type="guid">241e93fda13b4e69b7305d06c0928da4</split_id>
+      <split_action>Lieferantenrechnung</split_action>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>1503/100</split_value>
+      <split_quantity>1503/100</split_quantity>
+      <split_account type="guid">1a5b06dada56466197edbd15e64fd425</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">a705d9549f9f4ab1bf38bbbbc7c4f20f</split_id>
+      <split_action>Lieferantenrechnung</split_action>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>4760/100</split_value>
+      <split_quantity>4760/100</split_quantity>
+      <split_account type="guid">16305960bddc463aa18212dd4f230d4d</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">f55a9d8c16054fd2a87cd448ac01da17</split_id>
+      <split_action>Lieferantenrechnung</split_action>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>3151/100</split_value>
+      <split_quantity>3151/100</split_quantity>
+      <split_account type="guid">7baa658d697e4dfc8a4bf19f8cdd9fee</split_account>
+    </trn_split>
+    <trn_split>
+      <split_id type="guid">3eff736b0b794c30a101ff0cc8f45260</split_id>
+      <split_action>Lieferantenrechnung</split_action>
+      <split_reconciled-state>n</split_reconciled-state>
+      <split_value>-9414/100</split_value>
+      <split_quantity>-9414/100</split_quantity>
+      <split_account type="guid">68a4c19f9a8c48909fc69d0dc18c37a6</split_account>
+      <split_lot type="guid">ae4de9f6ba2941af94595a6b161795c7</split_lot>
+    </trn_split>
+  </trn_splits>
+</gnc_transaction>
+<gnc_budget version="2.0.0">
+  <bgt_id type="guid">66d6d03d772f4825bab86986a54bf295</bgt_id>
+  <bgt_name>Budget 2026</bgt_name>
+  <bgt_description>Erstellt: 18.05.2026</bgt_description>
+  <bgt_num-periods>12</bgt_num-periods>
+  <bgt_recurrence version="1.0.0">
+    <recurrence_mult>1</recurrence_mult>
+    <recurrence_period_type>month</recurrence_period_type>
+    <recurrence_start>
+      <gdate>2026-01-01</gdate>
+    </recurrence_start>
+  </bgt_recurrence>
+  <bgt_slots>
+    <slot>
+      <slot_key>038dea402d134180a6a3ca748c9f6b4d</slot_key>
+      <slot_value type="frame">
+        <slot>
+          <slot_key>5</slot_key>
+          <slot_value type="numeric">100/1</slot_value>
+        </slot>
+      </slot_value>
+    </slot>
+    <slot>
+      <slot_key>22a7432b85844c88bd023ba3c3ba72aa</slot_key>
+      <slot_value type="frame">
+        <slot>
+          <slot_key>0</slot_key>
+          <slot_value type="numeric">1000/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>1</slot_key>
+          <slot_value type="numeric">1000/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>10</slot_key>
+          <slot_value type="numeric">1000/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>11</slot_key>
+          <slot_value type="numeric">1000/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>2</slot_key>
+          <slot_value type="numeric">1000/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>3</slot_key>
+          <slot_value type="numeric">1000/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>4</slot_key>
+          <slot_value type="numeric">1000/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>5</slot_key>
+          <slot_value type="numeric">1000/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>6</slot_key>
+          <slot_value type="numeric">1000/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>7</slot_key>
+          <slot_value type="numeric">1000/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>8</slot_key>
+          <slot_value type="numeric">1000/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>9</slot_key>
+          <slot_value type="numeric">1000/1</slot_value>
+        </slot>
+      </slot_value>
+    </slot>
+    <slot>
+      <slot_key>2b5f38b679e848ee8e397a3a43ed0eb2</slot_key>
+      <slot_value type="frame">
+        <slot>
+          <slot_key>2</slot_key>
+          <slot_value type="numeric">750/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>6</slot_key>
+          <slot_value type="numeric">1500/1</slot_value>
+        </slot>
+      </slot_value>
+    </slot>
+    <slot>
+      <slot_key>8a54850637cd4002be59eefc68a3ab80</slot_key>
+      <slot_value type="frame">
+        <slot>
+          <slot_key>0</slot_key>
+          <slot_value type="numeric">20000/100</slot_value>
+        </slot>
+        <slot>
+          <slot_key>1</slot_key>
+          <slot_value type="numeric">200/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>10</slot_key>
+          <slot_value type="numeric">200/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>11</slot_key>
+          <slot_value type="numeric">200/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>2</slot_key>
+          <slot_value type="numeric">200/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>3</slot_key>
+          <slot_value type="numeric">200/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>4</slot_key>
+          <slot_value type="numeric">200/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>5</slot_key>
+          <slot_value type="numeric">200/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>6</slot_key>
+          <slot_value type="numeric">200/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>7</slot_key>
+          <slot_value type="numeric">200/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>8</slot_key>
+          <slot_value type="numeric">200/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>9</slot_key>
+          <slot_value type="numeric">200/1</slot_value>
+        </slot>
+      </slot_value>
+    </slot>
+    <slot>
+      <slot_key>c258aa23358040a08fcfe1efad2a906c</slot_key>
+      <slot_value type="frame">
+        <slot>
+          <slot_key>0</slot_key>
+          <slot_value type="numeric">800/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>1</slot_key>
+          <slot_value type="numeric">800/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>10</slot_key>
+          <slot_value type="numeric">800/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>11</slot_key>
+          <slot_value type="numeric">800/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>2</slot_key>
+          <slot_value type="numeric">800/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>3</slot_key>
+          <slot_value type="numeric">800/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>4</slot_key>
+          <slot_value type="numeric">800/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>5</slot_key>
+          <slot_value type="numeric">800/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>6</slot_key>
+          <slot_value type="numeric">800/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>7</slot_key>
+          <slot_value type="numeric">800/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>8</slot_key>
+          <slot_value type="numeric">800/1</slot_value>
+        </slot>
+        <slot>
+          <slot_key>9</slot_key>
+          <slot_value type="numeric">800/1</slot_value>
+        </slot>
+      </slot_value>
+    </slot>
+  </bgt_slots>
+</gnc_budget>
+<gnc_GncBillTerm version="2.0.0">
+  <billterm_guid type="guid">599bfe3ab5b84a73bf3acabc5abd5bc7</billterm_guid>
+  <billterm_name>sofort</billterm_name>
+  <billterm_desc>5 Tage netto</billterm_desc>
+  <billterm_refcount>3</billterm_refcount>
+  <billterm_invisible>0</billterm_invisible>
+  <billterm_days>
+    <bt-days_due-days>5</bt-days_due-days>
+  </billterm_days>
+</gnc_GncBillTerm>
+<gnc_GncBillTerm version="2.0.0">
+  <billterm_guid type="guid">f4310c65486a47a5a787348b7de6ca40</billterm_guid>
+  <billterm_name>30-10-3</billterm_name>
+  <billterm_desc>30 Tage netto / 10 Tage Skonto 3%</billterm_desc>
+  <billterm_refcount>2</billterm_refcount>
+  <billterm_invisible>0</billterm_invisible>
+  <billterm_days>
+    <bt-days_due-days>30</bt-days_due-days>
+    <bt-days_disc-days>10</bt-days_disc-days>
+    <bt-days_discount>300000/100000</bt-days_discount>
+  </billterm_days>
+</gnc_GncBillTerm>
+<gnc_GncBillTerm version="2.0.0">
+  <billterm_guid type="guid">f65a46140da94c81a4e1e3c0aa38c32b</billterm_guid>
+  <billterm_name>nächster-monat-mitte</billterm_name>
+  <billterm_desc>Fällig am 15. des nächsten Monats. 2% Skonto bei Zahlung bis zum 3.</billterm_desc>
+  <billterm_refcount>0</billterm_refcount>
+  <billterm_invisible>0</billterm_invisible>
+  <billterm_proximo>
+    <bt-prox_due-day>15</bt-prox_due-day>
+    <bt-prox_disc-day>3</bt-prox_disc-day>
+    <bt-prox_discount>200000/100000</bt-prox_discount>
+  </billterm_proximo>
+</gnc_GncBillTerm>
+<gnc_GncCustomer version="2.0.0">
+  <cust_guid type="guid">1d2081e8a10e4d5e9312d9fff17d470d</cust_guid>
+  <cust_name>N'importe Quoi S.A.</cust_name>
+  <cust_id>000003</cust_id>
+  <cust_addr version="2.0.0"/>
+  <cust_shipaddr version="2.0.0"/>
+  <cust_notes>Nous n'achetons rien!</cust_notes>
+  <cust_taxincluded>USEGLOBAL</cust_taxincluded>
+  <cust_active>1</cust_active>
+  <cust_discount>0/1</cust_discount>
+  <cust_credit>0/1</cust_credit>
+  <cust_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </cust_currency>
+  <cust_use-tt>1</cust_use-tt>
+  <cust_taxtable type="guid">de4c17d1eb0e4f088ba73d4c697032f0</cust_taxtable>
+</gnc_GncCustomer>
+<gnc_GncCustomer version="2.0.0">
+  <cust_guid type="guid">5d1dd9afa7554553988669830cc1f696</cust_guid>
+  <cust_name>Unfug und Quatsch GmbH</cust_name>
+  <cust_id>000001</cust_id>
+  <cust_addr version="2.0.0">
+    <addr_name>Herr SchwervonBegriff</addr_name>
+    <addr_addr1>Nixkapier-Str. 9</addr_addr1>
+    <addr_addr2>12345 Berlin</addr_addr2>
+  </cust_addr>
+  <cust_shipaddr version="2.0.0"/>
+  <cust_terms type="guid">f4310c65486a47a5a787348b7de6ca40</cust_terms>
+  <cust_taxincluded>USEGLOBAL</cust_taxincluded>
+  <cust_active>1</cust_active>
+  <cust_discount>0/1</cust_discount>
+  <cust_credit>0/1</cust_credit>
+  <cust_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </cust_currency>
+  <cust_use-tt>0</cust_use-tt>
+  <cust_slots>
+    <slot>
+      <slot_key>last-posted-to-acct</slot_key>
+      <slot_value type="guid">7e223ee2260d4ba28e8e9e19ce291f43</slot_value>
+    </slot>
+    <slot>
+      <slot_key>payment</slot_key>
+      <slot_value type="frame">
+        <slot>
+          <slot_key>last_acct</slot_key>
+          <slot_value type="guid">bbf77a599bd24a3dbfec3dd1d0bb9f5c</slot_value>
+        </slot>
+      </slot_value>
+    </slot>
+  </cust_slots>
+</gnc_GncCustomer>
+<gnc_GncCustomer version="2.0.0">
+  <cust_guid type="guid">f44645d2397946bcac90dff68cc03b76</cust_guid>
+  <cust_name>Is That So Ltd.</cust_name>
+  <cust_id>000002</cust_id>
+  <cust_addr version="2.0.0"/>
+  <cust_shipaddr version="2.0.0"/>
+  <cust_notes>So you want to sell to us, right?</cust_notes>
+  <cust_taxincluded>USEGLOBAL</cust_taxincluded>
+  <cust_active>1</cust_active>
+  <cust_discount>300000/100000</cust_discount>
+  <cust_credit>200000/100</cust_credit>
+  <cust_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </cust_currency>
+  <cust_use-tt>0</cust_use-tt>
+</gnc_GncCustomer>
+<gnc_GncEmployee version="2.0.0">
+  <employee_guid type="guid">7f70b352dcf44a5d8085767a53a9bc37</employee_guid>
+  <employee_username>otwist</employee_username>
+  <employee_id>000001</employee_id>
+  <employee_addr version="2.0.0">
+    <addr_name>Oliver Twist</addr_name>
+    <addr_addr1>Street Gang's Area</addr_addr1>
+    <addr_addr2>Bad Neighbourhood</addr_addr2>
+    <addr_addr3>London</addr_addr3>
+    <addr_addr4>United Kingdom</addr_addr4>
+    <addr_phone>+44 - 12 - 345 678 9</addr_phone>
+    <addr_email>otwist@myco.com</addr_email>
+  </employee_addr>
+  <employee_language>English</employee_language>
+  <employee_active>1</employee_active>
+  <employee_workday>1400000/100000</employee_workday>
+  <employee_rate>100/100</employee_rate>
+  <employee_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </employee_currency>
+</gnc_GncEmployee>
+<gnc_GncEmployee version="2.0.0">
+  <employee_guid type="guid">b7af86fc0f3e4b16a23424bc5d150cd1</employee_guid>
+  <employee_username>Herbert Blucksefuchs</employee_username>
+  <employee_id>000002</employee_id>
+  <employee_addr version="2.0.0">
+    <addr_name>Employee No. 2</addr_name>
+  </employee_addr>
+  <employee_active>1</employee_active>
+  <employee_workday>0/1</employee_workday>
+  <employee_rate>0/1</employee_rate>
+  <employee_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </employee_currency>
+</gnc_GncEmployee>
+<gnc_GncEntry version="2.0.0">
+  <entry_guid type="guid">0041b8d397f04ae4a2e9e3c7f991c4ec</entry_guid>
+  <entry_date>
+    <ts_date>2023-08-31 10:00:00 +0000</ts_date>
+  </entry_date>
+  <entry_entered>
+    <ts_date>2023-08-31 13:03:32 +0000</ts_date>
+  </entry_entered>
+  <entry_description>Gefälligkeiten</entry_description>
+  <entry_action>Stunden</entry_action>
+  <entry_qty>3/1</entry_qty>
+  <entry_b-acct type="guid">01efa7d55a4b4ac8958c0e4f43193072</entry_b-acct>
+  <entry_b-price>69/5</entry_b-price>
+  <entry_bill type="guid">4eb0dc387c3f4daba57b11b2a657d8a4</entry_bill>
+  <entry_billable>0</entry_billable>
+  <entry_b-taxable>1</entry_b-taxable>
+  <entry_b-taxincluded>0</entry_b-taxincluded>
+  <entry_b-pay>CASH</entry_b-pay>
+</gnc_GncEntry>
+<gnc_GncEntry version="2.0.0">
+  <entry_guid type="guid">220af9aa331947078954cd8ad31916c2</entry_guid>
+  <entry_date>
+    <ts_date>2025-05-19 10:00:00 +0000</ts_date>
+  </entry_date>
+  <entry_entered>
+    <ts_date>2025-05-19 07:41:34 +0000</ts_date>
+  </entry_entered>
+  <entry_description>Brezeln</entry_description>
+  <entry_action>Material</entry_action>
+  <entry_qty>100/1</entry_qty>
+  <entry_b-acct type="guid">e93bd8a244c94de9bb4d5c3cb6749bf1</entry_b-acct>
+  <entry_b-price>13/20</entry_b-price>
+  <entry_bill type="guid">d1e64a86c4004ef7b87e2610d762456d</entry_bill>
+  <entry_billable>0</entry_billable>
+  <entry_b-taxable>0</entry_b-taxable>
+  <entry_b-taxincluded>0</entry_b-taxincluded>
+  <entry_b-pay>CASH</entry_b-pay>
+</gnc_GncEntry>
+<gnc_GncEntry version="2.0.0">
+  <entry_guid type="guid">2a3b269cbf604076b4438c2b62817b53</entry_guid>
+  <entry_date>
+    <ts_date>2023-09-20 10:00:00 +0000</ts_date>
+  </entry_date>
+  <entry_entered>
+    <ts_date>2023-09-20 14:01:35 +0000</ts_date>
+  </entry_entered>
+  <entry_description>Item 1</entry_description>
+  <entry_action>Auftrag</entry_action>
+  <entry_qty>1/1</entry_qty>
+  <entry_b-acct type="guid">16305960bddc463aa18212dd4f230d4d</entry_b-acct>
+  <entry_b-price>920/1</entry_b-price>
+  <entry_bill type="guid">169331c9860642cf84b04f3e3151058a</entry_bill>
+  <entry_billable>0</entry_billable>
+  <entry_b-taxable>1</entry_b-taxable>
+  <entry_b-taxincluded>0</entry_b-taxincluded>
+  <entry_b-pay>CASH</entry_b-pay>
+  <entry_b-taxtable type="guid">3c9690f9f31b4cd0baa936048b833c06</entry_b-taxtable>
+</gnc_GncEntry>
+<gnc_GncEntry version="2.0.0">
+  <entry_guid type="guid">3c67a99b5fe34387b596bb1fbab21a74</entry_guid>
+  <entry_date>
+    <ts_date>2023-08-30 10:00:00 +0000</ts_date>
+  </entry_date>
+  <entry_entered>
+    <ts_date>2023-08-30 07:30:19 +0000</ts_date>
+  </entry_entered>
+  <entry_description>Posten 2</entry_description>
+  <entry_action>Material</entry_action>
+  <entry_qty>1/1</entry_qty>
+  <entry_i-acct type="guid">fed745c4da5c49ebb0fde0f47222b35b</entry_i-acct>
+  <entry_i-price>1234/1</entry_i-price>
+  <entry_invoice type="guid">d9967c10fdf1465e9394a3e4b1e7bd79</entry_invoice>
+  <entry_i-disc-type>VALUE</entry_i-disc-type>
+  <entry_i-disc-how>PRETAX</entry_i-disc-how>
+  <entry_i-taxable>0</entry_i-taxable>
+  <entry_i-taxincluded>0</entry_i-taxincluded>
+</gnc_GncEntry>
+<gnc_GncEntry version="2.0.0">
+  <entry_guid type="guid">513589a11391496cbb8d025fc1e87eaa</entry_guid>
+  <entry_date>
+    <ts_date>2023-08-30 10:00:00 +0000</ts_date>
+  </entry_date>
+  <entry_entered>
+    <ts_date>2023-08-30 06:57:37 +0000</ts_date>
+  </entry_entered>
+  <entry_description>Item 1</entry_description>
+  <entry_qty>3/1</entry_qty>
+  <entry_b-acct type="guid">7baa658d697e4dfc8a4bf19f8cdd9fee</entry_b-acct>
+  <entry_b-price>25/2</entry_b-price>
+  <entry_bill type="guid">286fc2651a7848038a23bb7d065c8b67</entry_bill>
+  <entry_billable>0</entry_billable>
+  <entry_b-taxable>1</entry_b-taxable>
+  <entry_b-taxincluded>1</entry_b-taxincluded>
+  <entry_b-pay>CASH</entry_b-pay>
+  <entry_b-taxtable type="guid">cba6011c826f426fbc4a1a72c3d6c8ee</entry_b-taxtable>
+</gnc_GncEntry>
+<gnc_GncEntry version="2.0.0">
+  <entry_guid type="guid">83e78ce224d94c3eafc55e33d3d5f3e6</entry_guid>
+  <entry_date>
+    <ts_date>2023-08-13 10:00:00 +0000</ts_date>
+  </entry_date>
+  <entry_entered>
+    <ts_date>2023-09-13 08:40:47 +0000</ts_date>
+  </entry_entered>
+  <entry_description>Posten 3</entry_description>
+  <entry_action>Material</entry_action>
+  <entry_qty>10/1</entry_qty>
+  <entry_i-acct type="guid">3a4fe87c83ac4a1ba8c4d851ccd4d940</entry_i-acct>
+  <entry_i-price>120/1</entry_i-price>
+  <entry_invoice type="guid">6588f1757b9e4e24b62ad5b37b8d8e07</entry_invoice>
+  <entry_i-disc-type>PERCENT</entry_i-disc-type>
+  <entry_i-disc-how>PRETAX</entry_i-disc-how>
+  <entry_i-taxable>1</entry_i-taxable>
+  <entry_i-taxincluded>0</entry_i-taxincluded>
+  <entry_i-taxtable type="guid">cba6011c826f426fbc4a1a72c3d6c8ee</entry_i-taxtable>
+</gnc_GncEntry>
+<gnc_GncEntry version="2.0.0">
+  <entry_guid type="guid">9218e269422d4c08b3b9a8c27fbd051a</entry_guid>
+  <entry_date>
+    <ts_date>2023-11-13 11:00:00 +0000</ts_date>
+  </entry_date>
+  <entry_entered>
+    <ts_date>2023-11-13 16:46:43 +0000</ts_date>
+  </entry_entered>
+  <entry_description>Tanken</entry_description>
+  <entry_action>Material</entry_action>
+  <entry_qty>1/1</entry_qty>
+  <entry_b-acct type="guid">626aa7a18ea840a69844ad612c28fe29</entry_b-acct>
+  <entry_b-price>85/1</entry_b-price>
+  <entry_bill type="guid">8de4467c17e04bb2895fb68cc07fc4df</entry_bill>
+  <entry_billable>0</entry_billable>
+  <entry_b-taxable>1</entry_b-taxable>
+  <entry_b-taxincluded>0</entry_b-taxincluded>
+  <entry_b-pay>CASH</entry_b-pay>
+</gnc_GncEntry>
+<gnc_GncEntry version="2.0.0">
+  <entry_guid type="guid">92e54c04b66f4682a9afb48e27dfe397</entry_guid>
+  <entry_date>
+    <ts_date>2023-08-30 10:00:00 +0000</ts_date>
+  </entry_date>
+  <entry_entered>
+    <ts_date>2023-08-30 07:29:49 +0000</ts_date>
+  </entry_entered>
+  <entry_description>Posten 1</entry_description>
+  <entry_action>Stunden</entry_action>
+  <entry_qty>3/1</entry_qty>
+  <entry_i-acct type="guid">fed745c4da5c49ebb0fde0f47222b35b</entry_i-acct>
+  <entry_i-price>156/5</entry_i-price>
+  <entry_invoice type="guid">d9967c10fdf1465e9394a3e4b1e7bd79</entry_invoice>
+  <entry_i-disc-type>PERCENT</entry_i-disc-type>
+  <entry_i-disc-how>PRETAX</entry_i-disc-how>
+  <entry_i-taxable>0</entry_i-taxable>
+  <entry_i-taxincluded>0</entry_i-taxincluded>
+</gnc_GncEntry>
+<gnc_GncEntry version="2.0.0">
+  <entry_guid type="guid">993eae09ce664094adf63b85509de2bc</entry_guid>
+  <entry_date>
+    <ts_date>2023-09-20 10:00:00 +0000</ts_date>
+  </entry_date>
+  <entry_entered>
+    <ts_date>2023-09-20 10:32:01 +0000</ts_date>
+  </entry_entered>
+  <entry_description>Item 3</entry_description>
+  <entry_action>Material</entry_action>
+  <entry_qty>40/1</entry_qty>
+  <entry_i-acct type="guid">3a4fe87c83ac4a1ba8c4d851ccd4d940</entry_i-acct>
+  <entry_i-price>30/1</entry_i-price>
+  <entry_invoice type="guid">b1e981f796b94ca0b17a9dccb91fedc0</entry_invoice>
+  <entry_i-disc-type>PERCENT</entry_i-disc-type>
+  <entry_i-disc-how>PRETAX</entry_i-disc-how>
+  <entry_i-taxable>1</entry_i-taxable>
+  <entry_i-taxincluded>0</entry_i-taxincluded>
+  <entry_i-taxtable type="guid">3c9690f9f31b4cd0baa936048b833c06</entry_i-taxtable>
+</gnc_GncEntry>
+<gnc_GncEntry version="2.0.0">
+  <entry_guid type="guid">99b0115f9e804cf485976c4c94d70cb7</entry_guid>
+  <entry_date>
+    <ts_date>2023-08-13 10:00:00 +0000</ts_date>
+  </entry_date>
+  <entry_entered>
+    <ts_date>2023-09-13 08:40:31 +0000</ts_date>
+  </entry_entered>
+  <entry_description>Posten 2</entry_description>
+  <entry_action>Stunden</entry_action>
+  <entry_qty>2/1</entry_qty>
+  <entry_i-acct type="guid">690f25c6ef0649cba836529ba6724f78</entry_i-acct>
+  <entry_i-price>90/1</entry_i-price>
+  <entry_invoice type="guid">6588f1757b9e4e24b62ad5b37b8d8e07</entry_invoice>
+  <entry_i-disc-type>PERCENT</entry_i-disc-type>
+  <entry_i-disc-how>PRETAX</entry_i-disc-how>
+  <entry_i-taxable>1</entry_i-taxable>
+  <entry_i-taxincluded>0</entry_i-taxincluded>
+  <entry_i-taxtable type="guid">cba6011c826f426fbc4a1a72c3d6c8ee</entry_i-taxtable>
+</gnc_GncEntry>
+<gnc_GncEntry version="2.0.0">
+  <entry_guid type="guid">b31e045828d94cc8b780e452cf716d88</entry_guid>
+  <entry_date>
+    <ts_date>2023-08-13 10:00:00 +0000</ts_date>
+  </entry_date>
+  <entry_entered>
+    <ts_date>2023-09-13 08:40:10 +0000</ts_date>
+  </entry_entered>
+  <entry_description>Posten 1</entry_description>
+  <entry_action>Stunden</entry_action>
+  <entry_qty>3/1</entry_qty>
+  <entry_i-acct type="guid">690f25c6ef0649cba836529ba6724f78</entry_i-acct>
+  <entry_i-price>75/1</entry_i-price>
+  <entry_invoice type="guid">6588f1757b9e4e24b62ad5b37b8d8e07</entry_invoice>
+  <entry_i-disc-type>PERCENT</entry_i-disc-type>
+  <entry_i-disc-how>PRETAX</entry_i-disc-how>
+  <entry_i-taxable>1</entry_i-taxable>
+  <entry_i-taxincluded>0</entry_i-taxincluded>
+  <entry_i-taxtable type="guid">cba6011c826f426fbc4a1a72c3d6c8ee</entry_i-taxtable>
+</gnc_GncEntry>
+<gnc_GncEntry version="2.0.0">
+  <entry_guid type="guid">b6e2313e32d44bb4a8a701c1063e03a7</entry_guid>
+  <entry_date>
+    <ts_date>2023-11-13 11:00:00 +0000</ts_date>
+  </entry_date>
+  <entry_entered>
+    <ts_date>2023-11-13 16:47:31 +0000</ts_date>
+  </entry_entered>
+  <entry_description>Übernachtung</entry_description>
+  <entry_action>Material</entry_action>
+  <entry_qty>1/1</entry_qty>
+  <entry_b-acct type="guid">626aa7a18ea840a69844ad612c28fe29</entry_b-acct>
+  <entry_b-price>145/1</entry_b-price>
+  <entry_bill type="guid">8de4467c17e04bb2895fb68cc07fc4df</entry_bill>
+  <entry_billable>0</entry_billable>
+  <entry_b-taxable>1</entry_b-taxable>
+  <entry_b-taxincluded>0</entry_b-taxincluded>
+  <entry_b-pay>CASH</entry_b-pay>
+</gnc_GncEntry>
+<gnc_GncEntry version="2.0.0">
+  <entry_guid type="guid">dc3c53f07ff64199ad4ea38988b3f40a</entry_guid>
+  <entry_date>
+    <ts_date>2023-08-30 10:00:00 +0000</ts_date>
+  </entry_date>
+  <entry_entered>
+    <ts_date>2023-08-30 06:57:40 +0000</ts_date>
+  </entry_entered>
+  <entry_description>Item 2</entry_description>
+  <entry_qty>2/1</entry_qty>
+  <entry_b-acct type="guid">16305960bddc463aa18212dd4f230d4d</entry_b-acct>
+  <entry_b-price>119/5</entry_b-price>
+  <entry_bill type="guid">286fc2651a7848038a23bb7d065c8b67</entry_bill>
+  <entry_billable>0</entry_billable>
+  <entry_b-taxable>1</entry_b-taxable>
+  <entry_b-taxincluded>0</entry_b-taxincluded>
+  <entry_b-pay>CASH</entry_b-pay>
+  <entry_b-taxtable type="guid">cba6011c826f426fbc4a1a72c3d6c8ee</entry_b-taxtable>
+</gnc_GncEntry>
+<gnc_GncEntry version="2.0.0">
+  <entry_guid type="guid">eb5eb3b7c1e34965b36fb6d5af183e82</entry_guid>
+  <entry_date>
+    <ts_date>2023-09-20 10:00:00 +0000</ts_date>
+  </entry_date>
+  <entry_entered>
+    <ts_date>2023-09-20 10:31:16 +0000</ts_date>
+  </entry_entered>
+  <entry_description>Item 2</entry_description>
+  <entry_action>Stunden</entry_action>
+  <entry_qty>5/1</entry_qty>
+  <entry_i-acct type="guid">690f25c6ef0649cba836529ba6724f78</entry_i-acct>
+  <entry_i-price>95/1</entry_i-price>
+  <entry_invoice type="guid">b1e981f796b94ca0b17a9dccb91fedc0</entry_invoice>
+  <entry_i-disc-type>PERCENT</entry_i-disc-type>
+  <entry_i-disc-how>PRETAX</entry_i-disc-how>
+  <entry_i-taxable>1</entry_i-taxable>
+  <entry_i-taxincluded>0</entry_i-taxincluded>
+  <entry_i-taxtable type="guid">3c9690f9f31b4cd0baa936048b833c06</entry_i-taxtable>
+</gnc_GncEntry>
+<gnc_GncEntry version="2.0.0">
+  <entry_guid type="guid">fa483972d10a4ce0abf2a7e1319706e7</entry_guid>
+  <entry_date>
+    <ts_date>2023-09-20 10:00:00 +0000</ts_date>
+  </entry_date>
+  <entry_entered>
+    <ts_date>2023-09-20 10:30:51 +0000</ts_date>
+  </entry_entered>
+  <entry_description>Item 1</entry_description>
+  <entry_action>Auftrag</entry_action>
+  <entry_qty>1/1</entry_qty>
+  <entry_i-acct type="guid">690f25c6ef0649cba836529ba6724f78</entry_i-acct>
+  <entry_i-price>2450/1</entry_i-price>
+  <entry_invoice type="guid">b1e981f796b94ca0b17a9dccb91fedc0</entry_invoice>
+  <entry_i-disc-type>PERCENT</entry_i-disc-type>
+  <entry_i-disc-how>PRETAX</entry_i-disc-how>
+  <entry_i-taxable>1</entry_i-taxable>
+  <entry_i-taxincluded>0</entry_i-taxincluded>
+  <entry_i-taxtable type="guid">3c9690f9f31b4cd0baa936048b833c06</entry_i-taxtable>
+</gnc_GncEntry>
+<gnc_GncInvoice version="2.0.0">
+  <invoice_guid type="guid">169331c9860642cf84b04f3e3151058a</invoice_guid>
+  <invoice_id>000001</invoice_id>
+  <invoice_owner version="2.0.0">
+    <owner_type>gncJob</owner_type>
+    <owner_id type="guid">028cfb5993ef4d6b83206bc844e2fe56</owner_id>
+  </invoice_owner>
+  <invoice_opened>
+    <ts_date>2023-09-20 10:59:00 +0000</ts_date>
+  </invoice_opened>
+  <invoice_notes>With vendor job / with taxes</invoice_notes>
+  <invoice_active>1</invoice_active>
+  <invoice_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </invoice_currency>
+  <invoice_slots>
+    <slot>
+      <slot_key>assoc_uri</slot_key>
+      <slot_value type="string">https://my.job.invoice.link.01</slot_value>
+    </slot>
+    <slot>
+      <slot_key>credit-note</slot_key>
+      <slot_value type="integer">0</slot_value>
+    </slot>
+  </invoice_slots>
+</gnc_GncInvoice>
+<gnc_GncInvoice version="2.0.0">
+  <invoice_guid type="guid">286fc2651a7848038a23bb7d065c8b67</invoice_guid>
+  <invoice_id>2740921</invoice_id>
+  <invoice_owner version="2.0.0">
+    <owner_type>gncVendor</owner_type>
+    <owner_id type="guid">087e1a3d43fa4ef9a9bdd4b4797c4231</owner_id>
+  </invoice_owner>
+  <invoice_opened>
+    <ts_date>2023-08-30 10:59:00 +0000</ts_date>
+  </invoice_opened>
+  <invoice_posted>
+    <ts_date>2023-08-30 10:59:00 +0000</ts_date>
+  </invoice_posted>
+  <invoice_notes>Dat isjamaol eine schöne jepflejgte Reschnung!</invoice_notes>
+  <invoice_active>1</invoice_active>
+  <invoice_posttxn type="guid">aa64d862bb5e4d749eb41f198b28d73d</invoice_posttxn>
+  <invoice_postlot type="guid">ae4de9f6ba2941af94595a6b161795c7</invoice_postlot>
+  <invoice_postacc type="guid">68a4c19f9a8c48909fc69d0dc18c37a6</invoice_postacc>
+  <invoice_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </invoice_currency>
+</gnc_GncInvoice>
+<gnc_GncInvoice version="2.0.0">
+  <invoice_guid type="guid">4eb0dc387c3f4daba57b11b2a657d8a4</invoice_guid>
+  <invoice_id>1730-383/2</invoice_id>
+  <invoice_owner version="2.0.0">
+    <owner_type>gncVendor</owner_type>
+    <owner_id type="guid">087e1a3d43fa4ef9a9bdd4b4797c4231</owner_id>
+  </invoice_owner>
+  <invoice_opened>
+    <ts_date>2023-08-31 10:59:00 +0000</ts_date>
+  </invoice_opened>
+  <invoice_notes>Sie wissen schon: Gefälligkeiten, ne?</invoice_notes>
+  <invoice_active>1</invoice_active>
+  <invoice_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </invoice_currency>
+  <invoice_slots>
+    <slot>
+      <slot_key>assoc_uri</slot_key>
+      <slot_value type="string">https://my.vendor.bill.link.01</slot_value>
+    </slot>
+    <slot>
+      <slot_key>credit-note</slot_key>
+      <slot_value type="integer">0</slot_value>
+    </slot>
+  </invoice_slots>
+</gnc_GncInvoice>
+<gnc_GncInvoice version="2.0.0">
+  <invoice_guid type="guid">6588f1757b9e4e24b62ad5b37b8d8e07</invoice_guid>
+  <invoice_id>R1731</invoice_id>
+  <invoice_owner version="2.0.0">
+    <owner_type>gncCustomer</owner_type>
+    <owner_id type="guid">5d1dd9afa7554553988669830cc1f696</owner_id>
+  </invoice_owner>
+  <invoice_opened>
+    <ts_date>2023-08-13 10:59:00 +0000</ts_date>
+  </invoice_opened>
+  <invoice_posted>
+    <ts_date>2023-08-13 10:59:00 +0000</ts_date>
+  </invoice_posted>
+  <invoice_notes>Diesmal mit Steuern / teilw. bezahlt</invoice_notes>
+  <invoice_active>1</invoice_active>
+  <invoice_posttxn type="guid">9e066e5f3081485ab08539e41bf85495</invoice_posttxn>
+  <invoice_postlot type="guid">c9a34ac416b8456ea84d7f19cca341d6</invoice_postlot>
+  <invoice_postacc type="guid">7e223ee2260d4ba28e8e9e19ce291f43</invoice_postacc>
+  <invoice_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </invoice_currency>
+  <invoice_slots>
+    <slot>
+      <slot_key>assoc_uri</slot_key>
+      <slot_value type="string">https://my.customer.invoice.link.01</slot_value>
+    </slot>
+    <slot>
+      <slot_key>credit-note</slot_key>
+      <slot_value type="integer">0</slot_value>
+    </slot>
+  </invoice_slots>
+</gnc_GncInvoice>
+<gnc_GncInvoice version="2.0.0">
+  <invoice_guid type="guid">75e5e943505a4272ab2bcf75b03bd6fd</invoice_guid>
+  <invoice_id>gg8nixlos</invoice_id>
+  <invoice_owner version="2.0.0">
+    <owner_type>gncVendor</owner_type>
+    <owner_id type="guid">087e1a3d43fa4ef9a9bdd4b4797c4231</owner_id>
+  </invoice_owner>
+  <invoice_opened>
+    <ts_date>2025-05-19 10:59:00 +0000</ts_date>
+  </invoice_opened>
+  <invoice_terms type="guid">599bfe3ab5b84a73bf3acabc5abd5bc7</invoice_terms>
+  <invoice_active>1</invoice_active>
+  <invoice_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </invoice_currency>
+  <invoice_slots>
+    <slot>
+      <slot_key>credit-note</slot_key>
+      <slot_value type="integer">0</slot_value>
+    </slot>
+  </invoice_slots>
+</gnc_GncInvoice>
+<gnc_GncInvoice version="2.0.0">
+  <invoice_guid type="guid">8de4467c17e04bb2895fb68cc07fc4df</invoice_guid>
+  <invoice_id>000001</invoice_id>
+  <invoice_owner version="2.0.0">
+    <owner_type>gncEmployee</owner_type>
+    <owner_id type="guid">7f70b352dcf44a5d8085767a53a9bc37</owner_id>
+  </invoice_owner>
+  <invoice_opened>
+    <ts_date>2023-11-13 10:59:00 +0000</ts_date>
+  </invoice_opened>
+  <invoice_notes>Spesen Geschäftsreise</invoice_notes>
+  <invoice_active>1</invoice_active>
+  <invoice_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </invoice_currency>
+  <invoice_slots>
+    <slot>
+      <slot_key>credit-note</slot_key>
+      <slot_value type="integer">0</slot_value>
+    </slot>
+  </invoice_slots>
+</gnc_GncInvoice>
+<gnc_GncInvoice version="2.0.0">
+  <invoice_guid type="guid">b1e981f796b94ca0b17a9dccb91fedc0</invoice_guid>
+  <invoice_id>R94871</invoice_id>
+  <invoice_owner version="2.0.0">
+    <owner_type>gncJob</owner_type>
+    <owner_id type="guid">e91b99cd6fbb48a985cbf1e8041f378c</owner_id>
+  </invoice_owner>
+  <invoice_opened>
+    <ts_date>2023-09-20 10:59:00 +0000</ts_date>
+  </invoice_opened>
+  <invoice_notes>With customer job / with taxes</invoice_notes>
+  <invoice_active>1</invoice_active>
+  <invoice_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </invoice_currency>
+  <invoice_slots>
+    <slot>
+      <slot_key>credit-note</slot_key>
+      <slot_value type="integer">0</slot_value>
+    </slot>
+  </invoice_slots>
+</gnc_GncInvoice>
+<gnc_GncInvoice version="2.0.0">
+  <invoice_guid type="guid">d1e64a86c4004ef7b87e2610d762456d</invoice_guid>
+  <invoice_id>gg9nixlos</invoice_id>
+  <invoice_owner version="2.0.0">
+    <owner_type>gncVendor</owner_type>
+    <owner_id type="guid">087e1a3d43fa4ef9a9bdd4b4797c4231</owner_id>
+  </invoice_owner>
+  <invoice_opened>
+    <ts_date>2025-05-19 10:59:00 +0000</ts_date>
+  </invoice_opened>
+  <invoice_terms type="guid">599bfe3ab5b84a73bf3acabc5abd5bc7</invoice_terms>
+  <invoice_active>1</invoice_active>
+  <invoice_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </invoice_currency>
+  <invoice_slots>
+    <slot>
+      <slot_key>credit-note</slot_key>
+      <slot_value type="integer">0</slot_value>
+    </slot>
+  </invoice_slots>
+</gnc_GncInvoice>
+<gnc_GncInvoice version="2.0.0">
+  <invoice_guid type="guid">d9967c10fdf1465e9394a3e4b1e7bd79</invoice_guid>
+  <invoice_id>R1730</invoice_id>
+  <invoice_owner version="2.0.0">
+    <owner_type>gncCustomer</owner_type>
+    <owner_id type="guid">5d1dd9afa7554553988669830cc1f696</owner_id>
+  </invoice_owner>
+  <invoice_opened>
+    <ts_date>2023-07-29 10:59:00 +0000</ts_date>
+  </invoice_opened>
+  <invoice_posted>
+    <ts_date>2023-07-29 10:59:00 +0000</ts_date>
+  </invoice_posted>
+  <invoice_notes>Alles ohne Steuern / voll bezahlt</invoice_notes>
+  <invoice_active>1</invoice_active>
+  <invoice_posttxn type="guid">c97032ba41684b2bb5d1391c9d7547e9</invoice_posttxn>
+  <invoice_postlot type="guid">c183bc9303484e75945af1324d18e8cc</invoice_postlot>
+  <invoice_postacc type="guid">7e223ee2260d4ba28e8e9e19ce291f43</invoice_postacc>
+  <invoice_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </invoice_currency>
+</gnc_GncInvoice>
+<gnc_GncJob version="2.0.0">
+  <job_guid type="guid">028cfb5993ef4d6b83206bc844e2fe56</job_guid>
+  <job_id>000002</job_id>
+  <job_name>Let's buy help</job_name>
+  <job_owner version="2.0.0">
+    <owner_type>gncVendor</owner_type>
+    <owner_id type="guid">4f16fd55c0d64ebe82ffac0bb25fe8f5</owner_id>
+  </job_owner>
+  <job_active>1</job_active>
+</gnc_GncJob>
+<gnc_GncJob version="2.0.0">
+  <job_guid type="guid">bdb7cfdd002b4ea28c8c0080f051479b</job_guid>
+  <job_id>000004</job_id>
+  <job_name>Dummy-Auftrag (Lieferant)</job_name>
+  <job_owner version="2.0.0">
+    <owner_type>gncVendor</owner_type>
+    <owner_id type="guid">087e1a3d43fa4ef9a9bdd4b4797c4231</owner_id>
+  </job_owner>
+  <job_active>1</job_active>
+</gnc_GncJob>
+<gnc_GncJob version="2.0.0">
+  <job_guid type="guid">e1ffc66e574447de963c13c0465e74e8</job_guid>
+  <job_id>000003</job_id>
+  <job_name>Dummy-Auftrag (Kunde)</job_name>
+  <job_owner version="2.0.0">
+    <owner_type>gncCustomer</owner_type>
+    <owner_id type="guid">5d1dd9afa7554553988669830cc1f696</owner_id>
+  </job_owner>
+  <job_active>1</job_active>
+</gnc_GncJob>
+<gnc_GncJob version="2.0.0">
+  <job_guid type="guid">e91b99cd6fbb48a985cbf1e8041f378c</job_guid>
+  <job_id>000001</job_id>
+  <job_name>Do more for others</job_name>
+  <job_owner version="2.0.0">
+    <owner_type>gncCustomer</owner_type>
+    <owner_id type="guid">f44645d2397946bcac90dff68cc03b76</owner_id>
+  </job_owner>
+  <job_active>1</job_active>
+</gnc_GncJob>
+<gnc_GncTaxTable version="2.0.0">
+  <taxtable_guid type="guid">0bc4e576896a4fb4a2779dcf310f82f1</taxtable_guid>
+  <taxtable_name>UK_VAT_Std</taxtable_name>
+  <taxtable_refcount>1</taxtable_refcount>
+  <taxtable_invisible>0</taxtable_invisible>
+  <taxtable_entries>
+    <gnc_GncTaxTableEntry>
+      <tte_acct type="guid">1a5b06dada56466197edbd15e64fd425</tte_acct>
+      <tte_amount>2000000/100000</tte_amount>
+      <tte_type>PERCENT</tte_type>
+    </gnc_GncTaxTableEntry>
+  </taxtable_entries>
+</gnc_GncTaxTable>
+<gnc_GncTaxTable version="2.0.0">
+  <taxtable_guid type="guid">3c9690f9f31b4cd0baa936048b833c06</taxtable_guid>
+  <taxtable_name>DE_USt_Std</taxtable_name>
+  <taxtable_refcount>4</taxtable_refcount>
+  <taxtable_invisible>0</taxtable_invisible>
+  <taxtable_child type="guid">cba6011c826f426fbc4a1a72c3d6c8ee</taxtable_child>
+  <taxtable_entries>
+    <gnc_GncTaxTableEntry>
+      <tte_acct type="guid">1a5b06dada56466197edbd15e64fd425</tte_acct>
+      <tte_amount>1900000/100000</tte_amount>
+      <tte_type>PERCENT</tte_type>
+    </gnc_GncTaxTableEntry>
+  </taxtable_entries>
+</gnc_GncTaxTable>
+<gnc_GncTaxTable version="2.0.0">
+  <taxtable_guid type="guid">9d33a0082d9241ac89aa8e907f30d1db</taxtable_guid>
+  <taxtable_name>UK_VAT_red</taxtable_name>
+  <taxtable_refcount>0</taxtable_refcount>
+  <taxtable_invisible>0</taxtable_invisible>
+  <taxtable_entries>
+    <gnc_GncTaxTableEntry>
+      <tte_acct type="guid">1a5b06dada56466197edbd15e64fd425</tte_acct>
+      <tte_amount>500000/100000</tte_amount>
+      <tte_type>PERCENT</tte_type>
+    </gnc_GncTaxTableEntry>
+  </taxtable_entries>
+</gnc_GncTaxTable>
+<gnc_GncTaxTable version="2.0.0">
+  <taxtable_guid type="guid">c518af53a93c4a5cb3e2161b7b358e68</taxtable_guid>
+  <taxtable_name>DE_USt_red</taxtable_name>
+  <taxtable_refcount>0</taxtable_refcount>
+  <taxtable_invisible>0</taxtable_invisible>
+  <taxtable_entries>
+    <gnc_GncTaxTableEntry>
+      <tte_acct type="guid">1a5b06dada56466197edbd15e64fd425</tte_acct>
+      <tte_amount>700000/100000</tte_amount>
+      <tte_type>PERCENT</tte_type>
+    </gnc_GncTaxTableEntry>
+  </taxtable_entries>
+</gnc_GncTaxTable>
+<gnc_GncTaxTable version="2.0.0">
+  <taxtable_guid type="guid">cba6011c826f426fbc4a1a72c3d6c8ee</taxtable_guid>
+  <taxtable_name>USt_Std</taxtable_name>
+  <taxtable_refcount>0</taxtable_refcount>
+  <taxtable_invisible>1</taxtable_invisible>
+  <taxtable_parent type="guid">3c9690f9f31b4cd0baa936048b833c06</taxtable_parent>
+  <taxtable_entries>
+    <gnc_GncTaxTableEntry>
+      <tte_acct type="guid">1a5b06dada56466197edbd15e64fd425</tte_acct>
+      <tte_amount>1900000/100000</tte_amount>
+      <tte_type>PERCENT</tte_type>
+    </gnc_GncTaxTableEntry>
+  </taxtable_entries>
+</gnc_GncTaxTable>
+<gnc_GncTaxTable version="2.0.0">
+  <taxtable_guid type="guid">de4c17d1eb0e4f088ba73d4c697032f0</taxtable_guid>
+  <taxtable_name>FR_TVA_Std</taxtable_name>
+  <taxtable_refcount>1</taxtable_refcount>
+  <taxtable_invisible>0</taxtable_invisible>
+  <taxtable_entries>
+    <gnc_GncTaxTableEntry>
+      <tte_acct type="guid">1a5b06dada56466197edbd15e64fd425</tte_acct>
+      <tte_amount>2000000/100000</tte_amount>
+      <tte_type>PERCENT</tte_type>
+    </gnc_GncTaxTableEntry>
+  </taxtable_entries>
+</gnc_GncTaxTable>
+<gnc_GncTaxTable version="2.0.0">
+  <taxtable_guid type="guid">e279d5cc81204f1bb6cf672ef3357c0c</taxtable_guid>
+  <taxtable_name>FR_TVA_red</taxtable_name>
+  <taxtable_refcount>0</taxtable_refcount>
+  <taxtable_invisible>0</taxtable_invisible>
+  <taxtable_entries>
+    <gnc_GncTaxTableEntry>
+      <tte_acct type="guid">1a5b06dada56466197edbd15e64fd425</tte_acct>
+      <tte_amount>1000000/100000</tte_amount>
+      <tte_type>PERCENT</tte_type>
+    </gnc_GncTaxTableEntry>
+  </taxtable_entries>
+</gnc_GncTaxTable>
+<gnc_GncVendor version="2.0.0">
+  <vendor_guid type="guid">087e1a3d43fa4ef9a9bdd4b4797c4231</vendor_guid>
+  <vendor_name>Lieferfanto AG</vendor_name>
+  <vendor_id>000001</vendor_id>
+  <vendor_addr version="2.0.0">
+    <addr_name>Frau Schbörzel-Schnurrenburgen</addr_name>
+    <addr_addr1>Über den Linden 81</addr_addr1>
+    <addr_addr2>12345 Berlin</addr_addr2>
+  </vendor_addr>
+  <vendor_terms type="guid">599bfe3ab5b84a73bf3acabc5abd5bc7</vendor_terms>
+  <vendor_taxincluded>USEGLOBAL</vendor_taxincluded>
+  <vendor_active>1</vendor_active>
+  <vendor_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </vendor_currency>
+  <vendor_use-tt>0</vendor_use-tt>
+  <vendor_slots>
+    <slot>
+      <slot_key>last-posted-to-acct</slot_key>
+      <slot_value type="guid">68a4c19f9a8c48909fc69d0dc18c37a6</slot_value>
+    </slot>
+    <slot>
+      <slot_key>payment</slot_key>
+      <slot_value type="frame">
+        <slot>
+          <slot_key>last_acct</slot_key>
+          <slot_value type="guid">bbf77a599bd24a3dbfec3dd1d0bb9f5c</slot_value>
+        </slot>
+      </slot_value>
+    </slot>
+  </vendor_slots>
+</gnc_GncVendor>
+<gnc_GncVendor version="2.0.0">
+  <vendor_guid type="guid">4f16fd55c0d64ebe82ffac0bb25fe8f5</vendor_guid>
+  <vendor_name>Super Suppliers Corp.</vendor_name>
+  <vendor_id>000002</vendor_id>
+  <vendor_addr version="2.0.0"/>
+  <vendor_notes>We are so super, man!</vendor_notes>
+  <vendor_taxincluded>USEGLOBAL</vendor_taxincluded>
+  <vendor_active>1</vendor_active>
+  <vendor_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </vendor_currency>
+  <vendor_use-tt>1</vendor_use-tt>
+  <vendor_taxtable type="guid">0bc4e576896a4fb4a2779dcf310f82f1</vendor_taxtable>
+</gnc_GncVendor>
+<gnc_GncVendor version="2.0.0">
+  <vendor_guid type="guid">bc1c7a6d0a6c4b4ea7dd9f8eb48f79f7</vendor_guid>
+  <vendor_name>Achetez Chez Nous S.A.</vendor_name>
+  <vendor_id>000003</vendor_id>
+  <vendor_addr version="2.0.0"/>
+  <vendor_notes>Nous sommes vraiment les meilleurs! Venez chez nous!</vendor_notes>
+  <vendor_terms type="guid">f4310c65486a47a5a787348b7de6ca40</vendor_terms>
+  <vendor_taxincluded>USEGLOBAL</vendor_taxincluded>
+  <vendor_active>1</vendor_active>
+  <vendor_currency>
+    <cmdty_space>CURRENCY</cmdty_space>
+    <cmdty_id>EUR</cmdty_id>
+  </vendor_currency>
+  <vendor_use-tt>0</vendor_use-tt>
+</gnc_GncVendor>
+</gnc_book>
+</gnc-v2>
+
