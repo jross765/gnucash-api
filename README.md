@@ -10,7 +10,7 @@ file.
 
 * This is a module-level repository which is part of a multi-module project, i.e. it has a parent and several siblings. 
 
-  [Parent](https://github.com/jross765/JGnuCashLibNTools.git)
+  [Parent](https://codeberg.org/jross765/JGnuCashLibNTools.git)
 
 * Under normal circumstances, you cannot compile it on its own (at least not without further preparation), but instead, you should clone it together with the other repos and use the parent repo's build-script.
 
@@ -18,11 +18,13 @@ file.
 
 ## Major Changes
 
-Cf. document "[Major Changes](https://github.com/jross765/JGnuCashLibNTools/gnucash-api/major_changes.md)".
+Cf. document "[Major Changes](https://codeberg.org/jross765/JGnuCashLibNTools/gnucash-api/major_changes.md)".
 
 ## Planned
 It should go without saying, but the following items are of course subject to change and 
 by no means a promise that they will actually be implemented soon:
+
+* Add support for other entities (reports, scheduled transactions).
 
 * Invoices and bills: Support more variants, such as choosing the terms of payment or the "tax included" flag for entries.
 
@@ -68,15 +70,22 @@ by no means a promise that they will actually be implemented soon:
 * Last not least: Provide user documentation.
 
 ## Known Issues
-* Performance: When using the `Writable`-classes (i.e., generating new objects or changing existing ones), the performance is less-than-overwhelming, especially when working with larger files.
+* *Performance*: When using the `Writable`-classes (i.e., generating new objects or changing existing ones), the performance is less-than-overwhelming, especially when working with larger files.
 
-* As mentioned in the parent repo's README: As of now, the lib only works well when your GnuCash files are generated on a handful of system locales.
+  Please notice that this is *not* due to bad programming (at least, not primarily),
+  but rather the consequence of a *design decision*, taken by the 
+  original author two decades ago: Having a *high-level API* above the generated low-level bindings,
+  which necessarily leads to a lot of additonal objects in memory when loading a file.
+  To oversimplify a bit: It is the price to pay for a data model aligned to business logic, 
+  strong type safety and convenience.
+  
+* As mentioned in the parent repo's README: As of now, the lib only works well when your GnuCash files are generated on one of a handful of system locales.
 
 * *Edge case*: The "virgin" test file (the practically empty one) cannot be parsed -- in the current stage of development, the lib still assumes a handful of entities being already there, such as the Price DB.
 
 * *Edge case*: Generating new objects currently only works (reliably) when at least one object of the same type (a customer, say) is already in the file.
 
-* When generating invoices, you cannot/should not call the method `post()` immediately after composing the object. 
+* When *generating invoices*, you cannot/should not call the method `post()` immediately after composing the object. 
   It will seemingly work (not throw an exception), but the amount of the post-transaction will be wrong (thus, the 
   transaction will be useless as it cannot be corrected manually in GnuCash; post-transactions are read-only). 
 
@@ -84,10 +93,10 @@ by no means a promise that they will actually be implemented soon:
 
   Cf. test classes `TestGnucashWritableCustomerInvoiceImpl`, `TestGnucashWritableVendorBillImpl` and  `TestGnucashWritableJobInvoiceImpl`.
 
-* GnuCash (the original software) "tricks" you with security symbols:
+* GnuCash (the original software) "tricks" you with *security symbols*:
   When you enter the same string into the "symbol" field and into the "ticker" field (technically "code"),
   then GnuCash will *not* save that symbol redundantly in a separate field, as you would 
-  expect and saves nothing for the symbol in the XML file (not even an indicative flag). 
+  expect, and saves nothing for the symbol in the XML file (not even an indicative flag). 
 
   Instead, GnuCash shows you the ticker. Only when symbol and ticker are two *different* 
   strings, GnuCash saves it as an additional key-value pair for the commodity in the 
@@ -116,14 +125,26 @@ by no means a promise that they will actually be implemented soon:
 
   Please do not blame the maintainer for this.
 
+* This lib cannot handle *scheduled transactions* properly, due to the special way the GnuCash developers
+  chose to model them (very different from what the current maintainer would have expected until
+  recently -- and obviously, his predecessors as well, b.t.w.).
+
+  That does not only mean that scheduled transactions are not directly represented by 
+  a class of their own (that's planned for a future realse, cf. above), but more importantly,
+  that they are currently misrepresented as being regular ones.
+
+  > **WARNING**:
+  > Do not use `JGnuCashLib` with a GnuCash file that contains scheduled/template transactions! 
+  > It will problably lead to unpredictable behavior.
+
 * XSD schema file (the one used to generate the "base" code of the lib) is not suitable to validate the GnuCash files read and generated.
 
   Sure, one would expect that the files are valid when checked against the relevant XSD file, but this is not as dramatic as it sounds:
    * For one, plenty of tests as well as real-life usage have proven that the lib works very well. 
-   * Additonally, oddly enough, it seems that the GnuCash developers themselves do not put too much emphasis on this aspect. They do not even maintain an official XSD file (the one used in this project has evolved from a file originally written/generated by the first author some 15 years ago and now is being mainained manually by re-engineering the GnuCash file format). 
+   * Additonally, oddly enough, it seems that the GnuCash developers themselves do not put too much emphasis on this aspect. They do not even maintain an official XSD file (the one used in this project has evolved from a file originally written/generated by the first author some 20 years ago and now is being mainained manually by re-engineering the GnuCash file format). 
 
-     They do, however, have a sort-of half-official RNC file, from which an XSD file can be generated, but 
+     They do, however, have a sort-of half-official RNC file, from which a set of XSD files (one per name space) can be generated. However,
       * the author has read somewhere in their documentation that it is not used "in earnest", but rather exists in the shadows, so to speak,
-      * the generated (set of) XSD file(s) is *very* different from the one used right now, and the author hesitates to replace it at this point, and
+      * the generated XSD files is *very* different from the one used right now, and the author hesitates to replace it at this point, and
       * apart from the previous two points: it is useless -- the original (!) GnuCash-generated files are not valid according to the XSD files generated from the half-official RNC file. 
         So what's the point?
