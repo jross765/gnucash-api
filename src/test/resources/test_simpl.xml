@@ -767,6 +767,10 @@
   <act_description>Aktiendepot 1</act_description>
   <act_slots>
     <slot>
+      <slot_key>balance-limit</slot_key>
+      <slot_value type="frame"/>
+    </slot>
+    <slot>
       <slot_key>placeholder</slot_key>
       <slot_value type="string">true</slot_value>
     </slot>
@@ -842,6 +846,12 @@
   </act_commodity>
   <act_commodity-scu>100</act_commodity-scu>
   <act_description>Aktiendepot 2</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>balance-limit</slot_key>
+      <slot_value type="frame"/>
+    </slot>
+  </act_slots>
   <act_parent type="guid">7ee6fe4de6db46fd957f3513c9c6f983</act_parent>
 </gnc_account>
 <gnc_account version="2.0.0">
@@ -888,13 +898,19 @@
 <gnc_account version="2.0.0">
   <act_name>Giro SocGen</act_name>
   <act_id type="guid">aa0f8f2a0e8b4b8cb940918710145088</act_id>
-  <act_type>ASSET</act_type>
+  <act_type>BANK</act_type>
   <act_commodity>
     <cmdty_space>CURRENCY</cmdty_space>
     <cmdty_id>EUR</cmdty_id>
   </act_commodity>
   <act_commodity-scu>100</act_commodity-scu>
   <act_description>Girokonto 2</act_description>
+  <act_slots>
+    <slot>
+      <slot_key>balance-limit</slot_key>
+      <slot_value type="frame"/>
+    </slot>
+  </act_slots>
   <act_parent type="guid">fdffaa52f5b04754901dfb1cf9221494</act_parent>
 </gnc_account>
 <gnc_account version="2.0.0">
