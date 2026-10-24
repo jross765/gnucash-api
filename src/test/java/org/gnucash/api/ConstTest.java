@@ -9,6 +9,14 @@ public class ConstTest extends Const {
     public static final String GCSH_FILENAME_OUT = "test_out.xml";
     
     // ---------------------------------------------------------------
+    
+    public static final String GCSH_FILENAME_SIMPLE     = "test_simpl.xml";
+
+    public static final String GCSH_FILENAME_SIMPLE_IN  = GCSH_FILENAME_SIMPLE;
+
+    public static final String GCSH_FILENAME_SIMPLE_OUT = "test_simple_out.xml";
+    
+    // ---------------------------------------------------------------
     // Stats for above-mentioned GnuCash test file (before write operations)
     
     public class Stats {
